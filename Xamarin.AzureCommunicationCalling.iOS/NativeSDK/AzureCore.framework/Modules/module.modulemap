@@ -1,0 +1,4 @@
+framework module AzureCore {
+  header "AzureCore-Swift.h"
+  requires objc
+}
