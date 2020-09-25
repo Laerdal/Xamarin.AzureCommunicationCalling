@@ -11,7 +11,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	  [Model] is used to generate a C# class that implements this protocol,
 	  and might be useful for protocols that consumers are supposed to implement,
 	  since consumers can subclass the generated class instead of implementing
-	  the generated interface. If consumers are not supposed to implement this
+	  the generated interface. If c	onsumers are not supposed to implement this
 	  protocol, then [Model] is redundant and will generate code that will never
 	  be used.
 	*/
@@ -20,23 +20,18 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	interface CommunicationIdentifier
 	{
 		// @required -(NSString * _Nonnull)getId __attribute__((warn_unused_result("")));
-		[Abstract]
 		[Export("getId")]
 		string Id { get; }
 	}
 
 	// @interface CallingApplication : NSObject <CommunicationIdentifier>
-	[BaseType(typeof(NSObject), Name = "_TtC18AzureCommunication18CallingApplication")]
+	[BaseType(typeof(CommunicationIdentifier), Name = "_TtC18AzureCommunication18CallingApplication")]
 	[DisableDefaultCtor]
-	interface CallingApplication : CommunicationIdentifier
+	interface CallingApplication
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull identifier;
 		[Export("identifier")]
 		string Identifier { get; }
-
-		// -(NSString * _Nonnull)getId __attribute__((warn_unused_result("")));
-		[Export("getId")]
-		string Id { get; }
 
 		// -(instancetype _Nonnull)initWithIdentifier:(NSString * _Nonnull)identifier __attribute__((objc_designated_initializer));
 		[Export("initWithIdentifier:")]
@@ -45,17 +40,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	// @interface CommunicationUser : NSObject <CommunicationIdentifier>
-	[BaseType(typeof(NSObject), Name = "_TtC18AzureCommunication17CommunicationUser")]
+	[BaseType(typeof(CommunicationIdentifier), Name = "_TtC18AzureCommunication17CommunicationUser")]
 	[DisableDefaultCtor]
-	interface CommunicationUser : CommunicationIdentifier
+	interface CommunicationUser
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull identifier;
 		[Export("identifier")]
 		string Identifier { get; }
-
-		// -(NSString * _Nonnull)getId __attribute__((warn_unused_result("")));
-		[Export("getId")]
-		string Id { get; }
 
 		// -(instancetype _Nonnull)initWithIdentifier:(NSString * _Nonnull)identifier __attribute__((objc_designated_initializer));
 		[Export("initWithIdentifier:")]
@@ -85,17 +76,17 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	// @interface PhoneNumber : NSObject <CommunicationIdentifier>
-	[BaseType(typeof(NSObject), Name = "_TtC18AzureCommunication11PhoneNumber")]
+	[BaseType(typeof(CommunicationIdentifier), Name = "_TtC18AzureCommunication11PhoneNumber")]
 	[DisableDefaultCtor]
-	interface PhoneNumber : CommunicationIdentifier
+	interface PhoneNumber
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull value;
 		[Export("value")]
 		string Value { get; }
 
 		// -(NSString * _Nonnull)getId __attribute__((warn_unused_result("")));
-		[Export("getId")]
-		string Id { get; }
+		//[Export("getId")]
+		//string Id { get; }
 
 		// -(instancetype _Nonnull)initWithPhoneNumber:(NSString * _Nonnull)phoneNumber __attribute__((objc_designated_initializer));
 		[Export("initWithPhoneNumber:")]
