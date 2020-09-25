@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AzureCommunicationVideoTest.MainPage">
+    <StackLayout Spacing="20">
+        <Frame BackgroundColor="#2196F3" Padding="24,60,24,24" CornerRadius="0">
+            <Label Text="ACS Demo app" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
+        </Frame>
+        <Button x:Name="CallEchoButton" Text="Call echo service" HorizontalOptions="Center"/>
+        <Button x:Name="CallGroupButton" Text="Call group" HorizontalOptions="Center"/>
+    </StackLayout>
+</ContentPage>
