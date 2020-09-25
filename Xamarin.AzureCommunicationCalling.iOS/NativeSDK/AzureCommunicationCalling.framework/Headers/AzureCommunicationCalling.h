@@ -1,16 +1,16 @@
-// SpoolCommonModule
-// This file was auto-generated from SpoolApiModel.cs.
+// ACSCallingShared
+// This file was auto-generated from ACSCallingModel.cs.
 
 #import <Foundation/Foundation.h>
 
-#import <AzureCommunication/AzureCommunication-Swift.h>
-#import <AzureCore/AzureCore-Swift.h>
+#import "../../AzureCommunication.framework/Headers/AzureCommunication-Swift.h"
+#import "../../AzureCore.framework/Headers/AzureCore-Swift.h"
 #import "ACSRenderer.h"
 #import "ACSRendererView.h"
 #import "ACSStreamSize.h"
 
 // Enumerations.
-/// Additional failed states for ACS
+/// Additional failed states for Azure Communication Services
 typedef NS_OPTIONS(NSInteger, ACSCommunicationErrors)
 {
     /// No errors
@@ -24,7 +24,9 @@ typedef NS_OPTIONS(NSInteger, ACSCommunicationErrors)
     /// Failed to process push notification payload.
     ACSCommunicationErrorsReceivedInvalidPNPayload = 4,
     /// Recieved empty/invalid notification payload.
-    ACSCommunicationErrorsFailedToProcessPNPayload = 8
+    ACSCommunicationErrorsFailedToProcessPNPayload = 8,
+    /// Recieved invalid group Id.
+    ACSCommunicationErrorsInvalidGuidGroupId = 16
 };
 
 /// Direction of the camera
@@ -61,9 +63,12 @@ typedef NS_ENUM(NSInteger, ACSVideoDeviceType)
     ACSVideoDeviceTypeSRAugmented = 4
 };
 
+/// Local and Remote Video Stream types
 typedef NS_ENUM(NSInteger, ACSMediaStreamType)
 {
+    /// Video
     ACSMediaStreamTypeVideo = 0,
+    /// Screen share
     ACSMediaStreamTypeScreenSharing = 1
 };
 
@@ -109,7 +114,7 @@ typedef NS_ENUM(NSInteger, ACSCallState)
     ACSCallStateDisconnected = 8
 };
 
-/// DTMF tone for PSTN calls
+/// DTMF (Dual-Tone Multi-Frequency) tone for PSTN calls
 typedef NS_ENUM(NSInteger, ACSDtmfTone)
 {
     /// Zero
@@ -157,19 +162,13 @@ typedef NS_ENUM(NSInteger, ACSAudioDeviceType)
     ACSAudioDeviceTypeSpeaker = 1
 };
 
+/// Local and Remote Video scaling mode
 typedef NS_ENUM(NSInteger, ACSScalingMode)
 {
+    /// Cropped
     ACSScalingModeCrop = 1,
+    /// Fitted
     ACSScalingModeFit = 2
-};
-
-typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
-{
-    ACSCompositeAudioDeviceTypeSpeakers = 0,
-    ACSCompositeAudioDeviceTypeHeadphones = 1,
-    ACSCompositeAudioDeviceTypeHeadset = 2,
-    ACSCompositeAudioDeviceTypeHandset = 3,
-    ACSCompositeAudioDeviceTypeSpeakerphone = 4
 };
 
 // MARK: Forward declarations.
@@ -183,11 +182,10 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 @class ACSStartCallOptions;
 @class ACSAddPhoneNumberOptions;
 @class ACSGroupCallContext;
-@class ACSSourceInfo;
 @class ACSCallAgent;
 @class ACSCall;
 @class ACSRemoteParticipant;
-@class ACSAcsError;
+@class ACSCallEndReason;
 @class ACSRemoteVideoStream;
 @class ACSPropertyChangedEventArgs;
 @class ACSRemoteVideoStreamsEventArgs;
@@ -202,7 +200,6 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 @class ACSAudioDevicesUpdatedEventArgs;
 @class ACSVideoDevicesUpdatedEventArgs;
 @class ACSRenderingOptions;
-@class ACSCompositeAudioDeviceInfo;
 @protocol ACSInternalTokenProviderDelegate;
 @protocol ACSCallAgentDelegate;
 @protocol ACSCallDelegate;
@@ -242,7 +239,6 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 @optional
 - (void)onParticipantStateChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
 - (void)onVideoStreamsUpdated:(ACSRemoteParticipant *)remoteParticipant :(ACSRemoteVideoStreamsEventArgs *)args;
-- (void)onScreenSharingStreamsUpdated:(ACSRemoteParticipant *)remoteParticipant :(ACSRemoteVideoStreamsEventArgs *)args;
 @end
 
 /**
@@ -254,14 +250,14 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 - (void)onVideoDevicesUpdated:(ACSDeviceManager *)deviceManager :(ACSVideoDevicesUpdatedEventArgs *)args;
 @end
 
-/// Video options in CallOptions
+/// Property bag class for Video Options. Use this class to set video options required during a call (start/accept/join)
 @interface ACSVideoOptions : NSObject
 -(instancetype)init:(ACSLocalVideoStream *)localVideoStream;
 
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
-/// Video device info which can be fetched from DeviceManager
+/// The video stream that is used to render the video on the UI surface
 @property (retain) ACSLocalVideoStream * localVideoStream;
 
 @end
@@ -273,10 +269,13 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// Video device to use as source for local video.
 @property (retain, readonly) ACSVideoDeviceInfo * source;
 
+/// Sets to True when the local video stream is being sent on a call.
 @property (readonly) BOOL isSending;
 
+/// Video stream type being used for the current stream.
 @property (readonly) ACSMediaStreamType mediaStreamType;
 
 // Class extension begins for LocalVideoStream.
@@ -304,6 +303,7 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 
 @end
 
+/// Internal Use Only. Should not be used publicly. Will be removed in the future.
 @interface ACSInternalTokenProvider : NSObject
 -(instancetype)init;
 
@@ -315,13 +315,15 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
  */
 @property(nonatomic, assign) id<ACSInternalTokenProviderDelegate> delegate;
 
--(void)setTokenWithToken:(NSString *)token accountIdentity:(NSString *)accountIdentity displayName:(NSString *)displayName;
+/// Exclusively for Internal. Do not use publicly. Will be removed in the future.
+-(void)setTokenWithToken:(NSString *)token accountIdentity:(NSString *)accountIdentity displayName:(NSString *)displayName resourceId:(NSString *)resourceId;
 
+/// Exclusively for Internal. Do not use publicly. Will be removed in the future.
 -(void)setError:(NSString *)error;
 
 @end
 
-/// Audio options provided when accepting an incoming call or making an outgoing call
+/// Property bag class for Audio Options. Use this class to set audio settings required during a call (start/join)
 @interface ACSAudioOptions : NSObject
 -(instancetype)init;
 
@@ -367,8 +369,10 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// Video options when starting a call
 @property (retain) ACSVideoOptions * videoOptions;
 
+/// Audio options when starting a call
 @property (retain) ACSAudioOptions * audioOptions;
 
 // Class extension begins for StartCallOptions.
@@ -392,29 +396,23 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 
 /// Options for joining a group call
 @interface ACSGroupCallContext : NSObject
--(instancetype)init:(NSString *)groupId;
-
-/// Deallocates the memory occupied by this object.
--(void)dealloc;
-
-@property (retain, readonly) NSString * groupId;
-
-@end
-
-@interface ACSSourceInfo : NSObject
 -(instancetype)init;
 
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+// Class extension begins for GroupCallContext.
+@property(nonatomic, nonnull) NSUUID* groupId;
+// Class extension ends for GroupCallContext.
+
 @end
 
-/// Call client created by the create factory method
+/// Call agent created by the CallClient factory method createCallAgent It bears the responsibility of managing calls on behalf of the authenticated user
 @interface ACSCallAgent : NSObject
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
-/// Get all the active calls.
+/// Returns the list of all active calls.
 @property (copy, readonly) NSArray<ACSCall *> * calls;
 
 /**
@@ -422,7 +420,7 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
  */
 @property(nonatomic, assign) id<ACSCallAgentDelegate> delegate;
 
-/// Join an call using GroupCallContext
+/// Join a call using GroupCallContext
 -(ACSCall *)joinWithGroupCallContext:(ACSGroupCallContext *)groupCallContext joinCallOptions:(ACSJoinCallOptions *)joinCallOptions;
 
 -(void)unRegisterPushNotificationsWithCompletionHandler:(void (^)(NSError *error))completionHandler;
@@ -441,7 +439,7 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
-/// Get a list of remote participants in this call.
+/// Get a list of remote participants in the current call.
 @property (copy, readonly) NSArray<ACSRemoteParticipant *> * remoteParticipants;
 
 /// Id of the call
@@ -450,15 +448,16 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 /// Current state of the call
 @property (readonly) ACSCallState state;
 
-/// Containing code/subcode indicating how call ended
-@property (retain, readonly) ACSAcsError * callEndReason;
+/// Containing code/subcode indicating how a call has ended
+@property (retain, readonly) ACSCallEndReason * callEndReason;
 
 /// True if the call is an incoming call
 @property (readonly) BOOL isIncoming;
 
-/// Whether this local microphone is muted.
+/// Whether the local microphone is muted or not.
 @property (readonly) BOOL isMicrophoneMuted;
 
+/// Get a list of local video streams in the current call.
 @property (copy, readonly) NSArray<ACSLocalVideoStream *> * localVideoStreams;
 
 /**
@@ -481,11 +480,13 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 /// Stop sharing video stream to the call
 -(void)stopVideo:(ACSLocalVideoStream *)stream withCompletionHandler:(void (^)(NSError *error))completionHandler;
 
-/// Hangup
+/// Hangup a call
 -(void)hangup:(ACSHangupOptions *)options withCompletionHandler:(void (^)(NSError *error))completionHandler;
 
+/// Remove a participant from a call
 -(void)removeParticipant:(ACSRemoteParticipant *)participant withCompletionHandler:(void (^)(NSError *error))completionHandler;
 
+/// Accept an incoming call
 -(void)accept:(ACSAcceptCallOptions *)options withCompletionHandler:(void (^)(NSError *error))completionHandler;
 
 /// Reject this incoming call
@@ -500,7 +501,7 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 
 @end
 
-/// Describes a remote participant
+/// Describes a remote participant on a call
 @interface ACSRemoteParticipant : NSObject
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
@@ -515,14 +516,13 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 @property (readonly) BOOL isSpeaking;
 
 /// Reason why participant left the call, contains code/subcode.
-@property (retain, readonly) ACSAcsError * callEndReason;
+@property (retain, readonly) ACSCallEndReason * callEndReason;
 
 /// Current state of the remote participant
 @property (readonly) ACSParticipantState state;
 
+/// Remote Video streams part of the current call
 @property (copy, readonly) NSArray<ACSRemoteVideoStream *> * videoStreams;
-
-@property (copy, readonly) NSArray<ACSRemoteVideoStream *> * screenSharingStreams;
 
 /**
  * The delegate that will handle events from the ACSRemoteParticipant.
@@ -535,8 +535,8 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 
 @end
 
-/// Describes the reason for a call end
-@interface ACSAcsError : NSObject
+/// Describes the reason for a call to end
+@interface ACSCallEndReason : NSObject
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
@@ -553,15 +553,19 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// True when remote video stream is available.
 @property (readonly) BOOL isAvailable;
 
+/// MediaStream type of the current remote video stream (Video or ScreenShare).
 @property (readonly) ACSMediaStreamType type;
 
+/// Unique Identifier of the current remote video stream.
 @property (readonly) int id;
 
 
 @end
 
+/// Describes a PropertyChanged event data
 @interface ACSPropertyChangedEventArgs : NSObject
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
@@ -573,42 +577,48 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// Remote video streams that have been added to the current call
 @property (copy, readonly) NSArray<ACSRemoteVideoStream *> * addedRemoteVideoStreams;
 
+/// Remote video streams that are no longer part of the current call
 @property (copy, readonly) NSArray<ACSRemoteVideoStream *> * removedRemoteVideoStreams;
 
 @end
 
-/// Describes a ParticipantsUpdated event
+/// Describes a ParticipantsUpdated event data
 @interface ACSParticipantsUpdatedEventArgs : NSObject
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
-/// Participants that were added
+/// List of Participants that were added
 @property (copy, readonly) NSArray<ACSRemoteParticipant *> * addedParticipants;
 
-/// Participants that were removed
+/// List of Participants that were removed
 @property (copy, readonly) NSArray<ACSRemoteParticipant *> * removedParticipants;
 
 @end
 
+/// Describes a LocalVideoStreamsUpdated event data
 @interface ACSLocalVideoStreamsUpdatedEventArgs : NSObject
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// List of LocalVideoStream that were added
 @property (copy, readonly) NSArray<ACSLocalVideoStream *> * addedStreams;
 
+/// List of LocalVideoStream that were removed
 @property (copy, readonly) NSArray<ACSLocalVideoStream *> * removedStreams;
 
 @end
 
-/// Hangup options
+/// Property bag class for hanging up a call
 @interface ACSHangupOptions : NSObject
 -(instancetype)init;
 
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// Use to determine whether the current call should be terminated for all participant on the call or not
 @property BOOL forEveryone;
 
 @end
@@ -626,6 +636,7 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 
 @end
 
+/// Property bag class as container for SDK initialization options.
 @interface ACSInitializationOptions : NSObject
 -(instancetype)init;
 
@@ -641,17 +652,19 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 /// Private Preview Only: Enable log encryption
 @property BOOL isEncrypted;
 
-/// Private Preview Only: Enable STDOUT logging
+/// Private Preview Only: Enable STDOUT logging. Disabled by default.
 @property BOOL stdoutLogging;
 
 @end
 
+/// This is the main class representing the entrypoint for the Calling SDK.
 @interface ACSCallClient : NSObject
 -(instancetype)init;
 
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// Gets a device manager object that can be used to enumerates audio and video devices available for calls.
 -(void)getDeviceManagerWithCompletionHandler:(void (^)(ACSDeviceManager * value, NSError *error))completionHandler;
 
 // Class extension begins for CallClient.
@@ -691,7 +704,7 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 -(void)setMicrophone:(ACSAudioDeviceInfo *)microphoneDevice;
 
 /// Set the speakers to be used for all active calls
--(void)setSpeakers:(ACSAudioDeviceInfo *)speakersDevice;
+-(void)setSpeaker:(ACSAudioDeviceInfo *)speakerDevice;
 
 @end
 
@@ -714,50 +727,41 @@ typedef NS_ENUM(NSInteger, ACSCompositeAudioDeviceType)
 
 @end
 
-/// Audio devices added or removed
+/// Describes a AudioDevicesUpdated event data
 @interface ACSAudioDevicesUpdatedEventArgs : NSObject
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// List of AudioDevices that were added
 @property (copy, readonly) NSArray<ACSAudioDeviceInfo *> * addedAudioDevices;
 
+/// List of AudioDevices that were removed
 @property (copy, readonly) NSArray<ACSAudioDeviceInfo *> * removedAudioDevices;
 
 @end
 
-/// Video devices added or removed
+/// Describes a VideoDevicesUpdated event data
 @interface ACSVideoDevicesUpdatedEventArgs : NSObject
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// Video devicesRemote video streams that have been added to the current call
 @property (copy, readonly) NSArray<ACSVideoDeviceInfo *> * addedVideoDevices;
 
+/// Remote video streams that have been added to the current call
 @property (copy, readonly) NSArray<ACSVideoDeviceInfo *> * removedVideoDevices;
 
 @end
 
+/// Options to be passed when rendering a Video
 @interface ACSRenderingOptions : NSObject
 -(instancetype)init:(ACSScalingMode)scalingMode;
 
 /// Deallocates the memory occupied by this object.
 -(void)dealloc;
 
+/// Scaling mode for rendering the video.
 @property ACSScalingMode scalingMode;
-
-@end
-
-/// Composite audio device info (NOT_SUPPORTED)
-@interface ACSCompositeAudioDeviceInfo : NSObject
-/// Deallocates the memory occupied by this object.
--(void)dealloc;
-
-@property (retain, readonly) ACSAudioDeviceInfo * microphone;
-
-@property (retain, readonly) ACSAudioDeviceInfo * speakers;
-
-@property (readonly) BOOL isPcInternalDevice;
-
-@property (readonly) ACSCompositeAudioDeviceType compositeAudioDeviceType;
 
 @end
 

@@ -12,7 +12,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		NoVideoPermission = 0x2,
 		NoAudioAndVideoPermission = 0x3,
 		ReceivedInvalidPNPayload = 0x4,
-		FailedToProcessPNPayload = 0x8
+		FailedToProcessPNPayload = 0x8,
+		InvalidGuidGroupId = 0x10
 	}
 
 	[Native]
@@ -104,15 +105,5 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	{
 		Crop = 1,
 		Fit = 2
-	}
-
-	[Native]
-	public enum ACSCompositeAudioDeviceType : long
-	{
-		Speakers = 0,
-		Headphones = 1,
-		Headset = 2,
-		Handset = 3,
-		Speakerphone = 4
 	}
 }
