@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace AzureCommunicationVideoTest
 {
     public interface IVideoCalling
     {
         public Task<bool> Init(string token);
-        public void JoinGroup(Guid groupID);
+        public View JoinGroup(Guid groupID);
         public void CallEchoService();
     }
 }

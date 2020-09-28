@@ -14,16 +14,13 @@ namespace AzureCommunicationVideoTest
 
         }
 
-        /*
-        JsonSerializerOptions options = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        };
-        */
-
         private const string ApiUrl = "api/";
-        private const string Ip = "192.168.3.241";
-        //private const string Ip = "10.184.34.26";
+
+        // Home
+        //private const string Ip = "192.168.3.241";
+
+        // Work
+        private const string Ip = "10.184.34.26";
         private static readonly string Server = $"https://{Ip}:5001/";
         
         private JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings

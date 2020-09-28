@@ -6,5 +6,8 @@
         </Frame>
         <Button x:Name="CallEchoButton" Text="Call echo service" HorizontalOptions="Center"/>
         <Button x:Name="CallGroupButton" Text="Call group" HorizontalOptions="Center"/>
-    </StackLayout>
+         <ContentView x:Name="VideoContainer"
+                      VerticalOptions="FillAndExpand"
+                      HorizontalOptions="FillAndExpand"/>
+     </StackLayout>
 </ContentPage>

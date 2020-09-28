@@ -55,7 +55,8 @@ namespace AzureCommunicationVideoTest
 
             var videoCalling = Xamarin.Forms.DependencyService.Get<IVideoCalling>();
             await videoCalling.Init(token.Token);
-            videoCalling.JoinGroup(new Guid("8833bec5-3ec0-41db-8657-c55626b5ee71"));
+            var videoRenderer = videoCalling.JoinGroup(new Guid("8833bec5-3ec0-41db-8657-c55626b5ee71"));
+            VideoContainer.Content = videoRenderer;
         }
     }
 }

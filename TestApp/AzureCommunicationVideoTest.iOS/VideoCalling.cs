@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using Xamarin.AzureCommunicationCalling.iOS;
 using System.Linq;
 using AzureCommunicationVideoTest.iOS.ACS;
+using Xamarin.Forms.Platform.iOS;
 
 [assembly: Dependency(typeof(AzureCommunicationVideoTest.iOS.VideoCalling))]
 namespace AzureCommunicationVideoTest.iOS
@@ -72,7 +73,7 @@ namespace AzureCommunicationVideoTest.iOS
         }
 
 
-        public void JoinGroup(Guid groupID)
+        public View JoinGroup(Guid groupID)
         {
             //Log.Debug($"Starting group call: {groupID}");
             var groupCallContext = new ACSGroupCallContext();
@@ -80,16 +81,20 @@ namespace AzureCommunicationVideoTest.iOS
             var callOptions = new ACSJoinCallOptions();
 
             var camera = _deviceManager.CameraList.FirstOrDefault(c => c.CameraFacing == ACSCameraFacing.Front);
-            
+
             callOptions.AudioOptions = new ACSAudioOptions();
-            
+
             //callOptions.AudioOptions.Muted = true;
             var localVideoStream = new ACSLocalVideoStream(camera);
             callOptions.VideoOptions = new ACSVideoOptions(localVideoStream);
-
+            var renderer = new ACSRenderer(localVideoStream);
+            var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
+            var view = renderer.CreateView(renderingOptions);
             _call = _callAgent.JoinWithGroupCallContext(groupCallContext, callOptions);
             //_call.StartVideo(localVideoStream, OnVideoStarted);
             //Log.Debug($"Started group call: {groupID}");
+
+            return new ContentView { Content = view.ToView() };
         }
 
         void OnVideoStarted(NSError error)
