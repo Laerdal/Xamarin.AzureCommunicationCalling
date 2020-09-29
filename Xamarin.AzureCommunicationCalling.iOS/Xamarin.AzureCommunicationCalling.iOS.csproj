@@ -63,5 +63,12 @@
        <SmartLink>False</SmartLink>
      </NativeReference>
    </ItemGroup>
+   <ItemGroup>
+     <ProjectReference Include="..\Xamarin.AzureCommunicationCalling\Xamarin.AzureCommunicationCalling.csproj">
+       <Project>{9DD7476C-571B-4C2C-B9BF-27C3227882EC}</Project>
+       <Name>Xamarin.AzureCommunicationCalling</Name>
+       <ReferenceSourceTarget></ReferenceSourceTarget>
+     </ProjectReference>
+   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
 </Project>

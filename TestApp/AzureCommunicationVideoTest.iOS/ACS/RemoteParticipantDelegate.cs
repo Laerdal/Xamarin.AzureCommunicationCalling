@@ -1,22 +1,31 @@
-﻿using System;
-using Xamarin.AzureCommunicationCalling.iOS;
+﻿using Xamarin.AzureCommunicationCalling.iOS;
 
 namespace AzureCommunicationVideoTest.iOS.ACS
 {
     public class RemoteParticipantDelegate : ACSRemoteParticipantDelegate
     {
-        public RemoteParticipantDelegate()
+        private readonly VideoCallbackManager _videoCallbackManager;
+        //private List<ACSRemoteVideoStream> _remoteVideoStreams = new List<ACSRemoteVideoStream>();
+
+        public RemoteParticipantDelegate(VideoCallbackManager videoCallbackManager)
         {
+            _videoCallbackManager = videoCallbackManager;
+        }
+
+        public override void OnParticipantStateChanged(ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args)
+        {
+            
         }
 
         public override void OnVideoStreamsUpdated(ACSRemoteParticipant remoteParticipant, ACSRemoteVideoStreamsEventArgs args)
         {
-            base.OnVideoStreamsUpdated(remoteParticipant, args);
-            
             foreach (var videoStream in args.AddedRemoteVideoStreams)
             {
-                var renderer = new ACSRenderer(videoStream);
-                //renderer.
+                if (videoStream.IsAvailable)
+                {
+                    _videoCallbackManager.RemoteVideoStreamAdded?.Invoke(videoStream);
+                }
+                //_remoteVideoStreams.Add(videoStream);
             }
         }
     }

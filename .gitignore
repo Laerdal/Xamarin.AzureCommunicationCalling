@@ -1,6 +1,7 @@
 .vs/
 .idea/
 **/wwwroot/dist/
+*.nupkg
 
 ## Xamarin stuff
 Components
