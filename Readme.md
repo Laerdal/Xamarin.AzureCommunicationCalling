@@ -1,5 +1,5 @@
-iOS binding library for project spool
-=====================================
+iOS binding library for Azure Communication Services
+====================================================
 
 Use this library to make spool calls(AzureCommunicationCalling).
 
