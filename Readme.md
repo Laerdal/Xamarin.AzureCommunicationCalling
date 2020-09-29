@@ -10,4 +10,4 @@ https://docs.github.com/en/github/managing-large-files/installing-git-large-file
 
 See the sample forms app for usage. You need to implement the rest service providing the ACS token, afterwards the app should look like this:
 
-![alt "Test app"](testapp.png "Test app")
+![alt "Test app"](testapp.jpg "Test app")
