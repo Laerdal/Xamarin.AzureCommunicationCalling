@@ -67,8 +67,8 @@
     <Compile Include="ACS\CallAgentDelegate.cs" />
     <Compile Include="ACS\CallDelegate.cs" />
     <Compile Include="ACS\RemoteParticipantDelegate.cs" />
-    <Compile Include="ACS\VideoCallbackManager.cs" />
-    <Compile Include="ACS\VideoCallManager.cs" />
+    <Compile Include="ACS\CallingCallbackManager.cs" />
+    <Compile Include="ACS\CallingManager.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />

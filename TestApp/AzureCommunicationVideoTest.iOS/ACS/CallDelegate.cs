@@ -7,10 +7,10 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 {
     public class CallDelegate : ACSCallDelegate
     {
-        private VideoCallbackManager _videoCallbackManager;
+        private CallingCallbackManager _videoCallbackManager;
         private List<ACSRemoteParticipant> _remoteParticipants = new List<ACSRemoteParticipant>();
 
-        public CallDelegate(VideoCallbackManager videoCallbackManager)
+        public CallDelegate(CallingCallbackManager videoCallbackManager)
         {
             _videoCallbackManager = videoCallbackManager;
         }

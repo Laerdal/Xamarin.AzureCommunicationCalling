@@ -5,9 +5,9 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 {
     public class CallAgentDelegate : ACSCallAgentDelegate
     {
-        private readonly VideoCallbackManager _videoCallbackManager;
+        private readonly CallingCallbackManager _videoCallbackManager;
 
-        public CallAgentDelegate(VideoCallbackManager videoCallbackManager)
+        public CallAgentDelegate(CallingCallbackManager videoCallbackManager)
         {
             _videoCallbackManager = videoCallbackManager;
         }

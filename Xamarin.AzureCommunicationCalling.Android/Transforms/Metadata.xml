@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <!--
+  This sample removes the class: android.support.v4.content.AsyncTaskLoader.LoadTask:
+  <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='AsyncTaskLoader.LoadTask']" />
+  
+  This sample removes the method: android.support.v4.content.CursorLoader.loadInBackground:
+  <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='CursorLoader']/method[@name='loadInBackground']" />
+  -->
+    <!--
+
+    
+    <add-node path="/api/package[@name='com.skype.android.video.hw.codec.encoder.camera.gl']/class[@name='AbstractRenderingTarget']">
+        <method name="context" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">           
+        </method>            
+    </add-node>
+
+    <remove-node path="/api/package[@name='com.skype.android.video.hw.extension.decoder']/class[@name='VideoSampleDecoderExtension.Factory']" />
+    <remove-node path="/api/package[@name='com.skype.android.video.hw.format']/interface[@name='SliqOmxMapping']/method[@name='getOmxValue' and count(parameter)=0]" />
+    <remove-node path="/api/package[@name='Com.Skype.Android.Video.HW.Format.ISliqOmxMapping.OmxValue']/class" />
+    <remove-node path="/api/package[@name='Com.Skype.Android.Video.HW.Format.ISliqOmxMapping.SliqValue']/class" />
+
+
+                -->
+
+    
+    <remove-node path="/api/package[@name='com.microsoft.dl.video.capture']/class[@name='CapturerConfiguration']/method[@name='getTransformationOptions' and count(parameter)=0]" />
+    <remove-node path="/api/package[@name='com.skype.android.video.hw.codec.encoder.camera.gl']/class[@name='AbstractRenderingTarget']/field[@name='context']"/>
+    <remove-node path="/api/package[@name='com.skype.android.video.hw.format']/interface[@name='SliqOmxMapping']/*"/>
+    <remove-node path="/api/package[@name='com.skype.android.video.hw.extension.decoder']/*"/>
+    <remove-node path="/api/package[@name='com.skype.android.video.hw.extension.encoder']/*"/>
+    <remove-node path="/api/package[@name='com.skype.android.jipc.omx.inout']/*"/>
+    
+    <add-node path="/api/package[@name='com.microsoft.dl.video.capture.impl']/class[@name='FpsRangeComparator']">
+        <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+            <parameter name="p0" type="java.lang.Object" />
+        </method>
+    </add-node>
+    <add-node path="/api/package[@name='com.microsoft.dl.video.capture.api']/class[@name='FpsRange']">
+        <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+            <parameter name="p0" type="java.lang.Object" />
+        </method>
+    </add-node>
+    <add-node path="/api/package[@name='com.skype.android.video.hw.format']/class[@name='Resolution']">
+        <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+            <parameter name="p0" type="java.lang.Object" />
+        </method>
+    </add-node>
+    <add-node path="/api/package[@name='com.microsoft.dl.video.capture.impl']/class[@name='FpsRangeComparator']">
+        <method name="compare" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+            <parameter name="p0" type="java.lang.Object" />
+            <parameter name="p1" type="java.lang.Object" />
+        </method>
+    </add-node>
+    <add-node path="/api/package[@name='com.microsoft.dl.video.utils']/class[@name='Resolution']">
+        <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+            <parameter name="p0" type="java.lang.Object" />
+        </method>
+    </add-node>
+    
+    
+    <attr path="/api/package[@name='com.azure.communication.calling']/class[@name='Renderer']" 
+    name="name">RendererClass</attr>    
+
+</metadata>
