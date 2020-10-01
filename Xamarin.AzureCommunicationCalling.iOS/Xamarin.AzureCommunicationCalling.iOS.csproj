@@ -50,16 +50,14 @@
      <NativeReference Include="NativeSDK\AzureCommunicationCalling.framework">
        <Kind>Framework</Kind>
        <SmartLink>False</SmartLink>
-       <ForceLoad>True</ForceLoad>
-     </NativeReference>
-     <NativeReference Include="NativeSDK\AzureCore.framework">
-       <Kind>Framework</Kind>
-       <SmartLink>False</SmartLink>
-       <ForceLoad>True</ForceLoad>
      </NativeReference>
      <NativeReference Include="NativeSDK\AzureCommunication.framework">
        <Kind>Framework</Kind>
-       <ForceLoad>True</ForceLoad>
+       <SmartLink>False</SmartLink>
+       <Frameworks></Frameworks>
+     </NativeReference>
+     <NativeReference Include="NativeSDK\AzureCore.framework">
+       <Kind>Framework</Kind>
        <SmartLink>False</SmartLink>
      </NativeReference>
    </ItemGroup>
