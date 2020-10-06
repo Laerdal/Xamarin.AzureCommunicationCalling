@@ -1,0 +1,6 @@
+framework module AzureCommunicationCalling {
+  umbrella header "AzureCommunicationCalling.h"
+
+  export *
+  module * { export * }
+}

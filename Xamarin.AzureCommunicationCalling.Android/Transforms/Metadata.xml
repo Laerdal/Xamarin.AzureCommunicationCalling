@@ -21,7 +21,7 @@
     <remove-node path="/api/package[@name='Com.Skype.Android.Video.HW.Format.ISliqOmxMapping.SliqValue']/class" />
 
 
-                -->
+                            -->
 
     
     <remove-node path="/api/package[@name='com.microsoft.dl.video.capture']/class[@name='CapturerConfiguration']/method[@name='getTransformationOptions' and count(parameter)=0]" />
@@ -57,8 +57,7 @@
             <parameter name="p0" type="java.lang.Object" />
         </method>
     </add-node>
-    
-    
+                            
     <attr path="/api/package[@name='com.azure.communication.calling']/class[@name='Renderer']" 
     name="name">RendererClass</attr>    
 

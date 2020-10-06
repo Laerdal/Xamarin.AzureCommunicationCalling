@@ -58,6 +58,11 @@
     <PackageReference Include="Xamarin.AndroidX.Migration">
       <Version>1.0.7.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.3.0.2-alpha03" />
+    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.3-alpha01" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.1.0.5-rc3" />
+    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.5" />        
+        
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -93,6 +98,10 @@
     <Folder Include="ACS\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Xamarin.AzureCommunicationCommon.Android\Xamarin.AzureCommunicationCommon.Android.csproj">
+      <Project>{4761749a-fbbb-46d6-bd39-f07def36e923}</Project>
+      <Name>Xamarin.AzureCommunicationCommon.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AzureCommunicationVideoTest\AzureCommunicationVideoTest.csproj">
       <Project>{DD287FD7-2A1B-4EB6-BAF6-FAE6E9558AE3}</Project>
       <Name>AzureCommunicationVideoTest</Name>
