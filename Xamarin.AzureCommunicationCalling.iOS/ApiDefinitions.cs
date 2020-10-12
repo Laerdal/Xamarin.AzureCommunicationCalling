@@ -261,6 +261,15 @@ namespace Xamarin.AzureCommunicationCalling.iOS
         [Export("onParticipantStateChanged::")]
         void OnParticipantStateChanged(ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args);
 
+		// @optional -(void)onIsMutedChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
+		[Export ("onIsMutedChanged::")]
+		void OnIsMutedChanged (ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onIsSpeakingChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
+		[Export ("onIsSpeakingChanged::")]
+		void OnIsSpeakingChanged (ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args);
+        
+
         // @optional -(void)onVideoStreamsUpdated:(ACSRemoteParticipant *)remoteParticipant :(ACSRemoteVideoStreamsEventArgs *)args;
         [Abstract]
         [Export("onVideoStreamsUpdated::")]

@@ -26,7 +26,9 @@ typedef NS_OPTIONS(NSInteger, ACSCommunicationErrors)
     /// Recieved empty/invalid notification payload.
     ACSCommunicationErrorsFailedToProcessPNPayload = 8,
     /// Recieved invalid group Id.
-    ACSCommunicationErrorsInvalidGuidGroupId = 16
+    ACSCommunicationErrorsInvalidGuidGroupId = 16,
+    /// Push notification device registration token is invalid.
+    ACSCommunicationErrorsInvalidPNDeviceRegistrationToken = 32
 };
 
 /// Direction of the camera
@@ -238,6 +240,8 @@ typedef NS_ENUM(NSInteger, ACSScalingMode)
 @protocol ACSRemoteParticipantDelegate <NSObject>
 @optional
 - (void)onParticipantStateChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
+- (void)onIsMutedChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
+- (void)onIsSpeakingChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
 - (void)onVideoStreamsUpdated:(ACSRemoteParticipant *)remoteParticipant :(ACSRemoteVideoStreamsEventArgs *)args;
 @end
 
