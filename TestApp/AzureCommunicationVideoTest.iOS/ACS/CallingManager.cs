@@ -30,7 +30,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         {
             _remoteVideoStreams.Add(remoteVideoStream);
             var renderer = new ACSRenderer(remoteVideoStream);
-            var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Fit);
+            var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
             var nativeView = renderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
             RemoteVideoAdded?.Invoke(this, formsView);
@@ -112,7 +112,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
                 .CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);
             _localVideoStream = new ACSLocalVideoStream(camera);
             var renderer = new ACSRenderer(_localVideoStream);
-            var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Fit);
+            var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
             var nativeView = renderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
             

@@ -66,9 +66,13 @@
     <PackageReference Include="Xamarin.Android.JakeWharton.ThreeTenAbp">
       <Version>1.2.4</Version>
     </PackageReference>
-    <PackageReference Include="Jackson.Core">
-      <Version>2.7.4.1</Version>
-    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedReferenceJar Include="Jars\jackson-module-jaxb-annotations-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-dataformat-xml-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-databind-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-core-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-annotations-2.11.3.jar" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

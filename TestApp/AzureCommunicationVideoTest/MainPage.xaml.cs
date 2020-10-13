@@ -21,9 +21,9 @@ namespace AzureCommunicationVideoTest
             GetTokenButton.Clicked += GetTokenButtonOnClicked;
             HangupButton.Clicked += HangupButton_Clicked;
             _callingManager = DependencyService.Get<IACSCallingManager>();
-            _callingManager.LocalVideoAdded += delegate(object sender, View view) { LocalVideoView.Content = view; };
+            _callingManager.LocalVideoAdded += delegate(object sender, View view) { Device.BeginInvokeOnMainThread(() => LocalVideoView.Content = view); };
             // TODO: if you wanna support multiple remotes, show them in stacklayout or similar
-            _callingManager.RemoteVideoAdded += delegate(object sender, View view) { RemoteVideoView.Content = view; };
+            _callingManager.RemoteVideoAdded += delegate (object sender, View view) { Device.BeginInvokeOnMainThread(() => RemoteVideoView.Content = view); };
         }
 
         private void HangupButton_Clicked(object sender, EventArgs e)

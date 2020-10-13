@@ -110,6 +110,10 @@
       <Project>{9A469670-123D-43DC-873C-3D71FD3581BF}</Project>
       <Name>Xamarin.AzureCommunicationCalling.Android</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.AzureCore.Android\Xamarin.AzureCore.Android.csproj">
+      <Project>{A684B6CB-CD3B-4035-BD0B-A12A6536E059}</Project>
+      <Name>Xamarin.AzureCore.Android</Name>
+    </ProjectReference>
   </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

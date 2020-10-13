@@ -1,9 +1,9 @@
-iOS binding library for Azure Communication Services
-====================================================
+iOS and Android binding library for Azure Communication Services
+================================================================
 
 Use this library to make spool calls(AzureCommunicationCalling).
 
-The native package is so big(120MB) that github wont accept it in a regular repo,
+The native package for iOS is so big(>100MB) that github wont accept it in a regular repo,
 so you need to install LFS to get all the files:
 
 https://docs.github.com/en/github/managing-large-files/installing-git-large-file-storage

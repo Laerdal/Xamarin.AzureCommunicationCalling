@@ -47,16 +47,15 @@ namespace AzureCommunicationVideoTest.Droid.ACS
             joinCallOptions.AudioOptions = new AudioOptions();
             var camera = _deviceManager.CameraList.First(c => c.CameraFacing == CameraFacing.Front);
             _localVideoStream = new LocalVideoStream(camera, Application.Context);
-
-            var renderer = new RendererClass(_localVideoStream, Application.Context);
-            var renderingOptions = new RenderingOptions(ScalingMode.Fit);
+            var renderer = new Renderer(_localVideoStream, Application.Context);
+            var renderingOptions = new RenderingOptions(ScalingMode.Crop);
             var nativeView = renderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
             LocalVideoAdded?.Invoke(this, formsView);
 
             joinCallOptions.VideoOptions = new VideoOptions(_localVideoStream);
             _call = _callAgent.Join(Application.Context, groupCallContext, joinCallOptions);
-            _call.RemoteParticipantsUpdated += _call_RemoteParticipantsUpdated;
+            _call.RemoteParticipantsUpdated += _call_RemoteParticipantsUpdated;            
         }
 
         private void _call_RemoteParticipantsUpdated(object sender, ParticipantsUpdatedEventArgs e)
@@ -64,6 +63,11 @@ namespace AzureCommunicationVideoTest.Droid.ACS
             foreach (var p in e.P0.AddedParticipants)
             {
                 p.VideoStreamsUpdated += RemoteVideoStreamsUpdated;
+
+                foreach (var v in p.VideoStreams)
+                {
+                    if (v.IsAvailable) PublishRemoteVideoStream(v);
+                }
             }
         }
 
@@ -71,16 +75,18 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         {
             foreach (var v in e.P0.AddedRemoteVideoStreams)
             {
-                if (v.IsAvailable)
-                {
-                    _remoteVideoStreams.Add(v);
-                    var renderer = new RendererClass(v, Application.Context);
-                    var renderingOptions = new RenderingOptions(ScalingMode.Fit);
-                    var nativeView = renderer.CreateView(renderingOptions);
-                    var formsView = nativeView.ToView();
-                    RemoteVideoAdded?.Invoke(this, formsView);
-                }
+                if (v.IsAvailable) PublishRemoteVideoStream(v);
             }
+        }
+
+        private void PublishRemoteVideoStream(RemoteVideoStream v)
+        {
+            _remoteVideoStreams.Add(v);
+            var renderer = new Renderer(v, Application.Context);
+            var renderingOptions = new RenderingOptions(ScalingMode.Crop);
+            var nativeView = renderer.CreateView(renderingOptions);
+            var formsView = nativeView.ToView();
+            RemoteVideoAdded?.Invoke(this, formsView);
         }
 
         public void Hangup()

@@ -54,9 +54,6 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\azure-core-1.0.0-beta.1.aar" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common">
       <Version>2.2.0.3</Version>
     </PackageReference>
@@ -72,6 +69,16 @@
     <PackageReference Include="Square.Retrofit2">
       <Version>2.7.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedReferenceJar Include="Jars\jackson-module-jaxb-annotations-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-dataformat-xml-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-databind-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-core-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-annotations-2.11.3.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryProjectZip Include="Jars\azure-core-1.0.0-beta.2.aar" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -57,8 +57,10 @@
             <parameter name="p0" type="java.lang.Object" />
         </method>
     </add-node>
-                            
-    <attr path="/api/package[@name='com.azure.communication.calling']/class[@name='Renderer']" 
-    name="name">RendererClass</attr>    
-
+             
+    <attr path="/api/package[@name='com.azure.communication.calling']/class[@name='Renderer']/method[@name='addRendererListener']" name="name">AddRenderer</attr>
+    
+<!--    
+    <attr path="/api/package[@name='com.azure.communication.calling']/class[@name='Renderer']/event[@name='Renderer']" name="name">RendererEvent</attr>    
+    -->
 </metadata>
