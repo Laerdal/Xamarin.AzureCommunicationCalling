@@ -1,5 +1,8 @@
 When updating to new version:
 
+iOS:
+====
+
 Extract all deps, and make sure header files points to deps correctly, then run this sharpie command:
 Make sure you have latest sharpie version.
 Latest is NOT what is shown at ms docs.. docs say 3.4,
@@ -12,3 +15,14 @@ Edit generated files to fix namesapce, and any "Verify".
 Also, remove the generated nested Action\<Action\< attribute (constructor), which mono doesnt like
 
 Then copy files into binding lib
+
+Android:
+========
+
+Download latest version of all three aar lib:
+
+    AzureCommunicationCalling, AzureCommunicationCommon and AzureCore
+
+Since each binding lib can only hold one aar, we need 3 binding libs :(
+Copy into these, and check if deps have changed(update/add changed/new jars)
+

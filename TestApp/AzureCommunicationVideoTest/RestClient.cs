@@ -14,13 +14,6 @@ namespace AzureCommunicationVideoTest
 
         }
 
-        /*
-        JsonSerializerOptions options = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        };
-        */
-
         private const string ApiUrl = "api/";
         //private const string Ip = "192.168.3.241";
         private const string Ip = "10.184.34.26";
@@ -39,23 +32,15 @@ namespace AzureCommunicationVideoTest
         public async Task<AzureCommunicationToken> GetToken(string userId)
         {
             var url = $"{Server}{ApiUrl}token?userId={HttpUtility.UrlEncode(userId)}";
-            try
-            {
-                HttpClientHandler clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
-                using var wc = new HttpClient(clientHandler);
-                var message = new HttpRequestMessage(HttpMethod.Get, url);
+            using var wc = new HttpClient(clientHandler);
+            var message = new HttpRequestMessage(HttpMethod.Get, url);
 
-                var response = await wc.SendAsync(message);
-                var body = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<AzureCommunicationToken>(body, _jsonSerializerSettings);
-            }
-            catch (Exception e)
-            {
-                //Log.Error("Failed to call azure api: " + url, e, "CAMWW2");
-                throw;
-            }
+            var response = await wc.SendAsync(message);
+            var body = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<AzureCommunicationToken>(body, _jsonSerializerSettings);
         }
 
         public class AzureCommunicationToken

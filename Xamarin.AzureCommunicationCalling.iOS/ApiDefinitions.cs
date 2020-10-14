@@ -33,7 +33,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
         [Export("identifier")] string Identifier { get; }
 
         // -(NSString * _Nonnull)getId __attribute__((warn_unused_result("")));
-        [Export("getId")] string Id { get; }
+        //[Export("getId")] string Id { get; }
 
         // -(instancetype _Nonnull)initWithIdentifier:(NSString * _Nonnull)identifier __attribute__((objc_designated_initializer));
         [Export("initWithIdentifier:")]
@@ -145,8 +145,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
         void UpdateScalingMode(ACSScalingMode scalingMode);
 
         // -(void)dispose;
-        [Export("dispose")]
-        void Dispose();
+        //[Export("dispose")]
+        //void Dispose();
 
         // -(_Bool)isRendering;
         [Export("isRendering")] bool IsRendering { get; }
@@ -195,8 +195,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
         ACSRendererView CreateView(ACSRenderingOptions options);
 
         // -(void)dispose;
-        [Export("dispose")]
-        void Dispose();
+        //[Export("dispose")]
+        //void Dispose();
 
         // @property (readonly) ACSStreamSize * _Nonnull size;
         [Export("size")] ACSStreamSize Size { get; }
