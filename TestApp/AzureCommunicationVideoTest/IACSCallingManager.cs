@@ -7,7 +7,7 @@ namespace AzureCommunicationVideoTest
     public interface IACSCallingManager
     {
         Task<bool> Init(string token);
-        void JoinGroup(Guid groupID);
+        Task JoinGroup(Guid groupID);
         void Hangup();
         void CallEchoService();
         event EventHandler<View> LocalVideoAdded;

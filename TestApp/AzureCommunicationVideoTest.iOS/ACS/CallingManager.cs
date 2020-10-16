@@ -17,6 +17,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         private ACSCallAgent _callAgent;
         private ACSCall _call;
         private ACSLocalVideoStream _localVideoStream;
+        private ACSRenderer _localVideoStreamRenderer;
         private readonly CallingCallbackManager _videoCallbackManager;
         private readonly List<ACSRemoteVideoStream> _remoteVideoStreams;
 
@@ -79,7 +80,6 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         {
             var callOptions = new ACSStartCallOptions();
             var camera = _deviceManager.CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);
-
             callOptions.AudioOptions = new ACSAudioOptions();
 
             //callOptions.AudioOptions.Muted = true;
@@ -106,29 +106,28 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         }
 
 
-        public void JoinGroup(Guid groupID)
+        public async Task JoinGroup(Guid groupID)
         {
             var camera = _deviceManager
-                .CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);
+                .CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);            
             _localVideoStream = new ACSLocalVideoStream(camera);
-            var renderer = new ACSRenderer(_localVideoStream);
+            _localVideoStreamRenderer = new ACSRenderer(_localVideoStream);
             var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
-            var nativeView = renderer.CreateView(renderingOptions);
+            var nativeView = _localVideoStreamRenderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
-            
+
             LocalVideoAdded?.Invoke(this, formsView);
-            
+
             var groupCallContext = new ACSGroupCallContext {GroupId = new NSUuid(groupID.ToString())};
             var callOptions = new ACSJoinCallOptions
             {
                 AudioOptions = new ACSAudioOptions(), 
                 VideoOptions = new ACSVideoOptions(_localVideoStream)
             };
-            
             //callOptions.AudioOptions.Muted = true;
             _call = _callAgent.JoinWithGroupCallContext(groupCallContext, callOptions);
             _call.Delegate = new CallDelegate(_videoCallbackManager);
-            var r = _call.RemoteParticipants;
+
             _call.StartVideo(_localVideoStream, OnVideoStarted);
         }
 
@@ -141,6 +140,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         {
             _call?.Hangup(new ACSHangupOptions(), OnVideoHangup);
             _localVideoStream?.Dispose();
+            _localVideoStreamRenderer?.Dispose();
             _localVideoStream = null;
             _remoteVideoStreams.Clear();
         }

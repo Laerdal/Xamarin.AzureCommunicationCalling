@@ -1,19 +1,19 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureCommunicationVideoTest.Android", "AzureCommunicationVideoTest.Android\AzureCommunicationVideoTest.Android.csproj", "{98A9EBDC-5E53-49BC-ADB6-D575AF9CD138}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureCommunicationVideoTest.Android", "TestApp/AzureCommunicationVideoTest.Android\AzureCommunicationVideoTest.Android.csproj", "{98A9EBDC-5E53-49BC-ADB6-D575AF9CD138}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureCommunicationVideoTest.iOS", "AzureCommunicationVideoTest.iOS\AzureCommunicationVideoTest.iOS.csproj", "{B5C45339-AFB6-4143-8399-373141C5E655}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureCommunicationVideoTest.iOS", "TestApp/AzureCommunicationVideoTest.iOS\AzureCommunicationVideoTest.iOS.csproj", "{B5C45339-AFB6-4143-8399-373141C5E655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureCommunicationVideoTest", "AzureCommunicationVideoTest\AzureCommunicationVideoTest.csproj", "{DD287FD7-2A1B-4EB6-BAF6-FAE6E9558AE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureCommunicationVideoTest", "TestApp/AzureCommunicationVideoTest\AzureCommunicationVideoTest.csproj", "{DD287FD7-2A1B-4EB6-BAF6-FAE6E9558AE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCalling.iOS", "..\Xamarin.AzureCommunicationCalling.iOS\Xamarin.AzureCommunicationCalling.iOS.csproj", "{544B7985-D16B-4E42-88C7-63CCCCDB31E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCalling.iOS", "Xamarin.AzureCommunicationCalling.iOS\Xamarin.AzureCommunicationCalling.iOS.csproj", "{544B7985-D16B-4E42-88C7-63CCCCDB31E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCalling.Android", "..\Xamarin.AzureCommunicationCalling.Android\Xamarin.AzureCommunicationCalling.Android.csproj", "{9A469670-123D-43DC-873C-3D71FD3581BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCalling.Android", "Xamarin.AzureCommunicationCalling.Android\Xamarin.AzureCommunicationCalling.Android.csproj", "{9A469670-123D-43DC-873C-3D71FD3581BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCore.Android", "..\Xamarin.AzureCore.Android\Xamarin.AzureCore.Android.csproj", "{A684B6CB-CD3B-4035-BD0B-A12A6536E059}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCore.Android", "Xamarin.AzureCore.Android\Xamarin.AzureCore.Android.csproj", "{A684B6CB-CD3B-4035-BD0B-A12A6536E059}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCommon.Android", "..\Xamarin.AzureCommunicationCommon.Android\Xamarin.AzureCommunicationCommon.Android.csproj", "{4761749A-FBBB-46D6-BD39-F07DEF36E923}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCommon.Android", "Xamarin.AzureCommunicationCommon.Android\Xamarin.AzureCommunicationCommon.Android.csproj", "{4761749A-FBBB-46D6-BD39-F07DEF36E923}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

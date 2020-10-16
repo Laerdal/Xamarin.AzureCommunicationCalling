@@ -40,7 +40,7 @@ namespace AzureCommunicationVideoTest.Droid.ACS
             return true;
         }
 
-        public void JoinGroup(Guid groupID)
+        public Task JoinGroup(Guid groupID)
         {
             var groupCallContext = new GroupCallContext(UUID.FromString(groupID.ToString()));
             var joinCallOptions = new JoinCallOptions();
@@ -55,7 +55,8 @@ namespace AzureCommunicationVideoTest.Droid.ACS
 
             joinCallOptions.VideoOptions = new VideoOptions(_localVideoStream);
             _call = _callAgent.Join(Application.Context, groupCallContext, joinCallOptions);
-            _call.RemoteParticipantsUpdated += _call_RemoteParticipantsUpdated;            
+            _call.RemoteParticipantsUpdated += _call_RemoteParticipantsUpdated;
+            return Task.CompletedTask;
         }
 
         private void _call_RemoteParticipantsUpdated(object sender, ParticipantsUpdatedEventArgs e)

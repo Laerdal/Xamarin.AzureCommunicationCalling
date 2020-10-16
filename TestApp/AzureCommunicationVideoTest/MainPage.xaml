@@ -19,7 +19,7 @@
                 <Label Text="ACS Demo app" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
                 <Button x:Name="GetTokenButton" Text="Get Token from your own service" HorizontalOptions="Center" TextColor="white"/>
                 <Button x:Name="CallEchoButton" Text="Call echo service" HorizontalOptions="Center" TextColor="white" IsEnabled="False"/>
-                <Entry x:Name="GroupEntry" Text="8833bec5-3ec0-41db-8657-c55626b5ee71" FontSize="8"></Entry>
+                <Entry x:Name="GroupEntry" Text="4dc8d788-1c6b-4187-89a1-136b8c52fc76" FontSize="8"></Entry>
                 <Button x:Name="CallGroupButton" Text="Call group"
                         HorizontalOptions="Center" TextColor="white" IsEnabled="False"/>
                 <Entry x:Name="PhoneEntry" Text="+4790786985" IsVisible="false"/>
