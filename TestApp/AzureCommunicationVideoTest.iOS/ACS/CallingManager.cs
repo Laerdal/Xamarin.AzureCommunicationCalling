@@ -142,8 +142,12 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             _localVideoStream?.Dispose();
             _localVideoStreamRenderer?.Dispose();
             _localVideoStream = null;
+            _localVideoStream = null;
             _remoteVideoStreams.Clear();
-        }
+            _callClient.Dispose();
+            _deviceManager.Dispose();
+            _callAgent.Dispose();
+    }
 
         private void OnVideoHangup(NSError nsError)
         {
