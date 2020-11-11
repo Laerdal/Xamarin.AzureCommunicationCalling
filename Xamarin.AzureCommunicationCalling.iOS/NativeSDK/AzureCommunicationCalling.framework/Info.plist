@@ -18,11 +18,6 @@
 	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleSupportedPlatforms</key>
-	<array>
-		<string>iPhoneOS</string>
-		<string>iPhoneSimulator</string>
-	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0.0.4</string>
 	<key>CSResourcesFileMapped</key>
