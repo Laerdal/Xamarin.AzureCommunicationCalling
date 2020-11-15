@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Xamarin.AzureCommunicationCommon.Android</id>
+    <version>1.0.0-beta.1.1</version>
+    <title>AzureCommunicationCommon for Xamarin.Android</title>
+    <authors>Laerdal Medical</authors>
+    <owners>Laerdal Medical</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+Naive binding for Azure Communication Common SDK for Android.
+
+This nuget is just a binding library for https://search.maven.org/artifact/com.azure.android/azure-communication-common
+    </description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright Laerdal Medical 2020</copyright>
+    <repository type="git" url="https://github.com/laerdal/Xamarin.AzureCommunicationCalling"/>
+    <projectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling></projectUrl>
+    <license type="expression">MIT</license>
+    <tags>Xamarin Azure Communication Common Android</tags>
+    <dependencies>
+         <group targetFramework="MonoAndroid0.0">
+             <dependency id="Xamarin.AzureCore.Android" version="1.0.0-beta.2"/>
+             <dependency id="Xamarin.Android.JakeWharton.ThreeTenAbp" version="1.2"/>
+         </group>
+     </dependencies>        
+  </metadata>
+  <files>
+      <file src="bin/Release/Xamarin.AzureCommunicationCommon.Android.dll" target="lib\MonoAndroid" />
+      <file src="bin/Release/Xamarin.AzureCommunicationCommon.Android.pdb" target="lib\MonoAndroid" />
+  </files>
+</package>

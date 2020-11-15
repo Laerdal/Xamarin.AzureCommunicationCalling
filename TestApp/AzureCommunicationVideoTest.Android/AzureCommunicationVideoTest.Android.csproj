@@ -54,6 +54,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Xamarin.AzureCommunicationCalling.Android" Version="1.0.0-beta.2.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Xamarin.AndroidX.Migration">
@@ -64,6 +65,12 @@
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.1.0.5-rc3" />
     <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.5" />        
         
+    <PackageReference Include="Xamarin.AzureCore.Android">
+      <Version>1.0.0-beta.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AzureCommunicationCommon.Android">
+      <Version>1.0.0-beta.1.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -99,21 +106,9 @@
     <Folder Include="ACS\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Xamarin.AzureCommunicationCommon.Android\Xamarin.AzureCommunicationCommon.Android.csproj">
-      <Project>{4761749a-fbbb-46d6-bd39-f07def36e923}</Project>
-      <Name>Xamarin.AzureCommunicationCommon.Android</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AzureCommunicationVideoTest\AzureCommunicationVideoTest.csproj">
       <Project>{DD287FD7-2A1B-4EB6-BAF6-FAE6E9558AE3}</Project>
       <Name>AzureCommunicationVideoTest</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Xamarin.AzureCommunicationCalling.Android\Xamarin.AzureCommunicationCalling.Android.csproj">
-      <Project>{9A469670-123D-43DC-873C-3D71FD3581BF}</Project>
-      <Name>Xamarin.AzureCommunicationCalling.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Xamarin.AzureCore.Android\Xamarin.AzureCore.Android.csproj">
-      <Project>{A684B6CB-CD3B-4035-BD0B-A12A6536E059}</Project>
-      <Name>Xamarin.AzureCore.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

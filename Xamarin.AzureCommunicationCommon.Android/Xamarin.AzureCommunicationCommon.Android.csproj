@@ -57,14 +57,11 @@
     <LibraryProjectZip Include="Jars\azure-communication-common-1.0.0-beta.1.aar" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.AzureCore.Android\Xamarin.AzureCore.Android.csproj">
-      <Project>{A684B6CB-CD3B-4035-BD0B-A12A6536E059}</Project>
-      <Name>Xamarin.AzureCore.Android</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Xamarin.Android.JakeWharton.ThreeTenAbp">
       <Version>1.2.4</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AzureCore.Android">
+      <Version>1.0.0-beta.2.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

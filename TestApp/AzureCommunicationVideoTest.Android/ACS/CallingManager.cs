@@ -2,16 +2,16 @@
 using System.Threading.Tasks;
 using Com.Azure.Android.Communication.Common;
 using Xamarin.Forms;
-//using Com.Azure.Communication.Calling;
-//using Com.Azure.Communication;
-//using Com.Azure.Android.Communication.Common;
 using Com.Azure.Communication.Calling;
 using Application = Android.App.Application;
 using Java.Util;
 using Java.Util.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using Android.Hardware;
+using Android.Telecom;
 using Xamarin.Forms.Platform.Android;
+using CameraFacing = Com.Azure.Communication.Calling.CameraFacing;
 
 [assembly: Dependency(typeof(AzureCommunicationVideoTest.Droid.ACS.CallingManager))]
 namespace AzureCommunicationVideoTest.Droid.ACS
@@ -23,7 +23,7 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         private DeviceManager _deviceManager;
         private LocalVideoStream _localVideoStream;
         private readonly List<RemoteVideoStream> _remoteVideoStreams;
-        private Call _call;
+        private Com.Azure.Communication.Calling.Call _call;
 
 
         public CallingManager()
