@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCalling.iOS</id>
-    <version>1.0.0-beta.4.3</version>
+    <version>1.0.0-beta.4.4</version>
     <title>AzureCommunicationCalling for Xamarin.iOS</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -20,6 +20,7 @@ This nuget is just a binding library for this native iOS library : https://githu
     <tags>Xamarin Azure Communication Services iOS</tags>
     <dependencies>
         <group targetFramework="Xamarin.iOS0.0">
+            <dependency id="Xamarin.Swift" version="1.0.6"/>
         </group>
     </dependencies>
   </metadata>
