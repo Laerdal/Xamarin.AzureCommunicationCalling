@@ -48,16 +48,16 @@
     <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
   </ItemGroup>
    <ItemGroup>
-     <NativeReference Include="NativeSDK\AzureCommunicationCalling.framework">
+     <NativeReference Include="nativeLibs\Pods\AzureCommunicationCalling\AzureCommunicationCalling.framework">
        <Kind>Framework</Kind>
        <SmartLink>False</SmartLink>
      </NativeReference>
-     <NativeReference Include="NativeSDK\AzureCommunication.framework">
+     <NativeReference Include="nativeLibs\Pods\AzureCommunication\AzureCommunication.framework">
        <Kind>Framework</Kind>
        <SmartLink>False</SmartLink>
        <Frameworks></Frameworks>
      </NativeReference>
-     <NativeReference Include="NativeSDK\AzureCore.framework">
+     <NativeReference Include="nativeLibs\Pods\AzureCore\AzureCore.framework">
        <Kind>Framework</Kind>
        <SmartLink>False</SmartLink>
      </NativeReference>
