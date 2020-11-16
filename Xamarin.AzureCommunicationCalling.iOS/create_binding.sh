@@ -12,11 +12,13 @@
 #import "../../AzureCommunication.framework/Headers/AzureCommunication-Swift.h"
 #import "../../AzureCore.framework/Headers/AzureCore-Swift.h"
 #
+patch -s -p0 -N < AzureCommunicationCalling.h.patch
 
 sharpie bind \
-    -sdk iphoneos14.0 \
+    -sdk iphoneos14.1 \
     -o tmp \
     -namespace "Xamarin.AzureCommunicationCalling.iOS" \
-    -scope NativeSDK/AzureCommunicationCalling.framework/Headers \
-    NativeSDK/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
+    -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
+    nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
     -c -fmodules \
+
