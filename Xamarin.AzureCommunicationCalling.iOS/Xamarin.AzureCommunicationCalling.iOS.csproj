@@ -42,10 +42,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ObjcBindingApiDefinition Include="ApiDefinitions.cs" />
+    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+    <ObjcBindingApiDefinition Include="ApiDefinitions.cs" />
   </ItemGroup>
    <ItemGroup>
      <NativeReference Include="nativeLibs\Pods\AzureCommunicationCalling\AzureCommunicationCalling.framework">

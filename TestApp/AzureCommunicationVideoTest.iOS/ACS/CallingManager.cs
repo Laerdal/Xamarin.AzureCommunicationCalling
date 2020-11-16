@@ -109,7 +109,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         public async Task JoinGroup(Guid groupID)
         {
             var camera = _deviceManager
-                .CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);            
+                .CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);
             _localVideoStream = new ACSLocalVideoStream(camera);
             _localVideoStreamRenderer = new ACSRenderer(_localVideoStream);
             var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
@@ -121,7 +121,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             var groupCallContext = new ACSGroupCallContext {GroupId = new NSUuid(groupID.ToString())};
             var callOptions = new ACSJoinCallOptions
             {
-                AudioOptions = new ACSAudioOptions(), 
+                AudioOptions = new ACSAudioOptions(),
                 VideoOptions = new ACSVideoOptions(_localVideoStream)
             };
             //callOptions.AudioOptions.Muted = true;

@@ -15,7 +15,7 @@
 patch -s -p0 -N < AzureCommunicationCalling.h.patch
 
 sharpie bind \
-    -sdk iphoneos14.1 \
+    -sdk iphoneos14.2 \
     -o tmp \
     -namespace "Xamarin.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
