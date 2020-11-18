@@ -14,7 +14,6 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         public override void OnParticipantStateChanged(ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args)
         {
-            
         }
 
         public override void OnVideoStreamsUpdated(ACSRemoteParticipant remoteParticipant, ACSRemoteVideoStreamsEventArgs args)
