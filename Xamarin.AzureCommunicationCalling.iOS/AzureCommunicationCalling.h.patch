@@ -1,13 +1,12 @@
---- nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h   2020-11-16 05:57:35.000000000 -0800
-+++ nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h 2020-11-16 06:22:17.000000000 -0800@@ -3,8 +3,8 @@
-@@ -3,8 +3,8 @@
-
+--- nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h	2020-11-19 15:42:45.000000000 +0100
++++ nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h	2020-11-19 16:30:27.000000000 +0100
+@@ -3,8 +3,7 @@
+ 
  #import <Foundation/Foundation.h>
  
 -#import <AzureCommunication/AzureCommunication-Swift.h>
--#import <AzureCore/AzureCore-Swift.h>
+-//#import <AzureCore/AzureCore-Swift.h>
 +#import "../../../AzureCommunication/AzureCommunication.framework/Headers/AzureCommunication-Swift.h"
-+#import "../../../AzureCore/AzureCore.framework/Headers/AzureCore-Swift.h"
  #import "ACSRenderer.h"
  #import "ACSRendererView.h"
  #import "ACSStreamSize.h"

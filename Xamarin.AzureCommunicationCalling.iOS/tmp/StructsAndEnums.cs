@@ -14,7 +14,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		ReceivedInvalidPNPayload = 0x4,
 		FailedToProcessPNPayload = 0x8,
 		InvalidGuidGroupId = 0x10,
-		InvalidPNDeviceRegistrationToken = 0x20
+		InvalidPNDeviceRegistrationToken = 0x20,
+		MultipleRenderersNotSupported = 0x40,
+		MultipleViewsNotSupported = 0x80
 	}
 
 	[Native]
