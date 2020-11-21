@@ -2,7 +2,6 @@ using System;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
-using Xamarin.AzureCommunicationCalling.iOS;
 
 namespace Xamarin.AzureCommunicationCalling.iOS
 {
@@ -10,25 +9,24 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	partial interface Constants
 	{
 		// extern double AzureCommunicationVersionNumber;
-		//[Field ("AzureCommunicationVersionNumber", "__Internal")]
-		//double AzureCommunicationVersionNumber { get; }
+		[Field ("AzureCommunicationVersionNumber", "__Internal")]
+		double AzureCommunicationVersionNumber { get; }
 
 		// extern const unsigned char [] AzureCommunicationVersionString;
 		//[Field ("AzureCommunicationVersionString", "__Internal")]
 		//byte[] AzureCommunicationVersionString { get; }
 	}
 
-// @protocol CommunicationIdentifier <NSObject>
-/*
-Check whether adding [Model] to this declaration is appropriate.
-[Model] is used to generate a C# class that implements this protocol,
-and might be useful for protocols that consumers are supposed to implement,
-since consumers can subclass the generated class instead of implementing
-the generated interface. If consumers are not supposed to implement this
-protocol, then [Model] is redundant and will generate code that will never
-be used.
-*/
-	[Protocol (Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
+	// @protocol CommunicationIdentifier <NSObject>
+	/*
+  Check whether adding [Model] to this declaration is appropriate.
+  [Model] is used to generate a C# class that implements this protocol,
+  and might be useful for protocols that consumers are supposed to implement,
+  since consumers can subclass the generated class instead of implementing
+  the generated interface. If consumers are not supposed to implement this
+  protocol, then [Model] is redundant and will generate code that will never
+  be used.
+*/[Protocol (Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
 	[BaseType (typeof(NSObject), Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
 	interface CommunicationIdentifier
 	{
@@ -113,7 +111,7 @@ be used.
 	// @interface UnknownIdentifier : NSObject <CommunicationIdentifier>
 	[BaseType (typeof(CommunicationIdentifier), Name = "_TtC18AzureCommunication17UnknownIdentifier")]
 	[DisableDefaultCtor]
-	interface UnknownIdentifier //: ICommunicationIdentifier
+	interface UnknownIdentifier : CommunicationIdentifier
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull identifier;
 		[Export ("identifier")]
@@ -125,22 +123,12 @@ be used.
 		IntPtr Constructor (string identifier);
 	}
 
-	partial interface Constants
-	{
-		// extern double AzureCoreVersionNumber;
-		[Field ("AzureCoreVersionNumber", "__Internal")]
-		double AzureCoreVersionNumber { get; }
-
-		// extern const unsigned char [] AzureCoreVersionString;
-		//[Field ("AzureCoreVersionString", "__Internal")]
-		//byte[] AzureCoreVersionString { get; }
-	}
-
 	// @interface ACSRendererView : UIView
 	[BaseType (typeof(UIView))]
+	[DisableDefaultCtor]
 	interface ACSRendererView
 	{
-		// -(void)updateScalingMode:(ACSScalingMode)scalingMode;
+		// -(void)updateScalingMode:(ACSScalingMode)scalingMode __attribute__((swift_name("update(scalingMode:)")));
 		[Export ("updateScalingMode:")]
 		void UpdateScalingMode (ACSScalingMode scalingMode);
 
@@ -155,9 +143,10 @@ be used.
 
 	// @interface ACSStreamSize : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSStreamSize
 	{
-		// -(instancetype)initWithWidth:(int)width height:(int)height;
+		// -(instancetype)initWithWidth:(int)width height:(int)height __attribute__((swift_name("init(width:height:)")));
 		[Export ("initWithWidth:height:")]
 		IntPtr Constructor (int width, int height);
 
@@ -175,6 +164,11 @@ be used.
 	[BaseType (typeof(NSObject))]
 	interface ACSRendererDelegate
 	{
+		// @required -(void)rendererFailedToStart;
+		[Abstract]
+		[Export ("rendererFailedToStart")]
+		void RendererFailedToStart ();
+
 		// @optional -(void)onFirstFrameRendered;
 		[Export ("onFirstFrameRendered")]
 		void OnFirstFrameRendered ();
@@ -182,19 +176,24 @@ be used.
 
 	// @interface ACSRenderer : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSRenderer
 	{
-		// -(instancetype)initWithLocalVideoStream:(ACSLocalVideoStream *)localVideoStream;
-		[Export ("initWithLocalVideoStream:")]
-		IntPtr Constructor (ACSLocalVideoStream localVideoStream);
+		// -(instancetype _Nonnull)initWithLocalVideoStream:(ACSLocalVideoStream * _Nonnull)localVideoStream withError:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("init(localVideoStream:)")));
+		[Export ("initWithLocalVideoStream:withError:")]
+		IntPtr Constructor (ACSLocalVideoStream localVideoStream, [NullAllowed] out NSError error);
 
-		// -(instancetype)initWithRemoteVideoStream:(ACSRemoteVideoStream *)remoteVideoStream;
-		[Export ("initWithRemoteVideoStream:")]
-		IntPtr Constructor (ACSRemoteVideoStream remoteVideoStream);
+		// -(instancetype _Nonnull)initWithRemoteVideoStream:(ACSRemoteVideoStream * _Nonnull)remoteVideoStream withError:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("init(remoteVideoStream:)")));
+		[Export ("initWithRemoteVideoStream:withError:")]
+		IntPtr Constructor (ACSRemoteVideoStream remoteVideoStream, [NullAllowed] out NSError error);
 
-		// -(ACSRendererView *)createView:(ACSRenderingOptions *)options;
+		// -(ACSRendererView * _Nonnull)createView:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("createView()")));
 		[Export ("createView:")]
-		ACSRendererView CreateView (ACSRenderingOptions options);
+		ACSRendererView CreateView ([NullAllowed] out NSError error);
+
+		// -(ACSRendererView * _Nonnull)createViewWithOptions:(ACSRenderingOptions * _Nullable)options withError:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("createView(with:)")));
+		[Export ("createViewWithOptions:withError:")]
+		ACSRendererView CreateViewWithOptions ([NullAllowed] ACSRenderingOptions options, [NullAllowed] out NSError error);
 
 		// -(void)dispose;
 		[Export ("dispose")]
@@ -205,21 +204,21 @@ be used.
 		ACSStreamSize Size { get; }
 
 		[Wrap ("WeakDelegate")]
+		[NullAllowed]
 		ACSRendererDelegate Delegate { get; set; }
 
-		// @property (assign, nonatomic) id<ACSRendererDelegate> delegate;
+		// @property (assign, nonatomic) id<ACSRendererDelegate> _Nullable delegate;
 		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
 		NSObject WeakDelegate { get; set; }
 	}
-	
+
 	// @protocol ACSInternalTokenProviderDelegate <NSObject>
-	[Protocol, Model(AutoGeneratedName = true)]
-	[BaseType(typeof(NSObject))]
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
 	interface ACSInternalTokenProviderDelegate
 	{
-		// @optional -(void)onTokenRequested:(ACSInternalTokenProvider *)internalTokenProvider :(ACSInternalTokenProvider *)sender;
-		[Abstract]
-		[Export("onTokenRequested::")]
+		// @optional -(void)onTokenRequested:(ACSInternalTokenProvider *)internalTokenProvider :(ACSInternalTokenProvider *)sender __attribute__((swift_name("onTokenRequested(_:sender:)")));
+		[Export ("onTokenRequested::")]
 		void OnTokenRequested(ACSInternalTokenProvider internalTokenProvider, ACSInternalTokenProvider sender);
 	}
 
@@ -228,25 +227,25 @@ be used.
 	[BaseType (typeof(NSObject))]
 	interface ACSCallAgentDelegate
 	{
-		// @optional -(void)onCallsUpdated:(ACSCallAgent *)callAgent :(ACSCallsUpdatedEventArgs *)args;
+		// @optional -(void)onCallsUpdated:(ACSCallAgent *)callAgent :(ACSCallsUpdatedEventArgs *)args __attribute__((swift_name("onCallsUpdated(_:args:)")));
 		[Export ("onCallsUpdated::")]
-		void  OnCallsUpdated(ACSCallAgent callAgent, ACSCallsUpdatedEventArgs args);
+		void OnCallsUpdated(ACSCallAgent callAgent, ACSCallsUpdatedEventArgs args);
 	}
-	
+
 	// @protocol ACSCallDelegate <NSObject>
 	[Protocol, Model (AutoGeneratedName = true)]
 	[BaseType (typeof(NSObject))]
 	interface ACSCallDelegate
 	{
-		// @optional -(void)onCallStateChanged:(ACSCall *)call :(ACSPropertyChangedEventArgs *)args;
+		// @optional -(void)onCallStateChanged:(ACSCall *)call :(ACSPropertyChangedEventArgs *)args __attribute__((swift_name("onCallStateChanged(_:args:)")));
 		[Export ("onCallStateChanged::")]
 		void OnCallStateChanged (ACSCall call, ACSPropertyChangedEventArgs args);
 
-		// @optional -(void)onRemoteParticipantsUpdated:(ACSCall *)call :(ACSParticipantsUpdatedEventArgs *)args;
+		// @optional -(void)onRemoteParticipantsUpdated:(ACSCall *)call :(ACSParticipantsUpdatedEventArgs *)args __attribute__((swift_name("onRemoteParticipantsUpdated(_:args:)")));
 		[Export ("onRemoteParticipantsUpdated::")]
 		void OnRemoteParticipantsUpdated (ACSCall call, ACSParticipantsUpdatedEventArgs args);
 
-		// @optional -(void)onLocalVideoStreamsChanged:(ACSCall *)call :(ACSLocalVideoStreamsUpdatedEventArgs *)args;
+		// @optional -(void)onLocalVideoStreamsChanged:(ACSCall *)call :(ACSLocalVideoStreamsUpdatedEventArgs *)args __attribute__((swift_name("onLocalVideoStreamsChanged(_:args:)")));
 		[Export ("onLocalVideoStreamsChanged::")]
 		void OnLocalVideoStreamsChanged (ACSCall call, ACSLocalVideoStreamsUpdatedEventArgs args);
 	}
@@ -256,21 +255,19 @@ be used.
 	[BaseType (typeof(NSObject))]
 	interface ACSRemoteParticipantDelegate
 	{
-		// @optional -(void)onParticipantStateChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
-		[Abstract]
+		// @optional -(void)onParticipantStateChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args __attribute__((swift_name("onParticipantStateChanged(_:args:)")));
 		[Export ("onParticipantStateChanged::")]
 		void OnParticipantStateChanged (ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args);
 
-		// @optional -(void)onIsMutedChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
+		// @optional -(void)onIsMutedChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args __attribute__((swift_name("onIsMutedChanged(_:args:)")));
 		[Export ("onIsMutedChanged::")]
 		void OnIsMutedChanged (ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args);
 
-		// @optional -(void)onIsSpeakingChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args;
+		// @optional -(void)onIsSpeakingChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args __attribute__((swift_name("onIsSpeakingChanged(_:args:)")));
 		[Export ("onIsSpeakingChanged::")]
 		void OnIsSpeakingChanged (ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args);
 
-		// @optional -(void)onVideoStreamsUpdated:(ACSRemoteParticipant *)remoteParticipant :(ACSRemoteVideoStreamsEventArgs *)args;
-		[Abstract]
+		// @optional -(void)onVideoStreamsUpdated:(ACSRemoteParticipant *)remoteParticipant :(ACSRemoteVideoStreamsEventArgs *)args __attribute__((swift_name("onVideoStreamsUpdated(_:args:)")));
 		[Export ("onVideoStreamsUpdated::")]
 		void OnVideoStreamsUpdated (ACSRemoteParticipant remoteParticipant, ACSRemoteVideoStreamsEventArgs args);
 	}
@@ -280,20 +277,21 @@ be used.
 	[BaseType (typeof(NSObject))]
 	interface ACSDeviceManagerDelegate
 	{
-		// @optional -(void)onAudioDevicesUpdated:(ACSDeviceManager *)deviceManager :(ACSAudioDevicesUpdatedEventArgs *)args;
+		// @optional -(void)onAudioDevicesUpdated:(ACSDeviceManager *)deviceManager :(ACSAudioDevicesUpdatedEventArgs *)args __attribute__((swift_name("onAudioDevicesUpdated(_:args:)")));
 		[Export ("onAudioDevicesUpdated::")]
 		void OnAudioDevicesUpdated (ACSDeviceManager deviceManager, ACSAudioDevicesUpdatedEventArgs args);
 
-		// @optional -(void)onVideoDevicesUpdated:(ACSDeviceManager *)deviceManager :(ACSVideoDevicesUpdatedEventArgs *)args;
+		// @optional -(void)onVideoDevicesUpdated:(ACSDeviceManager *)deviceManager :(ACSVideoDevicesUpdatedEventArgs *)args __attribute__((swift_name("onVideoDevicesUpdated(_:args:)")));
 		[Export ("onVideoDevicesUpdated::")]
 		void OnVideoDevicesUpdated (ACSDeviceManager deviceManager, ACSVideoDevicesUpdatedEventArgs args);
 	}
 
 	// @interface ACSVideoOptions : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSVideoOptions
 	{
-		// -(instancetype)init:(ACSLocalVideoStream *)localVideoStream;
+		// -(instancetype)init:(ACSLocalVideoStream *)localVideoStream __attribute__((swift_name("init(localVideoStream:)")));
 		[Export ("init:")]
 		IntPtr Constructor (ACSLocalVideoStream localVideoStream);
 
@@ -308,9 +306,10 @@ be used.
 
 	// @interface ACSLocalVideoStream : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSLocalVideoStream
 	{
-		// -(instancetype)init:(ACSVideoDeviceInfo *)camera;
+		// -(instancetype)init:(ACSVideoDeviceInfo *)camera __attribute__((swift_name("init(camera:)")));
 		[Export ("init:")]
 		IntPtr Constructor (ACSVideoDeviceInfo camera);
 
@@ -330,7 +329,7 @@ be used.
 		[Export ("mediaStreamType")]
 		ACSMediaStreamType MediaStreamType { get; }
 
-		// -(void)switchSource:(ACSVideoDeviceInfo *)camera withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)switchSource:(ACSVideoDeviceInfo *)camera withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("switchSource(camera:completionHandler:)")));
 		[Export ("switchSource:withCompletionHandler:")]
 		void SwitchSource (ACSVideoDeviceInfo camera, Action<NSError> completionHandler);
 	}
@@ -375,11 +374,11 @@ be used.
 		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
 		NSObject WeakDelegate { get; set; }
 
-		// -(void)setTokenWithToken:(NSString *)token accountIdentity:(NSString *)accountIdentity displayName:(NSString *)displayName resourceId:(NSString *)resourceId;
+		// -(void)setTokenWithToken:(NSString *)token accountIdentity:(NSString *)accountIdentity displayName:(NSString *)displayName resourceId:(NSString *)resourceId __attribute__((swift_name("set(with:accountIdentity:displayName:resourceId:)")));
 		[Export ("setTokenWithToken:accountIdentity:displayName:resourceId:")]
 		void SetTokenWithToken (string token, string accountIdentity, string displayName, string resourceId);
 
-		// -(void)setError:(NSString *)error;
+		// -(void)setError:(NSString *)error __attribute__((swift_name("set(error:)")));
 		[Export ("setError:")]
 		void SetError (string error);
 	}
@@ -493,23 +492,23 @@ be used.
 		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
 		NSObject WeakDelegate { get; set; }
 
-		// -(ACSCall *)joinWithGroupCallContext:(ACSGroupCallContext *)groupCallContext joinCallOptions:(ACSJoinCallOptions *)joinCallOptions;
+		// -(ACSCall *)joinWithGroupCallContext:(ACSGroupCallContext *)groupCallContext joinCallOptions:(ACSJoinCallOptions *)joinCallOptions __attribute__((swift_name("join(with:joinCallOptions:)")));
 		[Export ("joinWithGroupCallContext:joinCallOptions:")]
 		ACSCall JoinWithGroupCallContext (ACSGroupCallContext groupCallContext, ACSJoinCallOptions joinCallOptions);
 
-		// -(void)unRegisterPushNotificationsWithCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)unRegisterPushNotificationsWithCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("unRegisterPushNotifications(completionHandler:)")));
 		[Export ("unRegisterPushNotificationsWithCompletionHandler:")]
 		void UnRegisterPushNotificationsWithCompletionHandler (Action<NSError> completionHandler);
 
-		// -(ACSCall *)call:(NSArray<id<CommunicationIdentifier>> *)participants options:(ACSStartCallOptions *)options;
+		// -(ACSCall *)call:(NSArray<id<CommunicationIdentifier>> *)participants options:(ACSStartCallOptions *)options __attribute__((swift_name("call(participants:options:)")));
 		[Export ("call:options:")]
 		ACSCall Call (CommunicationIdentifier[] participants, ACSStartCallOptions options);
 
-		// -(void)registerPushNotifications:(NSData *)deviceToken withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)registerPushNotifications:(NSData *)deviceToken withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("registerPushNotifications(deviceToken:completionHandler:)")));
 		[Export ("registerPushNotifications:withCompletionHandler:")]
 		void RegisterPushNotifications (NSData deviceToken, Action<NSError> completionHandler);
 
-		// -(void)handlePushNotification:(NSDictionary *)payload withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)handlePushNotification:(NSDictionary *)payload withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("handlePushNotification(payload:completionHandler:)")));
 		[Export ("handlePushNotification:withCompletionHandler:")]
 		void HandlePushNotification (NSDictionary payload, Action<NSError> completionHandler);
 	}
@@ -557,39 +556,39 @@ be used.
 		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
 		NSObject WeakDelegate { get; set; }
 
-		// -(void)muteWithCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)muteWithCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("mute(completionHandler:)")));
 		[Export ("muteWithCompletionHandler:")]
 		void MuteWithCompletionHandler (Action<NSError> completionHandler);
 
-		// -(void)unmuteWithCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)unmuteWithCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("unmute(completionHandler:)")));
 		[Export ("unmuteWithCompletionHandler:")]
 		void UnmuteWithCompletionHandler (Action<NSError> completionHandler);
 
-		// -(void)sendDtmf:(ACSDtmfTone)tone withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)sendDtmf:(ACSDtmfTone)tone withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("sendDtmf(tone:completionHandler:)")));
 		[Export ("sendDtmf:withCompletionHandler:")]
 		void SendDtmf (ACSDtmfTone tone, Action<NSError> completionHandler);
 
-		// -(void)startVideo:(ACSLocalVideoStream *)stream withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)startVideo:(ACSLocalVideoStream *)stream withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("startVideo(stream:completionHandler:)")));
 		[Export ("startVideo:withCompletionHandler:")]
 		void StartVideo (ACSLocalVideoStream stream, Action<NSError> completionHandler);
 
-		// -(void)stopVideo:(ACSLocalVideoStream *)stream withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)stopVideo:(ACSLocalVideoStream *)stream withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("stopVideo(stream:completionHandler:)")));
 		[Export ("stopVideo:withCompletionHandler:")]
 		void StopVideo (ACSLocalVideoStream stream, Action<NSError> completionHandler);
 
-		// -(void)hangup:(ACSHangupOptions *)options withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)hangup:(ACSHangupOptions *)options withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("hangup(options:completionHandler:)")));
 		[Export ("hangup:withCompletionHandler:")]
 		void Hangup (ACSHangupOptions options, Action<NSError> completionHandler);
 
-		// -(void)removeParticipant:(ACSRemoteParticipant *)participant withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)removeParticipant:(ACSRemoteParticipant *)participant withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("remove(participant:completionHandler:)")));
 		[Export ("removeParticipant:withCompletionHandler:")]
 		void RemoveParticipant (ACSRemoteParticipant participant, Action<NSError> completionHandler);
 
-		// -(void)accept:(ACSAcceptCallOptions *)options withCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)accept:(ACSAcceptCallOptions *)options withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("accept(options:completionHandler:)")));
 		[Export ("accept:withCompletionHandler:")]
 		void Accept (ACSAcceptCallOptions options, Action<NSError> completionHandler);
 
-		// -(void)rejectWithCompletionHandler:(void (^)(NSError *))completionHandler;
+		// -(void)rejectWithCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("reject(completionHandler:)")));
 		[Export ("rejectWithCompletionHandler:")]
 		void RejectWithCompletionHandler (Action<NSError> completionHandler);
 
@@ -597,11 +596,11 @@ be used.
 		[Export ("callerId", ArgumentSemantic.Assign)]
 		CommunicationIdentifier CallerId { get; set; }
 
-		// -(ACSRemoteParticipant *)addParticipant:(id<CommunicationIdentifier>)participant;
+		// -(ACSRemoteParticipant *)addParticipant:(id<CommunicationIdentifier>)participant __attribute__((swift_name("add(participant:)")));
 		[Export ("addParticipant:")]
 		ACSRemoteParticipant AddParticipant (CommunicationIdentifier participant);
 
-		// -(ACSRemoteParticipant *)addParticipant:(PhoneNumber *)participant options:(ACSAddPhoneNumberOptions *)options;
+		// -(ACSRemoteParticipant *)addParticipant:(PhoneNumber *)participant options:(ACSAddPhoneNumberOptions *)options __attribute__((swift_name("add(participant:options:)")));
 		[Export ("addParticipant:options:")]
 		ACSRemoteParticipant AddParticipant (PhoneNumber participant, ACSAddPhoneNumberOptions options);
 	}
@@ -811,11 +810,11 @@ be used.
 		[Export ("dealloc")]
 		void Dealloc ();
 
-		// -(void)getDeviceManagerWithCompletionHandler:(void (^)(ACSDeviceManager *, NSError *))completionHandler;
+		// -(void)getDeviceManagerWithCompletionHandler:(void (^)(ACSDeviceManager *, NSError *))completionHandler __attribute__((swift_name("getDeviceManager(completionHandler:)")));
 		[Export ("getDeviceManagerWithCompletionHandler:")]
 		void GetDeviceManagerWithCompletionHandler (Action<ACSDeviceManager, NSError> completionHandler);
 
-		// -(void)createCallAgent:(CommunicationUserCredential *)userCredential withCompletionHandler:(void (^)(ACSCallAgent *, NSError *))completionHandler;
+		// -(void)createCallAgent:(CommunicationUserCredential *)userCredential withCompletionHandler:(void (^)(ACSCallAgent *, NSError *))completionHandler __attribute__((swift_name("createCallAgent(with:completionHandler:)")));
 		[Export ("createCallAgent:withCompletionHandler:")]
 		void CreateCallAgent (CommunicationUserCredential userCredential, Action<ACSCallAgent, NSError> completionHandler);
 
@@ -859,11 +858,11 @@ be used.
 		[Export ("getSpeakerList")]
 		ACSAudioDeviceInfo[] SpeakerList { get; }
 
-		// -(void)setMicrophone:(ACSAudioDeviceInfo *)microphoneDevice;
+		// -(void)setMicrophone:(ACSAudioDeviceInfo *)microphoneDevice __attribute__((swift_name("setMicrophone(microphoneDevice:)")));
 		[Export ("setMicrophone:")]
 		void SetMicrophone (ACSAudioDeviceInfo microphoneDevice);
 
-		// -(void)setSpeaker:(ACSAudioDeviceInfo *)speakerDevice;
+		// -(void)setSpeaker:(ACSAudioDeviceInfo *)speakerDevice __attribute__((swift_name("setSpeaker(speakerDevice:)")));
 		[Export ("setSpeaker:")]
 		void SetSpeaker (ACSAudioDeviceInfo speakerDevice);
 	}
@@ -929,9 +928,10 @@ be used.
 
 	// @interface ACSRenderingOptions : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSRenderingOptions
 	{
-		// -(instancetype)init:(ACSScalingMode)scalingMode;
+		// -(instancetype)init:(ACSScalingMode)scalingMode __attribute__((swift_name("init(scalingMode:)")));
 		[Export ("init:")]
 		IntPtr Constructor (ACSScalingMode scalingMode);
 

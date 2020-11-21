@@ -30,11 +30,21 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         private void RemoteVideoStreamAdded(ACSRemoteVideoStream remoteVideoStream)
         {
             _remoteVideoStreams.Add(remoteVideoStream);
-            var renderer = new ACSRenderer(remoteVideoStream);
+            var renderer = new ACSRenderer(remoteVideoStream, out var rendererError);
+            ThrowIfError(rendererError);
             var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
-            var nativeView = renderer.CreateView(renderingOptions);
+            var nativeView = renderer.CreateViewWithOptions(renderingOptions, out var createViewError);
+            ThrowIfError(createViewError);
             var formsView = nativeView.ToView();
             RemoteVideoAdded?.Invoke(this, formsView);
+        }
+
+        private void ThrowIfError(NSError rendererError)
+        {
+            if (!string.IsNullOrEmpty(rendererError?.Description))
+            {
+                throw new Exception(rendererError.Description);
+            }
         }
 
         public Task<bool> Init(string token)
@@ -111,9 +121,11 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             var camera = _deviceManager
                 .CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);
             _localVideoStream = new ACSLocalVideoStream(camera);
-            _localVideoStreamRenderer = new ACSRenderer(_localVideoStream);
+            _localVideoStreamRenderer = new ACSRenderer(_localVideoStream, out var rendererError);
+            ThrowIfError(rendererError);
             var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
-            var nativeView = _localVideoStreamRenderer.CreateView(renderingOptions);
+            var nativeView = _localVideoStreamRenderer.CreateViewWithOptions(renderingOptions, out var viewError);
+            ThrowIfError(viewError);
             var formsView = nativeView.ToView();
 
             LocalVideoAdded?.Invoke(this, formsView);

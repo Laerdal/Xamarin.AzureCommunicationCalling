@@ -1,13 +1,18 @@
 iOS and Android binding library for Azure Communication Services
 ================================================================
 
-Use this library to make spool calls(AzureCommunicationCalling).
+Use this library to consume Azure Communication Services on Xamarin,
+e.g. make video and voice calls.
 
-The native package for iOS is so big(>100MB) that github wont accept it in a regular repo,
-so you need to install LFS to get all the files:
+On iOS, you need to install the nuget Xamarin.AzureCommunicationCalling.iOS,
+while on Android you need to install 3 nugets: Xamarin.AzureCore.Android,
+Xamarin.AzureCommunicationCommon.Android and Xamarin.AzureCommunicationCalling.Android.
+(The reason for 3 on Android is that one Xamarin binding library can only contain one aar-file)
 
-https://docs.github.com/en/github/managing-large-files/installing-git-large-file-storage
+These library are native to each platform, you need to make a common abstraction on top
+yourself if you want to use them in a forms project. See the TestApp for a simple example.
 
-See the sample forms app for usage. You need to implement the rest service providing the ACS token, afterwards the app should look like this:
+To run the TestApp, you need to implement the rest service providing the ACS token, 
+afterwards the app should look like this:
 
 ![alt "Test app"](testapp.jpg "Test app")
