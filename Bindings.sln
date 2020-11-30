@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.808.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCalling.iOS", "Bindings\Xamarin.AzureCommunicationCalling.iOS\Xamarin.AzureCommunicationCalling.iOS.csproj", "{544B7985-D16B-4E42-88C7-63CCCCDB31E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCore.Android", "Bindings\Android\Xamarin.AzureCore.Android\Xamarin.AzureCore.Android.csproj", "{A684B6CB-CD3B-4035-BD0B-A12A6536E059}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCommon.Android", "Bindings\Android\Xamarin.AzureCommunicationCommon.Android\Xamarin.AzureCommunicationCommon.Android.csproj", "{4761749A-FBBB-46D6-BD39-F07DEF36E923}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.AzureCommunicationCalling.Android", "Bindings\Android\Xamarin.AzureCommunicationCalling.Android\Xamarin.AzureCommunicationCalling.Android.csproj", "{9A469670-123D-43DC-873C-3D71FD3581BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{544B7985-D16B-4E42-88C7-63CCCCDB31E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{544B7985-D16B-4E42-88C7-63CCCCDB31E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{544B7985-D16B-4E42-88C7-63CCCCDB31E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{544B7985-D16B-4E42-88C7-63CCCCDB31E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A684B6CB-CD3B-4035-BD0B-A12A6536E059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A684B6CB-CD3B-4035-BD0B-A12A6536E059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A684B6CB-CD3B-4035-BD0B-A12A6536E059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A684B6CB-CD3B-4035-BD0B-A12A6536E059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4761749A-FBBB-46D6-BD39-F07DEF36E923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4761749A-FBBB-46D6-BD39-F07DEF36E923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4761749A-FBBB-46D6-BD39-F07DEF36E923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4761749A-FBBB-46D6-BD39-F07DEF36E923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A469670-123D-43DC-873C-3D71FD3581BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A469670-123D-43DC-873C-3D71FD3581BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A469670-123D-43DC-873C-3D71FD3581BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A469670-123D-43DC-873C-3D71FD3581BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A65CE1F6-2AA9-446C-A710-F0690E304457}
+	EndGlobalSection
+EndGlobal
