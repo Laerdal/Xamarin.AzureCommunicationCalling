@@ -1,38 +1,26 @@
 PODS:
-  - AzureCommunication (1.0.0-beta.5):
-    - AzureCore (~> 1.0.0-beta.5)
-  - AzureCommunicationCalling (1.0.0-beta.5):
-    - AzureCommunication (~> 1.0.0-beta.5)
-  - AzureCore (1.0.0-beta.5)
+  - AzureCommunication (1.0.0-beta.6):
+    - AzureCore (~> 1.0.0-beta.6)
+  - AzureCommunicationCalling (1.0.0-beta.6):
+    - AzureCommunication (~> 1.0.0-beta.6)
+  - AzureCore (1.0.0-beta.6)
 
 DEPENDENCIES:
-  - AzureCommunication (from `https://github.com/Azure/azure-sdk-for-ios.git`, commit `1a0818a70497fe2c0fa2e9a79d9c10cdffd5be61`)
-  - AzureCommunicationCalling (from `https://raw.githubusercontent.com/Azure/azure-sdk-for-ios/master/AzureCommunicationCalling.podspec`)
-  - AzureCore (from `https://github.com/Azure/azure-sdk-for-ios.git`, commit `1a0818a70497fe2c0fa2e9a79d9c10cdffd5be61`)
+  - AzureCommunication (~> 1.0.0-beta.6)
+  - AzureCommunicationCalling (~> 1.0.0-beta.6)
+  - AzureCore (~> 1.0.0-beta.6)
 
-EXTERNAL SOURCES:
-  AzureCommunication:
-    :commit: 1a0818a70497fe2c0fa2e9a79d9c10cdffd5be61
-    :git: https://github.com/Azure/azure-sdk-for-ios.git
-  AzureCommunicationCalling:
-    :podspec: https://raw.githubusercontent.com/Azure/azure-sdk-for-ios/master/AzureCommunicationCalling.podspec
-  AzureCore:
-    :commit: 1a0818a70497fe2c0fa2e9a79d9c10cdffd5be61
-    :git: https://github.com/Azure/azure-sdk-for-ios.git
-
-CHECKOUT OPTIONS:
-  AzureCommunication:
-    :commit: 1a0818a70497fe2c0fa2e9a79d9c10cdffd5be61
-    :git: https://github.com/Azure/azure-sdk-for-ios.git
-  AzureCore:
-    :commit: 1a0818a70497fe2c0fa2e9a79d9c10cdffd5be61
-    :git: https://github.com/Azure/azure-sdk-for-ios.git
+SPEC REPOS:
+  trunk:
+    - AzureCommunication
+    - AzureCommunicationCalling
+    - AzureCore
 
 SPEC CHECKSUMS:
-  AzureCommunication: 589ce75b0255a11c9f608eb9d5ebdd182fc003f4
-  AzureCommunicationCalling: 0a3ae614967e469ebcbf7c257d162b813f65a571
-  AzureCore: 1a2f5461569c84896280e2fa5614ef6baadbbc8f
+  AzureCommunication: 645a8381f57e7e02fa3150fcce1dc8f982665840
+  AzureCommunicationCalling: 786904af217d5e071fa925aaba189185b1812fd5
+  AzureCore: f056c388ffcb745e54119d7b77cc109d79d56446
 
-PODFILE CHECKSUM: 231d4c349c7122a0b94b63cbc1f2cc6a871a4162
+PODFILE CHECKSUM: 80e9eae817d2818910c369c3dc77526f93f64c48
 
 COCOAPODS: 1.10.0

@@ -56,6 +56,14 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("initWithToken:expiresOn:")]
 		[DesignatedInitializer]
 		IntPtr Constructor (string token, NSDate expiresOn);
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull token;
+		[Export("token")]
+		string Token { get; }
+
+		// @property (readonly, copy, nonatomic) NSDate * _Nonnull expiresOn;
+		[Export("expiresOn", ArgumentSemantic.Copy)]
+		NSDate ExpiresOn { get; }
 	}
 
 	// @interface CommunicationUser : NSObject <CommunicationIdentifier>

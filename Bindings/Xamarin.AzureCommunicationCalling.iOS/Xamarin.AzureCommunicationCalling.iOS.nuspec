@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCalling.iOS</id>
-    <version>1.0.0-beta.5.1</version>
+    <version>1.0.0-beta.6.1</version>
     <title>AzureCommunicationCalling for Xamarin.iOS</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -10,7 +10,7 @@
     <description>
 Naive binding for Azure Communication Calling SDK for iOS.
 
-This nuget is just a binding library for this native iOS library : https://github.com/Azure/Communication/releases/tag/v1.0.0-beta.5
+This nuget is just a binding library for this native iOS library : https://github.com/Azure/Communication/releases/tag/v1.0.0-beta.6
     </description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright Laerdal Medical 2020</copyright>

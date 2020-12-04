@@ -1,12 +1,9 @@
 plugin 'cocoapods-binary'
-platform :ios, '13.0'
+platform :ios, '12.0'
 use_frameworks!
 
-source 'https://github.com/Azure/azure-sdk-for-ios.git'
-
 target 'nativeLibsPlaceholder' do
-  pod 'AzureCommunicationCalling', :podspec => 'https://raw.githubusercontent.com/Azure/azure-sdk-for-ios/master/AzureCommunicationCalling.podspec'
-  pod 'AzureCommunication', :git => 'https://github.com/Azure/azure-sdk-for-ios.git', :commit => "1a0818a70497fe2c0fa2e9a79d9c10cdffd5be61", :binary => true
-  pod 'AzureCore', :git => 'https://github.com/Azure/azure-sdk-for-ios.git', :commit => "1a0818a70497fe2c0fa2e9a79d9c10cdffd5be61", :binary => true
-
+  pod 'AzureCommunicationCalling', '~> 1.0.0-beta.6'
+  pod 'AzureCommunication', '~> 1.0.0-beta.6', :binary => true
+  pod 'AzureCore', '~> 1.0.0-beta.6', :binary => true
 end

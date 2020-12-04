@@ -55,6 +55,14 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	[DisableDefaultCtor]
 	interface CommunicationAccessToken
 	{
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull token;
+		[Export ("token")]
+		string Token { get; }
+
+		// @property (readonly, copy, nonatomic) NSDate * _Nonnull expiresOn;
+		[Export ("expiresOn", ArgumentSemantic.Copy)]
+		NSDate ExpiresOn { get; }
+
 		// -(instancetype _Nonnull)initWithToken:(NSString * _Nonnull)token expiresOn:(NSDate * _Nonnull)expiresOn __attribute__((objc_designated_initializer));
 		[Export ("initWithToken:expiresOn:")]
 		[DesignatedInitializer]
