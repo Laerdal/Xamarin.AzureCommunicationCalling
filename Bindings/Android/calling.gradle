@@ -16,5 +16,5 @@ dependencies {
 
 task download(type: Copy) {
     from configurations.dummyProject 
-    into 'Jars'
+    into 'Xamarin.AzureCommunicationCalling.Android/Jars'
 }

@@ -11,10 +11,10 @@ configurations {
 }
 
 dependencies {
-    dummyProject 'com.azure.android:azure-core:1.+'
+    dummyProject 'com.azure.android:azure-communication-common:1.+'
 }
 
 task download(type: Copy) {
     from configurations.dummyProject 
-    into 'Jars'
+    into 'Xamarin.AzureCommunicationCommon.Android/Jars'
 }

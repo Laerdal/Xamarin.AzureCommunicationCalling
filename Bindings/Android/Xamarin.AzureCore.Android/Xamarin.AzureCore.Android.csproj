@@ -57,7 +57,7 @@
       <Version>2.2.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Annotation">
-      <Version>1.1.0.6</Version>
+      <Version>1.1.0.7</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.JakeWharton.ThreeTenAbp">
       <Version>1.2.4</Version>
@@ -70,11 +70,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedReferenceJar Include="Jars\jackson-module-jaxb-annotations-2.11.3.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-dataformat-xml-2.11.3.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-databind-2.11.3.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-core-2.11.3.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-annotations-2.11.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-module-jaxb-annotations-2.11.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-dataformat-xml-2.11.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-databind-2.11.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-core-2.11.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\jackson-annotations-2.11.2.jar" />
   </ItemGroup>
   <ItemGroup>
     <LibraryProjectZip Include="Jars\azure-core-1.0.0-beta.2.aar" />
