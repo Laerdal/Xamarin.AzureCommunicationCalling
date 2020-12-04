@@ -9,9 +9,10 @@ while on Android you need to install 3 nugets: Xamarin.AzureCore.Android,
 Xamarin.AzureCommunicationCommon.Android and Xamarin.AzureCommunicationCalling.Android.
 (The reason for 3 on Android is that one Xamarin binding library can only contain one aar-file)
 
-N.B. For ACS, Minimum iOS version is 12.0 and minimum Android is 26 (8.0).
-Also, on Android onlye x86_64 and arm64-v8a ABIs are supported. You will get some
+N.B. For ACS, Minimum iOS version is 12.0 and minimum Android is 21 (5.0).
+Also, on Android only x86_64 and arm64-v8a ABIs are supported. You will get some
 strange error messages if trying to run on e.g. x86(which is default ABI for the emulator...)
+Support for 32 bit is expected to come soon.
 
 These library are native to each platform, you need to make a common abstraction on top
 yourself if you want to use them in a forms project. See the TestApp for a simple example.

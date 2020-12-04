@@ -1,0 +1,20 @@
+apply plugin: 'base'
+
+repositories {
+    mavenCentral()
+    google()
+    jcenter()
+}
+
+configurations {
+    dummyProject
+}
+
+dependencies {
+    dummyProject 'com.azure.android:azure-communication-common:1.+'
+}
+
+task download(type: Copy) {
+    from configurations.dummyProject 
+    into 'Jars'
+}

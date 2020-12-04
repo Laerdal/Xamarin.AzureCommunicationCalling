@@ -191,5 +191,6 @@ FakesAssemblies/
 .DS_Store
 
 **/.idea/caches/
+**/.gradle
 
 .idea
