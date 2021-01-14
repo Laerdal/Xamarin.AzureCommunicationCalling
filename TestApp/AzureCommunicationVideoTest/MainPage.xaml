@@ -17,15 +17,20 @@
                HorizontalOptions="Center" VerticalOptions="End" Margin="30">
             <StackLayout>
                 <Label Text="ACS Demo app" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
-                <Button x:Name="GetTokenButton" Text="Get Token from your own service" HorizontalOptions="Center" TextColor="white"/>
-                <Button x:Name="CallEchoButton" Text="Call echo service" HorizontalOptions="Center" TextColor="white" IsEnabled="False"/>
-                <Entry x:Name="GroupEntry" Text="4dc8d788-1c6b-4187-89a1-136b8c52fc76" FontSize="8"></Entry>
+                <Button x:Name="GetTokenButton" Text="Get Token from your own service" HorizontalOptions="Center" TextColor="white"
+                        BackgroundColor="DarkGreen"/>
+                <Button x:Name="CallEchoButton" Text="Call echo service" HorizontalOptions="Center" TextColor="white" IsEnabled="False"
+                        BackgroundColor="Bisque"/>
+                <Entry x:Name="GroupEntry" Text="4dc8d788-1c6b-4187-89a1-136b8c52fc76" FontSize="8"
+                       BackgroundColor="White" TextColor="Black"></Entry>
                 <Button x:Name="CallGroupButton" Text="Call group"
-                        HorizontalOptions="Center" TextColor="white" IsEnabled="False"/>
+                        HorizontalOptions="Center" TextColor="white" IsEnabled="False"
+                        BackgroundColor="Bisque"/>
                 <Entry x:Name="PhoneEntry" Text="+4790786985" IsVisible="false"/>
                 <Button x:Name="CallPhoneButton" Text="Call phone" HorizontalOptions="Center"
                         TextColor="white" IsEnabled="False" IsVisible="false"/>
-                <Button x:Name="HangupButton" Text="Hang up" HorizontalOptions="Center" TextColor="White" IsEnabled="False"/>
+                <Button x:Name="HangupButton" Text="Hang up" HorizontalOptions="Center" TextColor="White" IsEnabled="False"
+                        BackgroundColor="Red"/>
             </StackLayout>
         </Frame>
 

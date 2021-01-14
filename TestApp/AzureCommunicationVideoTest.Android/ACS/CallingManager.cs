@@ -8,8 +8,6 @@ using Java.Util;
 using Java.Util.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Android.Hardware;
-using Android.Telecom;
 using Xamarin.Forms.Platform.Android;
 using CameraFacing = Com.Azure.Communication.Calling.CameraFacing;
 
@@ -22,9 +20,9 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         private CallClient _callClient;
         private DeviceManager _deviceManager;
         private LocalVideoStream _localVideoStream;
+        private Renderer _localRenderer;
         private readonly List<RemoteVideoStream> _remoteVideoStreams;
-        private Com.Azure.Communication.Calling.Call _call;
-
+        private Call _call;
 
         public CallingManager()
         {
@@ -47,12 +45,11 @@ namespace AzureCommunicationVideoTest.Droid.ACS
             joinCallOptions.AudioOptions = new AudioOptions();
             var camera = _deviceManager.CameraList.First(c => c.CameraFacing == CameraFacing.Front);
             _localVideoStream = new LocalVideoStream(camera, Application.Context);
-            var renderer = new Renderer(_localVideoStream, Application.Context);
+            _localRenderer = new Renderer(_localVideoStream, Application.Context);
             var renderingOptions = new RenderingOptions(ScalingMode.Crop);
-            var nativeView = renderer.CreateView(renderingOptions);
+            var nativeView = _localRenderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
             LocalVideoAdded?.Invoke(this, formsView);
-
             joinCallOptions.VideoOptions = new VideoOptions(_localVideoStream);
             _call = _callAgent.Join(Application.Context, groupCallContext, joinCallOptions);
             _call.RemoteParticipantsUpdated += _call_RemoteParticipantsUpdated;
@@ -61,22 +58,24 @@ namespace AzureCommunicationVideoTest.Droid.ACS
 
         private void _call_RemoteParticipantsUpdated(object sender, ParticipantsUpdatedEventArgs e)
         {
-            foreach (var p in e.P0.AddedParticipants)
+            foreach (var participantAdded in e.P0.AddedParticipants)
             {
-                p.VideoStreamsUpdated += RemoteVideoStreamsUpdated;
+                participantAdded.VideoStreamsUpdated += RemoteVideoStreamsUpdated;
+                //participantAdded.AddOnVideoStreamsUpdatedListener(this);
 
-                foreach (var v in p.VideoStreams)
+                foreach (var videoStream in participantAdded.VideoStreams)
                 {
-                    if (v.IsAvailable) PublishRemoteVideoStream(v);
+                    if (videoStream.IsAvailable) PublishRemoteVideoStream(videoStream);
                 }
             }
+            
         }
 
         private void RemoteVideoStreamsUpdated(object sender, RemoteVideoStreamsUpdatedEventArgs e)
         {
             foreach (var v in e.P0.AddedRemoteVideoStreams)
             {
-                if (v.IsAvailable) PublishRemoteVideoStream(v);
+                if (v.IsAvailable) PublishRemoteVideoStream(v);                
             }
         }
 
@@ -95,6 +94,13 @@ namespace AzureCommunicationVideoTest.Droid.ACS
             _call.RemoteParticipantsUpdated -= _call_RemoteParticipantsUpdated;
             var hangupOptions = new HangupOptions();
             _call.Hangup(hangupOptions).Get();
+            _localRenderer?.Dispose();
+            _localRenderer = null;
+            _localVideoStream?.Dispose();
+            _localVideoStream = null;
+            _remoteVideoStreams.Clear();
+            _call.Dispose();
+            _call = null;
         }
 
         public void CallEchoService()
@@ -118,7 +124,6 @@ namespace AzureCommunicationVideoTest.Droid.ACS
 
         public void CallPhone(string phoneNumber)
         {
-            throw new NotImplementedException();
         }
     }
 }
