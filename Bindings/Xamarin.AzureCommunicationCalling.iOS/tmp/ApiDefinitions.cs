@@ -279,6 +279,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("onIsSpeakingChanged::")]
 		void OnIsSpeakingChanged (ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args);
 
+		// @optional -(void)onDisplayNameChanged:(ACSRemoteParticipant *)remoteParticipant :(ACSPropertyChangedEventArgs *)args __attribute__((swift_name("onDisplayNameChanged(_:args:)")));
+		[Export ("onDisplayNameChanged::")]
+		void OnDisplayNameChanged (ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args);
+
 		// @optional -(void)onVideoStreamsUpdated:(ACSRemoteParticipant *)remoteParticipant :(ACSRemoteVideoStreamsEventArgs *)args __attribute__((swift_name("onVideoStreamsUpdated(_:args:)")));
 		[Export ("onVideoStreamsUpdated::")]
 		void OnVideoStreamsUpdated (ACSRemoteParticipant remoteParticipant, ACSRemoteVideoStreamsEventArgs args);
@@ -348,6 +352,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSVideoDeviceInfo : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSVideoDeviceInfo
 	{
 		// -(void)dealloc;
@@ -485,8 +490,22 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		NSUuid GroupId { get; set; }
 	}
 
+	// @interface ACSCallAgentOptions : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCallAgentOptions
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (retain) NSString * displayName;
+		[Export ("displayName", ArgumentSemantic.Retain)]
+		string DisplayName { get; set; }
+	}
+
 	// @interface ACSCallAgent : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSCallAgent
 	{
 		// -(void)dealloc;
@@ -527,6 +546,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSCall : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSCall
 	{
 		// -(void)dealloc;
@@ -619,6 +639,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSRemoteParticipant : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSRemoteParticipant
 	{
 		// -(void)dealloc;
@@ -663,6 +684,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSCallEndReason : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSCallEndReason
 	{
 		// -(void)dealloc;
@@ -680,6 +702,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSRemoteVideoStream : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSRemoteVideoStream
 	{
 		// -(void)dealloc;
@@ -701,6 +724,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSPropertyChangedEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSPropertyChangedEventArgs
 	{
 		// -(void)dealloc;
@@ -710,6 +734,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSRemoteVideoStreamsEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSRemoteVideoStreamsEventArgs
 	{
 		// -(void)dealloc;
@@ -727,6 +752,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSParticipantsUpdatedEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSParticipantsUpdatedEventArgs
 	{
 		// -(void)dealloc;
@@ -744,6 +770,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSLocalVideoStreamsUpdatedEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSLocalVideoStreamsUpdatedEventArgs
 	{
 		// -(void)dealloc;
@@ -774,6 +801,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSCallsUpdatedEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSCallsUpdatedEventArgs
 	{
 		// -(void)dealloc;
@@ -826,7 +854,11 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("getDeviceManagerWithCompletionHandler:")]
 		void GetDeviceManagerWithCompletionHandler (Action<ACSDeviceManager, NSError> completionHandler);
 
-		// -(void)createCallAgent:(CommunicationUserCredential *)userCredential withCompletionHandler:(void (^)(ACSCallAgent *, NSError *))completionHandler __attribute__((swift_name("createCallAgent(with:completionHandler:)")));
+		// -(void)createCallAgentWithOptions:(CommunicationUserCredential *)userCredential callAgentOptions:(ACSCallAgentOptions *)callAgentOptions withCompletionHandler:(void (^)(ACSCallAgent *, NSError *))completionHandler __attribute__((swift_name("createCallAgent(userCredential:options:completionHandler:)")));
+		[Export ("createCallAgentWithOptions:callAgentOptions:withCompletionHandler:")]
+		void CreateCallAgentWithOptions (CommunicationUserCredential userCredential, ACSCallAgentOptions callAgentOptions, Action<ACSCallAgent, NSError> completionHandler);
+
+		// -(void)createCallAgent:(CommunicationUserCredential *)userCredential withCompletionHandler:(void (^)(ACSCallAgent *, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:completionHandler:)")));
 		[Export ("createCallAgent:withCompletionHandler:")]
 		void CreateCallAgent (CommunicationUserCredential userCredential, Action<ACSCallAgent, NSError> completionHandler);
 
@@ -837,6 +869,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSDeviceManager : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSDeviceManager
 	{
 		// -(void)dealloc;
@@ -884,6 +917,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSAudioDeviceInfo : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSAudioDeviceInfo
 	{
 		// -(void)dealloc;
@@ -909,6 +943,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSAudioDevicesUpdatedEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSAudioDevicesUpdatedEventArgs
 	{
 		// -(void)dealloc;
@@ -926,6 +961,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSVideoDevicesUpdatedEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
 	interface ACSVideoDevicesUpdatedEventArgs
 	{
 		// -(void)dealloc;

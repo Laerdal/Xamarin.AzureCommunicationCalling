@@ -3,7 +3,7 @@ platform :ios, '12.0'
 use_frameworks!
 
 target 'nativeLibsPlaceholder' do
-  pod 'AzureCommunicationCalling', '~> 1.0.0-beta.6'
-  pod 'AzureCommunication', '~> 1.0.0-beta.6', :binary => true
-  pod 'AzureCore', '~> 1.0.0-beta.6', :binary => true
+  pod 'AzureCommunicationCalling', '~> 1.0.0-beta.7'
+  pod 'AzureCommunication', '~> 1.0.0-beta.7', :binary => true
+  pod 'AzureCore', '~> 1.0.0-beta.7', :binary => true
 end
