@@ -77,7 +77,7 @@
     <EmbeddedReferenceJar Include="Jars\jackson-annotations-2.11.2.jar" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\azure-core-1.0.0-beta.2.aar" />
+    <LibraryProjectZip Include="Jars\azure-core-1.0.0-beta.3.aar" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
