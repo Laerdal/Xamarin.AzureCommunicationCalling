@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="AzureCommunicationVideoTest.MainPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <ContentView Grid.Row="0" Grid.RowSpan="2" x:Name="RemoteVideoView"
-                     VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+    <Grid RowDefinitions="1*,2*">
+        <StackLayout Grid.Row="0" Grid.RowSpan="2" x:Name="RemoteVideoView"
+                     VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        </StackLayout>
         <ContentView x:Name="LocalVideoView"
                      Margin="30"
                      HorizontalOptions="End"
@@ -17,19 +14,19 @@
                HorizontalOptions="Center" VerticalOptions="End" Margin="30">
             <StackLayout>
                 <Label Text="ACS Demo app" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
-                <Button x:Name="GetTokenButton" Text="Get Token from your own service" HorizontalOptions="Center" TextColor="white"
+                <Button x:Name="GetTokenButton" Text="Get Token from your own service" HorizontalOptions="Center" TextColor="Black"
                         BackgroundColor="DarkGreen"/>
-                <Button x:Name="CallEchoButton" Text="Call echo service" HorizontalOptions="Center" TextColor="white" IsEnabled="False"
+                <Button x:Name="CallEchoButton" Text="Call echo service" HorizontalOptions="Center" TextColor="Black" IsEnabled="False"
                         BackgroundColor="Bisque"/>
                 <Entry x:Name="GroupEntry" Text="4dc8d788-1c6b-4187-89a1-136b8c52fc76" FontSize="8"
                        BackgroundColor="White" TextColor="Black"></Entry>
                 <Button x:Name="CallGroupButton" Text="Call group"
-                        HorizontalOptions="Center" TextColor="white" IsEnabled="False"
+                        HorizontalOptions="Center" TextColor="Black" IsEnabled="False"
                         BackgroundColor="Bisque"/>
                 <Entry x:Name="PhoneEntry" Text="+4790786985" IsVisible="false"/>
                 <Button x:Name="CallPhoneButton" Text="Call phone" HorizontalOptions="Center"
-                        TextColor="white" IsEnabled="False" IsVisible="false"/>
-                <Button x:Name="HangupButton" Text="Hang up" HorizontalOptions="Center" TextColor="White" IsEnabled="False"
+                        TextColor="Black" IsEnabled="False" IsVisible="false"/>
+                <Button x:Name="HangupButton" Text="Hang up" HorizontalOptions="Center" TextColor="Black" IsEnabled="False"
                         BackgroundColor="Red"/>
             </StackLayout>
         </Frame>

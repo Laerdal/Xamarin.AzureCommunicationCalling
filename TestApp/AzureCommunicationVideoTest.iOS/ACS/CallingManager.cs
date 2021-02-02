@@ -29,6 +29,8 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         private void RemoteVideoStreamAdded(ACSRemoteVideoStream remoteVideoStream)
         {
+            if (!remoteVideoStream.IsAvailable || _remoteVideoStreams.Contains(remoteVideoStream)) return;
+            
             _remoteVideoStreams.Add(remoteVideoStream);
             var renderer = new ACSRenderer(remoteVideoStream, out var rendererError);
             ThrowIfError(rendererError);
@@ -153,7 +155,6 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             _call?.Hangup(new ACSHangupOptions(), OnVideoHangup);
             _localVideoStreamRenderer?.Dispose();
             _localVideoStream?.Dispose();
-            _localVideoStream = null;
             _localVideoStream = null;
             _remoteVideoStreams.Clear();
             _call?.Dispose();

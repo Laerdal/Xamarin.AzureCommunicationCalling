@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AsyncAwaitBestPractices;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AzureCommunicationVideoTest
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage
     {
         private readonly IACSCallingManager _callingManager;
         private string _token;
@@ -25,14 +26,43 @@ namespace AzureCommunicationVideoTest
             {
                 Device.BeginInvokeOnMainThread(() => LocalVideoView.Content = view);
             };
-            // TODO: if you wanna support multiple remotes, show them in stacklayout or similar
-            _callingManager.RemoteVideoAdded += delegate (object sender, View view) { Device.BeginInvokeOnMainThread(() => RemoteVideoView.Content = view); };
+            _callingManager.RemoteVideoAdded += delegate (object sender, View view)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    // Add the new view to stack layout
+                    RemoteVideoView.Children.Add(new Frame
+                    {
+                        Content = view,
+                        BackgroundColor = GetAlternateBg()
+                    });
+
+                    // Calculate sizes based on screen and number of remotes
+                    var totalCount = RemoteVideoView.Children.Count;
+                    var width = DeviceDisplay.MainDisplayInfo.Width;
+                    var height = DeviceDisplay.MainDisplayInfo.Height / totalCount;
+
+                    // Apply size to new view and all existing
+                    foreach (var child in RemoteVideoView.Children)
+                    {
+                        child.HeightRequest = height;
+                        child.WidthRequest = width;
+                    }
+                });
+            };
+        }
+
+        private int _bgColorIx;
+        private Color GetAlternateBg()
+        {
+            _bgColorIx++;
+            return _bgColorIx % 3 == 0 ? Color.Red : _bgColorIx % 2 == 0 ? Color.Aqua : Color.Crimson;
         }
 
         private void HangupButton_Clicked(object sender, EventArgs e)
         {
             LocalVideoView.Content = null;
-            RemoteVideoView.Content = null;
+            RemoteVideoView.Children.Clear();
             _callingManager.Hangup();
         }
 
@@ -106,7 +136,7 @@ namespace AzureCommunicationVideoTest
         {
             await AskForPermissions();
             
-            var videoCalling = Xamarin.Forms.DependencyService.Get<IACSCallingManager>();
+            var videoCalling = DependencyService.Get<IACSCallingManager>();
             videoCalling.CallEchoService();
         }
 
@@ -117,7 +147,7 @@ namespace AzureCommunicationVideoTest
             var groupId = GroupEntry.Text;
             var groupIdGuid = new Guid(groupId);
             
-            _callingManager.JoinGroup(groupIdGuid);
+            _callingManager.JoinGroup(groupIdGuid).SafeFireAndForget();
         }
         private async Task StartPhoneCall()
         {
