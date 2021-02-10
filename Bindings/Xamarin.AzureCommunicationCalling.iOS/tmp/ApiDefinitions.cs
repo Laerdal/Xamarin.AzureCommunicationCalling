@@ -20,36 +20,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		byte[] AzureCommunicationVersionString { get; }
 	}
 
-	// @protocol CommunicationIdentifier <NSObject>
-	/*
-  Check whether adding [Model] to this declaration is appropriate.
-  [Model] is used to generate a C# class that implements this protocol,
-  and might be useful for protocols that consumers are supposed to implement,
-  since consumers can subclass the generated class instead of implementing
-  the generated interface. If consumers are not supposed to implement this
-  protocol, then [Model] is redundant and will generate code that will never
-  be used.
-*/[Protocol (Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
-	[BaseType (typeof(NSObject), Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
-	interface CommunicationIdentifier
-	{
-	}
-
-	// @interface CallingApplication : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication18CallingApplication")]
-	[DisableDefaultCtor]
-	interface CallingApplication : ICommunicationIdentifier
-	{
-		// @property (readonly, copy, nonatomic) NSString * _Nonnull identifier;
-		[Export ("identifier")]
-		string Identifier { get; }
-
-		// -(instancetype _Nonnull)initWithIdentifier:(NSString * _Nonnull)identifier __attribute__((objc_designated_initializer));
-		[Export ("initWithIdentifier:")]
-		[DesignatedInitializer]
-		IntPtr Constructor (string identifier);
-	}
-
 	// @interface CommunicationAccessToken : NSObject
 	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication24CommunicationAccessToken")]
 	[DisableDefaultCtor]
@@ -69,10 +39,82 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		IntPtr Constructor (string token, NSDate expiresOn);
 	}
 
-	// @interface CommunicationUser : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication17CommunicationUser")]
+	// @interface CommunicationCloudEnvironment : NSObject
+	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication29CommunicationCloudEnvironment")]
 	[DisableDefaultCtor]
-	interface CommunicationUser : ICommunicationIdentifier
+	interface CommunicationCloudEnvironment
+	{
+		// @property (readonly, nonatomic, strong, class) CommunicationCloudEnvironment * _Nonnull Public;
+		[Static]
+		[Export ("Public", ArgumentSemantic.Strong)]
+		CommunicationCloudEnvironment Public { get; }
+
+		// @property (readonly, nonatomic, strong, class) CommunicationCloudEnvironment * _Nonnull Dod;
+		[Static]
+		[Export ("Dod", ArgumentSemantic.Strong)]
+		CommunicationCloudEnvironment Dod { get; }
+
+		// @property (readonly, nonatomic, strong, class) CommunicationCloudEnvironment * _Nonnull Gcch;
+		[Static]
+		[Export ("Gcch", ArgumentSemantic.Strong)]
+		CommunicationCloudEnvironment Gcch { get; }
+
+		// -(instancetype _Nonnull)initWithEnvironmentValue:(NSString * _Nonnull)environmentValue __attribute__((objc_designated_initializer));
+		[Export ("initWithEnvironmentValue:")]
+		[DesignatedInitializer]
+		IntPtr Constructor (string environmentValue);
+	}
+
+	// @protocol CommunicationIdentifier <NSObject>
+	/*
+  Check whether adding [Model] to this declaration is appropriate.
+  [Model] is used to generate a C# class that implements this protocol,
+  and might be useful for protocols that consumers are supposed to implement,
+  since consumers can subclass the generated class instead of implementing
+  the generated interface. If consumers are not supposed to implement this
+  protocol, then [Model] is redundant and will generate code that will never
+  be used.
+*/[Protocol (Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
+	[BaseType (typeof(NSObject), Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
+	interface CommunicationIdentifier
+	{
+	}
+
+	// @interface CommunicationTokenCredential : NSObject
+	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication28CommunicationTokenCredential")]
+	[DisableDefaultCtor]
+	interface CommunicationTokenCredential
+	{
+		// -(instancetype _Nullable)initWithToken:(NSString * _Nonnull)token error:(NSError * _Nullable * _Nullable)error __attribute__((objc_designated_initializer));
+		[Export ("initWithToken:error:")]
+		[DesignatedInitializer]
+		IntPtr Constructor (string token, [NullAllowed] out NSError error);
+
+		// -(instancetype _Nullable)initWith:(CommunicationTokenRefreshOptions * _Nonnull)option error:(NSError * _Nullable * _Nullable)error __attribute__((objc_designated_initializer));
+		[Export ("initWith:error:")]
+		[DesignatedInitializer]
+		IntPtr Constructor (CommunicationTokenRefreshOptions option, [NullAllowed] out NSError error);
+
+		// -(void)tokenWithCompletionHandler:(void (^ _Nonnull)(CommunicationAccessToken * _Nullable, NSError * _Nullable))completionHandler;
+		[Export ("tokenWithCompletionHandler:")]
+		void TokenWithCompletionHandler (Action<CommunicationAccessToken, NSError> completionHandler);
+	}
+
+	// @interface CommunicationTokenRefreshOptions : NSObject
+	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication32CommunicationTokenRefreshOptions")]
+	[DisableDefaultCtor]
+	interface CommunicationTokenRefreshOptions
+	{
+		// -(instancetype _Nonnull)initWithInitialToken:(NSString * _Nullable)initialToken refreshProactively:(BOOL)refreshProactively tokenRefresher:(void (^ _Nonnull)(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable)))tokenRefresher __attribute__((objc_designated_initializer));
+		[Export ("initWithInitialToken:refreshProactively:tokenRefresher:")]
+		[DesignatedInitializer]
+		IntPtr Constructor ([NullAllowed] string initialToken, bool refreshProactively, Action<Action<NSString, NSError>> tokenRefresher);
+	}
+
+	// @interface CommunicationUserIdentifier : NSObject <CommunicationIdentifier>
+	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication27CommunicationUserIdentifier")]
+	[DisableDefaultCtor]
+	interface CommunicationUserIdentifier : ICommunicationIdentifier
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull identifier;
 		[Export ("identifier")]
@@ -84,39 +126,55 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		IntPtr Constructor (string identifier);
 	}
 
-	// @interface CommunicationUserCredential : NSObject
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication27CommunicationUserCredential")]
+	// @interface MicrosoftTeamsUserIdentifier : NSObject <CommunicationIdentifier>
+	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication28MicrosoftTeamsUserIdentifier")]
 	[DisableDefaultCtor]
-	interface CommunicationUserCredential
+	interface MicrosoftTeamsUserIdentifier : ICommunicationIdentifier
 	{
-		// -(instancetype _Nullable)initWithToken:(NSString * _Nonnull)token error:(NSError * _Nullable * _Nullable)error __attribute__((objc_designated_initializer));
-		[Export ("initWithToken:error:")]
-		[DesignatedInitializer]
-		IntPtr Constructor (string token, [NullAllowed] out NSError error);
+		// @property (readonly, copy, nonatomic) NSString * _Nullable rawId;
+		[NullAllowed, Export ("rawId")]
+		string RawId { get; }
 
-		// -(instancetype _Nullable)initWithInitialToken:(NSString * _Nullable)initialToken refreshProactively:(BOOL)refreshProactively error:(NSError * _Nullable * _Nullable)error tokenRefresher:(void (^ _Nonnull)(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable)))tokenRefresher __attribute__((objc_designated_initializer));
-		[Export ("initWithInitialToken:refreshProactively:error:tokenRefresher:")]
-		[DesignatedInitializer]
-		IntPtr Constructor ([NullAllowed] string initialToken, bool refreshProactively, [NullAllowed] out NSError error, Action<Action<NSString, NSError>> tokenRefresher);
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull userId;
+		[Export ("userId")]
+		string UserId { get; }
 
-		// -(void)tokenWithCompletionHandler:(void (^ _Nonnull)(CommunicationAccessToken * _Nullable, NSError * _Nullable))completionHandler;
-		[Export ("tokenWithCompletionHandler:")]
-		void TokenWithCompletionHandler (Action<CommunicationAccessToken, NSError> completionHandler);
+		// @property (readonly, nonatomic) BOOL isAnonymous;
+		[Export ("isAnonymous")]
+		bool IsAnonymous { get; }
+
+		// @property (readonly, nonatomic, strong) CommunicationCloudEnvironment * _Nonnull cloudEnviroment;
+		[Export ("cloudEnviroment", ArgumentSemantic.Strong)]
+		CommunicationCloudEnvironment CloudEnviroment { get; }
+
+		// -(instancetype _Nonnull)initWithUserId:(NSString * _Nonnull)userId isAnonymous:(BOOL)isAnonymous rawId:(NSString * _Nullable)rawId cloudEnvironment:(CommunicationCloudEnvironment * _Nonnull)cloudEnvironment __attribute__((objc_designated_initializer));
+		[Export ("initWithUserId:isAnonymous:rawId:cloudEnvironment:")]
+		[DesignatedInitializer]
+		IntPtr Constructor (string userId, bool isAnonymous, [NullAllowed] string rawId, CommunicationCloudEnvironment cloudEnvironment);
+
+		// -(instancetype _Nonnull)initWithUserId:(NSString * _Nonnull)userId isAnonymous:(BOOL)isAnonymous __attribute__((objc_designated_initializer));
+		[Export ("initWithUserId:isAnonymous:")]
+		[DesignatedInitializer]
+		IntPtr Constructor (string userId, bool isAnonymous);
 	}
 
-	// @interface PhoneNumber : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication11PhoneNumber")]
+	// @interface PhoneNumberIdentifier : NSObject <CommunicationIdentifier>
+	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication21PhoneNumberIdentifier")]
 	[DisableDefaultCtor]
-	interface PhoneNumber : ICommunicationIdentifier
+	interface PhoneNumberIdentifier : ICommunicationIdentifier
 	{
-		// @property (readonly, copy, nonatomic) NSString * _Nonnull value;
-		[Export ("value")]
-		string Value { get; }
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull phoneNumber;
+		[Export ("phoneNumber")]
+		string PhoneNumber { get; }
 
-		// -(instancetype _Nonnull)initWithPhoneNumber:(NSString * _Nonnull)phoneNumber __attribute__((objc_designated_initializer));
-		[Export ("initWithPhoneNumber:")]
+		// @property (readonly, copy, nonatomic) NSString * _Nullable rawId;
+		[NullAllowed, Export ("rawId")]
+		string RawId { get; }
+
+		// -(instancetype _Nonnull)initWithPhoneNumber:(NSString * _Nonnull)phoneNumber rawId:(NSString * _Nullable)rawId __attribute__((objc_designated_initializer));
+		[Export ("initWithPhoneNumber:rawId:")]
 		[DesignatedInitializer]
-		IntPtr Constructor (string phoneNumber);
+		IntPtr Constructor (string phoneNumber, [NullAllowed] string rawId);
 	}
 
 	// @interface UnknownIdentifier : NSObject <CommunicationIdentifier>
@@ -260,6 +318,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// @optional -(void)onLocalVideoStreamsChanged:(ACSCall *)call :(ACSLocalVideoStreamsUpdatedEventArgs *)args __attribute__((swift_name("onLocalVideoStreamsChanged(_:args:)")));
 		[Export ("onLocalVideoStreamsChanged::")]
 		void OnLocalVideoStreamsChanged (ACSCall call, ACSLocalVideoStreamsUpdatedEventArgs args);
+
+		// @optional -(void)onIsRecordingActiveChanged:(ACSCall *)call :(ACSPropertyChangedEventArgs *)args __attribute__((swift_name("onIsRecordingActiveChanged(_:args:)")));
+		[Export ("onIsRecordingActiveChanged::")]
+		void OnIsRecordingActiveChanged (ACSCall call, ACSPropertyChangedEventArgs args);
 	}
 
 	// @protocol ACSRemoteParticipantDelegate <NSObject>
@@ -459,9 +521,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("audioOptions", ArgumentSemantic.Retain)]
 		ACSAudioOptions AudioOptions { get; set; }
 
-		// @property (nonatomic) PhoneNumber * _Nonnull alternateCallerID;
+		// @property (nonatomic) PhoneNumberIdentifier * _Nonnull alternateCallerID;
 		[Export ("alternateCallerID", ArgumentSemantic.Assign)]
-		PhoneNumber AlternateCallerID { get; set; }
+		PhoneNumberIdentifier AlternateCallerID { get; set; }
 	}
 
 	// @interface ACSAddPhoneNumberOptions : NSObject
@@ -472,22 +534,108 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("dealloc")]
 		void Dealloc ();
 
-		// @property (nonatomic) PhoneNumber * _Nonnull alternateCallerID;
+		// @property (nonatomic) PhoneNumberIdentifier * _Nonnull alternateCallerID;
 		[Export ("alternateCallerID", ArgumentSemantic.Assign)]
-		PhoneNumber AlternateCallerID { get; set; }
+		PhoneNumberIdentifier AlternateCallerID { get; set; }
 	}
 
-	// @interface ACSGroupCallContext : NSObject
+	// @interface ACSAbstractJoinMeetingLocator : NSObject
 	[BaseType (typeof(NSObject))]
-	interface ACSGroupCallContext
+	[DisableDefaultCtor]
+	interface ACSAbstractJoinMeetingLocator
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+	}
+
+	// @interface ACSGroupCallLocator : ACSAbstractJoinMeetingLocator
+	[BaseType (typeof(ACSAbstractJoinMeetingLocator))]
+	[DisableDefaultCtor]
+	interface ACSGroupCallLocator
+	{
+		// -(instancetype)init:(NSUUID *)groupId __attribute__((swift_name("init(groupId:)")));
+		[Export ("init:")]
+		IntPtr Constructor (NSUuid groupId);
+
+		// @property NSUUID * groupId;
+		[Export ("groupId", ArgumentSemantic.Assign)]
+		NSUuid GroupId { get; set; }
+	}
+
+	// @interface ACSTeamsMeetingCoordinatesLocator : ACSAbstractJoinMeetingLocator
+	[BaseType (typeof(ACSAbstractJoinMeetingLocator))]
+	[DisableDefaultCtor]
+	interface ACSTeamsMeetingCoordinatesLocator
+	{
+		// -(instancetype)initWithThreadId:(NSString *)threadId organizerId:(NSUUID *)organizerId tenantId:(NSUUID *)tenantId messageId:(NSString *)messageId __attribute__((swift_name("init(with:organizerId:tenantId:messageId:)")));
+		[Export ("initWithThreadId:organizerId:tenantId:messageId:")]
+		IntPtr Constructor (string threadId, NSUuid organizerId, NSUuid tenantId, string messageId);
+
+		// @property (readonly, retain) NSString * threadId;
+		[Export ("threadId", ArgumentSemantic.Retain)]
+		string ThreadId { get; }
+
+		// @property NSUUID * organizerId;
+		[Export ("organizerId", ArgumentSemantic.Assign)]
+		NSUuid OrganizerId { get; set; }
+
+		// @property NSUUID * tenantId;
+		[Export ("tenantId", ArgumentSemantic.Assign)]
+		NSUuid TenantId { get; set; }
+
+		// @property (readonly, retain) NSString * messageId;
+		[Export ("messageId", ArgumentSemantic.Retain)]
+		string MessageId { get; }
+	}
+
+	// @interface ACSTeamsMeetingLinkLocator : ACSAbstractJoinMeetingLocator
+	[BaseType (typeof(ACSAbstractJoinMeetingLocator))]
+	[DisableDefaultCtor]
+	interface ACSTeamsMeetingLinkLocator
+	{
+		// -(instancetype)init:(NSString *)meetingLink __attribute__((swift_name("init(meetingLink:)")));
+		[Export ("init:")]
+		IntPtr Constructor (string meetingLink);
+
+		// @property (readonly, retain) NSString * meetingLink;
+		[Export ("meetingLink", ArgumentSemantic.Retain)]
+		string MeetingLink { get; }
+	}
+
+	// @interface ACSIncomingCallPushNotification : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSIncomingCallPushNotification
 	{
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
 
-		// @property (nonatomic) NSUUID * _Nonnull groupId;
-		[Export ("groupId", ArgumentSemantic.Assign)]
-		NSUuid GroupId { get; set; }
+		// @property (readonly, retain) NSString * fromDisplayName;
+		[Export ("fromDisplayName", ArgumentSemantic.Retain)]
+		string FromDisplayName { get; }
+
+		// @property (readonly) BOOL hasIncomingVideo;
+		[Export ("hasIncomingVideo")]
+		bool HasIncomingVideo { get; }
+
+		// @property (readonly, retain) id<CommunicationIdentifier> from;
+		[Export ("from", ArgumentSemantic.Retain)]
+		CommunicationIdentifier From { get; }
+
+		// @property (readonly, retain) id<CommunicationIdentifier> to;
+		[Export ("to", ArgumentSemantic.Retain)]
+		CommunicationIdentifier To { get; }
+
+		// @property (readonly, nonatomic) NSUUID * _Nonnull callId;
+		[Export ("callId")]
+		NSUuid CallId { get; }
+
+		// +(ACSIncomingCallPushNotification *)fromDictionary:(NSDictionary *)payload;
+		[Static]
+		[Export ("fromDictionary:")]
+		ACSIncomingCallPushNotification FromDictionary (NSDictionary payload);
 	}
 
 	// @interface ACSCallAgentOptions : NSObject
@@ -523,9 +671,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
 		NSObject WeakDelegate { get; set; }
 
-		// -(ACSCall *)joinWithGroupCallContext:(ACSGroupCallContext *)groupCallContext joinCallOptions:(ACSJoinCallOptions *)joinCallOptions __attribute__((swift_name("join(with:joinCallOptions:)")));
-		[Export ("joinWithGroupCallContext:joinCallOptions:")]
-		ACSCall JoinWithGroupCallContext (ACSGroupCallContext groupCallContext, ACSJoinCallOptions joinCallOptions);
+		// -(ACSCall *)joinWithMeetingLocator:(ACSAbstractJoinMeetingLocator *)meetingLocator joinCallOptions:(ACSJoinCallOptions *)joinCallOptions __attribute__((swift_name("join(with:joinCallOptions:)")));
+		[Export ("joinWithMeetingLocator:joinCallOptions:")]
+		ACSCall JoinWithMeetingLocator (ACSAbstractJoinMeetingLocator meetingLocator, ACSJoinCallOptions joinCallOptions);
+
+		// -(void)handlePushNotification:(ACSIncomingCallPushNotification *)notification withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("handlePush(notification:completionHandler:)")));
+		[Export ("handlePushNotification:withCompletionHandler:")]
+		void HandlePushNotification (ACSIncomingCallPushNotification notification, Action<NSError> completionHandler);
 
 		// -(void)unRegisterPushNotificationsWithCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("unRegisterPushNotifications(completionHandler:)")));
 		[Export ("unRegisterPushNotificationsWithCompletionHandler:")]
@@ -538,10 +690,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// -(void)registerPushNotifications:(NSData *)deviceToken withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("registerPushNotifications(deviceToken:completionHandler:)")));
 		[Export ("registerPushNotifications:withCompletionHandler:")]
 		void RegisterPushNotifications (NSData deviceToken, Action<NSError> completionHandler);
-
-		// -(void)handlePushNotification:(NSDictionary *)payload withCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("handlePushNotification(payload:completionHandler:)")));
-		[Export ("handlePushNotification:withCompletionHandler:")]
-		void HandlePushNotification (NSDictionary payload, Action<NSError> completionHandler);
 	}
 
 	// @interface ACSCall : NSObject
@@ -580,6 +728,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// @property (readonly, copy) NSArray<ACSLocalVideoStream *> * localVideoStreams;
 		[Export ("localVideoStreams", ArgumentSemantic.Copy)]
 		ACSLocalVideoStream[] LocalVideoStreams { get; }
+
+		// @property (readonly) BOOL isRecordingActive;
+		[Export ("isRecordingActive")]
+		bool IsRecordingActive { get; }
 
 		[Wrap ("WeakDelegate")]
 		ACSCallDelegate Delegate { get; set; }
@@ -624,6 +776,14 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("rejectWithCompletionHandler:")]
 		void RejectWithCompletionHandler (Action<NSError> completionHandler);
 
+		// -(void)holdWithCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("hold(completionHandler:)")));
+		[Export ("holdWithCompletionHandler:")]
+		void HoldWithCompletionHandler (Action<NSError> completionHandler);
+
+		// -(void)resumeWithCompletionHandler:(void (^)(NSError *))completionHandler __attribute__((swift_name("resume(completionHandler:)")));
+		[Export ("resumeWithCompletionHandler:")]
+		void ResumeWithCompletionHandler (Action<NSError> completionHandler);
+
 		// @property (nonatomic) id<CommunicationIdentifier> _Nonnull callerId;
 		[Export ("callerId", ArgumentSemantic.Assign)]
 		CommunicationIdentifier CallerId { get; set; }
@@ -632,9 +792,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("addParticipant:")]
 		ACSRemoteParticipant AddParticipant (CommunicationIdentifier participant);
 
-		// -(ACSRemoteParticipant *)addParticipant:(PhoneNumber *)participant options:(ACSAddPhoneNumberOptions *)options __attribute__((swift_name("add(participant:options:)")));
+		// -(ACSRemoteParticipant *)addParticipant:(PhoneNumberIdentifier *)participant options:(ACSAddPhoneNumberOptions *)options __attribute__((swift_name("add(participant:options:)")));
 		[Export ("addParticipant:options:")]
-		ACSRemoteParticipant AddParticipant (PhoneNumber participant, ACSAddPhoneNumberOptions options);
+		ACSRemoteParticipant AddParticipant (PhoneNumberIdentifier participant, ACSAddPhoneNumberOptions options);
 	}
 
 	// @interface ACSRemoteParticipant : NSObject
@@ -854,17 +1014,17 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("getDeviceManagerWithCompletionHandler:")]
 		void GetDeviceManagerWithCompletionHandler (Action<ACSDeviceManager, NSError> completionHandler);
 
-		// -(void)createCallAgentWithOptions:(CommunicationUserCredential *)userCredential callAgentOptions:(ACSCallAgentOptions *)callAgentOptions withCompletionHandler:(void (^)(ACSCallAgent *, NSError *))completionHandler __attribute__((swift_name("createCallAgent(userCredential:options:completionHandler:)")));
+		// -(void)createCallAgentWithOptions:(CommunicationTokenCredential *)userCredential callAgentOptions:(ACSCallAgentOptions *)callAgentOptions withCompletionHandler:(void (^)(ACSCallAgent *, NSError *))completionHandler __attribute__((swift_name("createCallAgent(userCredential:options:completionHandler:)")));
 		[Export ("createCallAgentWithOptions:callAgentOptions:withCompletionHandler:")]
-		void CreateCallAgentWithOptions (CommunicationUserCredential userCredential, ACSCallAgentOptions callAgentOptions, Action<ACSCallAgent, NSError> completionHandler);
+		void CreateCallAgentWithOptions (CommunicationTokenCredential userCredential, ACSCallAgentOptions callAgentOptions, Action<ACSCallAgent, NSError> completionHandler);
 
-		// -(void)createCallAgent:(CommunicationUserCredential *)userCredential withCompletionHandler:(void (^)(ACSCallAgent *, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:completionHandler:)")));
+		// -(void)createCallAgent:(CommunicationTokenCredential *)userCredential withCompletionHandler:(void (^)(ACSCallAgent *, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:completionHandler:)")));
 		[Export ("createCallAgent:withCompletionHandler:")]
-		void CreateCallAgent (CommunicationUserCredential userCredential, Action<ACSCallAgent, NSError> completionHandler);
+		void CreateCallAgent (CommunicationTokenCredential userCredential, Action<ACSCallAgent, NSError> completionHandler);
 
-		// @property (retain) CommunicationUserCredential * _Nonnull communicationCredential;
+		// @property (retain) CommunicationTokenCredential * _Nonnull communicationCredential;
 		[Export ("communicationCredential", ArgumentSemantic.Retain)]
-		CommunicationUserCredential CommunicationCredential { get; set; }
+		CommunicationTokenCredential CommunicationCredential { get; set; }
 	}
 
 	// @interface ACSDeviceManager : NSObject

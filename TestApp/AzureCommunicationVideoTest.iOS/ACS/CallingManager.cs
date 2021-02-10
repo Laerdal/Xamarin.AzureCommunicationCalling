@@ -29,16 +29,23 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         private void RemoteVideoStreamAdded(ACSRemoteVideoStream remoteVideoStream)
         {
-            if (!remoteVideoStream.IsAvailable || _remoteVideoStreams.Contains(remoteVideoStream)) return;
+            if (!remoteVideoStream.IsAvailable ||
+                _remoteVideoStreams.Any(s => s.Id == remoteVideoStream.Id))
+            {
+                return;
+            }
             
             _remoteVideoStreams.Add(remoteVideoStream);
-            var renderer = new ACSRenderer(remoteVideoStream, out var rendererError);
-            ThrowIfError(rendererError);
-            var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
-            var nativeView = renderer.CreateViewWithOptions(renderingOptions, out var createViewError);
-            ThrowIfError(createViewError);
-            var formsView = nativeView.ToView();
-            RemoteVideoAdded?.Invoke(this, formsView);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                var renderer = new ACSRenderer(remoteVideoStream, out var rendererError);
+                ThrowIfError(rendererError);
+                var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
+                var nativeView = renderer.CreateViewWithOptions(renderingOptions, out var createViewError);
+                ThrowIfError(createViewError);
+                var formsView = nativeView.ToView();
+                RemoteVideoAdded?.Invoke(this, formsView);
+            });
         }
 
         private void ThrowIfError(NSError rendererError)
@@ -77,7 +84,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
                 _callClient.GetDeviceManagerWithCompletionHandler(OnDeviceManagerCreated);
             }
 
-            var credentials = new CommunicationUserCredential(token, out var nSError);
+            var credentials = new CommunicationTokenCredential(token, out var nSError);
             if (nSError != null)
             {
                 initTask.TrySetCanceled();
@@ -98,7 +105,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             var localVideoStream = new ACSLocalVideoStream(camera);
             callOptions.VideoOptions = new ACSVideoOptions(localVideoStream);
 
-            var receivers = new CommunicationIdentifier[] { new CommunicationUser("8:echo123") };
+            var receivers = new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:echo123") };
 
             _callAgent.Call(receivers, callOptions);
         }
@@ -108,7 +115,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         public void CallPhone(string phoneNumber)
         {
-            var acsNumber = new PhoneNumber(phoneNumber);
+            var acsNumber = new PhoneNumberIdentifier(phoneNumber, phoneNumber);
             var receivers = new CommunicationIdentifier[] { acsNumber };
             var callOptions = new ACSStartCallOptions
             {
@@ -120,6 +127,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         public async Task JoinGroup(Guid groupID)
         {
+            var cameras = _deviceManager.CameraList;
             var camera = _deviceManager
                 .CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);
             _localVideoStream = new ACSLocalVideoStream(camera);
@@ -132,15 +140,26 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
             LocalVideoAdded?.Invoke(this, formsView);
 
-            var groupCallContext = new ACSGroupCallContext {GroupId = new NSUuid(groupID.ToString())};
+            var groupCallLocator = new ACSGroupCallLocator(new NSUuid(groupID.ToString()));
             var callOptions = new ACSJoinCallOptions
             {
                 AudioOptions = new ACSAudioOptions(),
                 VideoOptions = new ACSVideoOptions(_localVideoStream)
             };
             //callOptions.AudioOptions.Muted = true;
-            _call = _callAgent.JoinWithGroupCallContext(groupCallContext, callOptions);
+            _call = _callAgent.JoinWithMeetingLocator(groupCallLocator, callOptions);
+            // Respond to changes
             _call.Delegate = new CallDelegate(_videoCallbackManager);
+            // Setup initial streams. This is clumsy and probably an API flaw...
+            // IMHO delegate should be called after setting it on existing state...
+            foreach (var remoteParticipant in _call.RemoteParticipants)
+            {
+                remoteParticipant.Delegate = new RemoteParticipantDelegate(_videoCallbackManager);
+                foreach (var remoteVideoStream in remoteParticipant.VideoStreams)
+                {
+                    RemoteVideoStreamAdded(remoteVideoStream);
+                }
+            }
 
             _call.StartVideo(_localVideoStream, OnVideoStarted);
         }

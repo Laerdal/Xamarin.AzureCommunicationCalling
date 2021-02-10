@@ -71,7 +71,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		Connected = 5,
 		Hold = 6,
 		Disconnecting = 7,
-		Disconnected = 8
+		Disconnected = 8,
+		InLobby = 9
 	}
 
 	[Native]
@@ -108,5 +109,14 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	{
 		Crop = 1,
 		Fit = 2
+	}
+
+	[Native]
+	public enum ACSHandleType : long
+	{
+		Unknown = 0,
+		GroupCallLocator = 1,
+		TeamsMeetingCoordinatesLocator = 2,
+		TeamsMeetingLinkLocator = 3
 	}
 }

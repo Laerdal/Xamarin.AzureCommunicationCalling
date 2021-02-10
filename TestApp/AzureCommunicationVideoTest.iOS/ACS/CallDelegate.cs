@@ -17,14 +17,17 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         public override void OnCallStateChanged(ACSCall call, ACSPropertyChangedEventArgs args)
         {
+            Logger.Debug($"Call state changed: {call.State}");
         }
 
         public override void OnLocalVideoStreamsChanged(ACSCall call, ACSLocalVideoStreamsUpdatedEventArgs args)
         {
+            Logger.Debug($"Local video streams changed");
         }
 
         public override void OnRemoteParticipantsUpdated(ACSCall call, ACSParticipantsUpdatedEventArgs args)
         {
+            Logger.Debug($"Remote participants changed");
             foreach (var participant in args.AddedParticipants)
             {
                 _videoCallbackManager.HandleRemoteParticipantAdded(participant);

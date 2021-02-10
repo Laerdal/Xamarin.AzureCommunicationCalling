@@ -21,7 +21,7 @@ patch -s -p0 -N < AzureCommunicationCalling.h.patch
 
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
 sharpie bind \
-    -sdk iphoneos14.3 \
+    -sdk iphoneos14.4 \
     -o tmp \
     -namespace "Xamarin.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \

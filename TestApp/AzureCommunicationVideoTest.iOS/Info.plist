@@ -46,12 +46,6 @@
 	<string>Looking up a location may access the calendar</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>This application communicates with a Laerdal Medical AS bluetooth device.</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>This application communicates with a Laerdal Medical AS bluetooth device.</string>
-	<key>NSBluetoothPeripheralDescription</key>
-	<string>This application communicates with a Laerdal Medical AS bluetooth device.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We use the microphone during an emergency to communicate with a dispatcher.</string>
 	<key>NSCameraUsageDescription</key>

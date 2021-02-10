@@ -5,7 +5,6 @@ namespace AzureCommunicationVideoTest.iOS.ACS
     public class RemoteParticipantDelegate : ACSRemoteParticipantDelegate
     {
         private readonly CallingCallbackManager _videoCallbackManager;
-        //private List<ACSRemoteVideoStream> _remoteVideoStreams = new List<ACSRemoteVideoStream>();
 
         public RemoteParticipantDelegate(CallingCallbackManager videoCallbackManager)
         {
@@ -14,17 +13,17 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         public override void OnParticipantStateChanged(ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args)
         {
+            foreach (var remoteVideoStream in remoteParticipant.VideoStreams)
+            {
+                _videoCallbackManager.RemoteVideoStreamAdded?.Invoke(remoteVideoStream);
+            }
         }
 
         public override void OnVideoStreamsUpdated(ACSRemoteParticipant remoteParticipant, ACSRemoteVideoStreamsEventArgs args)
         {
-            foreach (var videoStream in args.AddedRemoteVideoStreams)
+            foreach (var remoteVideoStream in args.AddedRemoteVideoStreams)
             {
-                if (videoStream.IsAvailable)
-                {
-                    _videoCallbackManager.RemoteVideoStreamAdded?.Invoke(videoStream);
-                }
-                //_remoteVideoStreams.Add(videoStream);
+                _videoCallbackManager.RemoteVideoStreamAdded?.Invoke(remoteVideoStream);
             }
         }
     }
