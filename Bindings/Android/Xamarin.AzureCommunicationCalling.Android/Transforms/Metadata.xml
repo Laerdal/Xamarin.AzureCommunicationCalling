@@ -31,8 +31,7 @@
     <remove-node path="/api/package[@name='com.skype.android.video.hw.extension.encoder']/*"/>
     <remove-node path="/api/package[@name='com.skype.android.jipc.omx.inout']/*"/>
     
-    <remove-node path="/api/package[@name='com.azure.communication.calling.internal']/class[@name='BasePrivateDictionary']"/>
-
+    <remove-node path="/api/package[@name='com.azure.android.communication.calling.internal']/class[@name='BasePrivateDictionary']"/>
     
     <add-node path="/api/package[@name='com.microsoft.dl.video.capture.impl']/class[@name='FpsRangeComparator']">
         <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
