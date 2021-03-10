@@ -15,7 +15,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             _videoCallbackManager = videoCallbackManager;
         }
 
-        public override void OnCallStateChanged(ACSCall call, ACSPropertyChangedEventArgs args)
+        public override void OnStateChanged(ACSCall call, ACSPropertyChangedEventArgs args)
         {
             Logger.Debug($"Call state changed: {call.State}");
         }

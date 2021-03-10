@@ -5,16 +5,16 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 {
 	[Flags]
 	[Native]
-	public enum ACSCommunicationErrors : long
+	public enum ACSCallingCommunicationErrors : long
 	{
 		None = 0x0,
 		NoAudioPermission = 0x1,
 		NoVideoPermission = 0x2,
 		NoAudioAndVideoPermission = 0x3,
-		ReceivedInvalidPNPayload = 0x4,
-		FailedToProcessPNPayload = 0x8,
+		ReceivedInvalidPushNotificationPayload = 0x4,
+		FailedToProcessPushNotificationPayload = 0x8,
 		InvalidGuidGroupId = 0x10,
-		InvalidPNDeviceRegistrationToken = 0x20,
+		InvalidPushNotificationDeviceRegistrationToken = 0x20,
 		MultipleRenderersNotSupported = 0x40,
 		MultipleViewsNotSupported = 0x80
 	}
@@ -37,8 +37,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		Unknown = 0,
 		UsbCamera = 1,
 		CaptureAdapter = 2,
-		Virtual = 3,
-		SRAugmented = 4
+		Virtual = 3
 	}
 
 	[Native]
@@ -55,9 +54,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		EarlyMedia = 1,
 		Connecting = 2,
 		Connected = 3,
-		OnHold = 4,
+		Hold = 4,
 		InLobby = 5,
-		Disconnected = 6
+		Disconnected = 6,
+		Ringing = 7
 	}
 
 	[Native]
@@ -65,14 +65,21 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	{
 		None = 0,
 		EarlyMedia = 1,
-		Incoming = 2,
 		Connecting = 3,
 		Ringing = 4,
 		Connected = 5,
-		Hold = 6,
+		LocalHold = 6,
 		Disconnecting = 7,
 		Disconnected = 8,
-		InLobby = 9
+		InLobby = 9,
+		RemoteHold = 10
+	}
+
+	[Native]
+	public enum ACSCallDirection : long
+	{
+		Outgoing = 1,
+		Incoming = 2
 	}
 
 	[Native]
@@ -98,13 +105,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSAudioDeviceType : long
-	{
-		Microphone = 0,
-		Speaker = 1
-	}
-
-	[Native]
 	public enum ACSScalingMode : long
 	{
 		Crop = 1,
@@ -115,8 +115,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	public enum ACSHandleType : long
 	{
 		Unknown = 0,
-		GroupCallLocator = 1,
-		TeamsMeetingCoordinatesLocator = 2,
-		TeamsMeetingLinkLocator = 3
+		AddPhoneNumberOptions = 1,
+		GroupCallLocator = 2,
+		TeamsMeetingCoordinatesLocator = 3,
+		TeamsMeetingLinkLocator = 4
 	}
 }

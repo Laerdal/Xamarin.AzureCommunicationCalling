@@ -17,7 +17,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         private ACSCallAgent _callAgent;
         private ACSCall _call;
         private ACSLocalVideoStream _localVideoStream;
-        private ACSRenderer _localVideoStreamRenderer;
+        private ACSVideoStreamRenderer _localVideoStreamRenderer;
         private readonly CallingCallbackManager _videoCallbackManager;
         private readonly List<ACSRemoteVideoStream> _remoteVideoStreams;
 
@@ -38,7 +38,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             _remoteVideoStreams.Add(remoteVideoStream);
             Device.BeginInvokeOnMainThread(() =>
             {
-                var renderer = new ACSRenderer(remoteVideoStream, out var rendererError);
+                var renderer = new ACSVideoStreamRenderer(remoteVideoStream, out var rendererError);
                 ThrowIfError(rendererError);
                 var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
                 var nativeView = renderer.CreateViewWithOptions(renderingOptions, out var createViewError);
@@ -98,7 +98,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         public void CallEchoService()
         {
             var callOptions = new ACSStartCallOptions();
-            var camera = _deviceManager.CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);
+            var camera = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
             callOptions.AudioOptions = new ACSAudioOptions();
 
             //callOptions.AudioOptions.Muted = true;
@@ -107,7 +107,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
             var receivers = new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:echo123") };
 
-            _callAgent.Call(receivers, callOptions);
+            _callAgent.StartCall(receivers, callOptions);
         }
 
         public event EventHandler<View> LocalVideoAdded = delegate {  };
@@ -121,17 +121,16 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             {
                 AudioOptions = new ACSAudioOptions()
             };
-            _call = _callAgent.Call(receivers, callOptions);
+            _call = _callAgent.StartCall(receivers, callOptions);
         }
 
 
         public async Task JoinGroup(Guid groupID)
         {
-            var cameras = _deviceManager.CameraList;
             var camera = _deviceManager
-                .CameraList.First(c => c.CameraFacing == ACSCameraFacing.Front);
+                .Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
             _localVideoStream = new ACSLocalVideoStream(camera);
-            _localVideoStreamRenderer = new ACSRenderer(_localVideoStream, out var rendererError);
+            _localVideoStreamRenderer = new ACSVideoStreamRenderer(_localVideoStream, out var rendererError);
             ThrowIfError(rendererError);
             var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
             var nativeView = _localVideoStreamRenderer.CreateViewWithOptions(renderingOptions, out var viewError);
@@ -171,7 +170,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         public void Hangup()
         {
-            _call?.Hangup(new ACSHangupOptions(), OnVideoHangup);
+            _call?.HangUp(new ACSHangUpOptions(), OnVideoHangup);
             _localVideoStreamRenderer?.Dispose();
             _localVideoStream?.Dispose();
             _localVideoStream = null;

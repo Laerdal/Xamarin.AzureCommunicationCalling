@@ -11,7 +11,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             _videoCallbackManager = videoCallbackManager;
         }
 
-        public override void OnParticipantStateChanged(ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args)
+        public override void OnStateChanged(ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args)
         {
             foreach (var remoteVideoStream in remoteParticipant.VideoStreams)
             {
