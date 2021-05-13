@@ -40,7 +40,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             {
                 var renderer = new ACSVideoStreamRenderer(remoteVideoStream, out var rendererError);
                 ThrowIfError(rendererError);
-                var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
+                var renderingOptions = new ACSCreateViewOptions(ACSScalingMode.Crop);
                 var nativeView = renderer.CreateViewWithOptions(renderingOptions, out var createViewError);
                 ThrowIfError(createViewError);
                 var formsView = nativeView.ToView();
@@ -103,11 +103,11 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
             //callOptions.AudioOptions.Muted = true;
             var localVideoStream = new ACSLocalVideoStream(camera);
-            callOptions.VideoOptions = new ACSVideoOptions(localVideoStream);
+            callOptions.VideoOptions = new ACSVideoOptions(new[] { localVideoStream });
 
             var receivers = new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:echo123") };
 
-            _callAgent.StartCall(receivers, callOptions);
+            _callAgent.StartCall(receivers, callOptions, null);
         }
 
         public event EventHandler<View> LocalVideoAdded = delegate {  };
@@ -121,32 +121,12 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             {
                 AudioOptions = new ACSAudioOptions()
             };
-            _call = _callAgent.StartCall(receivers, callOptions);
+            _callAgent.StartCall(receivers, callOptions, callCompleted);
         }
 
-
-        public async Task JoinGroup(Guid groupID)
+        private void callCompleted(ACSCall call, NSError err)
         {
-            var camera = _deviceManager
-                .Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
-            _localVideoStream = new ACSLocalVideoStream(camera);
-            _localVideoStreamRenderer = new ACSVideoStreamRenderer(_localVideoStream, out var rendererError);
-            ThrowIfError(rendererError);
-            var renderingOptions = new ACSRenderingOptions(ACSScalingMode.Crop);
-            var nativeView = _localVideoStreamRenderer.CreateViewWithOptions(renderingOptions, out var viewError);
-            ThrowIfError(viewError);
-            var formsView = nativeView.ToView();
-
-            LocalVideoAdded?.Invoke(this, formsView);
-
-            var groupCallLocator = new ACSGroupCallLocator(new NSUuid(groupID.ToString()));
-            var callOptions = new ACSJoinCallOptions
-            {
-                AudioOptions = new ACSAudioOptions(),
-                VideoOptions = new ACSVideoOptions(_localVideoStream)
-            };
-            //callOptions.AudioOptions.Muted = true;
-            _call = _callAgent.JoinWithMeetingLocator(groupCallLocator, callOptions);
+            _call = call;
             // Respond to changes
             _call.Delegate = new CallDelegate(_videoCallbackManager);
             // Setup initial streams. This is clumsy and probably an API flaw...
@@ -161,6 +141,30 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             }
 
             _call.StartVideo(_localVideoStream, OnVideoStarted);
+        }
+
+        public async Task JoinGroup(Guid groupID)
+        {
+            var camera = _deviceManager
+                .Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
+            _localVideoStream = new ACSLocalVideoStream(camera);
+            _localVideoStreamRenderer = new ACSVideoStreamRenderer(_localVideoStream, out var rendererError);
+            ThrowIfError(rendererError);
+            var renderingOptions = new ACSCreateViewOptions(ACSScalingMode.Crop);
+            var nativeView = _localVideoStreamRenderer.CreateViewWithOptions(renderingOptions, out var viewError);
+            ThrowIfError(viewError);
+            var formsView = nativeView.ToView();
+
+            LocalVideoAdded?.Invoke(this, formsView);
+
+            var groupCallLocator = new ACSGroupCallLocator(new NSUuid(groupID.ToString()));
+            var callOptions = new ACSJoinCallOptions
+            {
+                AudioOptions = new ACSAudioOptions(),
+                VideoOptions = new ACSVideoOptions(new [] { _localVideoStream })
+            };
+            //callOptions.AudioOptions.Muted = true;
+            _callAgent.JoinWithMeetingLocator(groupCallLocator, callOptions, callCompleted);
         }
 
         void OnVideoStarted(NSError error)

@@ -20,7 +20,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             Logger.Debug($"Call state changed: {call.State}");
         }
 
-        public override void OnLocalVideoStreamsChanged(ACSCall call, ACSLocalVideoStreamsUpdatedEventArgs args)
+        public override void OnLocalVideoStreamsUpdated(ACSCall call, ACSLocalVideoStreamsUpdatedEventArgs args)
         {
             Logger.Debug($"Local video streams changed");
         }

@@ -1,6 +1,6 @@
 using System;
-using AzureCommunication;
 using AzureCommunicationCalling;
+using AzureCommunicationCommon;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
@@ -11,17 +11,17 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	[Verify (ConstantsInterfaceAssociation)]
 	partial interface Constants
 	{
-		// extern double AzureCommunicationVersionNumber;
-		[Field ("AzureCommunicationVersionNumber", "__Internal")]
-		double AzureCommunicationVersionNumber { get; }
+		// extern double AzureCommunicationCommonVersionNumber;
+		[Field ("AzureCommunicationCommonVersionNumber", "__Internal")]
+		double AzureCommunicationCommonVersionNumber { get; }
 
-		// extern const unsigned char [] AzureCommunicationVersionString;
-		[Field ("AzureCommunicationVersionString", "__Internal")]
-		byte[] AzureCommunicationVersionString { get; }
+		// extern const unsigned char [] AzureCommunicationCommonVersionString;
+		[Field ("AzureCommunicationCommonVersionString", "__Internal")]
+		byte[] AzureCommunicationCommonVersionString { get; }
 	}
 
 	// @interface CommunicationAccessToken : NSObject
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication24CommunicationAccessToken")]
+	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon24CommunicationAccessToken")]
 	[DisableDefaultCtor]
 	interface CommunicationAccessToken
 	{
@@ -40,7 +40,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	// @interface CommunicationCloudEnvironment : NSObject
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication29CommunicationCloudEnvironment")]
+	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon29CommunicationCloudEnvironment")]
 	[DisableDefaultCtor]
 	interface CommunicationCloudEnvironment
 	{
@@ -79,14 +79,14 @@ namespace Xamarin.AzureCommunicationCalling.iOS
   the generated interface. If consumers are not supposed to implement this
   protocol, then [Model] is redundant and will generate code that will never
   be used.
-*/[Protocol (Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
-	[BaseType (typeof(NSObject), Name = "_TtP18AzureCommunication23CommunicationIdentifier_")]
+*/[Protocol (Name = "_TtP24AzureCommunicationCommon23CommunicationIdentifier_")]
+	[BaseType (typeof(NSObject), Name = "_TtP24AzureCommunicationCommon23CommunicationIdentifier_")]
 	interface CommunicationIdentifier
 	{
 	}
 
 	// @interface CommunicationTokenCredential : NSObject
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication28CommunicationTokenCredential")]
+	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon28CommunicationTokenCredential")]
 	[DisableDefaultCtor]
 	interface CommunicationTokenCredential
 	{
@@ -106,7 +106,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	// @interface CommunicationTokenRefreshOptions : NSObject
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication32CommunicationTokenRefreshOptions")]
+	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon32CommunicationTokenRefreshOptions")]
 	[DisableDefaultCtor]
 	interface CommunicationTokenRefreshOptions
 	{
@@ -117,7 +117,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	// @interface CommunicationUserIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication27CommunicationUserIdentifier")]
+	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon27CommunicationUserIdentifier")]
 	[DisableDefaultCtor]
 	interface CommunicationUserIdentifier : ICommunicationIdentifier
 	{
@@ -132,7 +132,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	// @interface MicrosoftTeamsUserIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication28MicrosoftTeamsUserIdentifier")]
+	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon28MicrosoftTeamsUserIdentifier")]
 	[DisableDefaultCtor]
 	interface MicrosoftTeamsUserIdentifier : ICommunicationIdentifier
 	{
@@ -164,7 +164,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	// @interface PhoneNumberIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication21PhoneNumberIdentifier")]
+	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon21PhoneNumberIdentifier")]
 	[DisableDefaultCtor]
 	interface PhoneNumberIdentifier : ICommunicationIdentifier
 	{
@@ -183,7 +183,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	// @interface UnknownIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC18AzureCommunication17UnknownIdentifier")]
+	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon17UnknownIdentifier")]
 	[DisableDefaultCtor]
 	interface UnknownIdentifier : ICommunicationIdentifier
 	{
