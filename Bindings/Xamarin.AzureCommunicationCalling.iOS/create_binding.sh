@@ -17,16 +17,16 @@ cd ..
 #import "../../AzureCommunication.framework/Headers/AzureCommunication-Swift.h"
 #import "../../AzureCore.framework/Headers/AzureCore-Swift.h"
 #
-patch -s -p0 -N < AzureCommunicationCalling.h.patch
+#patch -s -p0 -N < AzureCommunicationCalling.h.patch
 
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
-sharpie bind \
-    -sdk iphoneos14.4 \
-    -o tmp \
-    -namespace "Xamarin.AzureCommunicationCalling.iOS" \
-    -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
-    nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
-    -c -fmodules \
+#sharpie bind \
+#    -sdk iphoneos14.5 \
+#    -o tmp \
+#    -namespace "Xamarin.AzureCommunicationCalling.iOS" \
+#    -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
+#    nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
+#    -c -fmodules \
 
 # Lastly: manually copy tmp bindings into this folder and make it work
 echo "Remember to merge new tmp/*.cs into ./*.cs"

@@ -1,8 +1,17 @@
 using System;
+using System.Runtime.InteropServices;
 using ObjCRuntime;
 
 namespace Xamarin.AzureCommunicationCalling.iOS
 {
+	[StructLayout(LayoutKind.Sequential)]
+	public struct ACSStreamSize
+	{
+		public int width;
+
+		public int height;
+	}
+
 	[Flags]
 	[Native]
 	public enum ACSCallingCommunicationErrors : long
@@ -16,7 +25,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		InvalidGuidGroupId = 0x10,
 		InvalidPushNotificationDeviceRegistrationToken = 0x20,
 		MultipleRenderersNotSupported = 0x40,
-		MultipleViewsNotSupported = 0x80
+		MultipleViewsNotSupported = 0x80,
+		InvalidLocalVideoStreamForVideoOptions = 0x100,
+		NoMultipleConnectionsWithSameIdentity = 0x200
 	}
 
 	[Native]
@@ -43,8 +54,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	[Native]
 	public enum ACSMediaStreamType : long
 	{
-		Video = 0,
-		ScreenSharing = 1
+		Video = 1,
+		ScreenSharing = 2
 	}
 
 	[Native]
@@ -114,9 +125,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	public enum ACSHandleType : long
 	{
 		Unknown = 0,
-		AddPhoneNumberOptions = 1,
-		GroupCallLocator = 2,
-		TeamsMeetingCoordinatesLocator = 3,
-		TeamsMeetingLinkLocator = 4
+		GroupCallLocator = 1
 	}
 }
