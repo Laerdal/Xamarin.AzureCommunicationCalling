@@ -6,6 +6,6 @@
  
 -#import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>
 +#import "../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"
+ #import <CallKit/CallKit.h>
  #import "ACSVideoStreamRenderer.h"
  #import "ACSVideoStreamRendererView.h"
- #import "ACSStreamSize.h"

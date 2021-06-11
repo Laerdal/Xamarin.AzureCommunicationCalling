@@ -2,6 +2,7 @@ using System;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
+using CallKit;
 
 namespace Xamarin.AzureCommunicationCalling.iOS
 {
@@ -538,6 +539,47 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		NSUuid GroupId { get; set; }
 	}
 
+	// @interface ACSTeamsMeetingCoordinatesLocator : ACSJoinMeetingLocator
+	[BaseType(typeof(ACSJoinMeetingLocator))]
+	[DisableDefaultCtor]
+	interface ACSTeamsMeetingCoordinatesLocator
+	{
+		// -(instancetype _Nonnull)initWithThreadId:(NSString * _Nonnull)threadId organizerId:(NSUUID * _Nonnull)organizerId tenantId:(NSUUID * _Nonnull)tenantId messageId:(NSString * _Nonnull)messageId __attribute__((swift_name("init(withThreadId:organizerId:tenantId:messageId:)")));
+		[Export("initWithThreadId:organizerId:tenantId:messageId:")]
+		IntPtr Constructor(string threadId, NSUuid organizerId, NSUuid tenantId, string messageId);
+
+		// @property (readonly, retain) NSString * _Nonnull threadId;
+		[Export("threadId", ArgumentSemantic.Retain)]
+		string ThreadId { get; }
+
+		// @property NSUUID * _Nonnull organizerId;
+		[Export("organizerId", ArgumentSemantic.Assign)]
+		NSUuid OrganizerId { get; set; }
+
+		// @property NSUUID * _Nonnull tenantId;
+		[Export("tenantId", ArgumentSemantic.Assign)]
+		NSUuid TenantId { get; set; }
+
+		// @property (readonly, retain) NSString * _Nonnull messageId;
+		[Export("messageId", ArgumentSemantic.Retain)]
+		string MessageId { get; }
+	}
+
+	// @interface ACSTeamsMeetingLinkLocator : ACSJoinMeetingLocator
+	[BaseType(typeof(ACSJoinMeetingLocator))]
+	[DisableDefaultCtor]
+	interface ACSTeamsMeetingLinkLocator
+	{
+		// -(instancetype _Nonnull)init:(NSString * _Nonnull)meetingLink __attribute__((swift_name("init(meetingLink:)")));
+		[Export("init:")]
+		IntPtr Constructor(string meetingLink);
+
+		// @property (readonly, retain) NSString * _Nonnull meetingLink;
+		[Export("meetingLink", ArgumentSemantic.Retain)]
+		string MeetingLink { get; }
+	}
+
+
 	// @interface ACSCallerInfo : NSObject
 	[BaseType(typeof(NSObject))]
 	[DisableDefaultCtor]
@@ -625,6 +667,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
 		NSObject WeakDelegate { get; set; }
 
+		// -(void)dispose;
+		[Export("dispose")]
+		void Dispose();
+
 		// -(void)unregisterPushNotificationWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("unregisterPushNotification(completionHandler:)")));
 		[Export("unregisterPushNotificationWithCompletionHandler:")]
 		void UnregisterPushNotificationWithCompletionHandler(Action<NSError> completionHandler);
@@ -673,6 +719,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// @property (readonly) ACSCallDirection direction;
 		[Export("direction")]
 		ACSCallDirection Direction { get; }
+
+		// @property (readonly, retain) ACSCallInfo * _Nonnull info;
+		[Export("info", ArgumentSemantic.Retain)]
+		ACSCallInfo Info { get; }
 
 		// @property (readonly) BOOL isMuted;
 		[Export("isMuted")]
@@ -860,8 +910,22 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		ACSRemoteVideoStream[] RemovedRemoteVideoStreams { get; }
 	}
 
-	// @interface ACSParticipantsUpdatedEventArgs : NSObject
-	[BaseType (typeof(NSObject))]
+	// @interface ACSCallInfo : NSObject
+	[BaseType(typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSCallInfo
+	{
+		// -(void)dealloc;
+		[Export("dealloc")]
+		void Dealloc();
+
+		// -(void)getServerCallIdWithCompletionHandler:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getServerCallId(completionHandler:)")));
+		[Export("getServerCallIdWithCompletionHandler:")]
+		void GetServerCallIdWithCompletionHandler(Action<NSString, NSError> completionHandler);
+	}
+
+// @interface ACSParticipantsUpdatedEventArgs : NSObject
+[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
 	interface ACSParticipantsUpdatedEventArgs
 	{
@@ -954,10 +1018,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Wrap("WeakDelegate")]
 		[NullAllowed] ACSIncomingCallDelegate Delegate { get; set; }
 
-
-
-
-
 		// @property (assign, nonatomic) id<ACSIncomingCallDelegate> _Nullable delegate;
 		[NullAllowed, Export("delegate", ArgumentSemantic.Assign)]
 		NSObject WeakDelegate { get; set; }
@@ -979,13 +1039,26 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("dealloc")]
 		void Dealloc ();
 
-		// -(void)createCallAgent:(CommunicationTokenCredential * _Nonnull)userCredential withCompletionHandler:(void (^ _Nonnull)(ACSCallAgent * _Nonnull, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:completionHandler:)")));
+		// -(void)dispose;
+		[Export("dispose")]
+		void Dispose();
+
+		// -(void)createCallAgent:(CommunicationTokenCredential * _Nonnull)userCredential withCompletionHandler:(void (^ _Nonnull)(ACSCallAgent * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:completionHandler:)")));
 		[Export("createCallAgent:withCompletionHandler:")]
 		void CreateCallAgent(CommunicationTokenCredential userCredential, Action<ACSCallAgent, NSError> completionHandler);
 
 		// -(void)createCallAgentWithOptions:(CommunicationTokenCredential * _Nonnull)userCredential callAgentOptions:(ACSCallAgentOptions * _Nullable)callAgentOptions withCompletionHandler:(void (^ _Nonnull)(ACSCallAgent * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:options:completionHandler:)")));
 		[Export("createCallAgentWithOptions:callAgentOptions:withCompletionHandler:")]
 		void CreateCallAgentWithOptions(CommunicationTokenCredential userCredential, [NullAllowed] ACSCallAgentOptions callAgentOptions, Action<ACSCallAgent, NSError> completionHandler);
+
+		// -(void)createCallAgentWithCallKitOptions:(CommunicationTokenCredential * _Nonnull)userCredential callAgentOptions:(ACSCallAgentOptions * _Nullable)callAgentOptions cxproviderConfig:(CXProviderConfiguration * _Nullable)cxproviderConfig withCompletionHandler:(void (^ _Nonnull)(ACSCallAgent * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:options:cxproviderConfig:completionHandler:)")));
+		[Export("createCallAgentWithCallKitOptions:callAgentOptions:cxproviderConfig:withCompletionHandler:")]
+		void CreateCallAgentWithCallKitOptions(CommunicationTokenCredential userCredential, [NullAllowed] ACSCallAgentOptions callAgentOptions, [NullAllowed] CXProviderConfiguration cxproviderConfig, Action<ACSCallAgent, NSError> completionHandler);
+
+		// +(void)reportToCallKit:(ACSPushNotificationInfo * _Nonnull)payload cxproviderConfig:(CXProviderConfiguration * _Nonnull)providerConfig withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("reportToCallKit(with:cxproviderConfig:completionHandler:)")));
+		[Static]
+		[Export("reportToCallKit:cxproviderConfig:withCompletionHandler:")]
+		void ReportToCallKit(ACSPushNotificationInfo payload, CXProviderConfiguration providerConfig, Action<NSError> completionHandler);
 
 		// -(void)getDeviceManagerWithCompletionHandler:(void (^ _Nonnull)(ACSDeviceManager * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getDeviceManager(completionHandler:)")));
 		[Export("getDeviceManagerWithCompletionHandler:")]
