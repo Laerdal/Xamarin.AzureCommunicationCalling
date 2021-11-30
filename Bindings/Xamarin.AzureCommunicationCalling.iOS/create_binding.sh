@@ -25,6 +25,8 @@ cd ../../../
 patch -s -p0 -N < headers.patch
 
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
+# Make sure you have the latest Sharpie version:
+# 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 sharpie bind \
     -sdk iphoneos14.5 \
     -o tmp \
