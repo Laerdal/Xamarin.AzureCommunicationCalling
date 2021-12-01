@@ -15,8 +15,8 @@ namespace AzureCommunicationVideoTest
         }
 
         private const string ApiUrl = "api/";
-        private const string Ip = "192.168.68.68";
-        //private const string Ip = "10.184.34.26";
+        private const string Ip = "192.168.68.61";
+        //private const string Ip = "10.184.32.43";
         private static readonly string Server = $"https://{Ip}:5001/";
         
         private JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
@@ -36,7 +36,7 @@ namespace AzureCommunicationVideoTest
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
             using var wc = new HttpClient(clientHandler);
-            var message = new HttpRequestMessage(HttpMethod.Get, url);
+            var message = new HttpRequestMessage(HttpMethod.Post, url);
 
             var response = await wc.SendAsync(message);
             var body = await response.Content.ReadAsStringAsync();

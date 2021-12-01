@@ -21,14 +21,23 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		NoVideoPermission = 0x2,
 		NoAudioAndVideoPermission = 0x3,
 		ReceivedInvalidPushNotificationPayload = 0x4,
+		CallFeatureExtensionNotFound = 0x6,
 		FailedToProcessPushNotificationPayload = 0x8,
 		InvalidGuidGroupId = 0x10,
 		InvalidPushNotificationDeviceRegistrationToken = 0x20,
 		MultipleRenderersNotSupported = 0x40,
 		MultipleViewsNotSupported = 0x80,
+		DuplicateDeviceId = 0x81,
+		DelegateIsRequired = 0x82,
+		VirtualDeviceNotStarted = 0x83,
 		InvalidLocalVideoStreamForVideoOptions = 0x100,
 		NoMultipleConnectionsWithSameIdentity = 0x200,
-		InvalidServerCallId = 0x400
+		InvalidServerCallId = 0x400,
+		LocalVideoStreamSwitchSourceFailure = 0x800,
+		IncomingCallAlreadyUnplaced = 0x1000,
+		InvalidMeetingLink = 0x2000,
+		ParticipantAddedToUnconnectedCall = 0x4000,
+		ParticipantAlreadyAddedToCall = 0x8000
 	}
 
 	[Native]
@@ -129,6 +138,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		Unknown = 0,
 		GroupCallLocator = 1,
 		TeamsMeetingCoordinatesLocator = 2,
-		TeamsMeetingLinkLocator = 3
+		TeamsMeetingLinkLocator = 3,
+		RecordingCallFeature = 4,
+		TranscriptionCallFeature = 5
 	}
 }
