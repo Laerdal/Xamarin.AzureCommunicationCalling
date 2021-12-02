@@ -20,7 +20,7 @@ cd ../../../
 #
 # Make it look like this:
 #
-#import "./../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon/
+#import "./../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon/AzureCommunicationCommon-Swift.h
 #
 patch -s -p0 -N < headers.patch
 
