@@ -15,8 +15,8 @@ namespace AzureCommunicationVideoTest
         }
 
         private const string ApiUrl = "api/";
-        private const string Ip = "192.168.68.61";
-        //private const string Ip = "10.184.32.43";
+        //private const string Ip = "192.168.68.61";
+        private const string Ip = "10.184.32.43";
         private static readonly string Server = $"https://{Ip}:5001/";
         
         private JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
