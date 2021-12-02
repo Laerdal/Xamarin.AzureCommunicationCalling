@@ -28,7 +28,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		MultipleViewsNotSupported = 0x80,
 		InvalidLocalVideoStreamForVideoOptions = 0x100,
 		NoMultipleConnectionsWithSameIdentity = 0x200,
-		InvalidServerCallId = 0x400
+		InvalidServerCallId = 0x400,
+		LocalVideoStreamSwitchSourceFailure = 0x800
 	}
 
 	[Native]
@@ -127,8 +128,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	public enum ACSHandleType : long
 	{
 		Unknown = 0,
-		GroupCallLocator = 1,
-		TeamsMeetingCoordinatesLocator = 2,
-		TeamsMeetingLinkLocator = 3
+		GroupCallLocator = 1
 	}
 }

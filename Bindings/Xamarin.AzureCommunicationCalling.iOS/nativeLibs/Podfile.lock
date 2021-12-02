@@ -1,12 +1,12 @@
 PODS:
-  - AzureCommunicationCalling (1.1.0-beta.1):
-    - AzureCommunicationCommon (= 1.0.0)
-  - AzureCommunicationCommon (1.0.0):
-    - AzureCore (= 1.0.0-beta.12)
-  - AzureCore (1.0.0-beta.12)
+  - AzureCommunicationCalling (1.1.0):
+    - AzureCommunicationCommon (~> 1.0)
+  - AzureCommunicationCommon (1.0.2)
+  - AzureCore (1.0.0-beta.13)
 
 DEPENDENCIES:
-  - AzureCommunicationCalling (~> 1.1.0-beta.1)
+  - AzureCommunicationCalling (~> 1.1.0)
+  - AzureCore (~> 1.0.0-beta.13)
 
 SPEC REPOS:
   trunk:
@@ -15,10 +15,10 @@ SPEC REPOS:
     - AzureCore
 
 SPEC CHECKSUMS:
-  AzureCommunicationCalling: 29be62620800e06d7e99ba7f025e80f41c2b46b3
-  AzureCommunicationCommon: 37d81f556d367c8a8e20581da1d8ffea5401cb86
-  AzureCore: 2e029168d18ade4f2e8cc59a96f6d8b26acad2b2
+  AzureCommunicationCalling: 6ebc5f7ae9879154c3f79bdf651719792b43e8f9
+  AzureCommunicationCommon: 743009b95ca5de0b32fb5327b1105c6239b7d15d
+  AzureCore: b5f90d9d68b282508eb134c21797f2b9d7f95780
 
-PODFILE CHECKSUM: 81e409d6ed8512fa7cd60db789a8440545def3c4
+PODFILE CHECKSUM: 2a4177ea00f6f5ccde34f59d67634a66d180ad31
 
 COCOAPODS: 1.10.0
