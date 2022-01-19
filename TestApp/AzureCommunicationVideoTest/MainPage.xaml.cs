@@ -30,6 +30,7 @@ namespace AzureCommunicationVideoTest
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    Logger.Debug("Adding remote video");
                     // Add the new view to stack layout
                     RemoteVideoView.Children.Add(new Frame
                     {
@@ -48,6 +49,7 @@ namespace AzureCommunicationVideoTest
                         child.HeightRequest = height;
                         child.WidthRequest = width;
                     }
+                    Logger.Debug($"Added remote video: {height} x {width}");
                 });
             };
         }

@@ -1,5 +1,5 @@
---- nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h	2021-05-13 22:27:29.000000000 +0200
-+++ nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling_new.h	2021-05-13 22:32:39.000000000 +0200
+--- nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h	2021-12-02 11:46:56.000000000 +0100
++++ nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h-new	2021-12-02 11:58:17.000000000 +0100
 @@ -3,7 +3,7 @@
  
  #import <Foundation/Foundation.h>

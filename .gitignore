@@ -194,3 +194,4 @@ FakesAssemblies/
 **/.gradle
 
 .idea
+*.profraw

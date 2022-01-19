@@ -30,6 +30,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             Logger.Debug($"Remote participants changed");
             foreach (var participant in args.AddedParticipants)
             {
+                Logger.Debug($"Setting up new remote participant");
                 _videoCallbackManager.HandleRemoteParticipantAdded(participant);
                 participant.Delegate = new RemoteParticipantDelegate(_videoCallbackManager);
                 _remoteParticipants.Add(participant);

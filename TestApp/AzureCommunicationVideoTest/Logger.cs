@@ -6,10 +6,12 @@ namespace AzureCommunicationVideoTest
 {
     public class Logger
     {
-        public static void Debug(string msg, [CallerMemberName] string name = null)
+        public static void Debug(string msg, [CallerMemberName] string name = null,
+            [CallerFilePath] string filePath = null)
         {
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine($"{ThreadNameOrId()} - {DateTime.Now:O} {name}: {msg}");
+            var output = $"{ThreadNameOrId()}-{DateTime.Now:O}|{filePath}|{name}|{msg}";
+            System.Diagnostics.Debug.WriteLine(output);
 #endif
         }
 

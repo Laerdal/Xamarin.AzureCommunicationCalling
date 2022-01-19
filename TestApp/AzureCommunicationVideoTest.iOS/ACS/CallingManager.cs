@@ -29,19 +29,23 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         private void RemoteVideoStreamAdded(ACSRemoteVideoStream remoteVideoStream)
         {
-            if (!remoteVideoStream.IsAvailable ||
-                _remoteVideoStreams.Any(s => s.Id == remoteVideoStream.Id))
+            Logger.Debug("RemoteVideoStreamAdded");
+            if (!remoteVideoStream.IsAvailable)
             {
                 return;
             }
-            
+
+            _remoteVideoStreams.RemoveAll(s => s.Id == remoteVideoStream.Id);
+
             _remoteVideoStreams.Add(remoteVideoStream);
+            Logger.Debug("RemoteVideoStreamAdded: Creating renderer");
             Device.BeginInvokeOnMainThread(() =>
             {
                 var renderer = new ACSVideoStreamRenderer(remoteVideoStream, out var rendererError);
                 ThrowIfError(rendererError);
                 var renderingOptions = new ACSCreateViewOptions(ACSScalingMode.Crop);
                 var nativeView = renderer.CreateViewWithOptions(renderingOptions, out var createViewError);
+                Logger.Debug("RemoteVideoStreamAdded: Created renderer");
                 ThrowIfError(createViewError);
                 var formsView = nativeView.ToView();
                 RemoteVideoAdded?.Invoke(this, formsView);
@@ -52,6 +56,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         {
             if (!string.IsNullOrEmpty(rendererError?.Description))
             {
+                Logger.Debug(rendererError.Description);
                 throw new Exception(rendererError.Description);
             }
         }
@@ -126,6 +131,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         private void callCompleted(ACSCall call, NSError err)
         {
+            Logger.Debug("Call setup");
             _call = call;
             // Respond to changes
             _call.Delegate = new CallDelegate(_videoCallbackManager);
@@ -133,6 +139,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
             // IMHO delegate should be called after setting it on existing state...
             foreach (var remoteParticipant in _call.RemoteParticipants)
             {
+                Logger.Debug("Remote participant already in call");
                 remoteParticipant.Delegate = new RemoteParticipantDelegate(_videoCallbackManager);
                 foreach (var remoteVideoStream in remoteParticipant.VideoStreams)
                 {
@@ -140,11 +147,13 @@ namespace AzureCommunicationVideoTest.iOS.ACS
                 }
             }
 
+            Logger.Debug("Starting video");
             _call.StartVideo(_localVideoStream, OnVideoStarted);
         }
 
         public async Task JoinGroup(Guid groupID)
         {
+            Logger.Debug("Setting up local video");
             var camera = _deviceManager
                 .Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
             _localVideoStream = new ACSLocalVideoStream(camera);
@@ -163,23 +172,28 @@ namespace AzureCommunicationVideoTest.iOS.ACS
                 AudioOptions = new ACSAudioOptions(),
                 VideoOptions = new ACSVideoOptions(new [] { _localVideoStream })
             };
+            
+            Logger.Debug("Joining group");
             //callOptions.AudioOptions.Muted = true;
             _callAgent.JoinWithMeetingLocator(groupCallLocator, callOptions, callCompleted);
         }
 
         void OnVideoStarted(NSError error)
         {
+            Logger.Debug("Video started");
             if (error != null) throw new Exception(error.Description);
         }
 
         public void Hangup()
         {
+            Logger.Debug("Hanging up");
             _call?.HangUp(new ACSHangUpOptions(), OnVideoHangup);
             _localVideoStreamRenderer?.Dispose();
             _localVideoStream?.Dispose();
             _localVideoStream = null;
             _remoteVideoStreams.Clear();
             _call?.Dispose();
+            Logger.Debug("Finished hanging up");
         }
 
         private void OnVideoHangup(NSError nsError)

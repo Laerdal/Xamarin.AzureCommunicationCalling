@@ -36,9 +36,6 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -49,10 +46,6 @@
   </ItemGroup>
    <ItemGroup>
      <NativeReference Include="nativeLibs\Pods\AzureCommunicationCalling\AzureCommunicationCalling.framework">
-       <Kind>Framework</Kind>
-       <SmartLink>False</SmartLink>
-     </NativeReference>
-     <NativeReference Include="nativeLibs\Pods\AzureCore\AzureCore.framework">
        <Kind>Framework</Kind>
        <SmartLink>False</SmartLink>
      </NativeReference>

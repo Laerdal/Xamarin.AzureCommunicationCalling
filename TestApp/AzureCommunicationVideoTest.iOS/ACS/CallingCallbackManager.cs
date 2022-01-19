@@ -16,6 +16,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
         {
             foreach (var videoStream in participant.VideoStreams)
             {
+                Logger.Debug("Remote participant added");
                 RemoteVideoStreamAdded?.Invoke(videoStream);
             }
         }
