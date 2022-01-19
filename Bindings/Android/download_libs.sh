@@ -1,7 +1,8 @@
 #!/bin/sh
 
-rm */Jars/*
+rm -rf */Jars/*
 
-gradle -b calling.gradle download
-gradle -b common.gradle download
-gradle -b core.gradle download
+gradle downloadCalling
+gradle downloadCommon
+gradle downloadCore
+gradle downloadLogging

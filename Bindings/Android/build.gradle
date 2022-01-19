@@ -1,0 +1,45 @@
+apply plugin: 'base'
+
+buildscript {
+     repositories {
+         google()
+         mavenCentral()
+     }
+     dependencies {
+         classpath "com.android.tools.build:gradle:7.0.4"
+
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
+     }
+ }
+
+configurations {
+    azureCalling
+    azureCommon
+    azureCore
+    azureLogging
+}
+
+dependencies {
+    azureCalling 'com.azure.android:azure-communication-calling:2.+'
+    azureCommon 'com.azure.android:azure-communication-common:1.+'
+    azureCore 'com.azure.android:azure-core:1.+'
+    azureLogging 'com.azure.android:azure-core-logging:1.+'
+}
+
+task downloadAzureCalling(type: Copy) {
+    from configurations.azureCalling 
+    into 'Xamarin.AzureCommunicationCalling.Android/Jars'
+}
+task downloadAzureCommon(type: Copy) {
+    from configurations.azureCommon 
+    into 'Xamarin.AzureCommunicationCommon.Android/Jars'
+}
+task downloadAzureCore(type: Copy) {
+    from configurations.azureCore 
+    into 'Xamarin.AzureCore.Android/Jars'
+}
+task downloadAzureLogging(type: Copy) {
+    from configurations.azureLogging 
+    into 'Xamarin.AzureCoreLogging.Android/Jars'
+}

@@ -14,7 +14,7 @@
     <AssemblyName>Xamarin.AzureCommunicationCommon.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Deterministic>True</Deterministic>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidClassParser>class-parse</AndroidClassParser>
     <AndroidCodegenTarget>XAJavaInterop1</AndroidCodegenTarget>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -53,22 +53,14 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\azure-communication-common-1.0.0-beta.5.aar" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Android.JakeWharton.ThreeTenAbp">
-      <Version>1.2.4</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.AzureCore.Android">
-      <Version>1.0.0-beta.2.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedReferenceJar Include="Jars\jackson-module-jaxb-annotations-2.11.2.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-dataformat-xml-2.11.2.jar" />
     <EmbeddedReferenceJar Include="Jars\jackson-databind-2.11.2.jar" />
     <EmbeddedReferenceJar Include="Jars\jackson-core-2.11.2.jar" />
     <EmbeddedReferenceJar Include="Jars\jackson-annotations-2.11.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\android-retrofuture-1.7.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\android-retrostreams-1.7.3.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryProjectZip Include="Jars\azure-communication-common-1.0.1.aar" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

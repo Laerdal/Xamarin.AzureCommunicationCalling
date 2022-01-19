@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using Com.Azure.Android.Communication.Common;
 using Xamarin.Forms;
-using Com.Azure.Communication.Calling;
+using Com.Azure.Android.Communication.Calling;
 using Application = Android.App.Application;
 using Java.Util;
-using Java.Util.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms.Platform.Android;
-using CameraFacing = Com.Azure.Communication.Calling.CameraFacing;
+using CameraFacing = Com.Azure.Android.Communication.Calling.CameraFacing;
 
 [assembly: Dependency(typeof(AzureCommunicationVideoTest.Droid.ACS.CallingManager))]
 namespace AzureCommunicationVideoTest.Droid.ACS
@@ -20,7 +19,7 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         private CallClient _callClient;
         private DeviceManager _deviceManager;
         private LocalVideoStream _localVideoStream;
-        private Renderer _localRenderer;
+        private VideoStreamRenderer _localRenderer;
         private readonly List<RemoteVideoStream> _remoteVideoStreams;
         private Call _call;
 
@@ -33,24 +32,26 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         {
             var credentials = new CommunicationTokenCredential(token);
             _callClient = new CallClient();
-            _callAgent = (CallAgent) await _callClient.CreateCallAgent(Application.Context, credentials).GetAsync();
-            _deviceManager = (DeviceManager) await _callClient.DeviceManager.GetAsync();
+            var callOptions = new CallAgentOptions();
+            
+            _callAgent = Com.Laerdal.Azurecommunicationhelper.CallClientHelper.GetCallAgent(_callClient, Application.Context, credentials);
+            _deviceManager = Com.Laerdal.Azurecommunicationhelper.CallClientHelper.GetDeviceManager(_callClient, Application.Context);
             return true;
         }
 
         public Task JoinGroup(Guid groupID)
         {
-            var groupCallLocator = new GroupCallLocator(UUID.FromString(groupID.ToString()));
-            var joinCallOptions = new JoinCallOptions();
-            joinCallOptions.AudioOptions = new AudioOptions();
-            var camera = _deviceManager.CameraList.First(c => c.CameraFacing == CameraFacing.Front);
+            var camera = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
             _localVideoStream = new LocalVideoStream(camera, MainActivity.Instance);
-            _localRenderer = new Renderer(_localVideoStream, MainActivity.Instance);
-            var renderingOptions = new RenderingOptions(ScalingMode.Crop);
+            _localRenderer = new VideoStreamRenderer(_localVideoStream, MainActivity.Instance);
+            var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
             var nativeView = _localRenderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
             LocalVideoAdded?.Invoke(this, formsView);
-            joinCallOptions.VideoOptions = new VideoOptions(_localVideoStream);
+            var groupCallLocator = new GroupCallLocator(UUID.FromString(groupID.ToString()));
+            var videoOptions = new VideoOptions(new LocalVideoStream[] { _localVideoStream });
+            var joinCallOptions = new JoinCallOptions();
+            joinCallOptions.SetVideoOptions(videoOptions);
             _call = _callAgent.Join(Application.Context, groupCallLocator, joinCallOptions);
             _call.RemoteParticipantsUpdated += _call_RemoteParticipantsUpdated;
             return Task.CompletedTask;
@@ -82,8 +83,8 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         private void PublishRemoteVideoStream(RemoteVideoStream v)
         {
             _remoteVideoStreams.Add(v);
-            var renderer = new Renderer(v, MainActivity.Instance);
-            var renderingOptions = new RenderingOptions(ScalingMode.Crop);
+            var renderer = new VideoStreamRenderer(v, MainActivity.Instance);
+            var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
             var nativeView = renderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
             RemoteVideoAdded?.Invoke(this, formsView);
@@ -92,8 +93,7 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         public void Hangup()
         {
             _call.RemoteParticipantsUpdated -= _call_RemoteParticipantsUpdated;
-            var hangupOptions = new HangupOptions();
-            _call.Hangup(hangupOptions).Get();
+            Com.Laerdal.Azurecommunicationhelper.CallClientHelper.HangUp(_call, new HangUpOptions());
             _localRenderer?.Dispose();
             _localRenderer = null;
             _localVideoStream?.Dispose();
@@ -106,17 +106,19 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         public void CallEchoService()
         {
             var callOptions = new StartCallOptions();
-            var camera = _deviceManager.CameraList.First(c => c.CameraFacing == CameraFacing.Front);
+            var camera = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
 
-            callOptions.AudioOptions = new AudioOptions();
+            callOptions.SetAudioOptions(new AudioOptions());
 
             //callOptions.AudioOptions.Muted = true;
             var localVideoStream = new LocalVideoStream(camera, MainActivity.Instance);
-            callOptions.VideoOptions = new VideoOptions(localVideoStream);
+            callOptions.SetVideoOptions(new VideoOptions(new LocalVideoStream[] { localVideoStream }));
 
             var receivers = new CommunicationIdentifier[] { new CommunicationUserIdentifier("8:echo123") };
-
-            _call = _callAgent.Call(MainActivity.Instance, receivers, callOptions);
+            // TODO:
+            //_callAgent.StartCall();
+            //var locator = new GroupCallLocator()
+            //_call = _callAgent. Join(MainActivity.Instance, receivers, callOptions);
         }
 
         public event EventHandler<View> LocalVideoAdded;

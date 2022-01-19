@@ -29,10 +29,11 @@
     <remove-node path="/api/package[@name='com.skype.android.video.hw.format']/interface[@name='SliqOmxMapping']/*"/>
     <remove-node path="/api/package[@name='com.skype.android.video.hw.extension.decoder']/*"/>
     <remove-node path="/api/package[@name='com.skype.android.video.hw.extension.encoder']/*"/>
-    <remove-node path="/api/package[@name='com.skype.android.jipc.omx.inout']/*"/>
-    
+    <remove-node path="/api/package[@name='com.skype.android.jipc.omx.inout']/class[@name='OutCodecs']"/>
+
+    <!--
     <remove-node path="/api/package[@name='com.azure.android.communication.calling.internal']/class[@name='BasePrivateDictionary']"/>
-    
+    -->
     <add-node path="/api/package[@name='com.microsoft.dl.video.capture.impl']/class[@name='FpsRangeComparator']">
         <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
             <parameter name="p0" type="java.lang.Object" />
@@ -60,11 +61,11 @@
         </method>
     </add-node>
              
+    
+<!--    
     <attr path="/api/package[@name='com.azure.communication.calling']/class[@name='Renderer']/method[@name='addRendererListener']" name="name">AddRenderer</attr>
     
 
-    
-<!--    
     <attr path="/api/package[@name='com.azure.communication.calling']/class[@name='Renderer']/event[@name='Renderer']" name="name">RendererEvent</attr>    
     -->
 </metadata>

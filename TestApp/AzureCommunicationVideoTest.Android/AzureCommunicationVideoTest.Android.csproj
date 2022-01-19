@@ -16,7 +16,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
@@ -54,13 +54,12 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.AzureCommunicationCommon.Android" Version="1.0.0-beta.4.1" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1931" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Xamarin.AzureCommunicationCommon.Android" Version="1.0.1.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Xamarin.AndroidX.Migration">
       <Version>1.0.8</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.3.0.2-alpha03" />
     <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.4" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.2.1.1" />
     <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.6" />        
@@ -72,9 +71,21 @@
       <Version>3.14.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCore.Android">
-      <Version>1.0.0-beta.3.1</Version>
+      <Version>1.0.0-beta.9.2</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.AzureCommunicationCalling.Android" Version="1.0.0-beta.7.1" />
+    <PackageReference Include="Xamarin.AzureCommunicationCalling.Android" Version="2.0.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData">
+      <Version>2.2.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Core">
+      <Version>1.3.2.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AzureCoreLogging.Android">
+      <Version>1.0.0-beta.9.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AzureCommunicationCallingHelper.Android">
+      <Version>1.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

@@ -14,7 +14,7 @@
     <AssemblyName>Xamarin.AzureCore.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Deterministic>True</Deterministic>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidClassParser>class-parse</AndroidClassParser>
     <AndroidCodegenTarget>XAJavaInterop1</AndroidCodegenTarget>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -53,31 +53,15 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common">
-      <Version>2.2.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.AndroidX.Annotation">
-      <Version>1.1.0.7</Version>
-    </PackageReference>
     <PackageReference Include="Xamarin.Android.JakeWharton.ThreeTenAbp">
-      <Version>1.2.4</Version>
-    </PackageReference>
-    <PackageReference Include="Square.OkHttp3">
-      <Version>4.3.1</Version>
-    </PackageReference>
-    <PackageReference Include="Square.Retrofit2">
-      <Version>2.7.2</Version>
+      <Version>1.3.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedReferenceJar Include="Jars\jackson-module-jaxb-annotations-2.11.2.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-dataformat-xml-2.11.2.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-databind-2.11.2.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-core-2.11.2.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-annotations-2.11.2.jar" />
+    <Folder Include="Jars\" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\azure-core-1.0.0-beta.3.aar" />
+    <LibraryProjectZip Include="Jars\azure-core-1.0.0-beta.9.aar" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

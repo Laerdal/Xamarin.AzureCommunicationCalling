@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Xamarin.AzureCore.Android</id>
-    <version>1.0.0-beta.9.2</version>
-    <title>AzureCore for Xamarin.Android</title>
+    <id>Xamarin.AzureCoreLogging.Android</id>
+    <version>1.0.0-beta.9.1</version>
+    <title>AzureCoreLogging for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-Naive binding for Azure Core SDK for Android.
+Naive binding for Azure Core Logging SDK for Android.
 
-This nuget is just a binding library for https://search.maven.org/artifact/com.azure.android/azure-core
+This nuget is just a binding library for https://search.maven.org/artifact/com.azure.android/azure-core-logging
     </description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright Laerdal Medical 2020</copyright>
@@ -20,12 +20,11 @@ This nuget is just a binding library for https://search.maven.org/artifact/com.a
     <tags>Xamarin Azure Core Android</tags>
     <dependencies>
         <group targetFramework="MonoAndroid0.0">
-            <dependency id="Xamarin.AzureCoreLogging.Android" version="1.0.0-beta.9.1"/>
         </group>
     </dependencies>
   </metadata>
   <files>
-      <file src="bin/Release/Xamarin.AzureCore.Android.dll" target="lib\MonoAndroid" />
-      <file src="bin/Release/Xamarin.AzureCore.Android.pdb" target="lib\MonoAndroid" />
+      <file src="bin/Release/Xamarin.AzureCoreLogging.Android.dll" target="lib\MonoAndroid" />
+      <file src="bin/Release/Xamarin.AzureCoreLogging.Android.pdb" target="lib\MonoAndroid" />
   </files>
 </package>
