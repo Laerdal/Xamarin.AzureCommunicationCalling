@@ -58,10 +58,10 @@
     <Folder Include="Jars\" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\azure-communication-calling-2.0.0.aar" />
+    <EmbeddedReferenceJar Include="Jars\gson-2.8.6.jar" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedReferenceJar Include="Jars\gson-2.8.6.jar" />
+    <LibraryProjectZip Include="Jars\azure-communication-calling-2.0.0-beta.1.aar" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

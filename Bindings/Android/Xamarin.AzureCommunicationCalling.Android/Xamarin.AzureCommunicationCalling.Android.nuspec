@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCalling.Android</id>
-    <version>2.0.0.2</version>
+    <version>2.0.0-beta.1.1</version>
     <title>AzureCommunicationCalling for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -12,7 +12,10 @@ Naive binding for Azure Communication Calling SDK for Android.
 
 This nuget is just a binding library for https://search.maven.org/artifact/com.azure.android/azure-communication-calling
     </description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>
+        The 2.0.0-beat.1 from Microsoft actually contains MORE features than the final 2.0.0. 
+        So if you want features like call recording(Call.getInfo()) you want this one...
+    </releaseNotes>
     <copyright>Copyright Laerdal Medical 2020</copyright>
     <repository type="git" url="https://github.com/laerdal/Xamarin.AzureCommunicationCalling"/>
     <projectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling></projectUrl>

@@ -4,8 +4,12 @@ import android.content.Context;
 import com.azure.android.communication.calling.Call;
 import com.azure.android.communication.calling.CallAgent;
 import com.azure.android.communication.calling.CallClient;
+import com.azure.android.communication.calling.CallInfo;
+import com.azure.android.communication.calling.CallerInfo;
 import com.azure.android.communication.calling.DeviceManager;
+import com.azure.android.communication.calling.Features;
 import com.azure.android.communication.calling.HangUpOptions;
+import com.azure.android.communication.calling.RecordingCallFeature;
 import com.azure.android.communication.calling.StartCallOptions;
 import com.azure.android.communication.common.CommunicationIdentifier;
 import com.azure.android.communication.common.CommunicationTokenCredential;
@@ -20,11 +24,9 @@ public class CallClientHelper {
             CommunicationTokenCredential credentials) throws ExecutionException, InterruptedException {
         return callClient.createCallAgent(context, credentials).get();
     }
-
     public static void HangUp(Call call, HangUpOptions options) throws ExecutionException, InterruptedException {
         call.hangUp(options).get();
     }
-
     public static Call Call(
             CallAgent callAgent,
             Context context,
@@ -32,12 +34,20 @@ public class CallClientHelper {
             StartCallOptions startCallOptions) {
         return callAgent.startCall(context, participants, startCallOptions);
     }
-
     public static DeviceManager GetDeviceManager(
             CallClient callClient,
             Context context
     ) throws ExecutionException, InterruptedException {
         return callClient.getDeviceManager(context).get();
     }
-
+    public static void Mute(Call call, Context context) throws ExecutionException, InterruptedException {
+        call.mute(context).get();
+    }
+    public static void UnMute(Call call, Context context) throws ExecutionException, InterruptedException {
+        call.unmute(context).get();
+    }
+    public static String GetServerCallId(CallInfo callInfo) throws ExecutionException, InterruptedException {
+        return callInfo.getServerCallId().get();
+    }
 }
+

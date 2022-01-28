@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCallingHelper.Android</id>
-    <version>1.0.0</version>
+    <version>1.1.1</version>
     <title>AzureCommunicationCallingHelper for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -14,7 +14,7 @@
         The nuget contains a few static methods, basically just exposing all the retrofutures
         from ACS as regular methods...
     </description>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>Added "Mute/UnMute" and "GetServerCallId"</releaseNotes>
     <copyright>Copyright Laerdal Medical 2022</copyright>
     <repository type="git" url="https://github.com/laerdal/Xamarin.AzureCommunicationCalling"/>
     <projectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling></projectUrl>
@@ -22,7 +22,7 @@
     <tags>Xamarin Azure Core Android</tags>
     <dependencies>
         <group targetFramework="MonoAndroid0.0">
-            <dependency id="Xamarin.AzureCommunicationCalling.Android" version="2.0.0.2"/>
+            <dependency id="Xamarin.AzureCommunicationCalling.Android" version="2.0.0-beta.1.1"/>
         </group>
     </dependencies>
   </metadata>
