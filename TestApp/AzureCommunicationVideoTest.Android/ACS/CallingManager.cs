@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms.Platform.Android;
 using CameraFacing = Com.Azure.Android.Communication.Calling.CameraFacing;
+using Com.Laerdal.Azurecommunicationhelper;
 
 [assembly: Dependency(typeof(AzureCommunicationVideoTest.Droid.ACS.CallingManager))]
 namespace AzureCommunicationVideoTest.Droid.ACS
@@ -34,8 +35,8 @@ namespace AzureCommunicationVideoTest.Droid.ACS
             _callClient = new CallClient();
             var callOptions = new CallAgentOptions();
             
-            _callAgent = Com.Laerdal.Azurecommunicationhelper.CallClientHelper.GetCallAgent(_callClient, Application.Context, credentials);
-            _deviceManager = Com.Laerdal.Azurecommunicationhelper.CallClientHelper.GetDeviceManager(_callClient, Application.Context);
+            _callAgent = CallClientHelper.GetCallAgent(_callClient, Application.Context, credentials);
+            _deviceManager = CallClientHelper.GetDeviceManager(_callClient, Application.Context);
             return true;
         }
 
@@ -93,7 +94,7 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         public void Hangup()
         {
             _call.RemoteParticipantsUpdated -= _call_RemoteParticipantsUpdated;
-            Com.Laerdal.Azurecommunicationhelper.CallClientHelper.HangUp(_call, new HangUpOptions());
+            CallClientHelper.HangUp(_call, new HangUpOptions());
             _localRenderer?.Dispose();
             _localRenderer = null;
             _localVideoStream?.Dispose();

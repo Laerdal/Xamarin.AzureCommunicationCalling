@@ -5,12 +5,11 @@ import com.azure.android.communication.calling.Call;
 import com.azure.android.communication.calling.CallAgent;
 import com.azure.android.communication.calling.CallClient;
 import com.azure.android.communication.calling.CallInfo;
-import com.azure.android.communication.calling.CallerInfo;
 import com.azure.android.communication.calling.DeviceManager;
-import com.azure.android.communication.calling.Features;
 import com.azure.android.communication.calling.HangUpOptions;
-import com.azure.android.communication.calling.RecordingCallFeature;
+import com.azure.android.communication.calling.LocalVideoStream;
 import com.azure.android.communication.calling.StartCallOptions;
+import com.azure.android.communication.calling.VideoDeviceInfo;
 import com.azure.android.communication.common.CommunicationIdentifier;
 import com.azure.android.communication.common.CommunicationTokenCredential;
 
@@ -49,5 +48,8 @@ public class CallClientHelper {
     public static String GetServerCallId(CallInfo callInfo) throws ExecutionException, InterruptedException {
         return callInfo.getServerCallId().get();
     }
+    public static void SwitchCameraSource(LocalVideoStream localVideoStream, VideoDeviceInfo camera) throws ExecutionException, InterruptedException {
+        localVideoStream.switchSource(camera).get();
+    }    
 }
 

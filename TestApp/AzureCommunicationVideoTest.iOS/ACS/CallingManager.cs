@@ -186,6 +186,7 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
         public void Hangup()
         {
+            
             Logger.Debug("Hanging up");
             _call?.HangUp(new ACSHangUpOptions(), OnVideoHangup);
             _localVideoStreamRenderer?.Dispose();
