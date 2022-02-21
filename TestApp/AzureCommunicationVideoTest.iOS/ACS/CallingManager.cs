@@ -39,17 +39,14 @@ namespace AzureCommunicationVideoTest.iOS.ACS
 
             _remoteVideoStreams.Add(remoteVideoStream);
             Logger.Debug("RemoteVideoStreamAdded: Creating renderer");
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                var renderer = new ACSVideoStreamRenderer(remoteVideoStream, out var rendererError);
-                ThrowIfError(rendererError);
-                var renderingOptions = new ACSCreateViewOptions(ACSScalingMode.Crop);
-                var nativeView = renderer.CreateViewWithOptions(renderingOptions, out var createViewError);
-                Logger.Debug("RemoteVideoStreamAdded: Created renderer");
-                ThrowIfError(createViewError);
-                var formsView = nativeView.ToView();
-                RemoteVideoAdded?.Invoke(this, formsView);
-            });
+            var renderer = new ACSVideoStreamRenderer(remoteVideoStream, out var rendererError);
+            ThrowIfError(rendererError);
+            var renderingOptions = new ACSCreateViewOptions(ACSScalingMode.Crop);
+            var nativeView = renderer.CreateViewWithOptions(renderingOptions, out var createViewError);
+            Logger.Debug("RemoteVideoStreamAdded: Created renderer");
+            ThrowIfError(createViewError);
+            var formsView = nativeView.ToView();
+            RemoteVideoAdded?.Invoke(this, formsView);
         }
 
         private void ThrowIfError(NSError rendererError)

@@ -1,3 +1,3 @@
 rm -rf Pods/*
-bundle exec pod install
+arch -x86_64 pod install
 

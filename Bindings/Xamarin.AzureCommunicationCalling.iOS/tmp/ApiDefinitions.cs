@@ -4,7 +4,6 @@ using AzureCommunicationCommon;
 using CallKit;
 using Foundation;
 using ObjCRuntime;
-using UIKit;
 
 namespace Xamarin.AzureCommunicationCalling.iOS
 {
@@ -563,11 +562,11 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	{
 		// -(instancetype _Nonnull)init:(NSUUID * _Nonnull)groupId __attribute__((swift_name("init(groupId:)")));
 		[Export ("init:")]
-		IntPtr Constructor (NSUuid groupId);
+		IntPtr Constructor (NSUUID groupId);
 
 		// @property NSUUID * _Nonnull groupId;
 		[Export ("groupId", ArgumentSemantic.Assign)]
-		NSUuid GroupId { get; set; }
+		NSUUID GroupId { get; set; }
 	}
 
 	// @interface ACSTeamsMeetingCoordinatesLocator : ACSJoinMeetingLocator
@@ -577,7 +576,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	{
 		// -(instancetype _Nonnull)initWithThreadId:(NSString * _Nonnull)threadId organizerId:(NSUUID * _Nonnull)organizerId tenantId:(NSUUID * _Nonnull)tenantId messageId:(NSString * _Nonnull)messageId __attribute__((swift_name("init(withThreadId:organizerId:tenantId:messageId:)")));
 		[Export ("initWithThreadId:organizerId:tenantId:messageId:")]
-		IntPtr Constructor (string threadId, NSUuid organizerId, NSUuid tenantId, string messageId);
+		IntPtr Constructor (string threadId, NSUUID organizerId, NSUUID tenantId, string messageId);
 
 		// @property (readonly, retain) NSString * _Nonnull threadId;
 		[Export ("threadId", ArgumentSemantic.Retain)]
@@ -585,11 +584,11 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 		// @property NSUUID * _Nonnull organizerId;
 		[Export ("organizerId", ArgumentSemantic.Assign)]
-		NSUuid OrganizerId { get; set; }
+		NSUUID OrganizerId { get; set; }
 
 		// @property NSUUID * _Nonnull tenantId;
 		[Export ("tenantId", ArgumentSemantic.Assign)]
-		NSUuid TenantId { get; set; }
+		NSUUID TenantId { get; set; }
 
 		// @property (readonly, retain) NSString * _Nonnull messageId;
 		[Export ("messageId", ArgumentSemantic.Retain)]
@@ -655,7 +654,7 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 		// @property (readonly, nonatomic) NSUUID * _Nonnull callId;
 		[Export ("callId")]
-		NSUuid CallId { get; }
+		NSUUID CallId { get; }
 
 		// +(ACSPushNotificationInfo * _Nonnull)fromDictionary:(NSDictionary * _Nonnull)payload;
 		[Static]
@@ -674,6 +673,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// @property (retain) NSString * _Nonnull displayName;
 		[Export ("displayName", ArgumentSemantic.Retain)]
 		string DisplayName { get; set; }
+
+		// @property (retain) NSString * _Nonnull emergencyCountryCode;
+		[Export ("emergencyCountryCode", ArgumentSemantic.Retain)]
+		string EmergencyCountryCode { get; set; }
 	}
 
 	// @interface ACSCallAgent : NSObject

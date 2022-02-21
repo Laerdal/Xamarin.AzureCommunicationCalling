@@ -21,15 +21,11 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		NoVideoPermission = 0x2,
 		NoAudioAndVideoPermission = 0x3,
 		ReceivedInvalidPushNotificationPayload = 0x4,
-		CallFeatureExtensionNotFound = 0x6,
 		FailedToProcessPushNotificationPayload = 0x8,
 		InvalidGuidGroupId = 0x10,
 		InvalidPushNotificationDeviceRegistrationToken = 0x20,
 		MultipleRenderersNotSupported = 0x40,
 		MultipleViewsNotSupported = 0x80,
-		DuplicateDeviceId = 0x81,
-		DelegateIsRequired = 0x82,
-		VirtualDeviceNotStarted = 0x83,
 		InvalidLocalVideoStreamForVideoOptions = 0x100,
 		NoMultipleConnectionsWithSameIdentity = 0x200,
 		InvalidServerCallId = 0x400,
@@ -37,8 +33,11 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		IncomingCallAlreadyUnplaced = 0x1000,
 		InvalidMeetingLink = 0x2000,
 		ParticipantAddedToUnconnectedCall = 0x4000,
-		ParticipantAlreadyAddedToCall = 0x8000
-
+		ParticipantAlreadyAddedToCall = 0x8000,
+		CallFeatureExtensionNotFound = 0x10000,
+		DuplicateDeviceId = 0x20000,
+		DelegateIsRequired = 0x40000,
+		VirtualDeviceNotStarted = 0x80000
 	}
 
 	[Native]

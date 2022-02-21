@@ -28,13 +28,17 @@ namespace AzureCommunicationVideoTest
             };
             _callingManager.RemoteVideoAdded += delegate (object sender, View view)
             {
+
+                Logger.Debug("Adding remote video");
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    Logger.Debug("Adding remote video");
+                    
                     // Add the new view to stack layout
                     RemoteVideoView.Children.Add(new Frame
                     {
                         Content = view,
+                        VerticalOptions = LayoutOptions.FillAndExpand,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
                         BackgroundColor = GetAlternateBg()
                     });
 
