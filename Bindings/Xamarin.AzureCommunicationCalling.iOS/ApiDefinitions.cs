@@ -206,8 +206,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		void UpdateScalingMode (ACSScalingMode scalingMode);
 
 		// -(void)dispose;
-		//[Export ("dispose")]
-		//void Dispose ();
+		[Export ("dispose")]
+		void Dispose ();
 
 		// -(_Bool)isRendering;
 		[Export ("isRendering")]
@@ -254,8 +254,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		ACSVideoStreamRendererView CreateViewWithOptions([NullAllowed] ACSCreateViewOptions options, [NullAllowed] out NSError error);
 
 		// -(void)dispose;
-		//[Export ("dispose")]
-		//void Dispose ();
+		[Export ("dispose")]
+		void Dispose ();
 
 		// @property (readonly) struct ACSStreamSize size;
 		[Export ("size")]
@@ -702,8 +702,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		NSObject WeakDelegate { get; set; }
 
 		// -(void)dispose;
-		//[Export("dispose")]
-		//void Dispose();
+		[Export("dispose")]
+		void Dispose();
 
 		// -(void)unregisterPushNotificationWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("unregisterPushNotification(completionHandler:)")));
 		[Export("unregisterPushNotificationWithCompletionHandler:")]
@@ -1097,8 +1097,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		void Dealloc ();
 
 		// -(void)dispose;
-		//[Export("dispose")]
-		//void Dispose();
+		[Export("dispose")]
+		void Dispose();
 
 		// -(void)createCallAgent:(CommunicationTokenCredential * _Nonnull)userCredential withCompletionHandler:(void (^ _Nonnull)(ACSCallAgent * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:completionHandler:)")));
 		[Export("createCallAgent:withCompletionHandler:")]
