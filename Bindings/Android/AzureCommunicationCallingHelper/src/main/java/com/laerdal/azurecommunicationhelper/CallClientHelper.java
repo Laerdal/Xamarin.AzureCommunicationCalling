@@ -51,5 +51,11 @@ public class CallClientHelper {
     public static void SwitchCameraSource(LocalVideoStream localVideoStream, VideoDeviceInfo camera) throws ExecutionException, InterruptedException {
         localVideoStream.switchSource(camera).get();
     }    
+    public static void StartVideo(Call call, LocalVideoStream localVideoStream, Context context) throws ExecutionException, InterruptedException {
+        call.startVideo(context, localVideoStream).get();
+    }
+    public static void StopVideo(Call call, LocalVideoStream localVideoStream, Context context) throws ExecutionException, InterruptedException {
+        call.stopVideo(context, localVideoStream).get();
+    }
 }
 
