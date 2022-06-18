@@ -16,7 +16,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
@@ -32,7 +32,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AndroidSupportedAbis>arm64-v8a;x86_64;x86;armeabi-v7a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>arm64-v8a</AndroidSupportedAbis>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,15 +55,15 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.AzureCommunicationCommon.Android" Version="1.0.1.1" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
+    <PackageReference Include="Xamarin.AzureCommunicationCommon.Android" Version="1.0.2.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
     <PackageReference Include="Xamarin.AndroidX.Migration">
       <Version>1.0.8</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.4" />
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.2.1.1" />
-    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.6" />        
+    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.4.0.1" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.5.0.2" />
+    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.13" />        
         
     <PackageReference Include="Square.Retrofit2">
       <Version>2.7.2</Version>
@@ -71,20 +72,20 @@
       <Version>3.14.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCore.Android">
-      <Version>1.0.0-beta.9.2</Version>
+      <Version>1.0.0-beta.10.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.AzureCommunicationCalling.Android" Version="2.0.0.2" />
+    <PackageReference Include="Xamarin.AzureCommunicationCalling.Android" Version="2.2.0.1" />
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData">
-      <Version>2.2.0.4</Version>
+      <Version>2.4.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Core">
-      <Version>1.3.2.3</Version>
+      <Version>1.7.0.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCoreLogging.Android">
-      <Version>1.0.0-beta.9.1</Version>
+      <Version>1.0.0-beta.10.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCommunicationCallingHelper.Android">
-      <Version>1.1.1</Version>
+      <Version>2.0.0-beta.1.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +125,7 @@
     <ProjectReference Include="..\AzureCommunicationVideoTest\AzureCommunicationVideoTest.csproj">
       <Project>{DD287FD7-2A1B-4EB6-BAF6-FAE6E9558AE3}</Project>
       <Name>AzureCommunicationVideoTest</Name>
+      <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
