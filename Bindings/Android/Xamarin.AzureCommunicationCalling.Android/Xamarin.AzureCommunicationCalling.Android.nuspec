@@ -2,8 +2,8 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCalling.Android</id>
-    <version>2.2.0.1</version>
-    <title>AzureCommunicationCalling for Xamarin.Android</title>
+    <version>2.3.0-beta.1</version>
+    <title>AzureommunicationCalling for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,10 +13,8 @@ Naive binding for Azure Communication Calling SDK for Android.
 This nuget is just a binding library for https://search.maven.org/artifact/com.azure.android/azure-communication-calling
     </description>
     <releaseNotes>
-        * Client options diagnostic information.
-        * Application will be able to pass custom 'appName', 'appVersion', and additionally set of 'tags' to the SDK that will be sent with telemetry pipeline.
-        * Voice and video calling support in Azure government.
-        * Push Notifications support for stopping an incoming call because it was answered in another device, or caller cancelled, etc.
+        * Revamp of Raw Media Functionality using Streams concept.
+        * New ScreenSharing functionality via a new type of Raw Video Stream
     </releaseNotes>
     <copyright>Copyright Laerdal Medical 2020</copyright>
     <repository type="git" url="https://github.com/laerdal/Xamarin.AzureCommunicationCalling"/>

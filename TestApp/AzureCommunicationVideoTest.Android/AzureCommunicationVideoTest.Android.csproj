@@ -74,7 +74,7 @@
     <PackageReference Include="Xamarin.AzureCore.Android">
       <Version>1.0.0-beta.10.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.AzureCommunicationCalling.Android" Version="2.2.0.1" />
+    <PackageReference Include="Xamarin.AzureCommunicationCalling.Android" Version="2.3.0-beta.1" />
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData">
       <Version>2.4.1.1</Version>
     </PackageReference>
@@ -85,7 +85,7 @@
       <Version>1.0.0-beta.10.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCommunicationCallingHelper.Android">
-      <Version>2.0.0-beta.1.2</Version>
+      <Version>2.3.0-beta.1.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
