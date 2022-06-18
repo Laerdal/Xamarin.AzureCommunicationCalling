@@ -34,8 +34,10 @@ namespace AzureCommunicationVideoTest.Droid.ACS
             var credentials = new CommunicationTokenCredential(token);
             _callClient = new CallClient();
             var callOptions = new CallAgentOptions();
-            
-            _callAgent = CallClientHelper.GetCallAgent(_callClient, Application.Context, credentials);
+
+            var callAgentOptions = new CallAgentOptions();
+            callAgentOptions.SetDisplayName("Pikachu");
+            _callAgent = CallClientHelper.GetCallAgent(_callClient, Application.Context, credentials, callAgentOptions);
             _deviceManager = CallClientHelper.GetDeviceManager(_callClient, Application.Context);
             return Task.FromResult(true);
         }
