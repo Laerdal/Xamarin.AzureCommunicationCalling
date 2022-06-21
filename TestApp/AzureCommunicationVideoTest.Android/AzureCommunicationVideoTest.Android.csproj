@@ -56,8 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.AzureCommunicationCommon.Android" Version="1.0.2.1" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
     <PackageReference Include="Xamarin.AndroidX.Migration">
       <Version>1.0.8</Version>
     </PackageReference>

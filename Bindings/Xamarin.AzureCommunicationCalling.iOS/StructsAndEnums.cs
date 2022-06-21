@@ -31,13 +31,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		InvalidServerCallId = 0x400,
 		LocalVideoStreamSwitchSourceFailure = 0x800,
 		IncomingCallAlreadyUnplaced = 0x1000,
-		InvalidMeetingLink = 0x2000,
-		ParticipantAddedToUnconnectedCall = 0x4000,
-		ParticipantAlreadyAddedToCall = 0x8000,
-		CallFeatureExtensionNotFound = 0x10000,
-		DuplicateDeviceId = 0x20000,
-		DelegateIsRequired = 0x40000,
-		VirtualDeviceNotStarted = 0x80000
+		InvalidMeetingLink = 0x4000,
+		ParticipantAddedToUnconnectedCall = 0x8000,
+		ParticipantAlreadyAddedToCall = 0x10000,
+		CallFeatureExtensionNotFound = 0x20000
 	}
 
 	[Native]
