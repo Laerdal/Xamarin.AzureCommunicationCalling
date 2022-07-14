@@ -40,10 +40,12 @@ Windows support is official.
 
 # Screenshots
 ## Android
-<img src="/Screenshots/Android_Intro.jpg" width="200" height="400" /> <img src="/Screenshots/Android_Join.jpg" width="200" height="400" /><img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />
+<img src="/Screenshots/Android_Intro.jpg" width="200" height="400" />   <img src="/Screenshots/Android_Join.jpg" width="200" height="400" /><img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />
+
 ## iOS
 <img src="/Screenshots/iOS_Intro.png" width="200" height="400" /> <img src="/Screenshots/iOS_Join.png" width="200" height="400" /><img src="/Screenshots/iOS_Setup.png" width="200" height="400" />
 ## UWP
+
 <img src="/Screenshots/Windows_Intro.png" width="600" height="400" /> <img src="/Screenshots/Windows_Join.png" width="600" height="400" />
 <img src="/Screenshots/Windows_Setup.png" width="600" height="400" />
 
