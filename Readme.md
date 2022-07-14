@@ -5,9 +5,15 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 ## Support platforms
 
 - [x] Android
-- [x] iOS
+- [x] iOS 
 - [x] UWP (Min Target: 10.0.18362)
 - macOS (study in progress)
+
+## Support Libraries
+
+Mobile support is maintained by the community
+
+Windows support is official.
 
 ## Features
 
