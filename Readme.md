@@ -23,7 +23,7 @@ Windows support is official.
 | Start a new PSTN call                   | ✅           | ✅               |✅               |
 | Join an existing Teams Meeting          | ✅           | ✅               | ✅               |
 | Start and Receive calls                             | :hourglass:            | :hourglass:               |:hourglass:               |
-| Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | ✅           | ✅               |✅               |
+| Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | :hourglass:            | ✅               |✅               |
 | Render remote participant video streams dynamically | :hourglass:            | ✅               |✅               |
 | Show remote call participants                     | :hourglass:            | ✅               |✅               |
 | Show remote participants with microphone on/off   | :hourglass:            | ✅               |✅               |
