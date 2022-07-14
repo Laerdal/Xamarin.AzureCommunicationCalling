@@ -17,7 +17,7 @@ Windows support is official.
 
 ## Features
 
-| Feature                                 | iOS | Android |UWP |
+| Features                                | iOS | Android |UWP |
 | -----------------------------           | ----------- | --------------- | --------------- |
 | Start or join in existing group call                  | ✅          |✅                 |✅        |
 | Start a new PSTN call                   | ✅           | ✅               |✅               |
