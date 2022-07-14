@@ -25,6 +25,8 @@ Windows support is official.
 | Start and Receive calls                             | :hourglass:            | :hourglass:               |:hourglass:               |
 | Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | ✅           | ✅               |✅               |
 | Render remote participant video streams dynamically | :hourglass:            | ✅               |✅               |
+| Show remote call participants                     | :hourglass:            | ✅               |✅               |
+| Show remote participants with microphone on/off   | :hourglass:            | ✅               |✅               |
 | Turning local video stream from camera on/off | ✅           | ✅               |✅               |
 | Mute/unmute local microphone audio      | ✅           | ✅               |✅               |
 | Turn off screen on calls      | :x:           | ✅               |:x:               |
