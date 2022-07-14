@@ -1,7 +1,6 @@
 using System;
 using AzureCommunicationCalling;
 using AzureCommunicationCommon;
-using CallKit;
 using Foundation;
 using ObjCRuntime;
 
@@ -284,6 +283,133 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		Class Transcription { get; }
 	}
 
+	// @interface ACSCallAgentEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCallAgentEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSCallsUpdatedEventArgs * _Nonnull) onCallsUpdated;
+		[NullAllowed, Export ("onCallsUpdated", ArgumentSemantic.Copy)]
+		Action<ACSCallsUpdatedEventArgs> OnCallsUpdated { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSIncomingCall * _Nonnull) onIncomingCall;
+		[NullAllowed, Export ("onIncomingCall", ArgumentSemantic.Copy)]
+		Action<ACSIncomingCall> OnIncomingCall { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSCallEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCallEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIdChanged;
+		[NullAllowed, Export ("onIdChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIdChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onStateChanged;
+		[NullAllowed, Export ("onStateChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnStateChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSParticipantsUpdatedEventArgs * _Nonnull) onRemoteParticipantsUpdated;
+		[NullAllowed, Export ("onRemoteParticipantsUpdated", ArgumentSemantic.Copy)]
+		Action<ACSParticipantsUpdatedEventArgs> OnRemoteParticipantsUpdated { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSLocalVideoStreamsUpdatedEventArgs * _Nonnull) onLocalVideoStreamsUpdated;
+		[NullAllowed, Export ("onLocalVideoStreamsUpdated", ArgumentSemantic.Copy)]
+		Action<ACSLocalVideoStreamsUpdatedEventArgs> OnLocalVideoStreamsUpdated { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIsMutedChanged;
+		[NullAllowed, Export ("onIsMutedChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIsMutedChanged { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSRemoteParticipantEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSRemoteParticipantEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onStateChanged;
+		[NullAllowed, Export ("onStateChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnStateChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIsMutedChanged;
+		[NullAllowed, Export ("onIsMutedChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIsMutedChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIsSpeakingChanged;
+		[NullAllowed, Export ("onIsSpeakingChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIsSpeakingChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onDisplayNameChanged;
+		[NullAllowed, Export ("onDisplayNameChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnDisplayNameChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSRemoteVideoStreamsEventArgs * _Nonnull) onVideoStreamsUpdated;
+		[NullAllowed, Export ("onVideoStreamsUpdated", ArgumentSemantic.Copy)]
+		Action<ACSRemoteVideoStreamsEventArgs> OnVideoStreamsUpdated { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSIncomingCallEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSIncomingCallEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onCallEnded;
+		[NullAllowed, Export ("onCallEnded", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnCallEnded { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSDeviceManagerEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSDeviceManagerEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSVideoDevicesUpdatedEventArgs * _Nonnull) onCamerasUpdated;
+		[NullAllowed, Export ("onCamerasUpdated", ArgumentSemantic.Copy)]
+		Action<ACSVideoDevicesUpdatedEventArgs> OnCamerasUpdated { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSRecordingCallFeatureEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSRecordingCallFeatureEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIsRecordingActiveChanged;
+		[NullAllowed, Export ("onIsRecordingActiveChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIsRecordingActiveChanged { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSTranscriptionCallFeatureEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSTranscriptionCallFeatureEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIsTranscriptionActiveChanged;
+		[NullAllowed, Export ("onIsTranscriptionActiveChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIsTranscriptionActiveChanged { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
 	// @protocol ACSCallAgentDelegate <NSObject>
 	[Protocol, Model (AutoGeneratedName = true)]
 	[BaseType (typeof(NSObject))]
@@ -322,10 +448,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// @optional -(void)onIsMutedChanged:(ACSCall * _Nonnull)call :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("call(_:didChangeMuteState:)")));
 		[Export ("onIsMutedChanged::")]
 		void OnIsMutedChanged (ACSCall call, ACSPropertyChangedEventArgs args);
-
-		// @optional -(void)onTotalParticipantCountChanged:(ACSCall * _Nonnull)call :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("call(_:didChangeTotalParticipantCount:)")));
-		[Export ("onTotalParticipantCountChanged::")]
-		void OnTotalParticipantCountChanged (ACSCall call, ACSPropertyChangedEventArgs args);
 	}
 
 	// @protocol ACSRemoteParticipantDelegate <NSObject>
@@ -399,6 +521,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	[DisableDefaultCtor]
 	interface ACSVideoOptions
 	{
+		// -(instancetype _Nonnull)init:(NSArray<ACSLocalVideoStream *> * _Nonnull)localVideoStreams __attribute__((swift_name("init(localVideoStreams:)")));
+		[Export ("init:")]
+		IntPtr Constructor (ACSLocalVideoStream[] localVideoStreams);
+
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
@@ -406,10 +532,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// @property (readonly, copy) NSArray<ACSLocalVideoStream *> * _Nonnull localVideoStreams;
 		[Export ("localVideoStreams", ArgumentSemantic.Copy)]
 		ACSLocalVideoStream[] LocalVideoStreams { get; }
-
-		// -(instancetype _Nonnull)init:(NSArray<ACSLocalVideoStream *> * _Nonnull)localVideoStreams __attribute__((swift_name("init(localVideoStreams:)")));
-		[Export ("init:")]
-		IntPtr Constructor (ACSLocalVideoStream[] localVideoStreams);
 	}
 
 	// @interface ACSLocalVideoStream : NSObject
@@ -564,9 +686,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("init:")]
 		IntPtr Constructor (NSUUID groupId);
 
-		// @property NSUUID * _Nonnull groupId;
-		[Export ("groupId", ArgumentSemantic.Assign)]
-		NSUUID GroupId { get; set; }
+		// @property (readonly, retain) NSUUID * _Nonnull groupId;
+		[Export ("groupId", ArgumentSemantic.Retain)]
+		NSUUID GroupId { get; }
 	}
 
 	// @interface ACSTeamsMeetingCoordinatesLocator : ACSJoinMeetingLocator
@@ -582,13 +704,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("threadId", ArgumentSemantic.Retain)]
 		string ThreadId { get; }
 
-		// @property NSUUID * _Nonnull organizerId;
-		[Export ("organizerId", ArgumentSemantic.Assign)]
-		NSUUID OrganizerId { get; set; }
+		// @property (readonly, retain) NSUUID * _Nonnull organizerId;
+		[Export ("organizerId", ArgumentSemantic.Retain)]
+		NSUUID OrganizerId { get; }
 
-		// @property NSUUID * _Nonnull tenantId;
-		[Export ("tenantId", ArgumentSemantic.Assign)]
-		NSUUID TenantId { get; set; }
+		// @property (readonly, retain) NSUUID * _Nonnull tenantId;
+		[Export ("tenantId", ArgumentSemantic.Retain)]
+		NSUUID TenantId { get; }
 
 		// @property (readonly, retain) NSString * _Nonnull messageId;
 		[Export ("messageId", ArgumentSemantic.Retain)]
@@ -674,9 +796,22 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("displayName", ArgumentSemantic.Retain)]
 		string DisplayName { get; set; }
 
-		// @property (retain) NSString * _Nonnull emergencyCountryCode;
-		[Export ("emergencyCountryCode", ArgumentSemantic.Retain)]
-		string EmergencyCountryCode { get; set; }
+		// @property (retain) ACSEmergencyCallOptions * _Nullable emergencyCallOptions;
+		[NullAllowed, Export ("emergencyCallOptions", ArgumentSemantic.Retain)]
+		ACSEmergencyCallOptions EmergencyCallOptions { get; set; }
+	}
+
+	// @interface ACSEmergencyCallOptions : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSEmergencyCallOptions
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (retain) NSString * _Nonnull countryCode;
+		[Export ("countryCode", ArgumentSemantic.Retain)]
+		string CountryCode { get; set; }
 	}
 
 	// @interface ACSCallAgent : NSObject
@@ -696,9 +831,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[NullAllowed]
 		ACSCallAgentDelegate Delegate { get; set; }
 
-		// @property (assign, nonatomic) id<ACSCallAgentDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
+		// @property (nonatomic, weak) id<ACSCallAgentDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
 		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSCallAgentEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSCallAgentEvents Events { get; }
 
 		// -(void)dispose;
 		[Export ("dispose")]
@@ -754,10 +893,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("direction")]
 		ACSCallDirection Direction { get; }
 
-		// @property (readonly, retain) ACSCallInfo * _Nonnull info;
-		[Export ("info", ArgumentSemantic.Retain)]
-		ACSCallInfo Info { get; }
-
 		// @property (readonly) BOOL isMuted;
 		[Export ("isMuted")]
 		bool IsMuted { get; }
@@ -770,17 +905,17 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("localVideoStreams", ArgumentSemantic.Copy)]
 		ACSLocalVideoStream[] LocalVideoStreams { get; }
 
-		// @property (readonly) int totalParticipantCount;
-		[Export ("totalParticipantCount")]
-		int TotalParticipantCount { get; }
-
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
 		ACSCallDelegate Delegate { get; set; }
 
-		// @property (assign, nonatomic) id<ACSCallDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
+		// @property (nonatomic, weak) id<ACSCallDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
 		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSCallEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSCallEvents Events { get; }
 
 		// -(void)muteWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("mute(completionHandler:)")));
 		[Export ("muteWithCompletionHandler:")]
@@ -870,9 +1005,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[NullAllowed]
 		ACSRemoteParticipantDelegate Delegate { get; set; }
 
-		// @property (assign, nonatomic) id<ACSRemoteParticipantDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
+		// @property (nonatomic, weak) id<ACSRemoteParticipantDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
 		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSRemoteParticipantEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSRemoteParticipantEvents Events { get; }
 
 		// @property (readonly, nonatomic) id<CommunicationIdentifier> _Nonnull identifier;
 		[Export ("identifier")]
@@ -945,20 +1084,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// @property (readonly, copy) NSArray<ACSRemoteVideoStream *> * _Nonnull removedRemoteVideoStreams;
 		[Export ("removedRemoteVideoStreams", ArgumentSemantic.Copy)]
 		ACSRemoteVideoStream[] RemovedRemoteVideoStreams { get; }
-	}
-
-	// @interface ACSCallInfo : NSObject
-	[BaseType (typeof(NSObject))]
-	[DisableDefaultCtor]
-	interface ACSCallInfo
-	{
-		// -(void)dealloc;
-		[Export ("dealloc")]
-		void Dealloc ();
-
-		// -(void)getServerCallIdWithCompletionHandler:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getServerCallId(completionHandler:)")));
-		[Export ("getServerCallIdWithCompletionHandler:")]
-		void GetServerCallIdWithCompletionHandler (Action<NSString, NSError> completionHandler);
 	}
 
 	// @interface ACSParticipantsUpdatedEventArgs : NSObject
@@ -1071,9 +1196,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[NullAllowed]
 		ACSIncomingCallDelegate Delegate { get; set; }
 
-		// @property (assign, nonatomic) id<ACSIncomingCallDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
+		// @property (nonatomic, weak) id<ACSIncomingCallDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
 		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSIncomingCallEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSIncomingCallEvents Events { get; }
 
 		// -(void)accept:(ACSAcceptCallOptions * _Nonnull)options withCompletionHandler:(void (^ _Nonnull)(ACSCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("accept(options:completionHandler:)")));
 		[Export ("accept:withCompletionHandler:")]
@@ -1108,15 +1237,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("createCallAgentWithOptions:callAgentOptions:withCompletionHandler:")]
 		void CreateCallAgentWithOptions (CommunicationTokenCredential userCredential, [NullAllowed] ACSCallAgentOptions callAgentOptions, Action<ACSCallAgent, NSError> completionHandler);
 
-		// -(void)createCallAgentWithCallKitOptions:(CommunicationTokenCredential * _Nonnull)userCredential callAgentOptions:(ACSCallAgentOptions * _Nullable)callAgentOptions cxproviderConfig:(CXProviderConfiguration * _Nullable)cxproviderConfig withCompletionHandler:(void (^ _Nonnull)(ACSCallAgent * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:options:cxproviderConfig:completionHandler:)")));
-		[Export ("createCallAgentWithCallKitOptions:callAgentOptions:cxproviderConfig:withCompletionHandler:")]
-		void CreateCallAgentWithCallKitOptions (CommunicationTokenCredential userCredential, [NullAllowed] ACSCallAgentOptions callAgentOptions, [NullAllowed] CXProviderConfiguration cxproviderConfig, Action<ACSCallAgent, NSError> completionHandler);
-
-		// +(void)reportToCallKit:(ACSPushNotificationInfo * _Nonnull)payload cxproviderConfig:(CXProviderConfiguration * _Nonnull)providerConfig withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("reportToCallKit(with:cxproviderConfig:completionHandler:)")));
-		[Static]
-		[Export ("reportToCallKit:cxproviderConfig:withCompletionHandler:")]
-		void ReportToCallKit (ACSPushNotificationInfo payload, CXProviderConfiguration providerConfig, Action<NSError> completionHandler);
-
 		// -(void)getDeviceManagerWithCompletionHandler:(void (^ _Nonnull)(ACSDeviceManager * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getDeviceManager(completionHandler:)")));
 		[Export ("getDeviceManagerWithCompletionHandler:")]
 		void GetDeviceManagerWithCompletionHandler (Action<ACSDeviceManager, NSError> completionHandler);
@@ -1134,14 +1254,14 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("dealloc")]
 		void Dealloc ();
 
-		// @property (retain) ACSDiagnosticOptions * _Nullable diagnostics;
+		// @property (retain) ACSCallDiagnosticsOptions * _Nullable diagnostics;
 		[NullAllowed, Export ("diagnostics", ArgumentSemantic.Retain)]
-		ACSDiagnosticOptions Diagnostics { get; set; }
+		ACSCallDiagnosticsOptions Diagnostics { get; set; }
 	}
 
-	// @interface ACSDiagnosticOptions : NSObject
+	// @interface ACSCallDiagnosticsOptions : NSObject
 	[BaseType (typeof(NSObject))]
-	interface ACSDiagnosticOptions
+	interface ACSCallDiagnosticsOptions
 	{
 		// -(void)dealloc;
 		[Export ("dealloc")]
@@ -1177,9 +1297,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[NullAllowed]
 		ACSDeviceManagerDelegate Delegate { get; set; }
 
-		// @property (assign, nonatomic) id<ACSDeviceManagerDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
+		// @property (nonatomic, weak) id<ACSDeviceManagerDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
 		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSDeviceManagerEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSDeviceManagerEvents Events { get; }
 	}
 
 	// @interface ACSVideoDevicesUpdatedEventArgs : NSObject
@@ -1213,9 +1337,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[NullAllowed]
 		ACSRecordingCallFeatureDelegate Delegate { get; set; }
 
-		// @property (assign, nonatomic) id<ACSRecordingCallFeatureDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
+		// @property (nonatomic, weak) id<ACSRecordingCallFeatureDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
 		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSRecordingCallFeatureEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSRecordingCallFeatureEvents Events { get; }
 	}
 
 	// @interface ACSTranscriptionCallFeature : ACSCallFeature
@@ -1231,9 +1359,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[NullAllowed]
 		ACSTranscriptionCallFeatureDelegate Delegate { get; set; }
 
-		// @property (assign, nonatomic) id<ACSTranscriptionCallFeatureDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
+		// @property (nonatomic, weak) id<ACSTranscriptionCallFeatureDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
 		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSTranscriptionCallFeatureEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSTranscriptionCallFeatureEvents Events { get; }
 	}
 
 	// @interface ACSCreateViewOptions : NSObject

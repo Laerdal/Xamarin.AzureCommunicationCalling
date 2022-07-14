@@ -29,15 +29,17 @@ namespace AzureCommunicationVideoTest.Droid.ACS
             _remoteVideoStreams = new List<RemoteVideoStream>();
         }
 
-        public async Task<bool> Init(string token)
+        public Task<bool> Init(string token)
         {
             var credentials = new CommunicationTokenCredential(token);
             _callClient = new CallClient();
             var callOptions = new CallAgentOptions();
-            
-            _callAgent = CallClientHelper.GetCallAgent(_callClient, Application.Context, credentials);
+
+            var callAgentOptions = new CallAgentOptions();
+            callAgentOptions.SetDisplayName("Pikachu");
+            _callAgent = CallClientHelper.GetCallAgent(_callClient, Application.Context, credentials, callAgentOptions);
             _deviceManager = CallClientHelper.GetDeviceManager(_callClient, Application.Context);
-            return true;
+            return Task.FromResult(true);
         }
 
         public Task JoinGroup(Guid groupID)
@@ -128,5 +130,40 @@ namespace AzureCommunicationVideoTest.Droid.ACS
         public void CallPhone(string phoneNumber)
         {
         }
+
+        public async Task SetupLocalVideo()
+        {
+            try
+            {
+                if (_deviceManager == null)
+                {
+                    _deviceManager = CallClientHelper.GetDeviceManager(_callClient, MainActivity.Instance);
+                }
+
+                // First cleanup existing local video
+                _localRenderer?.Dispose();
+                _localVideoStream?.Dispose();
+
+                // A few times Ive seen that there is NOT a camera available at this time,
+                // assume its still initializing, and just wait a little while
+                if (_deviceManager.Cameras.All(c => c.CameraFacing != CameraFacing.Front))
+                {
+                    await Task.Delay(1_000);
+                }
+
+                var camera = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
+                _localVideoStream = new LocalVideoStream(camera, MainActivity.Instance);
+                _localRenderer = new VideoStreamRenderer(_localVideoStream, MainActivity.Instance);
+                var renderingOptions = new CreateViewOptions(ScalingMode.Fit);
+                var nativeView = _localRenderer.CreateView(renderingOptions);
+                var formsView = nativeView.ToView();
+            }
+            catch (Exception)
+            {
+                //_logger.Error("Local video setup failed", e);
+                throw;
+            }
+        }
+
     }
 }

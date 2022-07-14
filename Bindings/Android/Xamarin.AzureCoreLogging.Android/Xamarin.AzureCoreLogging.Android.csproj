@@ -56,7 +56,7 @@
     <Folder Include="Jars\" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\azure-core-logging-1.0.0-beta.9.aar" />
+    <LibraryProjectZip Include="Jars\azure-core-logging-1.0.0-beta.10.aar" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedReferenceJar Include="Jars\slf4j-api-1.7.32.jar" />

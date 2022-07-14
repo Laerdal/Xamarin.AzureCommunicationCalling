@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCommon.Android</id>
-    <version>1.0.1.1</version>
+    <version>1.0.2.1</version>
     <title>AzureCommunicationCommon for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -20,7 +20,7 @@ This nuget is just a binding library for https://search.maven.org/artifact/com.a
     <tags>Xamarin Azure Communication Common Android</tags>
     <dependencies>
          <group targetFramework="MonoAndroid0.0">
-             <dependency id="Xamarin.AzureCore.Android" version="1.0.0-beta.9.2"/>
+             <dependency id="Xamarin.AzureCore.Android" version="1.0.0-beta.10.1"/>
              <dependency id="Xamarin.Android.JakeWharton.ThreeTenAbp" version="1.3"/>
          </group>
      </dependencies>        
