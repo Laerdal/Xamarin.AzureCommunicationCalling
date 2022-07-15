@@ -31,7 +31,7 @@ Windows support is official.
 | Show remote call participants                     | :hourglass:            | ✅               |✅               |
 | Show remote participants with microphone on/off   | :hourglass:            | ✅               |✅               |
 | Turning local video stream from camera on/off | ✅           | ✅               |✅               |
-| switch between cameras                         | :x:            | :x:                |:x:                 |
+| switch between cameras                         | ✅            | ✅               |:x:                 |
 | View remote screen sharing                     | :x:            | :x:                |:x:                 |
 | Request permission to use audio and/or video   | ✅             | ✅               |✅               |
 | Mute/unmute local microphone audio      | ✅           | ✅               |✅               |
