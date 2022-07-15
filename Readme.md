@@ -15,7 +15,8 @@ Mobile support is maintained by the community
 
 Windows support is official.
 
-## Features
+# Features
+
 
 | Features                                | iOS | Android |UWP |
 | -----------------------------           | ----------- | --------------- | --------------- |
@@ -23,7 +24,7 @@ Windows support is official.
 | Start a new PSTN call                   | ✅           | ✅               |✅               |
 | Join an existing Teams Meeting          | ✅           | ✅               | ✅               |
 | Start calls inside sdk                            | ✅             | ✅               |✅                |
-| Receive calls inside sdk                             | :x:          | ✅               | ✅             |
+| Receive calls inside sdk                             | :construction:	         | ✅               | ✅             |
 | call notification                             | :x:          | ✅               | ✅            |
 | Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | :hourglass:            | ✅               |✅               |
 | Render remote participant video streams dynamically | :hourglass:            | ✅               |✅               |
@@ -39,7 +40,15 @@ Windows support is official.
 | Toggle audio output                       | ✅           | ✅               |:x:               |
 | Screensharing                 | :x:               |:hourglass:            |:x:
 | Background Voip API           | ✅  Services              |:hourglass:  Callkit           |:x:  VoipPhoneCall 
+## Subtitle
 
+in progress      :construction: 
+
+In consideration :hourglass:
+
+Not implemented  :x:
+
+implemented      ✅   
 # Screenshots
 ## Android
 <img src="/Screenshots/Android_Intro.jpg" width="200" height="400" />   <img src="/Screenshots/Android_Join.jpg" width="200" height="400" /><img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />
