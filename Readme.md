@@ -24,7 +24,7 @@ Windows support is official.
 | Start a new PSTN call                   | ✅           | ✅               |✅               |
 | Join an existing Teams Meeting          | ✅           | ✅               | ✅               |
 | Start calls inside sdk                            | ✅             | ✅               |✅                |
-| Receive calls inside sdk                             | :construction:	         | ✅               | ✅             |
+| Receive calls inside sdk                             | ✅          | ✅               | ✅             |
 | Add participants during calls                   | ✅         | ✅            | ✅           |
 | call notification                             | :x:          | ✅               | ✅            |
 | Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | ✅             | ✅               |✅               |
