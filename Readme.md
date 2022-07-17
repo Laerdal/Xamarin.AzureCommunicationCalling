@@ -28,9 +28,9 @@ Windows support is official.
 | Add participants during calls                   | :construction:	         | :construction:               | :construction:             |
 | call notification                             | :x:          | ✅               | ✅            |
 | Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | :hourglass:            | ✅               |✅               |
-| Render remote participant video streams dynamically | :hourglass:            | ✅               |✅               |
-| Show remote call participants                     | :hourglass:            | ✅               |✅               |
-| Show remote participants with microphone on/off   | :hourglass:            | ✅               |✅               |
+| Render remote participant video streams dynamically | ✅             | ✅               |✅               |
+| Show remote call participants                     | ✅             | ✅               |✅               |
+| Show remote participants with microphone on/off   | ✅            | ✅               |✅               |
 | Turning local video stream from camera on/off | ✅           | ✅               |✅               |
 | switch between cameras                         | ✅            | ✅               |:x:                 |
 | View remote screen sharing                     | :x:            | :x:                |:x:                 |
