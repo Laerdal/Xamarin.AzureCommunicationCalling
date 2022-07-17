@@ -36,7 +36,7 @@ Windows support is official.
 | View remote screen sharing                     | :x:            | :x:                |:x:                 |
 | Request permission to use audio and/or video   | ✅             | ✅               |✅               |
 | Mute/unmute local microphone audio      | ✅           | ✅               |✅               |
-| Show dominant speaker                         | :x:            | :x:                |:x:                 |
+| Show dominant speaker                         | ✅             | ✅                 |✅                 |
 | Turn off screen on calls      | :x:           | ✅               |:x:               |
 | Toggle audio output                       | ✅           | ✅               |:x:               |
 | Screensharing                 | :x:               |:hourglass:            |:x:
