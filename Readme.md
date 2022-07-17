@@ -100,8 +100,11 @@ The camera on android doesn't seem to work during calls.
 ## UWP
 
 The token initialization agent has a wait of up to 15 seconds
+
 Incoming call and accept/or reject status does not update on event.
+
 Video refresh event no longer works after a video is removed from the screen.
+
 
 Please refer to the [wiki](https://github.com/Azure-Samples/communication-services-android-calling-hero/wiki/Known-Issues) for known issues related to this sample.
 ](https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features)
