@@ -27,7 +27,7 @@ Windows support is official.
 | Receive calls inside sdk                             | :construction:	         | ✅               | ✅             |
 | Add participants during calls                   | :construction:	         | :construction:               | :construction:             |
 | call notification                             | :x:          | ✅               | ✅            |
-| Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | :hourglass:            | ✅               |✅               |
+| Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | ✅             | ✅               |✅               |
 | Render remote participant video streams dynamically | ✅             | ✅               |✅               |
 | Show remote call participants                     | ✅             | ✅               |✅               |
 | Show remote participants with microphone on/off   | ✅            | ✅               |✅               |
