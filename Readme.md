@@ -27,6 +27,7 @@ Windows support is official.
 | Receive calls inside sdk                             | ✅          | ✅               | ✅             |
 | Add participants during calls                   | ✅         | ✅            | ✅           |
 | call notification                             | :x:          | ✅               | ✅            |
+| answer calls with locked screen               | :construction:          | :hourglass:               | :x:         |
 | Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | ✅             | ✅               |✅               |
 | Render remote participant video streams dynamically | ✅             | ✅               |✅               |
 | Show remote call participants                     | ✅             | ✅               |✅               |
@@ -40,7 +41,7 @@ Windows support is official.
 | Turn off screen on calls      | :x:           | ✅               |:x:               |
 | Toggle audio output                       | ✅           | ✅               |:x:               |
 | Screensharing                 | :x:               |:hourglass:            |:x:
-| Background Voip API           | ✅  Services              |:hourglass:  Callkit           |:x:  VoipPhoneCall 
+| Background Voip API           | ✅  Services              |:construction:  Callkit           |:x:  VoipPhoneCall 
 ## Subtitle
 
 in progress      :construction: 
