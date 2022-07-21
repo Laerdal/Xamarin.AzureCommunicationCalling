@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AzureSample.Pages.CallTemplate.ParticipantsTemplate"
+             xmlns:local="clr-namespace:AzureSample.Pages.CallTemplate"
+             x:Name="this">
+    <ContentView.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <FlexLayout x:Name="flexLayout"
+                    BindingContext="{x:Reference this}"
+                    Wrap="Wrap"
+                    Direction="Row"
+                    JustifyContent="Center" 
+                    AlignItems="Start"
+                    AlignContent="Center"
+                    BindableLayout.ItemsSource="{Binding Items}"
+                    ChildAdded="flexLayout_ChildAdded"
+                    ChildRemoved="flexLayout_ChildRemoved">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <local:ParticipantTemplate FlexLayout.Basis="33%"
+                                   Padding="0"
+                                   ParticipantName="{Binding Name}"
+                                   ParticipantAvatar="{Binding Id}"
+                                   VideoStream="{Binding StreamVideo}"
+                                   ParticipantMicrophoneMuted="{Binding MicrophoneMuted}"/>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>

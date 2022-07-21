@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AzureSample.Pages.JoinCallPage"
+             BackgroundColor="White"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Start" HorizontalOptions="Center">
+            <Grid x:Name="GridJoin" RowDefinitions="50,50,50,50,50,50,100">
+                <syncfusion:SfCheckBox                     
+                    Grid.Row="0"
+                    IsChecked="{Binding Group}" 
+                    CheckedColor="#0078d4" 
+                    TickColor="#000000" 
+                    TextColor="#000000"
+                    ControlSize="30"
+                    CornerRadius="20" 
+                    VerticalOptions="Center"
+                    Text="Enter meeting ID"/>
+                <syncfusion:SfCheckBox                    
+                    Grid.Row="1"
+                    IsChecked="{Binding Teams}" 
+                    VerticalOptions="Center"
+                    CheckedColor="#0078d4" 
+                    TickColor="#000000" 
+                    TextColor="#000000"
+                    ControlSize="30"
+                    CornerRadius="20"
+                    Text="Join a Teams meeting"/>
+                <syncfusion:SfCheckBox                                    
+                    Grid.Row="2"
+                    IsChecked="{Binding Direct}" 
+                    VerticalOptions="Center"
+                    CheckedColor="#0078d4" 
+                    TickColor="#000000" 
+                    TextColor="#000000"
+                    ControlSize="30"
+                    CornerRadius="20"
+                    Text="Direct call from user ID"/>
+                <syncfusion:SfCheckBox                                    
+                    Grid.Row="3"
+                    IsChecked="{Binding Bot}" 
+                    VerticalOptions="Center"
+                    CheckedColor="#0078d4" 
+                    TickColor="#000000" 
+                    TextColor="#000000"
+                    ControlSize="30"
+                    CornerRadius="20"
+                    Text="Call from azure bot"/>
+                <syncfusion:SfCheckBox                                    
+                    Grid.Row="4"
+                    IsChecked="{Binding PSTN}" 
+                    VerticalOptions="Center"
+                    CheckedColor="#0078d4" 
+                    TickColor="#000000" 
+                    TextColor="#000000"
+                    ControlSize="30"
+                    CornerRadius="20"
+                    Text="Direct call from number phone"/>
+                <Entry 
+                    x:Name="EntryMeeting"
+                    Grid.Row="5" Margin="30,0,30,0"
+                    TextColor="Black"
+                    BackgroundColor="LightGray" 
+                    Text="{Binding Code}"
+                    Placeholder="{Binding PlaceholderExample}"
+                    />
+
+             
+                <Frame Grid.Row="6"
+                        Margin="30,20,30,0" 
+                        BackgroundColor="#1f6feb" 
+                        HorizontalOptions="FillAndExpand"
+                        CornerRadius="10">
+                    <Label Text="Join Call" FontSize="12" 
+                        FontAttributes="Bold"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        TextColor="White"></Label>
+                    <Frame.Triggers>
+                        <DataTrigger TargetType="Frame"
+                                     Binding="{Binding MeetingValidation}"
+                                     Value="True">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="BackgroundColor" Value="#1f6feb"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Frame"
+                                     Binding="{Binding MeetingValidation}"
+                                     Value="false">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Setter Property="BackgroundColor" Value="Gray"/>
+                        </DataTrigger>
+                    </Frame.Triggers>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding StartCommand}"></TapGestureRecognizer>
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </Grid>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
