@@ -58,7 +58,7 @@
     <MtouchInterpreter>-all</MtouchInterpreter>
     <MtouchSdkVersion>15.5</MtouchSdkVersion>
     <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
-    <CodesignProvision>Sikur Messenger Development Profile</CodesignProvision>
+    <CodesignProvision></CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
