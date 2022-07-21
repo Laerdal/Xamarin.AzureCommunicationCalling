@@ -1,17 +1,19 @@
 # Azure Communication Calling Sample Xamarin Forms
 
+All the necessary documentation is intended for the native environment (java/swift), so it may be necessary to investigate unexpected behaviors or crashes in the native environment to confirm if the problem is here or in the native platform sdk itself.
+
 Additional documentation for this sample can be found on [Microsoft Docs](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/calling-sdk-features).
 
 ## Support platforms
 
-- [x] Android
-- [x] iOS 
+- [x] Android >= 21
+- [x] iOS >= 12
 - [x] UWP (Min Target: 10.0.18362)
 - macOS (study in progress)
 
 ## Support Libraries
 
-Mobile support is maintained by the community
+Mobile support is maintained by [@tompi](https://github.com/tompi)
 
 Windows support is official.
 
@@ -38,7 +40,7 @@ Windows support is official.
 | Request permission to use audio and/or video   | ✅             | ✅               |✅               |
 | Mute/unmute local microphone audio      | ✅           | ✅               |✅               |
 | Show dominant speaker                         | ✅             | ✅                 |✅                 |
-| Turn off screen on calls      | :x:           | ✅               |:x:               |
+| Turn off screen on calls      | :hourglass:           | :hourglass:                |:x:               |
 | Toggle audio output                       | ✅           | ✅               |:x:               |
 | Screensharing                 | :x:               |:hourglass:            |:x:
 | Background Voip API           | ✅  Services              |:construction:  Callkit           |:x:  VoipPhoneCall 
@@ -51,6 +53,7 @@ In consideration :hourglass:
 Not implemented  :x:
 
 implemented      ✅   
+
 # Screenshots
 ## Android
 <img src="/Screenshots/Android_Intro.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Join.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Call.jpg" width="200" height="400" />
