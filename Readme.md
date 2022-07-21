@@ -27,6 +27,7 @@ Windows support is official.
 | Receive calls inside sdk                             | ✅          | ✅               | ✅             |
 | Add participants during calls                   | ✅         | ✅            | ✅           |
 | call notification                             | :x:          | ✅               | ✅            |
+| answer calls with locked screen               | :construction:          | :hourglass:               | :x:         |
 | Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | ✅             | ✅               |✅               |
 | Render remote participant video streams dynamically | ✅             | ✅               |✅               |
 | Show remote call participants                     | ✅             | ✅               |✅               |
@@ -40,7 +41,7 @@ Windows support is official.
 | Turn off screen on calls      | :x:           | ✅               |:x:               |
 | Toggle audio output                       | ✅           | ✅               |:x:               |
 | Screensharing                 | :x:               |:hourglass:            |:x:
-| Background Voip API           | ✅  Services              |:hourglass:  Callkit           |:x:  VoipPhoneCall 
+| Background Voip API           | ✅  Services              |:construction:  Callkit           |:x:  VoipPhoneCall 
 ## Subtitle
 
 in progress      :construction: 
@@ -52,14 +53,14 @@ Not implemented  :x:
 implemented      ✅   
 # Screenshots
 ## Android
-<img src="/Screenshots/Android_Intro.jpg" width="200" height="400" />   <img src="/Screenshots/Android_Join.jpg" width="200" height="400" /><img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />
+<img src="/Screenshots/Android_Intro.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Join.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Call.jpg" width="200" height="400" />
 
 ## iOS
-<img src="/Screenshots/iOS_Intro.png" width="200" height="400" /> <img src="/Screenshots/iOS_Join.png" width="200" height="400" /><img src="/Screenshots/iOS_Setup.png" width="200" height="400" />
+<img src="/Screenshots/iOS_Intro.png" width="200" height="400" />  <img src="/Screenshots/iOS_Join.png" width="200" height="400" />  <img src="/Screenshots/iOS_Setup.png" width="200" height="400" />  <img src="/Screenshots/iOS_Call.png" width="200" height="400" />
 ## UWP
 
-<img src="/Screenshots/Windows_Intro.png" width="600" height="400" /> <img src="/Screenshots/Windows_Join.png" width="600" height="400" />
-<img src="/Screenshots/Windows_Setup.png" width="600" height="400" />
+<img src="/Screenshots/Windows_Intro.png" width="600" height="400" />  <img src="/Screenshots/Windows_Join.png" width="600" height="400" />
+<img src="/Screenshots/Windows_Setup.png" width="600" height="400" />  <img src="/Screenshots/Windows_Call.png" width="600" height="400" />
 
 ## Prerequisites
 
