@@ -348,6 +348,7 @@ namespace AzureSample.iOS.Implementations
             callOptions.AudioOptions = audioOptions;
             var callOptionsACSS = new ACSStartCallOptions();
             callOptionsACSS.AudioOptions = audioOptions;
+            audioOptions.Muted = azureSetupRoom.MicrophoneEnabled;
             var callees = new List<CommunicationIdentifier>();
             var acsNumber = new PhoneNumberIdentifier[] { new PhoneNumberIdentifier(azureSetupRoom.CodeMeeting, azureSetupRoom.CodeMeeting) };
             callees.Add(new CommunicationUserIdentifier(azureSetupRoom.CodeMeeting));
