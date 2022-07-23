@@ -159,6 +159,7 @@ namespace AzureSample.Droid.Implementations
             var callOptions = new StartCallOptions();
             var joinCallOptions = new JoinCallOptions();
             var AudioOptions = new AudioOptions();
+            AudioOptions.SetMuted(azureSetupRoom.MicrophoneEnabled);
             joinCallOptions.SetAudioOptions(AudioOptions);
             callOptions.SetAudioOptions(new AudioOptions());
             var callees = new List<CommunicationIdentifier>();
