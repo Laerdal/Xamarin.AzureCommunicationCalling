@@ -30,7 +30,6 @@ namespace AzureSample.iOS.Implementations
         private readonly CallingCallbackManager _videoCallbackManager;
         private readonly List<ACSRemoteVideoStream> _remoteVideoStreams;
         public event EventHandler<ConferenceStateChangedEnventArgs> StateChanged = delegate { };
-        private List<ACSRemoteParticipant> _remoteParticipants = new List<ACSRemoteParticipant>();
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoRemoved = delegate { };
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoAdded = delegate { };
         public event EventHandler<ParticipantSpeakingStatusChangedArgs> SpeakingChanged = delegate { };

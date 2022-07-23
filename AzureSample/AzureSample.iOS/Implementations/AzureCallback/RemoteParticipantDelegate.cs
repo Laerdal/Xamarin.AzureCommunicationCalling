@@ -29,6 +29,10 @@ namespace AzureSample.iOS.Implementations
                 //_videoCallbackManager.RemoteParticipantStateChanged?.Invoke(new VideoStream(remoteParticipant,remoteVideoStream));
             }
         }
+        public override void OnIsSpeakingChanged(ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args)
+        {
+            _videoCallbackManager.RemoteParticipantSpeaking?.Invoke(remoteParticipant);
+        }
         public override void OnIsMutedChanged(ACSRemoteParticipant remoteParticipant, ACSPropertyChangedEventArgs args)
         {
             _videoCallbackManager.RemoteParticipantMutedChanged?.Invoke(remoteParticipant);
