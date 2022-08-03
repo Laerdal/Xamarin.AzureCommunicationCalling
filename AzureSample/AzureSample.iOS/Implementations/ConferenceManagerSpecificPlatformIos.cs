@@ -403,9 +403,22 @@ namespace AzureSample.iOS.Implementations
 
         }
         public void StartScreensharing() { }
-        public void StartVideo()
+        public void StartCamera()
         {
+            LocalVideoAdded?.Invoke(this, GetCameraView());
             _call.StartVideo(_localVideoStream, MutedUnMutedVoid());
+        }
+        public View GetCameraView()
+        {
+            if (_localVideoStreamRenderer != null)
+            {
+                var renderingOptions = new ACSCreateViewOptions(ACSScalingMode.Crop);
+                var nativeView = _localVideoStreamRenderer.CreateViewWithOptions(renderingOptions, out var createViewError);
+                ThrowIfError(createViewError);
+                return nativeView.ToView();
+            }
+            else return null;
+
         }
         public async void LoadServerCallId()
         {
@@ -424,8 +437,9 @@ namespace AzureSample.iOS.Implementations
                 ServerCallId = nSString.ToString();
         }
         public void StopScreensharing() { }
-        public void StopVideo()
+        public void StopCamera()
         {
+            LocalVideoAdded?.Invoke(this, null);
             _call.StopVideo(_localVideoStream, MutedVideo);
         }
         void MutedVideo(NSError action)
