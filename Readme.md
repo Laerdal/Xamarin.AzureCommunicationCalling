@@ -55,16 +55,6 @@ Not implemented  :x:
 
 implemented      ✅   
 
-# Screenshots
-## Android
-<img src="/Screenshots/Android_Intro.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Join.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Call.jpg" width="200" height="400" />
-
-## iOS
-<img src="/Screenshots/iOS_Intro.png" width="200" height="400" />  <img src="/Screenshots/iOS_Join.png" width="200" height="400" />  <img src="/Screenshots/iOS_Setup.png" width="200" height="400" />  <img src="/Screenshots/iOS_Call.png" width="200" height="400" />
-## UWP
-
-<img src="/Screenshots/Windows_Intro.png" width="600" height="400" />  <img src="/Screenshots/Windows_Join.png" width="600" height="400" />
-<img src="/Screenshots/Windows_Setup.png" width="600" height="400" />  <img src="/Screenshots/Windows_Call.png" width="600" height="400" />
 
 ## Prerequisites
 
@@ -100,7 +90,7 @@ For simple demonstration purposes, this sample uses a publicly accessible endpoi
 
 ## Android
 
-The camera on android doesn't seem to work during calls.
+There is some privacy policy on the camera, as it only works if the user can see their own image on the screen, it is a point of attention.
 
 ## UWP
 
@@ -110,6 +100,19 @@ Incoming call and accept/or reject status does not update on event.
 
 Video refresh event no longer works after a video is removed from the screen.
 
+Call events in windows are unstable in certain scenarios and suddenly stop working.
 
 Please refer to the [wiki](https://github.com/Azure-Samples/communication-services-android-calling-hero/wiki/Known-Issues) for known issues related to this sample.
 ](https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features)
+
+# Screenshots
+## Android
+<img src="/Screenshots/Android_Intro.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Join.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Call.jpg" width="200" height="400" />
+
+## iOS
+<img src="/Screenshots/iOS_Intro.png" width="200" height="400" />  <img src="/Screenshots/iOS_Join.png" width="200" height="400" />  <img src="/Screenshots/iOS_Setup.png" width="200" height="400" />  <img src="/Screenshots/iOS_Call.png" width="200" height="400" />
+## UWP
+
+<img src="/Screenshots/Windows_Intro.png" width="600" height="400" />  <img src="/Screenshots/Windows_Join.png" width="600" height="400" />
+<img src="/Screenshots/Windows_Setup.png" width="600" height="400" />  <img src="/Screenshots/Windows_Call.png" width="600" height="400" />
+
