@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:sh="http://sharpnado.com" xmlns:controls="clr-namespace:TestSample.Controls" xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#564581"
+             x:Class="TestSample.Pages.CallTemplate.CallTemplate">
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="1,1" EndPoint="0,2" >
+            <GradientStop Color="#564581"
+                          Offset="0.1" />
+            <GradientStop Color="#282a48"
+                          Offset="0.50" />
+            <GradientStop Color="#4f2e4f"
+                          Offset="0.51" />
+            <GradientStop Color="#282a48"
+                          Offset="0.1" />
+            <GradientStop Color="#4f2e4f"
+                          Offset="0.1" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    <ScrollView>
+        <FlexLayout Direction="Column">
+
+            <FlexLayout FlexLayout.Grow="1">
+                <FlexLayout 
+        BindableLayout.ItemsSource="{Binding Participants}"
+        Wrap="Wrap" FlexLayout.AlignSelf="Center"
+                            JustifyContent="Center"
+                    
+                    Direction="Row"
+        VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="*" >
+                                <controls:DominantSpeakerControl
+                                    Grid.Row="0"
+                                    HeightRequest="{OnIdiom Desktop='290', Phone='160'}" 
+                                    WidthRequest="{OnIdiom Desktop='290', Phone='160'}" 
+                                    PulseColor="Red"
+                                    Margin="0,0,0,0"
+                                    IsRunning="{Binding Speaking}"
+                                    VerticalOptions="FillAndExpand"
+                                    HorizontalOptions="FillAndExpand"                                    Speed="10" 
+                                    Source="avatar"
+                                    AutoStart="true"/>
+                                <controls:SvgImage 
+                                    Grid.Row="0" 
+                                    Opacity="1"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    Margin="10,0,10,0" 
+                                    Padding="0"
+                                    HeightRequest="{OnIdiom Desktop='180', Phone='100'}" 
+                                    WidthRequest="{OnIdiom Desktop='180', Phone='100'}" 
+                                    ResourceId="{Binding Image}">
+                                    <controls:SvgImage.Clip>
+                                        <EllipseGeometry
+                Center="{OnIdiom Desktop='90,90', Phone='50,50'}"
+                RadiusX="{OnIdiom Desktop='90', Phone='50'}"
+                RadiusY="{OnIdiom Desktop='90', Phone='50'}"/>
+                                    </controls:SvgImage.Clip>
+                                    <controls:SvgImage.Triggers>
+                                        <DataTrigger
+                        Binding="{Binding Speaking}"
+                        TargetType="controls:SvgImage"
+                        Value="True">
+                                            <Setter Property="Opacity" Value="0.9" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                        Binding="{Binding Speaking}"
+                        TargetType="controls:SvgImage"
+                        Value="false">
+                                            <Setter Property="Opacity" Value="1" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                        Binding="{Binding IsVideo}"
+                        TargetType="controls:SvgImage"
+                        Value="True">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                        Binding="{Binding IsVideo}"
+                        TargetType="controls:SvgImage"
+                        Value="false">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </controls:SvgImage.Triggers>
+                                </controls:SvgImage>
+
+
+
+                                <ContentView Content="{Binding Video}"
+                Grid.Row="0"
+                Padding="0"    
+                                             HeightRequest="{OnIdiom Desktop='200', Phone='160'}" 
+                                    WidthRequest="{OnIdiom Desktop='200', Phone='160'}" 
+                HorizontalOptions="FillAndExpand">
+                                    <ContentView.Triggers>
+                                        <DataTrigger
+                        Binding="{Binding IsVideo}"
+                        TargetType="ContentView"
+                        Value="True">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                        Binding="{Binding IsVideo}"
+                        TargetType="ContentView"
+                        Value="false">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </ContentView.Triggers>
+                                </ContentView>
+                                <controls:SvgImage 
+                                    Grid.Row="0"
+                                    Margin="{OnIdiom Desktop='0,120,0,0', Phone='0,60,0,0'}"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center" 
+                                    IsVisible="False"
+                                    HeightRequest="{OnIdiom Desktop='70', Phone='30'}" 
+                                    WidthRequest="{OnIdiom Desktop='40', Phone='30'}"                        
+                                    ResourceId="ic_microphone_muted">
+                                    <controls:SvgImage.Triggers>
+                                        <DataTrigger
+                        Binding="{Binding Muted}"
+                        TargetType="controls:SvgImage"
+                        Value="True">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                        Binding="{Binding Muted}"
+                        TargetType="controls:SvgImage"
+                        Value="false">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </controls:SvgImage.Triggers>
+                                </controls:SvgImage>
+                                <Label 
+                                    TextColor="White" 
+                                    Margin="{OnIdiom Desktop='0,200,0,0', Phone='0,140,0,0'}" 
+                                    Grid.Row="0" 
+                                    FontSize="20" 
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"  
+                                    Text="{Binding Name}"/>
+                            </Grid>
+
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                    <FlexLayout.Triggers>
+                        <DataTrigger
+                        Binding="{Binding IsSharingRemoteVideo}"
+                        TargetType="FlexLayout"
+                        Value="True">
+                            <Setter Property="FlexLayout.Basis" Value="100" />
+                        </DataTrigger>
+                        <DataTrigger
+                        Binding="{Binding IsSharingRemoteVideo}"
+                        TargetType="FlexLayout"
+                        Value="false">
+                            <Setter Property="FlexLayout.Grow" Value="1" />
+                        </DataTrigger>
+                    </FlexLayout.Triggers>
+                </FlexLayout>
+                <BoxView FlexLayout.Basis="{OnIdiom Desktop='800', Phone='250'}" Margin="0,10,0,10"
+                     FlexLayout.Order="-1"
+                     Color="Blue" IsVisible="{Binding IsSharingRemoteVideo}"/>
+            </FlexLayout>
+            <Label 
+                    x:Name="timerLabel"                               
+                    FontAttributes="Bold"                               
+                    TextColor="White"
+                    FlexLayout.Grow="0"
+                FlexLayout.AlignSelf="Center"
+                    HeightRequest="{OnIdiom Desktop='50', Phone='30'}"
+                    FontSize="20"
+                
+                    HorizontalOptions="FillAndExpand"                                    
+                    VerticalOptions="End" />
+            <Frame FlexLayout.Grow="0"                        
+                    Opacity="{OnIdiom Desktop='0.7', Phone='0.8'}"                        
+                    BackgroundColor="#293440"                         
+                    Padding="0" 
+                    HeightRequest="{OnIdiom Desktop='120', Phone='100'}"                        
+                    HorizontalOptions="FillAndExpand"
+                    CornerRadius="10">
+                <StackLayout 
+                        Orientation="Horizontal" HorizontalOptions="Center" Spacing="{OnIdiom Desktop='40', Phone='10'}" VerticalOptions="FillAndExpand">
+
+                    <controls:SvgImage 
+                                    Padding="5"
+                                    CornerRadius="{OnIdiom Desktop='40', Phone='25'}" 
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="#293440"
+                                    HeightRequest="{OnIdiom Desktop='40', Phone='40'}" 
+                                    WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                        
+                                    ResourceId="ic_camera_on"/>
+                    <controls:SvgImage 
+                                    Padding="5"
+                                    CornerRadius="{OnIdiom Desktop='40', Phone='25'}" 
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="#293440"
+                                    HeightRequest="{OnIdiom Desktop='40', Phone='40'}" 
+                                    WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                     
+                                    ResourceId="ic_microphone_on"/>
+
+                    <controls:SvgImage 
+                                    Padding="5"
+                                    CornerRadius="{OnIdiom Desktop='8', Phone='10'}" 
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                            Margin="0,0,0,0"
+                                    BackgroundColor="Red"
+                                    HeightRequest="{OnIdiom Desktop='40', Phone='40'}" 
+                                    WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                         
+                                    ResourceId="ic_call_end"/>
+                    <controls:SvgImage 
+                                    Padding="5"
+                                    CornerRadius="{OnIdiom Desktop='40', Phone='25'}" 
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="#293440"
+                                    HeightRequest="{OnIdiom Desktop='40', Phone='40'}" 
+                                    WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                          
+                                    ResourceId="ic_speaker_on"/>
+                    <controls:SvgImage 
+                                    Padding="5"
+                                    CornerRadius="{OnIdiom Desktop='40', Phone='25'}" 
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="#293440"
+                                    HeightRequest="{OnIdiom Desktop='40', Phone='40'}" 
+                                    WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                     
+                                    ResourceId="ic_camera_switch"/>
+                </StackLayout>
+            </Frame>
+        </FlexLayout>
+    </ScrollView>
+
+</ContentPage>

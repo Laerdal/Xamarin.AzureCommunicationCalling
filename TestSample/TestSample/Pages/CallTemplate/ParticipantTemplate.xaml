@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:TestSample.Controls"
+             x:Class="TestSample.Pages.CallTemplate.ParticipantTemplate"
+              x:Name="this">
+    <ContentView.Content>
+        <Grid BindingContext="{x:Reference this}" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="Auto"/>
+                    <RowDefinition  Height="30"/>
+                </Grid.RowDefinitions>
+
+            <ContentView Content="{Binding VideoStream}"
+                Grid.Row="0"
+                Padding="0"    
+                HorizontalOptions="FillAndExpand">
+            </ContentView>
+            <local:SvgImage
+                x:Name="initials"
+                Grid.Row="0"
+                Padding="0"
+                Opacity=".30"
+                IsClippedToBounds="True"
+                HorizontalOptions="Center"
+                HasShadow="False"
+                ResourceId="avatar"
+                HeightRequest="{OnIdiom Default='100', Desktop='140'}"
+                WidthRequest="{OnIdiom Default='100', Desktop='140'}"
+                CornerRadius="{OnIdiom Default='35', Desktop='70'}"
+                IsVisible="True">
+               
+            </local:SvgImage>
+            <local:SvgImage
+                Grid.Column="0"
+                HeightRequest="{OnIdiom Default='24', Desktop='48'}"
+                WidthRequest="{OnIdiom Default='24', Desktop='48'}"
+                ResourceId="ic_microphone_off"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                Margin="{OnIdiom Default='0,0,4,4', Desktop='0,0,100,4'}"
+                CornerRadius="{OnIdiom Default='12', Desktop='24'}"
+                IsVisible="True">
+                    <local:SvgImage.Triggers>
+                        <DataTrigger TargetType="local:SvgImage" Binding="{Binding ParticipantMicrophoneMuted}" Value="True">
+                            <Setter Property="IsVisible" Value="True" />
+                        </DataTrigger>
+                         <DataTrigger TargetType="local:SvgImage" Binding="{Binding ParticipantMicrophoneMuted}" Value="False">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </local:SvgImage.Triggers>
+            </local:SvgImage>
+
+            <Label 
+                Text="{Binding ParticipantName}"
+                Grid.Row="1"
+                Margin="0,10,0,0"
+                HorizontalTextAlignment="Center"/>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
