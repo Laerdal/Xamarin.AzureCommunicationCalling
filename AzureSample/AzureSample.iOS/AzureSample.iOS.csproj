@@ -9,9 +9,9 @@
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6143fdea-f3c2-4a09-aafa-6e230626515e}</TemplateGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>AzureXamarinPOC.iOS</RootNamespace>
+    <RootNamespace>AzureSample.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>AzureXamarinPOC.iOS</AssemblyName>
+    <AssemblyName>AzureSample.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <ProvisioningType>manual</ProvisioningType>
@@ -51,14 +51,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey></CodesignKey>
+    <CodesignKey>
+    </CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchInterpreter>-all</MtouchInterpreter>
     <MtouchSdkVersion>15.5</MtouchSdkVersion>
     <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
-    <CodesignProvision></CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -80,6 +82,7 @@
     <Compile Include="Implementations\AzureCallback\CallManagerIncomingCall.cs" />
     <Compile Include="Implementations\AzureCallback\RemoteParticipantDelegate.cs" />
     <Compile Include="Implementations\CallKit\ProviderDelegate.cs" />
+    <Compile Include="Implementations\CommunicationIdentifierExtension.cs" />
     <Compile Include="Implementations\ConferenceManagerSpecificPlatformIos.cs" />
     <Compile Include="Implementations\StatusBarIos.cs" />
     <Compile Include="Main.cs" />

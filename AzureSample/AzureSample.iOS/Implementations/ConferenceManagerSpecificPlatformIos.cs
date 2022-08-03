@@ -28,7 +28,6 @@ namespace AzureSample.iOS.Implementations
         private ACSLocalVideoStream _localVideoStream;
         private ACSVideoStreamRenderer _localVideoStreamRenderer;
         private readonly CallingCallbackManager _videoCallbackManager;
-        private readonly List<ACSRemoteVideoStream> _remoteVideoStreams;
         public event EventHandler<ConferenceStateChangedEnventArgs> StateChanged = delegate { };
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoRemoved = delegate { };
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoAdded = delegate { };
@@ -70,7 +69,6 @@ namespace AzureSample.iOS.Implementations
         [Preserve]
         public ConferenceManagerSpecificPlatformiOS()
         {
-            _remoteVideoStreams = new List<ACSRemoteVideoStream>();
             _videoCallbackManager = new CallingCallbackManager(
                 RemoteVideoStreamRemoved,
                 RemoteParticipantAdded,
@@ -96,21 +94,21 @@ namespace AzureSample.iOS.Implementations
         }
         private void RemoteParticipantSpeaking(ACSRemoteParticipant participantAdded)
         {
-            SpeakingChanged?.Invoke(this, new ParticipantSpeakingStatusChangedArgs(participantAdded.DisplayName, participantAdded.IsMuted, participantAdded.IsSpeaking));
+            SpeakingChanged?.Invoke(this, new ParticipantSpeakingStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.IsMuted, participantAdded.IsSpeaking));
         }
         private void RemoteParticipantAdded(ACSRemoteParticipant participantAdded)
         {
-            ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(participantAdded.DisplayName, participantAdded.DisplayName));
+            ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.DisplayName));
 
         }
         private void RemoteParticipantMutedChanged(ACSRemoteParticipant participantAdded)
         {
-            ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(participantAdded.DisplayName, participantAdded.IsMuted));
+            ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.IsMuted));
 
         }
         private void RemoteParticipantRemoved(ACSRemoteParticipant participantAdded)
         {
-            ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(participantAdded.DisplayName, participantAdded.DisplayName));
+            ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.DisplayName));
         }
         private void RemoteVideoStreamAdded(VideoStream videoStream)
         {
@@ -121,8 +119,6 @@ namespace AzureSample.iOS.Implementations
             {
                 return;
             }
-            _remoteVideoStreams.RemoveAll(s => s.Id == remoteVideoStream.Id);
-            _remoteVideoStreams.Add(remoteVideoStream);
             LoggerService.Debug("RemoteVideoStreamAdded: Creating renderer");
             var renderer = new ACSVideoStreamRenderer(remoteVideoStream, out var rendererError);
             ThrowIfError(rendererError);
@@ -131,7 +127,7 @@ namespace AzureSample.iOS.Implementations
             LoggerService.Debug("RemoteVideoStreamAdded: Created renderer");
             ThrowIfError(createViewError);
             var formsView = nativeView.ToView();
-            RemoteVideoAdded?.Invoke(this, new ParticipantVideoStatusChangedArgs(remoteParticipant.DisplayName, remoteParticipant.IsMuted, formsView));
+            RemoteVideoAdded?.Invoke(this, new ParticipantVideoStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(remoteParticipant), remoteParticipant.IsMuted, formsView));
 
         }
         private void RemoteVideoStreamRemoved(VideoStream videoStream)
@@ -139,7 +135,7 @@ namespace AzureSample.iOS.Implementations
             var remoteVideoStream = videoStream.RemoteVideoStream;
             var remoteParticipant = videoStream.RemoteParticipant;
             LoggerService.Debug("RemoteVideoStreamAdded");
-            RemoteVideoRemoved?.Invoke(this, new ParticipantVideoStatusChangedArgs(remoteParticipant.DisplayName, remoteParticipant.IsMuted, null));
+            RemoteVideoRemoved?.Invoke(this, new ParticipantVideoStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(remoteParticipant), remoteParticipant.IsMuted, null));
 
         }
         public void StateCall(ACSCallState acsCallState)
@@ -275,7 +271,7 @@ namespace AzureSample.iOS.Implementations
         public void RemoteParticipants(ACSRemoteParticipant callingCallbackManager)
         {
             if (callingCallbackManager != null)
-                ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(callingCallbackManager.DisplayName, callingCallbackManager.IsMuted));
+                ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(callingCallbackManager), callingCallbackManager.IsMuted));
         }
         public void Muted()
         {
@@ -449,7 +445,6 @@ namespace AzureSample.iOS.Implementations
                 _localVideoStreamRenderer?.Dispose();
                 _localVideoStream?.Dispose();
                 _localVideoStream = null;
-                _remoteVideoStreams.Clear();
                 _call?.Dispose();
                 _call = null;
                 StateChanged?.Invoke(this, new ConferenceStateChangedEnventArgs(ConferenceState.Disconnected));
@@ -471,7 +466,7 @@ namespace AzureSample.iOS.Implementations
                 return result;
             foreach (var item in _call.RemoteParticipants.ToList())
             {
-                var conferenceParticipant = new ConferenceParticipant(item.DisplayName, item.DisplayName);
+                var conferenceParticipant = new ConferenceParticipant(CommunicationIdentifierExtension.IdentifierExtension(item), item.DisplayName);
                 result.Add(conferenceParticipant);
             }
             return result;
