@@ -1,5 +1,5 @@
 # Azure Communication Calling Sample Xamarin Forms
-These library are native to each platform, you need to make a common abstraction on top yourself if you want to use them in a forms project. See the TestApp for a simple example.
+These library are native to each platform, you need to make a common abstraction on top yourself if you want to use them in a forms project. See the TestSample for a simple example.
 
 All the necessary documentation is intended for the native environment (java/swift), so it may be necessary to investigate unexpected behaviors or crashes in the native environment to confirm if the problem is here or in the native platform sdk itself.
 
