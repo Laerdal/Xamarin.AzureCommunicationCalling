@@ -339,7 +339,7 @@ namespace AzureSample.Droid.Implementations
             foreach (var participantAdded in e.P0.AddedParticipants)
             {
                 _remoteParticipants.Add(participantAdded);
-                ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(participantAdded.DisplayName, participantAdded.DisplayName));
+                ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.DisplayName));
                 ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(participantAdded.DisplayName, participantAdded.IsMuted));
                 participantAdded.VideoStreamsUpdated += RemoteVideoStreamsUpdated;
                 participantAdded.IsSpeakingChanged += ParticipantAdded_IsSpeakingChanged;
@@ -354,14 +354,14 @@ namespace AzureSample.Droid.Implementations
             foreach (var participantRemoved in e.P0.RemovedParticipants)
             {
                 _remoteParticipants.Remove(participantRemoved);
-                ParticipantLeft?.Invoke(this, new ParticipantLeftArgs(participantRemoved.DisplayName, participantRemoved.DisplayName));
+                ParticipantLeft?.Invoke(this, new ParticipantLeftArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.DisplayName));
             }
 
         }
         private void ParticipantAdded_IsMutedChanged(object sender, PropertyChangedEventArgs e)
         {
             var stateConference = ((RemoteParticipant)sender);
-            ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(stateConference.DisplayName, stateConference.IsMuted));
+            ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(stateConference), stateConference.IsMuted));
         }
 
         private void ParticipantAdded_StateChanged(object sender, PropertyChangedEventArgs e)
@@ -371,7 +371,7 @@ namespace AzureSample.Droid.Implementations
         private void ParticipantAdded_IsSpeakingChanged(object sender, PropertyChangedEventArgs e)
         {
             var participantAdded = ((RemoteParticipant)sender);
-            SpeakingChanged?.Invoke(this, new ParticipantSpeakingStatusChangedArgs(participantAdded.DisplayName, participantAdded.IsMuted, participantAdded.IsSpeaking));
+            SpeakingChanged?.Invoke(this, new ParticipantSpeakingStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.IsMuted, participantAdded.IsSpeaking));
 
         }
         private void RemoteVideoStreamsUpdated(object sender, RemoteVideoStreamsUpdatedEventArgs e)
@@ -393,7 +393,7 @@ namespace AzureSample.Droid.Implementations
         }
         private void RemoveRemoteVideoStream(RemoteParticipant remoteParticipant, RemoteVideoStream v)
         {
-            RemoteVideoRemoved?.Invoke(this, new ParticipantVideoStatusChangedArgs(remoteParticipant.DisplayName, remoteParticipant.IsMuted, null));
+            RemoteVideoRemoved?.Invoke(this, new ParticipantVideoStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(remoteParticipant), remoteParticipant.IsMuted, null));
         }
         private void PublishRemoteVideoStream(RemoteParticipant remoteParticipant, RemoteVideoStream v)
         {
@@ -401,7 +401,7 @@ namespace AzureSample.Droid.Implementations
             var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
             var nativeView = renderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
-            RemoteVideoAdded?.Invoke(this, new ParticipantVideoStatusChangedArgs(remoteParticipant.DisplayName, remoteParticipant.IsMuted, formsView));
+            RemoteVideoAdded?.Invoke(this, new ParticipantVideoStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(remoteParticipant), remoteParticipant.IsMuted, formsView));
         }
         public void Hangup()
         {
@@ -423,7 +423,7 @@ namespace AzureSample.Droid.Implementations
                 return result;
             foreach (var item in _call.RemoteParticipants.ToList())
             {
-                var conferenceParticipant = new ConferenceParticipant(item.DisplayName, item.DisplayName);
+                var conferenceParticipant = new ConferenceParticipant(CommunicationIdentifierExtension.IdentifierExtension(item), item.DisplayName);
                 result.Add(conferenceParticipant);
             }
             return result;
