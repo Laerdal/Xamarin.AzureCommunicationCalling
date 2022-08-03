@@ -102,7 +102,7 @@ namespace AzureSample.UWP.Implementations
                 return result;
             foreach (var item in _call.RemoteParticipants.ToList())
             {
-                var conferenceParticipant = new ConferenceParticipant(item.DisplayName, item.DisplayName);
+                var conferenceParticipant = new ConferenceParticipant(CommunicationIdentifierExtension.IdentifierExtension(item), item.DisplayName);
                 result.Add(conferenceParticipant);
             }
             return result;
@@ -278,8 +278,8 @@ namespace AzureSample.UWP.Implementations
             {
                 _remoteParticipants.Add(participantAdded);
 
-                ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(participantAdded.DisplayName, participantAdded.DisplayName));
-                ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(participantAdded.DisplayName, participantAdded.IsMuted));
+                ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.DisplayName));
+                ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.IsMuted));
                 participantAdded.OnIsMutedChanged += ParticipantAdded_OnIsMutedChanged;
                 participantAdded.OnIsSpeakingChanged += ParticipantAdded_OnIsSpeakingChanged;
                 participantAdded.OnStateChanged += ParticipantAdded_OnStateChanged;
@@ -292,8 +292,8 @@ namespace AzureSample.UWP.Implementations
             foreach (var participantRemoved in e.RemovedParticipants)
             {
                 _remoteParticipants.Remove(participantRemoved);
-                ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(participantRemoved.DisplayName, participantRemoved.IsMuted));
-                ParticipantLeft?.Invoke(this, new ParticipantLeftArgs(participantRemoved.DisplayName, participantRemoved.DisplayName));
+                ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.IsMuted));
+                ParticipantLeft?.Invoke(this, new ParticipantLeftArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.DisplayName));
             }
         }
 
@@ -304,13 +304,13 @@ namespace AzureSample.UWP.Implementations
         private void ParticipantAdded_OnIsSpeakingChanged(object sender, PropertyChangedEventArgs args)
         {
             var participantAdded = ((RemoteParticipant)sender);
-            SpeakingChanged?.Invoke(this, new ParticipantSpeakingStatusChangedArgs(participantAdded.DisplayName, participantAdded.IsMuted, participantAdded.IsSpeaking));
+            SpeakingChanged?.Invoke(this, new ParticipantSpeakingStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.IsMuted, participantAdded.IsSpeaking));
         }
 
         private void ParticipantAdded_OnIsMutedChanged(object sender, PropertyChangedEventArgs args)
         {
             var stateConference = ((RemoteParticipant)sender);
-            ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(stateConference.DisplayName, stateConference.IsMuted));
+            ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(stateConference), stateConference.IsMuted));
         }
 
         private void RemoteVideoStreamsUpdated(object sender, RemoteVideoStreamsEventArgs e)
@@ -344,7 +344,7 @@ namespace AzureSample.UWP.Implementations
                 var video = controls.FirstOrDefault();
                 var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
                 var formsView = video.ToView();
-                RemoteVideoRemoved?.Invoke(this, new ParticipantVideoStatusChangedArgs(remoteParticipant.DisplayName, remoteParticipant.IsMuted, formsView));
+                RemoteVideoRemoved?.Invoke(this, new ParticipantVideoStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(remoteParticipant), remoteParticipant.IsMuted, formsView));
 
             });
         }
@@ -365,7 +365,7 @@ namespace AzureSample.UWP.Implementations
 
                 var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
                 var formsView = video.ToView();
-                RemoteVideoAdded?.Invoke(this, new ParticipantVideoStatusChangedArgs(remoteParticipant.DisplayName, remoteParticipant.IsMuted, formsView));
+                RemoteVideoAdded?.Invoke(this, new ParticipantVideoStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(remoteParticipant), remoteParticipant.IsMuted, formsView));
             });
         }
 

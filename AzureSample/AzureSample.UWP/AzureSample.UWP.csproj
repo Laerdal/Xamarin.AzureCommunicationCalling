@@ -93,6 +93,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Implementations\CommunicationIdentifierExtension.cs" />
     <Compile Include="Implementations\ConferenceManagerSpecificPlatformWindows.cs" />
     <Compile Include="Implementations\StatusBarWindows.cs" />
     <Compile Include="MainPage.xaml.cs">
