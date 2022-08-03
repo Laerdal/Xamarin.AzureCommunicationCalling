@@ -426,18 +426,20 @@ namespace AzureSample.Droid.Implementations
             return result;
         }
         public void StartScreensharing() { }
-        
+
         public void StopScreensharing() { }
         public Task<string> GetServerCallId()
         {
             return Task.FromResult(CallClientHelper.GetServerCallId(_call.Info));
         }
-        public void StartVideo()
+        public void StartCamera()
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 try
                 {
+                    LocalVideoAdded?.Invoke(this, GetCameraView());
+
                     CallClientHelper.StartVideo(_call, _localVideoStream, Xamarin.Essentials.Platform.AppContext);
                 }
                 catch (CallingCommunicationException ex)
@@ -450,12 +452,27 @@ namespace AzureSample.Droid.Implementations
                 }
             });
         }
-        public void StopVideo()
+        public View GetCameraView()
+        {
+            var videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
+            var localVideoStream = new LocalVideoStream(videoDeviceInfo, Xamarin.Essentials.Platform.AppContext);
+            var localRenderer = new VideoStreamRenderer(localVideoStream, Xamarin.Essentials.Platform.AppContext);
+            if (localRenderer != null)
+            {
+                var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
+                var nativeView = localRenderer.CreateView(renderingOptions);
+                return nativeView.ToView();
+            }
+            else return null;
+
+        }
+        public void StopCamera()
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 try
                 {
+                    LocalVideoAdded?.Invoke(this, null);
                     CallClientHelper.StopVideo(_call, _localVideoStream, Xamarin.Essentials.Platform.AppContext);
                 }
                 catch (CallingCommunicationException acsException)
