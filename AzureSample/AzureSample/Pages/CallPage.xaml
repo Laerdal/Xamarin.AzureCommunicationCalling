@@ -6,22 +6,22 @@
              BackgroundColor="#564581" 
              NavigationPage.HasNavigationBar="False"
              xmlns:local1="clr-namespace:AzureSample.Pages.CallTemplate">
- 
-        <ScrollView>
-            <FlexLayout Direction="Column">
 
-                <FlexLayout FlexLayout.Grow="1">
-                    <FlexLayout 
+    <ScrollView>
+        <FlexLayout Direction="Column">
+
+            <FlexLayout FlexLayout.Grow="1">
+                <FlexLayout 
         BindableLayout.ItemsSource="{Binding Participants}"
         Wrap="Wrap" FlexLayout.AlignSelf="Center"
                             JustifyContent="Center"
                     
                     Direction="Row"
         VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <Grid RowDefinitions="*" >
-                                    <local:DominantSpeakerControl
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="*" >
+                                <local:DominantSpeakerControl
                                     Grid.Row="0"
                                     HeightRequest="{OnIdiom Desktop='290', Phone='160'}" 
                                     WidthRequest="{OnIdiom Desktop='290', Phone='160'}" 
@@ -32,7 +32,7 @@
                                     HorizontalOptions="FillAndExpand"                                    Speed="10" 
                                     Source="avatar"
                                     AutoStart="true"/>
-                                    <local:SvgImage 
+                                <local:SvgImage 
                                     Grid.Row="0" 
                                     Opacity="1"
                                     VerticalOptions="Center"
@@ -49,64 +49,58 @@
                 RadiusY="{OnIdiom Desktop='90', Phone='50'}"/>
                                     </local:SvgImage.Clip>
                                     <local:SvgImage.Triggers>
-                                            <DataTrigger
+                                        <DataTrigger
                         Binding="{Binding IsSpeaking}"
                         TargetType="local:SvgImage"
                         Value="True">
-                                                <Setter Property="Opacity" Value="0.8" />
-                                            </DataTrigger>
-                                            <DataTrigger
+                                            <Setter Property="Opacity" Value="0.8" />
+                                        </DataTrigger>
+                                        <DataTrigger
                         Binding="{Binding IsSpeaking}"
                         TargetType="local:SvgImage"
                         Value="false">
-                                                <Setter Property="Opacity" Value="1" />
-                                            </DataTrigger>
-                                            <DataTrigger
+                                            <Setter Property="Opacity" Value="1" />
+                                        </DataTrigger>
+                                        <DataTrigger
                         Binding="{Binding IsVideoSharing}"
                         TargetType="local:SvgImage"
                         Value="True">
-                                                <Setter Property="IsVisible" Value="False" />
-                                            </DataTrigger>
-                                            <DataTrigger
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger
                         Binding="{Binding IsVideoSharing}"
                         TargetType="local:SvgImage"
                         Value="false">
-                                                <Setter Property="IsVisible" Value="True" />
-                                            </DataTrigger>
-                                        </local:SvgImage.Triggers>
-                                    </local:SvgImage>
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </local:SvgImage.Triggers>
+                                </local:SvgImage>
 
 
 
-                                    <ContentView Content="{Binding StreamVideo}"
+                                <ContentView Content="{Binding StreamVideo}"
                 Grid.Row="0"
                 Padding="0"    
                                               HeightRequest="{OnIdiom Desktop='180', Phone='100'}" 
                                     WidthRequest="{OnIdiom Desktop='180', Phone='100'}" 
                 VerticalOptions="Center"
                                     HorizontalOptions="Center">
-                                    <!--<ContentView.Clip>
-                                        <EllipseGeometry
-                Center="{OnIdiom Desktop='90,90', Phone='50,50'}"
-                RadiusX="{OnIdiom Desktop='90', Phone='50'}"
-                RadiusY="{OnIdiom Desktop='90', Phone='50'}"/>
-                                    </ContentView.Clip>-->
                                     <ContentView.Triggers>
-                                            <DataTrigger
-                        Binding="{Binding IsVideoSharing}"
-                        TargetType="ContentView"
-                        Value="True">
-                                                <Setter Property="IsVisible" Value="True" />
-                                            </DataTrigger>
-                                            <DataTrigger
-                        Binding="{Binding IsVideoSharing}"
-                        TargetType="ContentView"
-                        Value="false">
-                                                <Setter Property="IsVisible" Value="False" />
-                                            </DataTrigger>
-                                        </ContentView.Triggers>
-                                    </ContentView>
-                                    
+                                        <DataTrigger
+                                            Binding="{Binding IsVideoSharing}"
+                                            TargetType="ContentView"
+                                            Value="True">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding IsVideoSharing}"
+                                            TargetType="ContentView"
+                                            Value="false">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </ContentView.Triggers>
+                                </ContentView>
+
                                 <local:SvgImage 
                                     Grid.Row="0"
                                     Margin="{OnIdiom Desktop='0,120,0,0', Phone='0,60,0,0'}"
@@ -118,48 +112,47 @@
                                     ResourceId="ic_microphone_muted">
                                     <local:SvgImage.Triggers>
                                         <DataTrigger
-                        Binding="{Binding MicrophoneMuted}"
-                        TargetType="local:SvgImage"
-                        Value="True">
+                                           Binding="{Binding MicrophoneMuted}"
+                                           TargetType="local:SvgImage"
+                                           Value="True">
                                             <Setter Property="IsVisible" Value="True" />
                                         </DataTrigger>
-                                        <DataTrigger
-                        Binding="{Binding MicrophoneMuted}"
-                        TargetType="local:SvgImage"
-                        Value="false">
+                                        <DataTrigger                                            
+                                           Binding="{Binding MicrophoneMuted}"
+                                           TargetType="local:SvgImage"
+                                           Value="false">
                                             <Setter Property="IsVisible" Value="False" />
                                         </DataTrigger>
                                     </local:SvgImage.Triggers>
-                                   
                                 </local:SvgImage>
 
                                 <Label TextColor="White" Margin="{OnIdiom Desktop='0,220,0,0', Phone='0,140,0,0'}" Grid.Row="0" FontSize="10" VerticalOptions="Center"
                                     HorizontalOptions="Center"  Text="{Binding Name}"/>
                             </Grid>
 
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                        <FlexLayout.Triggers>
-                            <DataTrigger
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                    <FlexLayout.Triggers>
+                        <DataTrigger
                         Binding="{Binding IsSharingRemoteVideo}"
                         TargetType="FlexLayout"
                         Value="True">
-                                <Setter Property="FlexLayout.Basis" Value="100" />
-                            </DataTrigger>
-                            <DataTrigger
+                            <Setter Property="FlexLayout.Basis" Value="100" />
+                        </DataTrigger>
+                        <DataTrigger
                         Binding="{Binding IsSharingRemoteVideo}"
                         TargetType="FlexLayout"
                         Value="false">
-                                <Setter Property="FlexLayout.Grow" Value="1" />
-                            </DataTrigger>
-                        </FlexLayout.Triggers>
-                    </FlexLayout>
-                    <BoxView FlexLayout.Basis="{OnIdiom Desktop='800', Phone='250'}" Margin="0,10,0,10"
+                            <Setter Property="FlexLayout.Grow" Value="1" />
+                        </DataTrigger>
+                    </FlexLayout.Triggers>
+                </FlexLayout>
+                <BoxView FlexLayout.Basis="{OnIdiom Desktop='800', Phone='250'}" Margin="0,10,0,10"
                      FlexLayout.Order="-1"
                      Color="Blue" IsVisible="{Binding IsSharingRemoteVideo}"/>
-                </FlexLayout>
-
-                <Frame FlexLayout.Grow="0"                        
+            </FlexLayout>
+            <!--MENU BAR-->
+            <Frame FlexLayout.Grow="0"                        
                     Opacity="{OnIdiom Desktop='0.7', Phone='0.8'}"                        
                     BackgroundColor="#293440"                         
                     Padding="0" 
@@ -167,10 +160,10 @@
                         
                         HorizontalOptions="FillAndExpand"
                         CornerRadius="10">
-                    <StackLayout 
+                <StackLayout 
                         Orientation="Horizontal" HorizontalOptions="Center" Spacing="{OnIdiom Desktop='40', Phone='10'}" VerticalOptions="FillAndExpand">
 
-                        <local:SvgImage 
+                    <local:SvgImage 
                                     Padding="5"
                                     CornerRadius="{OnIdiom Desktop='40', Phone='25'}" 
                                     HorizontalOptions="Center"
@@ -180,25 +173,25 @@
                                     WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                        
                                     ResourceId="ic_camera_on"
                             Command="{Binding VideoEnableCommand}">
-                            <local:SvgImage.Triggers>
-                                <DataTrigger TargetType="local:SvgImage"
+                        <local:SvgImage.Triggers>
+                            <DataTrigger TargetType="local:SvgImage"
                                      Binding="{Binding VideoEnabled}"
                                      Value="True">
                                 <Setter Property="ResourceId" Value="ic_camera_off"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="local:SvgImage"
+                            </DataTrigger>
+                            <DataTrigger TargetType="local:SvgImage"
                                      Binding="{Binding VideoEnabled}"
                                      Value="false">
                                 <Setter Property="ResourceId" Value="ic_camera_on"/>
-                                </DataTrigger>
-                            </local:SvgImage.Triggers>
-                        </local:SvgImage>
-                        
-                        
-                        
-                        
-                        
-                        <local:SvgImage 
+                            </DataTrigger>
+                        </local:SvgImage.Triggers>
+                    </local:SvgImage>
+
+
+
+
+
+                    <local:SvgImage 
                                     Padding="5"
                                     CornerRadius="{OnIdiom Desktop='40', Phone='25'}" 
                                     HorizontalOptions="Center"
@@ -208,26 +201,26 @@
                                     WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                     
                                     ResourceId="ic_microphone_on"
                             Command="{Binding MicrophoneCommand}">
-                            <local:SvgImage.Triggers>
-                                <DataTrigger TargetType="local:SvgImage"
+                        <local:SvgImage.Triggers>
+                            <DataTrigger TargetType="local:SvgImage"
                                      Binding="{Binding MicrophoneEnabled}"
                                      Value="True">
-                                    <Setter Property="ResourceId" Value="ic_microphone_on"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="local:SvgImage"
+                                <Setter Property="ResourceId" Value="ic_microphone_on"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="local:SvgImage"
                                      Binding="{Binding MicrophoneEnabled}"
                                      Value="false">
-                                    <Setter Property="ResourceId" Value="ic_microphone_off"/>
-                                </DataTrigger>
-                            </local:SvgImage.Triggers>
-                        </local:SvgImage>
+                                <Setter Property="ResourceId" Value="ic_microphone_off"/>
+                            </DataTrigger>
+                        </local:SvgImage.Triggers>
+                    </local:SvgImage>
 
-                        
-                        
-                        
-                        
-                        
-                        <local:SvgImage 
+
+
+
+
+
+                    <local:SvgImage 
                                     Padding="5"
                                     CornerRadius="{OnIdiom Desktop='8', Phone='10'}" 
                                     HorizontalOptions="Center"
@@ -238,7 +231,7 @@
                                     WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                         
                                     ResourceId="ic_call_end"
                             Command="{Binding HangUpCallCommand}"/>
-                        <local:SvgImage 
+                    <local:SvgImage 
                                     Padding="5"
                                     CornerRadius="{OnIdiom Desktop='40', Phone='25'}" 
                                     HorizontalOptions="Center"
@@ -248,20 +241,20 @@
                                     WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                          
                                     ResourceId="ic_speaker_on"
                             Command="{Binding SpeakerCommand}">
-                            <local:SvgImage.Triggers>
-                                <DataTrigger TargetType="local:SvgImage"
+                        <local:SvgImage.Triggers>
+                            <DataTrigger TargetType="local:SvgImage"
                                      Binding="{Binding SpeakerEnabled}"
                                      Value="True">
-                                    <Setter Property="ResourceId" Value="ic_speaker_on"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="local:SvgImage"
+                                <Setter Property="ResourceId" Value="ic_speaker_on"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="local:SvgImage"
                                      Binding="{Binding SpeakerEnabled}"
                                      Value="false">
-                                    <Setter Property="ResourceId" Value="ic_headset_on"/>
-                                </DataTrigger>
-                            </local:SvgImage.Triggers>
-                        </local:SvgImage>
-                        <local:SvgImage 
+                                <Setter Property="ResourceId" Value="ic_headset_on"/>
+                            </DataTrigger>
+                        </local:SvgImage.Triggers>
+                    </local:SvgImage>
+                    <local:SvgImage 
                                     Padding="5"
                                     CornerRadius="{OnIdiom Desktop='40', Phone='25'}" 
                                     HorizontalOptions="Center"
@@ -270,9 +263,9 @@
                                     HeightRequest="{OnIdiom Desktop='40', Phone='40'}" 
                                     WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                     
                                     ResourceId="ic_camera_switch"/>
-                    </StackLayout>
-                </Frame>
-            </FlexLayout>
-        </ScrollView>
+                </StackLayout>
+            </Frame>
+        </FlexLayout>
+    </ScrollView>
 
 </ContentPage>

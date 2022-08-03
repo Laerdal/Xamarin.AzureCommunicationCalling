@@ -28,6 +28,7 @@ namespace AzureSample.iOS.Implementations
         private ACSLocalVideoStream _localVideoStream;
         private ACSVideoStreamRenderer _localVideoStreamRenderer;
         private readonly CallingCallbackManager _videoCallbackManager;
+        public event EventHandler<View> LocalVideoAdded;
         public event EventHandler<ConferenceStateChangedEnventArgs> StateChanged = delegate { };
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoRemoved = delegate { };
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoAdded = delegate { };

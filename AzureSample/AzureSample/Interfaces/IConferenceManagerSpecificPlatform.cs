@@ -34,6 +34,7 @@ namespace AzureSample.Interfaces
         bool SpeakerOn { get; set; }
         bool Initialized { get; }
         Task<bool> MuteUnMuted();
+        event EventHandler<View> LocalVideoAdded;
         event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoRemoved;
         event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoAdded;
         event EventHandler<ParticipantJoinArgs> ParticipantJoined;

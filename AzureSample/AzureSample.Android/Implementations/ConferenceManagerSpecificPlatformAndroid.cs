@@ -35,8 +35,7 @@ namespace AzureSample.Droid.Implementations
         private VideoStreamRenderer _localRenderer;
         IncomingCall _incomingCall;
         private Call _call;
-        private List<RemoteParticipant> _remoteParticipants = new List<RemoteParticipant>();
-
+        public event EventHandler<View> LocalVideoAdded;
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoAdded;
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoRemoved;
         public event EventHandler<ParticipantJoinArgs> ParticipantJoined;
@@ -338,7 +337,6 @@ namespace AzureSample.Droid.Implementations
         {
             foreach (var participantAdded in e.P0.AddedParticipants)
             {
-                _remoteParticipants.Add(participantAdded);
                 ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.DisplayName));
                 ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(participantAdded.DisplayName, participantAdded.IsMuted));
                 participantAdded.VideoStreamsUpdated += RemoteVideoStreamsUpdated;
@@ -353,7 +351,6 @@ namespace AzureSample.Droid.Implementations
             }
             foreach (var participantRemoved in e.P0.RemovedParticipants)
             {
-                _remoteParticipants.Remove(participantRemoved);
                 ParticipantLeft?.Invoke(this, new ParticipantLeftArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.DisplayName));
             }
 

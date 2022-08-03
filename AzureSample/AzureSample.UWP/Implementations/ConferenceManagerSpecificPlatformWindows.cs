@@ -27,7 +27,7 @@ namespace AzureSample.UWP.Implementations
         private LocalVideoStream[] _localVideoStream;
         private MediaElement mediaElement;
         private Call _call;
-        private List<RemoteParticipant> _remoteParticipants = new List<RemoteParticipant>();
+        public event EventHandler<View> LocalVideoAdded;
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoRemoved;
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoAdded;
         public event EventHandler<ParticipantJoinArgs> ParticipantJoined;
@@ -276,8 +276,6 @@ namespace AzureSample.UWP.Implementations
         {
             foreach (var participantAdded in e.AddedParticipants)
             {
-                _remoteParticipants.Add(participantAdded);
-
                 ParticipantJoined?.Invoke(this, new ParticipantJoinArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.DisplayName));
                 ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantAdded), participantAdded.IsMuted));
                 participantAdded.OnIsMutedChanged += ParticipantAdded_OnIsMutedChanged;
@@ -291,7 +289,6 @@ namespace AzureSample.UWP.Implementations
             }
             foreach (var participantRemoved in e.RemovedParticipants)
             {
-                _remoteParticipants.Remove(participantRemoved);
                 ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.IsMuted));
                 ParticipantLeft?.Invoke(this, new ParticipantLeftArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.DisplayName));
             }
