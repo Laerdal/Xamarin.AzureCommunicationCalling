@@ -25,6 +25,7 @@ namespace AzureSample.UWP.Implementations
         private CallClient _callClient;
         private DeviceManager _deviceManager;
         private LocalVideoStream[] _localVideoStream;
+        private VideoDeviceInfo _videoDeviceInfo;
         private MediaElement mediaElement;
         private Call _call;
         public event EventHandler<View> LocalVideoAdded;
@@ -221,14 +222,35 @@ namespace AzureSample.UWP.Implementations
                 var acsNumber = new Azure.WinRT.Communication.PhoneNumberIdentifier[] { new Azure.WinRT.Communication.PhoneNumberIdentifier(azureSetupRoom.CodeMeeting) };
                 if (_deviceManager.Cameras.Count > 0)
                 {
-                    VideoDeviceInfo videoDeviceInfo = _deviceManager.Cameras[0];
+                    _videoDeviceInfo = _deviceManager.Cameras.First();
                     _localVideoStream = new LocalVideoStream[1];
-                    _localVideoStream[0] = new LocalVideoStream(videoDeviceInfo);
+                    _localVideoStream[0] = new LocalVideoStream(_videoDeviceInfo);
                     if (azureSetupRoom.VideoEnabled)
                     {
                         var video = new VideoOptions(_localVideoStream);
                         startCallOptions.VideoOptions = video;
                         joinCallOptions.VideoOptions = video;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        await Task.Delay(2000);
+                        _videoDeviceInfo = _deviceManager.Cameras.First();
+                        _localVideoStream = new LocalVideoStream[1];
+                        _localVideoStream[0] = new LocalVideoStream(_videoDeviceInfo);
+                        if (azureSetupRoom.VideoEnabled)
+                        {
+                            var video = new VideoOptions(_localVideoStream);
+                            startCallOptions.VideoOptions = video;
+                            joinCallOptions.VideoOptions = video;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        new ConferenceExceptions(ex);
                     }
                 }
                 switch (azureSetupRoom.TypeCall)
@@ -292,8 +314,7 @@ namespace AzureSample.UWP.Implementations
                 ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.IsMuted));
                 ParticipantLeft?.Invoke(this, new ParticipantLeftArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.DisplayName));
             }
-        }
-
+        }      
         private void ParticipantAdded_OnStateChanged(object sender, PropertyChangedEventArgs args)
         {
         }
@@ -378,12 +399,21 @@ namespace AzureSample.UWP.Implementations
         }
         public void StartScreensharing()
         { }
-        public async void StartVideo()
+        public async void StartCamera()
         {
             await global::Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(global::Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
-                var video = _localVideoStream[0];
-                await _call.StartVideo(video);
+                try
+                {
+                    LocalVideoAdded.Invoke(this, await GetCameraViewAsync());
+                    if(_localVideoStream[0] != null)
+                    await _call.StartVideo(_localVideoStream[0]);
+                }
+                catch (Exception ex)
+                {
+
+                    new ConferenceExceptions(ex);
+                }
             });
         }
         public void StopScreensharing() { }
@@ -391,13 +421,47 @@ namespace AzureSample.UWP.Implementations
         {
             return await _call.Info.GetServerCallIdAsync(); 
         }
+        public async Task<View> GetCameraViewAsync()
+        {
+            VideoDeviceInfo videoDeviceInfo = _deviceManager.Cameras.First();
+            if (_deviceManager.Cameras.Count <= 0)
+            {
+                await Task.Delay(2000);
+                videoDeviceInfo = _deviceManager.Cameras.First();
+            }
+            var localVideoStream = new LocalVideoStream[1];
+            localVideoStream[0] = new LocalVideoStream(videoDeviceInfo);
+            if (localVideoStream != null)
+            {
+                Uri localUri = await localVideoStream[0].MediaUriAsync();
+                MediaElement RemoteVideo = new MediaElement();
+                RemoteVideo.Source = localUri;
+                RemoteVideo.AutoPlay = true;
+                RemoteVideo.Play();
+                var stackPanel = new StackPanel();
+                stackPanel.Children.Add(RemoteVideo);
+                var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
+                return stackPanel.ToView();
+            }
+            else return null;
 
-        public async void StopVideo()
+        }
+        public async void StopCamera()
         {
             await global::Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(global::Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
-                var video = _localVideoStream[0];
-                await _call.StopVideo(video);
+                try
+                {
+                    LocalVideoAdded.Invoke(this, null);
+                    if(_localVideoStream[0] != null)
+                    await _call.StopVideo(_localVideoStream[0]);
+                }
+                catch (Exception ex)
+                {
+
+                    new ConferenceExceptions(ex);
+                }
+                
             });
         }
     }
