@@ -20,6 +20,7 @@ namespace AzureSample.Interfaces
         Task InitializeConference(AzureSetupRoom azureSetupRoom);
         string CodeConference();
         void StartScreensharing();
+        void SwitchCamera();
         void StartCamera();
         void StopScreensharing();
         void StopCamera();

@@ -165,7 +165,7 @@ namespace AzureSample.UWP.Implementations
         }
 
         private void IncomingCall_OnCallEnded(object sender, PropertyChangedEventArgs args)
-        {            
+        {
         }
 
         public async Task RejectAsync()
@@ -314,7 +314,7 @@ namespace AzureSample.UWP.Implementations
                 ParticipantMicrophoneStatusChanged?.Invoke(this, new ParticipantMicrophoneStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.IsMuted));
                 ParticipantLeft?.Invoke(this, new ParticipantLeftArgs(CommunicationIdentifierExtension.IdentifierExtension(participantRemoved), participantRemoved.DisplayName));
             }
-        }      
+        }
         private void ParticipantAdded_OnStateChanged(object sender, PropertyChangedEventArgs args)
         {
         }
@@ -406,8 +406,8 @@ namespace AzureSample.UWP.Implementations
                 try
                 {
                     LocalVideoAdded.Invoke(this, await GetCameraViewAsync());
-                    if(_localVideoStream[0] != null)
-                    await _call.StartVideo(_localVideoStream[0]);
+                    if (_localVideoStream[0] != null)
+                        await _call.StartVideo(_localVideoStream[0]);
                 }
                 catch (Exception ex)
                 {
@@ -419,7 +419,11 @@ namespace AzureSample.UWP.Implementations
         public void StopScreensharing() { }
         public async Task<string> GetServerCallId()
         {
-            return await _call.Info.GetServerCallIdAsync(); 
+            return await _call.Info.GetServerCallIdAsync();
+        }
+        public void SwitchCamera()
+        {
+
         }
         public async Task<View> GetCameraViewAsync()
         {
@@ -453,15 +457,15 @@ namespace AzureSample.UWP.Implementations
                 try
                 {
                     LocalVideoAdded.Invoke(this, null);
-                    if(_localVideoStream[0] != null)
-                    await _call.StopVideo(_localVideoStream[0]);
+                    if (_localVideoStream[0] != null)
+                        await _call.StopVideo(_localVideoStream[0]);
                 }
                 catch (Exception ex)
                 {
 
                     new ConferenceExceptions(ex);
                 }
-                
+
             });
         }
     }

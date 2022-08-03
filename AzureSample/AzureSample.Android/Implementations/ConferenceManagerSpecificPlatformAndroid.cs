@@ -33,6 +33,7 @@ namespace AzureSample.Droid.Implementations
         private DeviceManager _deviceManager;
         private LocalVideoStream _localVideoStream;
         private VideoStreamRenderer _localRenderer;
+        private VideoDeviceInfo _videoDeviceInfo = null;
         IncomingCall _incomingCall;
         private Call _call;
         public event EventHandler<View> LocalVideoAdded;
@@ -45,6 +46,7 @@ namespace AzureSample.Droid.Implementations
         public event EventHandler<ParticipantSpeakingStatusChangedArgs> SpeakingChanged = delegate { };
 
         public string DisplayName { get; set; }
+        public SelectedCamera CurrentCamera { get; set; } = SelectedCamera.Front;
 
         public bool MicrophoneMute => _call.IsMuted;
 
@@ -166,17 +168,16 @@ namespace AzureSample.Droid.Implementations
 
             if (_deviceManager.Cameras.Count > 0)
             {
-                VideoDeviceInfo videoDeviceInfo = null;
-                switch (azureSetupRoom.SelectedCamera)
+                switch (CurrentCamera = azureSetupRoom.SelectedCamera)
                 {
                     case SelectedCamera.Front:
-                        videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
+                        _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
                         break;
                     case SelectedCamera.Back:
-                        videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
+                        _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
                         break;
                 }
-                _localVideoStream = new LocalVideoStream(videoDeviceInfo, appContext);
+                _localVideoStream = new LocalVideoStream(_videoDeviceInfo, appContext);
                 _localRenderer = new VideoStreamRenderer(_localVideoStream, appContext);
                 var videoOptions = new VideoOptions(new LocalVideoStream[] { _localVideoStream });
                 if (azureSetupRoom.VideoEnabled)
@@ -431,6 +432,21 @@ namespace AzureSample.Droid.Implementations
         public Task<string> GetServerCallId()
         {
             return Task.FromResult(CallClientHelper.GetServerCallId(_call.Info));
+        }
+        public void SwitchCamera()
+        {
+            switch (CurrentCamera)
+            {
+                case SelectedCamera.Front:
+                    CurrentCamera = SelectedCamera.Back;
+                    _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Back);
+                    break;
+                case SelectedCamera.Back:
+                    CurrentCamera = SelectedCamera.Front;
+                    _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
+                    break;
+            }
+            CallClientHelper.SwitchCameraSource(_localVideoStream, _videoDeviceInfo);
         }
         public void StartCamera()
         {

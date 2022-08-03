@@ -24,6 +24,7 @@ namespace AzureSample.iOS.Implementations
         private ACSDeviceManager _deviceManager;
         private ACSCallAgent _callAgent;
         private ACSCall _call;
+        private ACSVideoDeviceInfo _videoDeviceInfo = null;
         private ACSIncomingCall _incomingCall;
         private ACSLocalVideoStream _localVideoStream;
         private ACSVideoStreamRenderer _localVideoStreamRenderer;
@@ -41,6 +42,7 @@ namespace AzureSample.iOS.Implementations
         public DateTime? ConnectionStart { get; set; }
         public string DisplayName { get; set; }
         public bool MicrophoneMute => _call.IsMuted;
+        public SelectedCamera CurrentCamera { get; set; } = SelectedCamera.Front;
         public string ServerCallId { get; set; }
         public bool VideoEnabled { get; set; } = false;
         public bool Initialized { get; private set; } = false;
@@ -350,17 +352,16 @@ namespace AzureSample.iOS.Implementations
             callees.Add(new CommunicationUserIdentifier(azureSetupRoom.CodeMeeting));
             if (_deviceManager.Cameras.Count() > 0)
             {
-                ACSVideoDeviceInfo videoDeviceInfo = null;
-                switch (azureSetupRoom.SelectedCamera)
+                switch (CurrentCamera = azureSetupRoom.SelectedCamera)
                 {
                     case SelectedCamera.Front:
-                        videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
+                        _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
                         break;
                     case SelectedCamera.Back:
-                        videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
+                        _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
                         break;
                 }                
-                _localVideoStream = new ACSLocalVideoStream(videoDeviceInfo);
+                _localVideoStream = new ACSLocalVideoStream(_videoDeviceInfo);
                 _localVideoStreamRenderer = new ACSVideoStreamRenderer(_localVideoStream, out var rendererError);
                 ThrowIfError(rendererError);
                 VideoEnabled = azureSetupRoom.VideoEnabled;
@@ -440,9 +441,36 @@ namespace AzureSample.iOS.Implementations
         public void StopCamera()
         {
             LocalVideoAdded?.Invoke(this, null);
-            _call.StopVideo(_localVideoStream, MutedVideo);
+            _call.StopVideo(_localVideoStream, StopVideo);
         }
-        void MutedVideo(NSError action)
+        public void SwitchCamera()
+        {
+            switch (CurrentCamera)
+            {
+                case SelectedCamera.Front:
+                    CurrentCamera = SelectedCamera.Back;
+                    _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Back);
+                    break;
+                case SelectedCamera.Back:
+                    CurrentCamera = SelectedCamera.Front;
+                    _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
+                    break;
+            }
+            if (_videoDeviceInfo != null)
+            {
+                void SwtichCameraCompleted(NSError onSwtichCameraError)
+                {
+                    if (onSwtichCameraError != null)
+                    {
+                    }
+
+                    return;
+                }
+                _localVideoStream.SwitchSource(_videoDeviceInfo, SwtichCameraCompleted);
+            }
+
+        }
+        void StopVideo(NSError action)
         {
 
         }
