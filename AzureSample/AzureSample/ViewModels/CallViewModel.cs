@@ -16,8 +16,10 @@ namespace AzureSample.ViewModels
 {
     public class CallViewModel : BaseViewModel
     {
+        IConferenceManagerSpecificPlatform _conferenceManagerSpecificPlatform = ContainerDependencyInjectionService.GetService<IConferenceManagerSpecificPlatform>();
+
         public ICommand MicrophoneCommand { get; set; }
-        public ICommand VideoEnableCommand { get; set; }
+        public ICommand CameraCommand { get; set; }
         public ICommand SpeakerCommand { get; set; }
         public ICommand VideoCommand { get; set; }
         public ICommand ChangeCameraCommand { get; set; }
@@ -56,6 +58,13 @@ namespace AzureSample.ViewModels
             get => _isSharingRemoteVideo;
             set { SetProperty(ref _isSharingRemoteVideo, value); }
         }
+        public bool _isSharingLocalCamera = false;
+        public bool IsSharingLocalCamera
+        {
+            get => _isSharingLocalCamera;
+            set { SetProperty(ref _isSharingLocalCamera, value); }
+        }
+
         ObservableCollection<ConferenceParticipantWrapper> _participants;
         public ObservableCollection<ConferenceParticipantWrapper> Participants
         {
@@ -65,14 +74,19 @@ namespace AzureSample.ViewModels
                 SetProperty(ref _participants, value);
             }
         }
-        IConferenceManagerSpecificPlatform _conferenceManagerSpecificPlatform = ContainerDependencyInjectionService.GetService<IConferenceManagerSpecificPlatform>();
+        Xamarin.Forms.StackLayout localCamera = new Xamarin.Forms.StackLayout();
+        public Xamarin.Forms.StackLayout LocalCamera
+        {
+            get => localCamera;
+            set => SetProperty(ref localCamera, value);
+        }
 
         public CallViewModel()
         {
             HangUpCallCommand = new Command(HangUpCall);
             SpeakerCommand = new Command(ExecuteToggleSpeaker);
             MicrophoneCommand = new Command(ExecuteToggleMicrophone);
-            VideoEnableCommand = new Command(ChangeVideo);
+            CameraCommand = new Command(ExecuteToggleCamera);
             Participants = new ObservableCollection<ConferenceParticipantWrapper>();
             IsSharingRemoteVideo = false;
 
@@ -97,9 +111,40 @@ namespace AzureSample.ViewModels
                     _conferenceManagerSpecificPlatform.ParticipantLeft += OnParticipantLeft;
                     _conferenceManagerSpecificPlatform.ParticipantMicrophoneStatusChanged += ParticipantMicrophoneStatusChanged;
                     _conferenceManagerSpecificPlatform.RemoteVideoAdded += ConferenceManagerSpecificPlatform_RemoteVideoAdded;
-                    _conferenceManagerSpecificPlatform.RemoteVideoRemoved += ConferenceManagerSpecificPlatform_LocalVideoAdded;
+                    _conferenceManagerSpecificPlatform.RemoteVideoRemoved += ConferenceManagerSpecificPlatform_RemoteVideoRemoved;
+                    _conferenceManagerSpecificPlatform.LocalVideoAdded += ConferenceManagerSpecificPlatform_LocalVideoAdded;
                     _conferenceManagerSpecificPlatform.SpeakingChanged += ConferenceManagerSpecificPlatform_SpeakingChanged;
                 }
+            });
+        }
+
+        private void ConferenceManagerSpecificPlatform_LocalVideoAdded(object sender, Xamarin.Forms.View e)
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                try
+                {
+                    if (e != null)
+                    {
+                        LocalCamera.Children.Add(new Xamarin.Forms.Frame
+                        {
+                            Content = e,
+                        });
+                        IsSharingLocalCamera = true;
+                    }
+                    else
+                    {
+                        IsSharingLocalCamera = false;
+                        LocalCamera.Children.Clear();
+                        LocalCamera.ForceLayout();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    new ConferenceExceptions(ex);
+                }
+
             });
         }
 
@@ -112,64 +157,75 @@ namespace AzureSample.ViewModels
             }
         }
 
-        private void ConferenceManagerSpecificPlatform_LocalVideoAdded(object sender, ParticipantVideoStatusChangedArgs e)
+        private void ConferenceManagerSpecificPlatform_RemoteVideoRemoved(object sender, ParticipantVideoStatusChangedArgs e)
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                var existing = Participants.FirstOrDefault(p => p.Id == e.ParticipantId);
-                if (existing != null)
+                try
                 {
-                    existing.IsVideoSharing = false;
-                    existing.IsSpeaking = false;
-                    existing.StreamVideo.Children.Remove(existing.StreamVideo);
-                    existing.StreamVideo.Children.Clear();
-                    existing.StreamVideo.ForceLayout();
+                    var existing = Participants.FirstOrDefault(p => p.Id == e.ParticipantId);
+                    if (existing != null)
+                    {
+                        existing.IsVideoSharing = false;
+                        existing.IsSpeaking = false;
+                        existing.StreamVideo.Children.Remove(existing.StreamVideo);
+                        existing.StreamVideo.Children.Clear();
+                        existing.StreamVideo.ForceLayout();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    new ConferenceExceptions(ex);
                 }
             });
         }
 
-        Xamarin.Forms.StackLayout contentView = new Xamarin.Forms.StackLayout();
-        public Xamarin.Forms.StackLayout ContentVideo
-        {
-            get => contentView;
-            set => SetProperty(ref contentView, value);
-        }
+
 
         private void ConferenceManagerSpecificPlatform_RemoteVideoAdded(object sender, ParticipantVideoStatusChangedArgs e)
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                var existing = Participants.FirstOrDefault(p => p.Id == e.ParticipantId);
-                if (existing != null)
+                try
                 {
-                    existing.IsVideoSharing = true;
-                    existing.StreamVideo.HeightRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100;
-                    existing.StreamVideo.WidthRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100;
-                    existing.StreamVideo.WidthRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100;
-                    existing.StreamVideo.VerticalOptions = Xamarin.Forms.LayoutOptions.Center;
-                    existing.StreamVideo.HorizontalOptions = Xamarin.Forms.LayoutOptions.Center;
-                    existing.StreamVideo.Children.Add(new Xamarin.Forms.Frame
+                    var existing = Participants.FirstOrDefault(p => p.Id == e.ParticipantId);
+                    if (existing != null)
                     {
-                        Content = e.StreamVideo,
-                        HeightRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100,
-                        WidthRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100,
-                        VerticalOptions = Xamarin.Forms.LayoutOptions.Center,
-                    HorizontalOptions = Xamarin.Forms.LayoutOptions.Center,
-                    });
+                        existing.IsVideoSharing = true;
+                        existing.StreamVideo.HeightRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100;
+                        existing.StreamVideo.WidthRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100;
+                        existing.StreamVideo.WidthRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100;
+                        existing.StreamVideo.VerticalOptions = Xamarin.Forms.LayoutOptions.Center;
+                        existing.StreamVideo.HorizontalOptions = Xamarin.Forms.LayoutOptions.Center;
+                        existing.StreamVideo.Children.Add(new Xamarin.Forms.Frame
+                        {
+                            Content = e.StreamVideo,
+                            HeightRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100,
+                            WidthRequest = Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop ? 180 : 100,
+                            VerticalOptions = Xamarin.Forms.LayoutOptions.Center,
+                            HorizontalOptions = Xamarin.Forms.LayoutOptions.Center,
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    new ConferenceExceptions(ex);
                 }
             });
         }
 
-        public void ChangeVideo()
+        public void ExecuteToggleCamera()
         {
             if (VideoEnabled)
             {
-                _conferenceManagerSpecificPlatform.StopVideo();
+                _conferenceManagerSpecificPlatform.StopCamera();
                 VideoEnabled = false;
             }
             else
             {
-                _conferenceManagerSpecificPlatform.StartVideo();
+                _conferenceManagerSpecificPlatform.StartCamera();
                 VideoEnabled = true;
             }
 

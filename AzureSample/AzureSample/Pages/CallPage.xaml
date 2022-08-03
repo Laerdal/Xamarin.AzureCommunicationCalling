@@ -147,9 +147,17 @@
                         </DataTrigger>
                     </FlexLayout.Triggers>
                 </FlexLayout>
-                <BoxView FlexLayout.Basis="{OnIdiom Desktop='800', Phone='250'}" Margin="0,10,0,10"
+                <ContentView FlexLayout.Basis="{OnIdiom Desktop='800', Phone='250'}" Margin="0,10,0,10"
                      FlexLayout.Order="-1"
-                     Color="Blue" IsVisible="{Binding IsSharingRemoteVideo}"/>
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"  
+                             HeightRequest="500"
+                             WidthRequest="500"
+                             BackgroundColor="Black"
+                     Content="{Binding LocalCamera}"
+                     IsVisible="{Binding IsSharingLocalCamera}">
+                    
+                </ContentView>
             </FlexLayout>
             <!--MENU BAR-->
             <Frame FlexLayout.Grow="0"                        
@@ -172,7 +180,7 @@
                                     HeightRequest="{OnIdiom Desktop='40', Phone='40'}" 
                                     WidthRequest="{OnIdiom Desktop='40', Phone='40'}"                        
                                     ResourceId="ic_camera_on"
-                            Command="{Binding VideoEnableCommand}">
+                            Command="{Binding CameraCommand}">
                         <local:SvgImage.Triggers>
                             <DataTrigger TargetType="local:SvgImage"
                                      Binding="{Binding VideoEnabled}"
