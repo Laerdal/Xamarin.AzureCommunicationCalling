@@ -1,16 +1,33 @@
-# Azure Communication Calling Sample Xamarin Forms
-These library are native to each platform, you need to make a common abstraction on top yourself if you want to use them in a forms project. See the TestSample for a simple example.
+# iOS and Android binding libraries for Azure Communication Services
+Use these nugets to consume Azure Communication Services on Xamarin, e.g. make video and voice calls.
 
-All the necessary documentation is intended for the native environment (java/swift), so it may be necessary to investigate unexpected behaviors or crashes in the native environment to confirm if the problem is here or in the native platform sdk itself.
+These nugets are native to each platform, you need to make a common abstraction on top yourself if you want to use them in a forms project. See the TestSample for a example.
 
 Additional documentation for this sample can be found on [Microsoft Docs](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/calling-sdk-features).
 
-## Support platforms
+## Supported platforms
 
 - [x] Android >= 21
 - [x] iOS >= 12
 - [x] UWP (Min Target: 10.0.18362)
-- macOS (study in progress)
+# Screenshots
+## Android
+<img src="Screenshots/Android_Intro.jpg" width="200" height="400" />
+<img src="Screenshots/Android_Join.jpg" width="200" height="400" />  
+<img src="Screenshots/Android_Setup.jpg" width="200" height="400" />  
+<img src="Screenshots/Android_Call.jpg" width="200" height="400" />
+
+## iOS
+<img src="Screenshots/iOS_Intro.png" width="200" height="400" />  
+<img src="Screenshots/iOS_Join.png" width="200" height="400" />  
+<img src="Screenshots/iOS_Setup.png" width="200" height="400" />  
+<img src="Screenshots/iOS_Call.png" width="200" height="400" />
+## UWP
+
+<img src="Screenshots/Windows_Intro.png" width="600" height="400" />  
+<img src="Screenshots/Windows_Join.png" width="600" height="400" />
+<img src="Screenshots/Windows_Setup.png" width="600" height="400" />  
+<img src="Screenshots/Windows_Call.png" width="600" height="400" />
 
 ## Support Libraries
 
@@ -105,14 +122,4 @@ Call events in windows are unstable in certain scenarios and suddenly stop worki
 Please refer to the [wiki](https://github.com/Azure-Samples/communication-services-android-calling-hero/wiki/Known-Issues) for known issues related to this sample.
 ](https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features)
 
-# Screenshots
-## Android
-<img src="/Screenshots/Android_Intro.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Join.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Setup.jpg" width="200" height="400" />  <img src="/Screenshots/Android_Call.jpg" width="200" height="400" />
-
-## iOS
-<img src="/Screenshots/iOS_Intro.png" width="200" height="400" />  <img src="/Screenshots/iOS_Join.png" width="200" height="400" />  <img src="/Screenshots/iOS_Setup.png" width="200" height="400" />  <img src="/Screenshots/iOS_Call.png" width="200" height="400" />
-## UWP
-
-<img src="/Screenshots/Windows_Intro.png" width="600" height="400" />  <img src="/Screenshots/Windows_Join.png" width="600" height="400" />
-<img src="/Screenshots/Windows_Setup.png" width="600" height="400" />  <img src="/Screenshots/Windows_Call.png" width="600" height="400" />
 
