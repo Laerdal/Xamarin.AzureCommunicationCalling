@@ -12,22 +12,13 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 - [x] UWP (Min Target: 10.0.18362)
 # Screenshots
 ## Android
-<img src="Screenshots/Android_Intro.jpg" width="200" height="400" />
-<img src="Screenshots/Android_Join.jpg" width="200" height="400" />  
-<img src="Screenshots/Android_Setup.jpg" width="200" height="400" />  
-<img src="Screenshots/Android_Call.jpg" width="200" height="400" />
+<img src="Screenshots/Android_Intro.jpg" width="200" height="400" /> <img src="Screenshots/Android_Join.jpg" width="200" height="400" />  <img src="Screenshots/Android_Setup.jpg" width="200" height="400" />  <img src="Screenshots/Android_Call.jpg" width="200" height="400" />
 
 ## iOS
-<img src="Screenshots/iOS_Intro.png" width="200" height="400" />  
-<img src="Screenshots/iOS_Join.png" width="200" height="400" />  
-<img src="Screenshots/iOS_Setup.png" width="200" height="400" />  
-<img src="Screenshots/iOS_Call.png" width="200" height="400" />
+<img src="Screenshots/iOS_Intro.png" width="200" height="400" />  <img src="Screenshots/iOS_Join.png" width="200" height="400" />  <img src="Screenshots/iOS_Setup.png" width="200" height="400" />  <img src="Screenshots/iOS_Call.png" width="200" height="400" />
 ## UWP
 
-<img src="Screenshots/Windows_Intro.png" width="600" height="400" />  
-<img src="Screenshots/Windows_Join.png" width="600" height="400" />
-<img src="Screenshots/Windows_Setup.png" width="600" height="400" />  
-<img src="Screenshots/Windows_Call.png" width="600" height="400" />
+<img src="Screenshots/Windows_Intro.png" width="600" height="400" />  <img src="Screenshots/Windows_Join.png" width="600" height="400" /> <img src="Screenshots/Windows_Setup.png" width="600" height="400" />  <img src="Screenshots/Windows_Call.png" width="600" height="400" />
 
 ## Support Libraries
 
