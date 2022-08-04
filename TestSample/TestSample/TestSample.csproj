@@ -1,0 +1,107 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\avatar.svg" />
+    <None Remove="Images\avatar1.svg" />
+    <None Remove="Images\avatar2.svg" />
+    <None Remove="Images\avatar3.svg" />
+    <None Remove="Images\avatar4.svg" />
+    <None Remove="Images\avatar5.svg" />
+    <None Remove="Images\avatar6.svg" />
+    <None Remove="Images\ic_call_end.svg" />
+    <None Remove="Images\ic_camera_off.svg" />
+    <None Remove="Images\ic_camera_on.svg" />
+    <None Remove="Images\ic_camera_switch.svg" />
+    <None Remove="Images\ic_cloud_hero.svg" />
+    <None Remove="Images\ic_headset_on.svg" />
+    <None Remove="Images\ic_meet_now.svg" />
+    <None Remove="Images\ic_microphone_muted.svg" />
+    <None Remove="Images\ic_microphone_off.svg" />
+    <None Remove="Images\ic_microphone_on.svg" />
+    <None Remove="Images\ic_person.svg" />
+    <None Remove="Images\ic_speaker_off.svg" />
+    <None Remove="Images\ic_speaker_on.svg" />
+    <None Remove="Images\ic_speaking.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\avatar.svg" />
+    <EmbeddedResource Include="Images\avatar1.svg" />
+    <EmbeddedResource Include="Images\avatar2.svg" />
+    <EmbeddedResource Include="Images\avatar3.svg" />
+    <EmbeddedResource Include="Images\avatar4.svg" />
+    <EmbeddedResource Include="Images\avatar5.svg" />
+    <EmbeddedResource Include="Images\avatar6.svg" />
+    <EmbeddedResource Include="Images\ic_call_end.svg" />
+    <EmbeddedResource Include="Images\ic_camera_off.svg" />
+    <EmbeddedResource Include="Images\ic_camera_on.svg" />
+    <EmbeddedResource Include="Images\ic_camera_switch.svg" />
+    <EmbeddedResource Include="Images\ic_cloud_hero.svg" />
+    <EmbeddedResource Include="Images\ic_headset_on.svg" />
+    <EmbeddedResource Include="Images\ic_meet_now.svg" />
+    <EmbeddedResource Include="Images\ic_microphone_muted.svg" />
+    <EmbeddedResource Include="Images\ic_microphone_off.svg" />
+    <EmbeddedResource Include="Images\ic_microphone_on.svg" />
+    <EmbeddedResource Include="Images\ic_person.svg" />
+    <EmbeddedResource Include="Images\ic_speaker_off.svg" />
+    <EmbeddedResource Include="Images\ic_speaker_on.svg" />
+    <EmbeddedResource Include="Images\ic_speaking.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Communication.Identity" Version="1.1.0-beta.1" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="Sharpnado.Shadows" Version="1.2.0" />
+    <PackageReference Include="SkiaSharp" Version="2.88.0" />
+    <PackageReference Include="SkiaSharp.Extended" Version="1.60.0" />
+    <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
+    <PackageReference Include="SkiaSharp.Views" Version="2.88.0" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.88.0" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="20.2.0.36" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="20.2.0.36" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.4" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Pages\CallPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\CallTemplate\CallTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\CallTemplate\ParticipantsTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\CallTemplate\ParticipantTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\EndPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\IntroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\JoinCallPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\SetupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
