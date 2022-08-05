@@ -12,6 +12,7 @@ import com.azure.android.communication.calling.DeviceManager;
 import com.azure.android.communication.calling.HangUpOptions;
 import com.azure.android.communication.calling.IncomingCall;
 import com.azure.android.communication.calling.LocalVideoStream;
+import com.azure.android.communication.calling.PushNotificationInfo;
 import com.azure.android.communication.calling.StartCallOptions;
 import com.azure.android.communication.calling.VideoDeviceInfo;
 import com.azure.android.communication.common.CommunicationIdentifier;
@@ -73,6 +74,15 @@ public class CallClientHelper {
     }
     public static void Reject(IncomingCall incomingCall) throws ExecutionException, InterruptedException {
         incomingCall.reject().get();
+    }
+    public static void RegisterPushNotification(CallAgent callAgent, String deviceRegistrationToken) throws ExecutionException, InterruptedException {
+        callAgent.registerPushNotification(deviceRegistrationToken).get();
+    }
+    public static void UnRegisterPushNotification(CallAgent callAgent) throws ExecutionException, InterruptedException {
+        callAgent.unregisterPushNotification().get();
+    }
+    public static void HandlePushNotification(CallAgent callAgent, PushNotificationInfo pushNotificationInfo) throws ExecutionException, InterruptedException {
+        callAgent.handlePushNotification(pushNotificationInfo);
     }
 }
 
