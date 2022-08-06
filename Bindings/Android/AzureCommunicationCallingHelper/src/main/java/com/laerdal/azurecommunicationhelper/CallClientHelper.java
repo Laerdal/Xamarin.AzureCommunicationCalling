@@ -82,7 +82,7 @@ public class CallClientHelper {
         callAgent.unregisterPushNotification().get();
     }
     public static void HandlePushNotification(CallAgent callAgent, PushNotificationInfo pushNotificationInfo) throws ExecutionException, InterruptedException {
-        callAgent.handlePushNotification(pushNotificationInfo);
+        callAgent.handlePushNotification(pushNotificationInfo).get();
     }
 }
 
