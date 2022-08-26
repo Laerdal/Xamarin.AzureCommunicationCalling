@@ -80,7 +80,7 @@
 
                                 <ContentView Content="{Binding StreamVideo}"
                 Grid.Row="0"
-                Padding="0"    
+                Padding="-15"    
                                               HeightRequest="{OnIdiom Desktop='180', Phone='100'}" 
                                     WidthRequest="{OnIdiom Desktop='180', Phone='100'}" 
                 VerticalOptions="Center"
@@ -151,8 +151,8 @@
                      FlexLayout.Order="-1"
                              HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand"  
-                             HeightRequest="500"
-                             WidthRequest="500"
+                             HeightRequest="{OnIdiom Desktop='800', Phone='250'}"
+                             WidthRequest="{OnIdiom Desktop='800', Phone='250'}"
                              BackgroundColor="Black"
                      Content="{Binding LocalCamera}"
                      IsVisible="{Binding IsSharingLocalCamera}">
