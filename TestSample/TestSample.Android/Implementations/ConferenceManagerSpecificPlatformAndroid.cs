@@ -174,7 +174,7 @@ namespace TestSample.Droid.Implementations
                         _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
                         break;
                     case SelectedCamera.Back:
-                        _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
+                        _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Back);
                         break;
                 }
                 _localVideoStream = new LocalVideoStream(_videoDeviceInfo, appContext);
@@ -450,19 +450,26 @@ namespace TestSample.Droid.Implementations
         }
         public void StartCamera()
         {
-            MainThread.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
                 try
                 {
-                    LocalVideoAdded?.Invoke(this, GetCameraView());
+                    try
+                    {
+                        LocalVideoAdded?.Invoke(this, GetCameraView());
 
+                    }
+                    catch (System.Exception ex)
+                    {
+                        new ConferenceExceptions(ex);
+                    }
                     CallClientHelper.StartVideo(_call, _localVideoStream, Xamarin.Essentials.Platform.AppContext);
                 }
                 catch (CallingCommunicationException ex)
                 {
                     new ConferenceExceptions(ex);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     new ConferenceExceptions(ex);
                 }
@@ -470,13 +477,10 @@ namespace TestSample.Droid.Implementations
         }
         public View GetCameraView()
         {
-            var videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
-            var localVideoStream = new LocalVideoStream(videoDeviceInfo, Xamarin.Essentials.Platform.AppContext);
-            var localRenderer = new VideoStreamRenderer(localVideoStream, Xamarin.Essentials.Platform.AppContext);
-            if (localRenderer != null)
+            if (_localRenderer != null)
             {
                 var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
-                var nativeView = localRenderer.CreateView(renderingOptions);
+                var nativeView = _localRenderer.CreateView(renderingOptions);
                 return nativeView.ToView();
             }
             else return null;

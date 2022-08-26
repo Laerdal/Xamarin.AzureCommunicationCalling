@@ -74,15 +74,17 @@ namespace TestSample.ViewModels
                 SetProperty(ref _participants, value);
             }
         }
-        Xamarin.Forms.StackLayout localCamera = new Xamarin.Forms.StackLayout();
-        public Xamarin.Forms.StackLayout LocalCamera
+
+        Xamarin.Forms.Frame localCamera;
+        public Xamarin.Forms.Frame LocalCamera
         {
             get => localCamera;
             set => SetProperty(ref localCamera, value);
         }
-
         public CallViewModel()
         {
+            LocalCamera = new Xamarin.Forms.Frame();
+
             HangUpCallCommand = new Command(HangUpCall);
             SpeakerCommand = new Command(ExecuteToggleSpeaker);
             MicrophoneCommand = new Command(ExecuteToggleMicrophone);
@@ -126,17 +128,17 @@ namespace TestSample.ViewModels
                 {
                     if (e != null)
                     {
-                        LocalCamera.Children.Add(new Xamarin.Forms.Frame
-                        {
-                            Content = e,
-                        });
+                        LocalCamera = new Xamarin.Forms.Frame();
+                        LocalCamera.HeightRequest = e.HeightRequest;
+                        LocalCamera.WidthRequest = e.WidthRequest;
+                        LocalCamera.Content = e;
                         IsSharingLocalCamera = true;
                     }
                     else
                     {
                         IsSharingLocalCamera = false;
-                        LocalCamera.Children.Clear();
-                        LocalCamera.ForceLayout();
+                        LocalCamera = null;
+                        LocalCamera = new Xamarin.Forms.Frame();
                     }
                 }
                 catch (Exception ex)
