@@ -448,7 +448,10 @@ namespace TestSample.Droid.Implementations
                         break;
             }
             var switchCurrentCamera = _deviceManager.Cameras.Where(c => c.CameraFacing == SwitchCurrentCamera).FirstOrDefault();
-            CallClientHelper.SwitchCameraSource(_localVideoStream, switchCurrentCamera);
+            if (switchCurrentCamera != null)
+            {
+                CallClientHelper.SwitchCameraSource(_localVideoStream, switchCurrentCamera);
+            }
         }
         public void StartCamera()
         {
