@@ -445,19 +445,19 @@ namespace TestSample.iOS.Implementations
         }
         public void SwitchCamera()
         {
-            ACSCameraFacing aCSCameraFacing = ACSCameraFacing.Unknown;
+            ACSCameraFacing SwitchCurrentCamera = ACSCameraFacing.Unknown;
             switch (CurrentCamera)
             {
                 case SelectedCamera.Front:
-                    aCSCameraFacing = ACSCameraFacing.Back;
+                    SwitchCurrentCamera = ACSCameraFacing.Back;
                     CurrentCamera = SelectedCamera.Back;
                     break;
                 case SelectedCamera.Back:
-                    aCSCameraFacing = ACSCameraFacing.Front;
+                    SwitchCurrentCamera = ACSCameraFacing.Front;
                     CurrentCamera = SelectedCamera.Front;
                     break;
             }
-            var switchCurrentCamera = _deviceManager.Cameras.FirstOrDefault(c => c.CameraFacing == aCSCameraFacing);
+            var switchCurrentCamera = _deviceManager.Cameras.FirstOrDefault(c => c.CameraFacing == SwitchCurrentCamera);
 
             if (switchCurrentCamera != null)
             {
