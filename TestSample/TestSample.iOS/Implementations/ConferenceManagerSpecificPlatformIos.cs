@@ -445,18 +445,21 @@ namespace TestSample.iOS.Implementations
         }
         public void SwitchCamera()
         {
+            ACSCameraFacing SwitchCurrentCamera = ACSCameraFacing.Unknown;
             switch (CurrentCamera)
             {
                 case SelectedCamera.Front:
+                    SwitchCurrentCamera = ACSCameraFacing.Back;
                     CurrentCamera = SelectedCamera.Back;
-                    _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Back);
                     break;
                 case SelectedCamera.Back:
+                    SwitchCurrentCamera = ACSCameraFacing.Front;
                     CurrentCamera = SelectedCamera.Front;
-                    _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
                     break;
             }
-            if (_videoDeviceInfo != null)
+            var switchCurrentCamera = _deviceManager.Cameras.FirstOrDefault(c => c.CameraFacing == SwitchCurrentCamera);
+
+            if (switchCurrentCamera != null)
             {
                 void SwtichCameraCompleted(NSError onSwtichCameraError)
                 {
@@ -466,7 +469,7 @@ namespace TestSample.iOS.Implementations
 
                     return;
                 }
-                _localVideoStream.SwitchSource(_videoDeviceInfo, SwtichCameraCompleted);
+                _localVideoStream.SwitchSource(switchCurrentCamera, SwtichCameraCompleted);
             }
 
         }

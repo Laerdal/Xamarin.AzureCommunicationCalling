@@ -435,18 +435,23 @@ namespace TestSample.Droid.Implementations
         }
         public void SwitchCamera()
         {
+            CameraFacing SwitchCurrentCamera =null;
             switch (CurrentCamera)
             {
                 case SelectedCamera.Front:
+                    SwitchCurrentCamera = CameraFacing.Back;
                     CurrentCamera = SelectedCamera.Back;
-                    _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Back);
                     break;
                 case SelectedCamera.Back:
+                    SwitchCurrentCamera = CameraFacing.Front;
                     CurrentCamera = SelectedCamera.Front;
-                    _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Front);
-                    break;
+                        break;
             }
-            CallClientHelper.SwitchCameraSource(_localVideoStream, _videoDeviceInfo);
+            var switchCurrentCamera = _deviceManager.Cameras.Where(c => c.CameraFacing == SwitchCurrentCamera).FirstOrDefault();
+            if (switchCurrentCamera != null)
+            {
+                CallClientHelper.SwitchCameraSource(_localVideoStream, switchCurrentCamera);
+            }
         }
         public void StartCamera()
         {
