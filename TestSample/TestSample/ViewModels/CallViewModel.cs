@@ -20,6 +20,7 @@ namespace TestSample.ViewModels
 
         public ICommand MicrophoneCommand { get; set; }
         public ICommand CameraCommand { get; set; }
+        public ICommand CameraSwitchCommand { get; set; }
         public ICommand SpeakerCommand { get; set; }
         public ICommand VideoCommand { get; set; }
         public ICommand ChangeCameraCommand { get; set; }
@@ -89,6 +90,7 @@ namespace TestSample.ViewModels
             SpeakerCommand = new Command(ExecuteToggleSpeaker);
             MicrophoneCommand = new Command(ExecuteToggleMicrophone);
             CameraCommand = new Command(ExecuteToggleCamera);
+            CameraSwitchCommand = new Command(ExecuteCameraSwitch);
             Participants = new ObservableCollection<ConferenceParticipantWrapper>();
             IsSharingRemoteVideo = false;
 
@@ -217,7 +219,10 @@ namespace TestSample.ViewModels
                 }
             });
         }
-
+        public void ExecuteCameraSwitch()
+        {
+            _conferenceManagerSpecificPlatform.SwitchCamera();
+        }
         public void ExecuteToggleCamera()
         {
             if (VideoEnabled)
