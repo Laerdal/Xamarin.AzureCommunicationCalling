@@ -115,7 +115,7 @@
       <Version>1.0.10</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCommunicationCalling.Android">
-      <Version>2.3.0-beta.1</Version>
+      <Version>2.4.0-beta.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCommunicationCallingHelper.Android">
       <Version>2.3.0-beta.1.5</Version>

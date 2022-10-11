@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCalling.Android</id>
-    <version>2.3.0-beta.1</version>
+    <version>2.4.0-beta.1</version>
     <title>AzureommunicationCalling for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -13,8 +13,7 @@ Naive binding for Azure Communication Calling SDK for Android.
 This nuget is just a binding library for https://search.maven.org/artifact/com.azure.android/azure-communication-calling
     </description>
     <releaseNotes>
-        * Revamp of Raw Media Functionality using Streams concept.
-        * New ScreenSharing functionality via a new type of Raw Video Stream
+        2.4.0-beta.1
     </releaseNotes>
     <copyright>Copyright Laerdal Medical 2020</copyright>
     <repository type="git" url="https://github.com/laerdal/Xamarin.AzureCommunicationCalling"/>
