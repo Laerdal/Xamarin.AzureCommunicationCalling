@@ -343,7 +343,9 @@ namespace TestSample.ViewModels
                 case ConferenceState.Reconnecting:
                     break;
                 case ConferenceState.Connected:
-
+                    //This should retrieve the user image in the preview if the call starts with the camera on.
+                    //if (VideoEnabled)
+                    //    _conferenceManagerSpecificPlatform.GetCameraPreview();
                     break;
                 case ConferenceState.Reconnected:
                     break;

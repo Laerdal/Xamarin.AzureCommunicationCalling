@@ -429,6 +429,14 @@ namespace TestSample.iOS.Implementations
             else return null;
 
         }
+        public void RetrieveCameraPreview()
+        {
+            var cameras = _deviceManager.Cameras.FirstOrDefault();
+            if (cameras != null)
+            {
+                LocalVideoAdded?.Invoke(this, ShowPreview());
+            }
+        }
         public async void LoadServerCallId()
         {
             _call.Info.GetServerCallIdWithCompletionHandler(ServerCallIdCallback);
