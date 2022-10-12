@@ -208,18 +208,19 @@ namespace TestSample.iOS.Implementations
                     initTask.TrySetCanceled();
                     throw new Exception(nSError.Description);
                 }
-                ACSCallAgentOptions aCSCallAgentOptions = new ACSCallAgentOptions
-                {
-                    DisplayName = DisplayName = name
-                };
-                var configuration = new CXProviderConfiguration("Receiving Conference From")
+                var cxProviderConfiguration = new CXProviderConfiguration("Receiving Conference From")
                 {
                     MaximumCallsPerCallGroup = 1,
                     SupportsVideo = true,
                     MaximumCallGroups = 1
                 };
+                ACSCallAgentOptions aCSCallAgentOptions = new ACSCallAgentOptions
+                {
+                    DisplayName = DisplayName = name,
+                    CallKitOptions = new ACSCallKitOptions(cxProviderConfiguration)
+                };
                 //CreateCallAgentWithCallKitOptions Only available in beta version
-                _callClient.CreateCallAgentWithCallKitOptions(credentials, aCSCallAgentOptions, configuration, OnCallAgenttCreated);
+                _callClient.CreateCallAgentWithOptions(credentials, aCSCallAgentOptions, OnCallAgenttCreated);
                 return initTask.Task;
             }
             catch (Exception ex)

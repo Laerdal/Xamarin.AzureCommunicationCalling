@@ -34,7 +34,39 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		InvalidMeetingLink = 0x4000,
 		ParticipantAddedToUnconnectedCall = 0x8000,
 		ParticipantAlreadyAddedToCall = 0x10000,
-		CallFeatureExtensionNotFound = 0x20000
+		CallFeatureExtensionNotFound = 0x20000,
+		DuplicateDeviceId = 0x40000,
+		DelegateIsRequired = 0x80000,
+		VirtualDeviceNotStarted = 0x100000,
+		InvalidVideoStreamCombination = 0x400000,
+		DisplayNameLengthLongerThanSupported = 0x800000,
+		FailedToHangupForEveryone = 0x1000000,
+		NoMultipleConnectionsWithDifferentClouds = 0x2000000
+	}
+
+	[Native]
+	public enum ACSMediaStreamType : long
+	{
+		Video = 1,
+		ScreenSharing = 2
+	}
+
+	[Native]
+	public enum ACSOutgoingVideoStreamKind : long
+	{
+		None = 0,
+		Local = 1,
+		Virtual = 2,
+		ScreenShare = 3
+	}
+
+	[Native]
+	public enum ACSOutgoingVideoStreamState : long
+	{
+		None = 0,
+		Started = 1,
+		Stopped = 2,
+		Failed = 3
 	}
 
 	[Native]
@@ -59,10 +91,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSMediaStreamType : long
+	public enum ACSParticipantRole : long
 	{
-		Video = 1,
-		ScreenSharing = 2
+		Unknown = 0,
+		Attendee = 1,
+		Consumer = 2,
+		Presenter = 3,
+		Organizer = 4
 	}
 
 	[Native]
@@ -130,6 +165,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSResultType : long
+	{
+		Intermediate = 0,
+		Final = 1
+	}
+
+	[Native]
 	public enum ACSHandleType : long
 	{
 		Unknown = 0,
@@ -137,6 +179,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		TeamsMeetingCoordinatesLocator = 2,
 		TeamsMeetingLinkLocator = 3,
 		RecordingCallFeature = 4,
-		TranscriptionCallFeature = 5
+		TranscriptionCallFeature = 5,
+		DominantSpeakersCallFeature = 6,
+		LocalVideoStream = 7,
+		RoomCallLocator = 8
 	}
 }
