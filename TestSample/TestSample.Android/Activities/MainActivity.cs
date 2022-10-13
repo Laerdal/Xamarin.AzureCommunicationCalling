@@ -7,6 +7,7 @@ using Android.OS;
 using Microsoft.Extensions.DependencyInjection;
 using TestSample.Interfaces;
 using TestSample.Droid.Implementations;
+using Android.Content;
 
 namespace TestSample.Droid.Activities
 {
@@ -25,6 +26,13 @@ namespace TestSample.Droid.Activities
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConferenceManagerSpecificPlatform, ConferenceManagerSpecificPlatformAndroid>();
+        }
+        public event Action<int, Result, Intent> ActivityResult;
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if (this.ActivityResult != null)
+                this.ActivityResult(requestCode, resultCode, data);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
