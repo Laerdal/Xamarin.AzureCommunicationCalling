@@ -21,6 +21,7 @@ using Android.OS;
 using Android.Hardware;
 using Android.Runtime;
 using Xamarin.Essentials;
+using System.IO;
 using TestSample.Droid.Activities;
 using Android.Hardware.Lights;
 using TestSample.Droid.Implementations.Screensharing;
@@ -36,8 +37,11 @@ namespace TestSample.Droid.Implementations
         private CallAgent _callAgent;
         private CallClient _callClient;
         private DeviceManager _deviceManager;
-        private LocalVideoStream _localVideoStream;
-        private VideoStreamRenderer _localRenderer;
+        private LocalVideoStream _currentVideoStream;
+        private VideoStreamRenderer _previewRenderer;
+        VideoStreamRendererView _preview = null;
+        Context _appContext = Xamarin.Essentials.Platform.AppContext;
+
         private VideoDeviceInfo _videoDeviceInfo = null;
         IncomingCall _incomingCall;
         private Call _call;
@@ -195,11 +199,12 @@ namespace TestSample.Droid.Implementations
                         _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == CameraFacing.Back);
                         break;
                 }
-                _localVideoStream = new LocalVideoStream(_videoDeviceInfo, appContext);
-                _localRenderer = new VideoStreamRenderer(_localVideoStream, appContext);
-                var videoOptions = new VideoOptions(new LocalVideoStream[] { _localVideoStream });
+             
                 if (azureSetupRoom.VideoEnabled)
                 {
+                    _currentVideoStream = new LocalVideoStream(_videoDeviceInfo, _appContext);
+                    _previewRenderer = new VideoStreamRenderer(_currentVideoStream, _appContext);
+                    var videoOptions = new VideoOptions(new LocalVideoStream[] { _currentVideoStream });
                     callOptions.SetVideoOptions(videoOptions);
                     joinCallOptions.SetVideoOptions(videoOptions);
                 }
@@ -209,22 +214,22 @@ namespace TestSample.Droid.Implementations
             {
                 case TypeCall.Teams:
                     TeamsMeetingLinkLocator teamsMeetingLinkLocator = new TeamsMeetingLinkLocator(azureSetupRoom.CodeMeeting);
-                    _call = _callAgent.Join(appContext, teamsMeetingLinkLocator, joinCallOptions);
+                    _call = _callAgent.Join(_appContext, teamsMeetingLinkLocator, joinCallOptions);
                     break;
                 case TypeCall.Group:
                     GroupCallLocator groupCallLocator = new GroupCallLocator(UUID.FromString(azureSetupRoom.CodeMeeting));
-                    _call = _callAgent.Join(appContext, groupCallLocator, joinCallOptions);
+                    _call = _callAgent.Join(_appContext, groupCallLocator, joinCallOptions);
                     break;
                 case TypeCall.Direct:
                     callees.Add(new CommunicationUserIdentifier(azureSetupRoom.CodeMeeting));
-                    _call = CallClientHelper.Call(_callAgent, appContext, callees, callOptions);
+                    _call = CallClientHelper.Call(_callAgent, _appContext, callees, callOptions);
                     break;
                 case TypeCall.Bot:
                     callees.Add(new CommunicationUserIdentifier("8:echo123"));
-                    _call = CallClientHelper.Call(_callAgent, appContext, callees, callOptions);
+                    _call = CallClientHelper.Call(_callAgent, _appContext, callees, callOptions);
                     break;
                 case TypeCall.PSTN:
-                    _call = CallClientHelper.Call(_callAgent, appContext, acsNumber, callOptions);
+                    _call = CallClientHelper.Call(_callAgent, _appContext, acsNumber, callOptions);
                     break;
             }
             _call.RemoteParticipantsUpdated += Call_RemoteParticipantsUpdated;
@@ -425,8 +430,10 @@ namespace TestSample.Droid.Implementations
             {
                 CallClientHelper.HangUp(_call, new HangUpOptions());
                 AfterState = CallState.Disconnected;
-                _localRenderer = null;
-                _localVideoStream = null;
+                _previewRenderer.Dispose();
+                _previewRenderer = null;
+                _currentVideoStream = null;
+                _videoDeviceInfo = null;
                 _call = null;
             }
         }
@@ -551,7 +558,7 @@ namespace TestSample.Droid.Implementations
         }
         public void SwitchCamera()
         {
-            CameraFacing SwitchCurrentCamera =null;
+            CameraFacing SwitchCurrentCamera = null;
             switch (CurrentCamera)
             {
                 case SelectedCamera.Front:
@@ -561,12 +568,12 @@ namespace TestSample.Droid.Implementations
                 case SelectedCamera.Back:
                     SwitchCurrentCamera = CameraFacing.Front;
                     CurrentCamera = SelectedCamera.Front;
-                        break;
+                    break;
             }
             var switchCurrentCamera = _deviceManager.Cameras.Where(c => c.CameraFacing == SwitchCurrentCamera).FirstOrDefault();
             if (switchCurrentCamera != null)
             {
-                CallClientHelper.SwitchCameraSource(_localVideoStream, switchCurrentCamera);
+                CallClientHelper.SwitchCameraSource(_currentVideoStream, switchCurrentCamera);
             }
         }
         public void StartCamera()
@@ -575,14 +582,12 @@ namespace TestSample.Droid.Implementations
             {
                 try
                 {
-                    try
+                    var cameras = _deviceManager.Cameras.FirstOrDefault();
+                    if (cameras != null)
                     {
-                        LocalVideoAdded?.Invoke(this, GetCameraView());
-
-                    }
-                    catch (System.Exception ex)
-                    {
-                        new ConferenceExceptions(ex);
+                        _currentVideoStream = new LocalVideoStream(_videoDeviceInfo, _appContext);
+                        LocalVideoAdded?.Invoke(this, ShowPreview(_currentVideoStream));
+                        CallClientHelper.StartVideo(_call, _currentVideoStream, _appContext);
                     }
                     CallClientHelper.StartVideo(_call, _localVideoStream, _appContext);
                 }
@@ -596,16 +601,15 @@ namespace TestSample.Droid.Implementations
                 }
             });
         }
-        public View GetCameraView()
+        public View ShowPreview(LocalVideoStream stream)
         {
-            if (_localRenderer != null)
+            if (stream != null)
             {
-                var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
-                var nativeView = _localRenderer.CreateView(renderingOptions);
-                return nativeView.ToView();
+                _previewRenderer = new VideoStreamRenderer(stream, _appContext);
+                _preview = _previewRenderer.CreateView(new CreateViewOptions(ScalingMode.Crop));
+                return _preview.ToView();
             }
             else return null;
-
         }
         public void StopCamera()
         {
@@ -614,6 +618,9 @@ namespace TestSample.Droid.Implementations
                 try
                 {
                     LocalVideoAdded?.Invoke(this, null);
+                    _previewRenderer.Dispose();
+                    _previewRenderer = null; 
+                    CallClientHelper.StopVideo(_call, _currentVideoStream, _appContext);
                     CallClientHelper.StopVideo(_call, _localVideoStream, _appContext);
                 }
                 catch (CallingCommunicationException acsException)

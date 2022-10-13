@@ -27,7 +27,8 @@ namespace TestSample.iOS.Implementations
         private ACSVideoDeviceInfo _videoDeviceInfo = null;
         private ACSIncomingCall _incomingCall;
         private ACSLocalVideoStream _localVideoStream;
-        private ACSVideoStreamRenderer _localVideoStreamRenderer;
+        private ACSVideoStreamRenderer _previewRenderer;
+        private ACSVideoStreamRendererView _preview;
         private readonly CallingCallbackManager _videoCallbackManager;
         public event EventHandler<View> LocalVideoAdded;
         public event EventHandler<ConferenceStateChangedEnventArgs> StateChanged = delegate { };
@@ -207,18 +208,19 @@ namespace TestSample.iOS.Implementations
                     initTask.TrySetCanceled();
                     throw new Exception(nSError.Description);
                 }
-                ACSCallAgentOptions aCSCallAgentOptions = new ACSCallAgentOptions
-                {
-                    DisplayName = DisplayName = name
-                };
-                var configuration = new CXProviderConfiguration("Receiving Conference From")
+                var cxProviderConfiguration = new CXProviderConfiguration("Receiving Conference From")
                 {
                     MaximumCallsPerCallGroup = 1,
                     SupportsVideo = true,
                     MaximumCallGroups = 1
                 };
+                ACSCallAgentOptions aCSCallAgentOptions = new ACSCallAgentOptions
+                {
+                    DisplayName = DisplayName = name,
+                    CallKitOptions = new ACSCallKitOptions(cxProviderConfiguration)
+                };
                 //CreateCallAgentWithCallKitOptions Only available in beta version
-                _callClient.CreateCallAgentWithCallKitOptions(credentials, aCSCallAgentOptions, configuration, OnCallAgenttCreated);
+                _callClient.CreateCallAgentWithOptions(credentials, aCSCallAgentOptions, OnCallAgenttCreated);
                 return initTask.Task;
             }
             catch (Exception ex)
@@ -361,12 +363,13 @@ namespace TestSample.iOS.Implementations
                         _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
                         break;
                 }                
-                _localVideoStream = new ACSLocalVideoStream(_videoDeviceInfo);
-                _localVideoStreamRenderer = new ACSVideoStreamRenderer(_localVideoStream, out var rendererError);
-                ThrowIfError(rendererError);
+
                 VideoEnabled = azureSetupRoom.VideoEnabled;
                 if (azureSetupRoom.VideoEnabled)
                 {
+                    _localVideoStream = new ACSLocalVideoStream(_videoDeviceInfo);
+                    _previewRenderer = new ACSVideoStreamRenderer(_localVideoStream, out var rendererError);
+                    ThrowIfError(rendererError);
                     var video = new ACSVideoOptions(new[] { _localVideoStream });
                     callOptionsACSS.VideoOptions = video;
                     callOptions.VideoOptions = video;
@@ -406,17 +409,23 @@ namespace TestSample.iOS.Implementations
         public void StartScreensharing() { }
         public void StartCamera()
         {
-            LocalVideoAdded?.Invoke(this, GetCameraView());
-            _call.StartVideo(_localVideoStream, MutedUnMutedVoid());
-        }
-        public View GetCameraView()
-        {
-            if (_localVideoStreamRenderer != null)
+            var cameras = _deviceManager.Cameras.FirstOrDefault();
+            if (cameras != null)
             {
-                var renderingOptions = new ACSCreateViewOptions(ACSScalingMode.Crop);
-                var nativeView = _localVideoStreamRenderer.CreateViewWithOptions(renderingOptions, out var createViewError);
+                _localVideoStream = new ACSLocalVideoStream(_videoDeviceInfo);
+                _previewRenderer = new ACSVideoStreamRenderer(_localVideoStream, out var rendererError);
+                ThrowIfError(rendererError);
+                LocalVideoAdded?.Invoke(this, ShowPreview());
+                _call.StartVideo(_localVideoStream, MutedUnMutedVoid());
+            }
+        }
+        public View ShowPreview()
+        {
+            if (_previewRenderer != null)
+            {
+                _preview = _previewRenderer.CreateViewWithOptions(new ACSCreateViewOptions(ACSScalingMode.Crop), out var createViewError);
                 ThrowIfError(createViewError);
-                return nativeView.ToView();
+                return _preview.ToView();
             }
             else return null;
 
@@ -440,6 +449,17 @@ namespace TestSample.iOS.Implementations
         public void StopScreensharing() { }
         public void StopCamera()
         {
+            try
+            {
+                _previewRenderer?.Dispose();
+                _previewRenderer = null;
+                _preview = null;
+                LocalVideoAdded?.Invoke(this, null);
+            }
+            catch (Exception ex)
+            {
+                new ConferenceExceptions(ex);
+            }
             LocalVideoAdded?.Invoke(this, null);
             _call.StopVideo(_localVideoStream, StopVideo);
         }
@@ -487,10 +507,12 @@ namespace TestSample.iOS.Implementations
 
             if (_call != null)
             {
-                _call?.HangUp(new ACSHangUpOptions(), OnVideoHangup);
-                _localVideoStreamRenderer?.Dispose();
+                _previewRenderer?.Dispose();
+                _previewRenderer = null;
+                _preview = null;
                 _localVideoStream?.Dispose();
                 _localVideoStream = null;
+                _call?.HangUp(new ACSHangUpOptions(), OnVideoHangup);
                 _call?.Dispose();
                 _call = null;
                 StateChanged?.Invoke(this, new ConferenceStateChangedEnventArgs(ConferenceState.Disconnected));
