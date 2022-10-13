@@ -14,6 +14,8 @@ namespace TestSample.Droid.Activities
     [Activity(Label = "TestSample", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public event Action<int, Result, Intent> ActivityResult;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -27,8 +29,6 @@ namespace TestSample.Droid.Activities
         {
             services.AddSingleton<IConferenceManagerSpecificPlatform, ConferenceManagerSpecificPlatformAndroid>();
         }
-        public event Action<int, Result, Intent> ActivityResult;
-
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             if (this.ActivityResult != null)
