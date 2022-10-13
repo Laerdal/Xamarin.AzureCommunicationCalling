@@ -134,6 +134,7 @@
     <Compile Include="Implementations\CommunicationIdentifierExtension.cs" />
     <Compile Include="Implementations\ConferenceManagerSpecificPlatformAndroid.cs" />
     <Compile Include="Activities\MainActivity.cs" />
+    <Compile Include="Implementations\Screensharing\FrameGenerator.cs" />
     <Compile Include="Implementations\StatusBarAndroid.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,7 +174,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionAzureXamarinPOCAndroidHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarTestSampleAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarTestSampleAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionAzureXamarinPOCAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
