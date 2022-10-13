@@ -22,6 +22,7 @@ namespace TestSample.Interfaces
         void StartScreensharing();
         void SwitchCamera();
         void StartCamera();
+        void RetrieveCameraPreview();
         void StopScreensharing();
         void StopCamera();
         void Hangup();

@@ -425,6 +425,14 @@ namespace TestSample.UWP.Implementations
         {
 
         }
+        public async void RetrieveCameraPreview()
+        {
+            var cameras = _deviceManager.Cameras.FirstOrDefault();
+            if (cameras != null)
+            {
+                LocalVideoAdded?.Invoke(this, await GetCameraViewAsync());
+            }
+        }
         public async Task<View> GetCameraViewAsync()
         {
             VideoDeviceInfo videoDeviceInfo = _deviceManager.Cameras.First();
