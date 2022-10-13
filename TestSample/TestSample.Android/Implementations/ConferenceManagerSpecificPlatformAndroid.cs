@@ -93,9 +93,9 @@ namespace TestSample.Droid.Implementations
         private PowerManager powerManager;
         public ConferenceManagerSpecificPlatformAndroid()
         {
-            _audioManager = (AudioManager)Xamarin.Essentials.Platform.AppContext.GetSystemService(Context.AudioService);
-            sensorManager = (SensorManager)Xamarin.Essentials.Platform.AppContext.GetSystemService(Context.SensorService);
-            powerManager = (PowerManager)Xamarin.Essentials.Platform.AppContext.GetSystemService(Context.PowerService);
+            _audioManager = (AudioManager)_appContext.GetSystemService(Context.AudioService);
+            sensorManager = (SensorManager)_appContext.GetSystemService(Context.SensorService);
+            powerManager = (PowerManager)_appContext.GetSystemService(Context.PowerService);
             sensor = sensorManager.GetDefaultSensor(SensorType.Proximity);
             sensorManager.RegisterListener(this, sensor, SensorDelay.Fastest);
         }
@@ -143,8 +143,8 @@ namespace TestSample.Droid.Implementations
                 var callOptions = new CallAgentOptions();
                 _callClient = new CallClient();
                 callOptions.SetDisplayName(DisplayName = name);
-                _callAgent = CallClientHelper.GetCallAgent(_callClient, Xamarin.Essentials.Platform.AppContext, credentials, callOptions);
-                _deviceManager = CallClientHelper.GetDeviceManager(_callClient, Xamarin.Essentials.Platform.AppContext);
+                _callAgent = CallClientHelper.GetCallAgent(_callClient, _appContext, credentials, callOptions);
+                _deviceManager = CallClientHelper.GetDeviceManager(_callClient, _appContext);
                 _callAgent.IncomingCall += CallAgent_IncomingCall;
                 return Task.FromResult(Initialized = true);
             }
@@ -166,15 +166,15 @@ namespace TestSample.Droid.Implementations
             _incomingCall = e.P0;
             if (_incomingCall != null)
             {
-                Intent callIntent = new Intent(Xamarin.Essentials.Platform.AppContext, typeof(IncommingNotificationService));
+                Intent callIntent = new Intent(_appContext, typeof(IncommingNotificationService));
                 callIntent.PutExtra("key", "voipcall");
-                Xamarin.Essentials.Platform.AppContext.StartForegroundService(callIntent);
+                _appContext.StartForegroundService(callIntent);
             }
         }
 
         public Task InitializeConference(AzureSetupRoom azureSetupRoom)
         {
-            var appContext = Xamarin.Essentials.Platform.AppContext;
+            var appContext = _appContext;
             var callOptions = new StartCallOptions();
             var joinCallOptions = new JoinCallOptions();
             var AudioOptions = new AudioOptions();
@@ -254,26 +254,26 @@ namespace TestSample.Droid.Implementations
             ConnectionStart = DateTime.UtcNow;
             Intent callIntent = new Intent(Android.App.Application.Context, typeof(AzureConferenceSpecificPlatformService))
 .SetAction(AzureConferenceSpecificPlatformService.NewConference);
-            Xamarin.Essentials.Platform.AppContext.StartForegroundService(callIntent);
+            _appContext.StartForegroundService(callIntent);
         }
         public void StopService()
         {
             var intent = new Intent(Android.App.Application.Context, typeof(AzureConferenceSpecificPlatformService))
                 .SetAction(AzureConferenceSpecificPlatformService.HangUpConference);
-            Xamarin.Essentials.Platform.AppContext.StopService(intent);
+            _appContext.StopService(intent);
         }
         public void Muted()
         {
             if (_call != null)
             {
-                CallClientHelper.Mute(_call, Xamarin.Essentials.Platform.AppContext);
+                CallClientHelper.Mute(_call, _appContext);
             }
         }
         public void UnMuted()
         {
             if (_call != null)
             {
-                CallClientHelper.UnMute(_call, Xamarin.Essentials.Platform.AppContext);
+                CallClientHelper.UnMute(_call, _appContext);
             }
         }
         public Task<bool> MuteUnMuted()
@@ -281,9 +281,9 @@ namespace TestSample.Droid.Implementations
             if (_call != null)
             {
                 if (_call.IsMuted)
-                    CallClientHelper.UnMute(_call, Xamarin.Essentials.Platform.AppContext);
+                    CallClientHelper.UnMute(_call, _appContext);
                 else
-                    CallClientHelper.Mute(_call, Xamarin.Essentials.Platform.AppContext);
+                    CallClientHelper.Mute(_call, _appContext);
                 return Task.FromResult(_call.IsMuted);
             }
             return Task.FromResult(false);
@@ -413,7 +413,7 @@ namespace TestSample.Droid.Implementations
         }
         private void PublishRemoteVideoStream(RemoteParticipant remoteParticipant, RemoteVideoStream v)
         {
-            var renderer = new VideoStreamRenderer(v, Xamarin.Essentials.Platform.AppContext);
+            var renderer = new VideoStreamRenderer(v, _appContext);
             var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
             var nativeView = renderer.CreateView(renderingOptions);
             var formsView = nativeView.ToView();
@@ -453,7 +453,7 @@ namespace TestSample.Droid.Implementations
             }
             else
             {
-                Toast.MakeText(Xamarin.Essentials.Platform.AppContext, "Screensharing permission denied", ToastLength.Long).Show();
+                Toast.MakeText(_appContext, "Screensharing permission denied", ToastLength.Long).Show();
             }
            
         }
@@ -584,7 +584,7 @@ namespace TestSample.Droid.Implementations
                     {
                         new ConferenceExceptions(ex);
                     }
-                    CallClientHelper.StartVideo(_call, _localVideoStream, Xamarin.Essentials.Platform.AppContext);
+                    CallClientHelper.StartVideo(_call, _localVideoStream, _appContext);
                 }
                 catch (CallingCommunicationException ex)
                 {
@@ -614,7 +614,7 @@ namespace TestSample.Droid.Implementations
                 try
                 {
                     LocalVideoAdded?.Invoke(this, null);
-                    CallClientHelper.StopVideo(_call, _localVideoStream, Xamarin.Essentials.Platform.AppContext);
+                    CallClientHelper.StopVideo(_call, _localVideoStream, _appContext);
                 }
                 catch (CallingCommunicationException acsException)
                 {
@@ -639,7 +639,7 @@ namespace TestSample.Droid.Implementations
         {
             var acceptCallOptions = new AcceptCallOptions();
             await Task.Delay(2000);
-            _call = CallClientHelper.Accept(_incomingCall, acceptCallOptions, Xamarin.Essentials.Platform.AppContext);
+            _call = CallClientHelper.Accept(_incomingCall, acceptCallOptions, _appContext);
             _incomingCall.CallEnded += IncomingCall_CallEnded;
             _call.RemoteParticipantsUpdated += Call_RemoteParticipantsUpdated;
             _call.IsMutedChanged += Call_IsMutedChanged;
