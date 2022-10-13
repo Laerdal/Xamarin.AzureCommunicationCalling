@@ -40,7 +40,6 @@ namespace TestSample.Droid.Implementations
         private LocalVideoStream _currentVideoStream;
         private VideoStreamRenderer _previewRenderer;
         VideoStreamRendererView _preview = null;
-        Context _appContext = Xamarin.Essentials.Platform.AppContext;
 
         private VideoDeviceInfo _videoDeviceInfo = null;
         IncomingCall _incomingCall;
@@ -589,7 +588,6 @@ namespace TestSample.Droid.Implementations
                         LocalVideoAdded?.Invoke(this, ShowPreview(_currentVideoStream));
                         CallClientHelper.StartVideo(_call, _currentVideoStream, _appContext);
                     }
-                    CallClientHelper.StartVideo(_call, _localVideoStream, _appContext);
                 }
                 catch (CallingCommunicationException ex)
                 {
@@ -621,7 +619,6 @@ namespace TestSample.Droid.Implementations
                     _previewRenderer.Dispose();
                     _previewRenderer = null; 
                     CallClientHelper.StopVideo(_call, _currentVideoStream, _appContext);
-                    CallClientHelper.StopVideo(_call, _localVideoStream, _appContext);
                 }
                 catch (CallingCommunicationException acsException)
                 {
