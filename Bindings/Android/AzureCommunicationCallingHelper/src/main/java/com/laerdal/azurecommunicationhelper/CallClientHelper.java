@@ -75,17 +75,13 @@ public class CallClientHelper {
     public static void StartVideo(Call call, LocalVideoStream localVideoStream, Context context) throws ExecutionException, InterruptedException {
         call.startVideo(context, localVideoStream).get();
     }
-    public static void StartScreenShare(Call call, OutgoingVideoStream outgoingVideoStream, Context context) throws ExecutionException, InterruptedException {
+    public static void StartVideo(Call call, OutgoingVideoStream outgoingVideoStream, Context context) throws ExecutionException, InterruptedException {
         call.startVideo(context, outgoingVideoStream).get();
-    }
-    public static void FillFrame(ByteBuffer plane, int bandBegin, int bandsCount, byte greyValue) throws ExecutionException, InterruptedException {
-        java.util.Arrays.fill(plane.array(), bandBegin, bandsCount, greyValue);
-
     }
     public static void StopVideo(Call call, LocalVideoStream localVideoStream, Context context) throws ExecutionException, InterruptedException {
         call.stopVideo(context, localVideoStream).get();
     }
-    public static void StopScreenShare(Call call, OutgoingVideoStream outgoingVideoStream, Context context) throws ExecutionException, InterruptedException {
+    public static void StopVideo(Call call, OutgoingVideoStream outgoingVideoStream, Context context) throws ExecutionException, InterruptedException {
         call.stopVideo(context, outgoingVideoStream).get();
     }
     public static Call Accept(IncomingCall incomingCall, AcceptCallOptions acceptCallOptions, Context context) throws ExecutionException, InterruptedException {
@@ -103,10 +99,10 @@ public class CallClientHelper {
     public static void HandlePushNotification(CallAgent callAgent, PushNotificationInfo pushNotificationInfo) throws ExecutionException, InterruptedException {
         callAgent.handlePushNotification(pushNotificationInfo).get();
     }
-    public static FrameConfirmation ScreensharingVideoFrameSender(SoftwareBasedVideoFrameSender softwareBasedVideoFrameSender, ByteBuffer byteBuffer, long timeStamp) throws ExecutionException, InterruptedException {
+    public static FrameConfirmation SoftwareBasedVideoFrameSender(SoftwareBasedVideoFrameSender softwareBasedVideoFrameSender, ByteBuffer byteBuffer, long timeStamp) throws ExecutionException, InterruptedException {
          return softwareBasedVideoFrameSender.sendFrame(byteBuffer, timeStamp).get();
     }
-    public static FrameConfirmation ScreensharingVideoFrameSender(HardwareBasedVideoFrameSender hardwareBasedVideoFrameSender, int targetId, int[] textureIds, long timeStamp) throws ExecutionException, InterruptedException {
+    public static FrameConfirmation HardwareBasedVideoFrameSender(HardwareBasedVideoFrameSender hardwareBasedVideoFrameSender, int targetId, int[] textureIds, long timeStamp) throws ExecutionException, InterruptedException {
          return hardwareBasedVideoFrameSender.sendFrame(targetId, textureIds[0], timeStamp).get();
     }
 }
