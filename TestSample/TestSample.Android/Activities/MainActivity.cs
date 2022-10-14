@@ -7,12 +7,15 @@ using Android.OS;
 using Microsoft.Extensions.DependencyInjection;
 using TestSample.Interfaces;
 using TestSample.Droid.Implementations;
+using Android.Content;
 
 namespace TestSample.Droid.Activities
 {
     [Activity(Label = "TestSample", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public event Action<int, Result, Intent> ActivityResult;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -25,6 +28,11 @@ namespace TestSample.Droid.Activities
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConferenceManagerSpecificPlatform, ConferenceManagerSpecificPlatformAndroid>();
+        }
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if (this.ActivityResult != null)
+                this.ActivityResult(requestCode, resultCode, data);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
