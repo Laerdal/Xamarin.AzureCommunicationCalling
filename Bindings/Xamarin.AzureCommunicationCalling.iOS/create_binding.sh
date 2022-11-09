@@ -27,13 +27,14 @@ patch -s -p0 -N < headers.patch
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
 # Make sure you have the latest Sharpie version:
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
+# If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 sharpie bind \
-    -sdk iphoneos15.2 \
+    -sdk iphoneos16.0 \
     -o tmp \
     -namespace "Xamarin.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
     nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
-    -c -fmodules \
+    -c -fmodules
 
 # Lastly: manually copy tmp bindings into this folder and make it work
 echo "Remember to merge new tmp/*.cs into ./*.cs"

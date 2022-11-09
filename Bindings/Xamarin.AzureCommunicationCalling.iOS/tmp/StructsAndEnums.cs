@@ -41,7 +41,8 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		InvalidVideoStreamCombination = 0x400000,
 		DisplayNameLengthLongerThanSupported = 0x800000,
 		FailedToHangupForEveryone = 0x1000000,
-		NoMultipleConnectionsWithDifferentClouds = 0x2000000
+		NoMultipleConnectionsWithDifferentClouds = 0x2000000,
+		NoActiveAudioStreamToStop = 0x4000000
 	}
 
 	[Native]
@@ -91,6 +92,14 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSAudioStreamKind : long
+	{
+		None = 0,
+		Local = 1,
+		Virtual = 2
+	}
+
+	[Native]
 	public enum ACSParticipantRole : long
 	{
 		Unknown = 0,
@@ -136,6 +145,14 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSMediaStreamDirection : long
+	{
+		None = 0,
+		Incoming = 1,
+		Outgoing = 2
+	}
+
+	[Native]
 	public enum ACSDtmfTone : long
 	{
 		Zero = 0,
@@ -165,6 +182,34 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSRecordingState : long
+	{
+		Started = 0,
+		Paused = 1,
+		Ended = 2
+	}
+
+	[Native]
+	public enum ACSVideoFrameKind : long
+	{
+		None = 0,
+		VideoSoftware = 1,
+		VideoHardware = 2
+	}
+
+	[Native]
+	public enum ACSPixelFormat : long
+	{
+		None = 0,
+		Bgrx = 1,
+		Bgr24 = 2,
+		Rgbx = 3,
+		Rgba = 4,
+		Nv12 = 5,
+		I420 = 6
+	}
+
+	[Native]
 	public enum ACSResultType : long
 	{
 		Intermediate = 0,
@@ -172,16 +217,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSHandleType : long
+	public enum ACSAudioDeviceCategory : long
 	{
-		Unknown = 0,
-		GroupCallLocator = 1,
-		TeamsMeetingCoordinatesLocator = 2,
-		TeamsMeetingLinkLocator = 3,
-		RecordingCallFeature = 4,
-		TranscriptionCallFeature = 5,
-		DominantSpeakersCallFeature = 6,
-		LocalVideoStream = 7,
-		RoomCallLocator = 8
+		Physical = 0,
+		Dummy = 1
 	}
 }
