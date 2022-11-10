@@ -42,6 +42,20 @@
         abstract="false"
         deprecated="not deprecated"
         final="false"
+        name="getAudioOptions"
+        native="false"
+        return="com.azure.android.communication.calling.AudioOptions"
+        jni-return="Lcom/azure/android/communication/calling/AudioOptions;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/azure/android/communication/calling/AudioOptions;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
         name="getVideoOptions"
         native="false"
         return="com.azure.android.communication.calling.VideoOptions"
@@ -52,6 +66,25 @@
         bridge="false"
         synthetic="false"
         jni-signature="()Lcom/azure/android/communication/calling/VideoOptions;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="setAudioOptions"
+        native="false"
+        return="com.azure.android.communication.calling.AcceptCallOptions"
+        jni-return="Lcom/azure/android/communication/calling/AcceptCallOptions;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/AudioOptions;)Lcom/azure/android/communication/calling/AcceptCallOptions;">
+        <parameter
+          name="value"
+          type="com.azure.android.communication.calling.AudioOptions"
+          jni-type="Lcom/azure/android/communication/calling/AudioOptions;" />
+      </method>
       <method
         abstract="false"
         deprecated="not deprecated"
@@ -226,6 +259,76 @@
     <class
       abstract="false"
       deprecated="not deprecated"
+      jni-extends="Ljava/lang/Enum;"
+      extends="java.lang.Enum"
+      extends-generic-aware="java.lang.Enum&lt;com.azure.android.communication.calling.AudioDeviceCategory&gt;"
+      final="true"
+      name="AudioDeviceCategory"
+      jni-signature="Lcom/azure/android/communication/calling/AudioDeviceCategory;"
+      source-file-name="AudioDeviceCategory.java"
+      static="false"
+      visibility="public">
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="valueOf"
+        native="false"
+        return="com.azure.android.communication.calling.AudioDeviceCategory"
+        jni-return="Lcom/azure/android/communication/calling/AudioDeviceCategory;"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)Lcom/azure/android/communication/calling/AudioDeviceCategory;">
+        <parameter
+          name="name"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="values"
+        native="false"
+        return="com.azure.android.communication.calling.AudioDeviceCategory[]"
+        jni-return="[Lcom/azure/android/communication/calling/AudioDeviceCategory;"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()[Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="DUMMY"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.AudioDeviceCategory"
+        type-generic-aware="com.azure.android.communication.calling.AudioDeviceCategory"
+        jni-signature="Lcom/azure/android/communication/calling/AudioDeviceCategory;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="PHYSICAL"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.AudioDeviceCategory"
+        type-generic-aware="com.azure.android.communication.calling.AudioDeviceCategory"
+        jni-signature="Lcom/azure/android/communication/calling/AudioDeviceCategory;"
+        visibility="public"
+        volatile="false" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
       jni-extends="Ljava/lang/Object;"
       extends="java.lang.Object"
       extends-generic-aware="java.lang.Object"
@@ -262,6 +365,34 @@
         abstract="false"
         deprecated="not deprecated"
         final="false"
+        name="getIncomingAudioStream"
+        native="false"
+        return="com.azure.android.communication.calling.IncomingAudioStream"
+        jni-return="Lcom/azure/android/communication/calling/IncomingAudioStream;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/azure/android/communication/calling/IncomingAudioStream;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="getOutgoingAudioStream"
+        native="false"
+        return="com.azure.android.communication.calling.OutgoingAudioStream"
+        jni-return="Lcom/azure/android/communication/calling/OutgoingAudioStream;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/azure/android/communication/calling/OutgoingAudioStream;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
         name="isMuted"
         native="false"
         return="boolean"
@@ -272,6 +403,25 @@
         bridge="false"
         synthetic="false"
         jni-signature="()Z" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="setIncomingAudioStream"
+        native="false"
+        return="com.azure.android.communication.calling.AudioOptions"
+        jni-return="Lcom/azure/android/communication/calling/AudioOptions;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/IncomingAudioStream;)Lcom/azure/android/communication/calling/AudioOptions;">
+        <parameter
+          name="value"
+          type="com.azure.android.communication.calling.IncomingAudioStream"
+          jni-type="Lcom/azure/android/communication/calling/IncomingAudioStream;" />
+      </method>
       <method
         abstract="false"
         deprecated="not deprecated"
@@ -290,6 +440,25 @@
           name="value"
           type="boolean"
           jni-type="Z" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="setOutgoingAudioStream"
+        native="false"
+        return="com.azure.android.communication.calling.AudioOptions"
+        jni-return="Lcom/azure/android/communication/calling/AudioOptions;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/OutgoingAudioStream;)Lcom/azure/android/communication/calling/AudioOptions;">
+        <parameter
+          name="value"
+          type="com.azure.android.communication.calling.OutgoingAudioStream"
+          jni-type="Lcom/azure/android/communication/calling/OutgoingAudioStream;" />
       </method>
     </class>
     <class
@@ -325,6 +494,129 @@
         bridge="false"
         synthetic="false"
         jni-signature="()V" />
+    </class>
+    <class
+      abstract="true"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="AudioStream"
+      jni-signature="Lcom/azure/android/communication/calling/AudioStream;"
+      source-file-name="AudioStream.java"
+      static="false"
+      visibility="public">
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="finalize"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="protected"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="getAudioStreamKind"
+        native="false"
+        return="com.azure.android.communication.calling.AudioStreamKind"
+        jni-return="Lcom/azure/android/communication/calling/AudioStreamKind;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/azure/android/communication/calling/AudioStreamKind;" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Enum;"
+      extends="java.lang.Enum"
+      extends-generic-aware="java.lang.Enum&lt;com.azure.android.communication.calling.AudioStreamKind&gt;"
+      final="true"
+      name="AudioStreamKind"
+      jni-signature="Lcom/azure/android/communication/calling/AudioStreamKind;"
+      source-file-name="AudioStreamKind.java"
+      static="false"
+      visibility="public">
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="valueOf"
+        native="false"
+        return="com.azure.android.communication.calling.AudioStreamKind"
+        jni-return="Lcom/azure/android/communication/calling/AudioStreamKind;"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)Lcom/azure/android/communication/calling/AudioStreamKind;">
+        <parameter
+          name="name"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="values"
+        native="false"
+        return="com.azure.android.communication.calling.AudioStreamKind[]"
+        jni-return="[Lcom/azure/android/communication/calling/AudioStreamKind;"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()[Lcom/azure/android/communication/calling/AudioStreamKind;" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="LOCAL"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.AudioStreamKind"
+        type-generic-aware="com.azure.android.communication.calling.AudioStreamKind"
+        jni-signature="Lcom/azure/android/communication/calling/AudioStreamKind;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="NONE"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.AudioStreamKind"
+        type-generic-aware="com.azure.android.communication.calling.AudioStreamKind"
+        jni-signature="Lcom/azure/android/communication/calling/AudioStreamKind;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="VIRTUAL"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.AudioStreamKind"
+        type-generic-aware="com.azure.android.communication.calling.AudioStreamKind"
+        jni-signature="Lcom/azure/android/communication/calling/AudioStreamKind;"
+        visibility="public"
+        volatile="false" />
     </class>
     <class
       abstract="true"
@@ -1223,7 +1515,7 @@
         type="java.lang.String"
         type-generic-aware="java.lang.String"
         jni-signature="Ljava/lang/String;"
-        value="&quot;2.4.0-beta.1&quot;"
+        value="&quot;2.5.0-beta.1&quot;"
         visibility="public"
         volatile="false" />
     </class>
@@ -1660,6 +1952,20 @@
         abstract="false"
         deprecated="not deprecated"
         final="false"
+        name="isSpeakerMuted"
+        native="false"
+        return="boolean"
+        jni-return="Z"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Z" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
         name="mute"
         native="false"
         return="java9.util.concurrent.CompletableFuture&lt;java.lang.Void&gt;"
@@ -1674,6 +1980,25 @@
           name="context"
           type="android.content.Context"
           jni-type="Landroid/content/Context;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="muteSpeaker"
+        native="false"
+        return="java9.util.concurrent.CompletableFuture&lt;java.lang.Void&gt;"
+        jni-return="Ljava9/util/concurrent/CompletableFuture&lt;Ljava/lang/Void;&gt;;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Z)Ljava9/util/concurrent/CompletableFuture;">
+        <parameter
+          name="mute"
+          type="boolean"
+          jni-type="Z" />
       </method>
       <method
         abstract="false"
@@ -1864,6 +2189,29 @@
         abstract="false"
         deprecated="not deprecated"
         final="false"
+        name="startAudio"
+        native="false"
+        return="java9.util.concurrent.CompletableFuture&lt;java.lang.Void&gt;"
+        jni-return="Ljava9/util/concurrent/CompletableFuture&lt;Ljava/lang/Void;&gt;;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Landroid/content/Context;Lcom/azure/android/communication/calling/AudioStream;)Ljava9/util/concurrent/CompletableFuture;">
+        <parameter
+          name="context"
+          type="android.content.Context"
+          jni-type="Landroid/content/Context;" />
+        <parameter
+          name="audioStream"
+          type="com.azure.android.communication.calling.AudioStream"
+          jni-type="Lcom/azure/android/communication/calling/AudioStream;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
         name="startVideo"
         native="false"
         return="java9.util.concurrent.CompletableFuture&lt;java.lang.Void&gt;"
@@ -1882,6 +2230,29 @@
           name="stream"
           type="com.azure.android.communication.calling.OutgoingVideoStream"
           jni-type="Lcom/azure/android/communication/calling/OutgoingVideoStream;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="stopAudio"
+        native="false"
+        return="java9.util.concurrent.CompletableFuture&lt;java.lang.Void&gt;"
+        jni-return="Ljava9/util/concurrent/CompletableFuture&lt;Ljava/lang/Void;&gt;;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Landroid/content/Context;Lcom/azure/android/communication/calling/MediaStreamDirection;)Ljava9/util/concurrent/CompletableFuture;">
+        <parameter
+          name="context"
+          type="android.content.Context"
+          jni-type="Landroid/content/Context;" />
+        <parameter
+          name="mediaStreamDirection"
+          type="com.azure.android.communication.calling.MediaStreamDirection"
+          jni-type="Lcom/azure/android/communication/calling/MediaStreamDirection;" />
       </method>
       <method
         abstract="false"
@@ -1930,8 +2301,8 @@
       abstract="false"
       deprecated="not deprecated"
       enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
-      enclosing-method-name="muteInternal"
-      enclosing-method-signature="()Ljava9/util/concurrent/CompletableFuture;"
+      enclosing-method-name="startAudioInternal"
+      enclosing-method-signature="(Lcom/azure/android/communication/calling/AudioStream;)Ljava9/util/concurrent/CompletableFuture;"
       jni-extends="Ljava/lang/Object;"
       extends="java.lang.Object"
       extends-generic-aware="java.lang.Object"
@@ -1964,218 +2335,14 @@
       abstract="false"
       deprecated="not deprecated"
       enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
-      enclosing-method-name="getInstance"
-      enclosing-method-signature="(JZ)Lcom/azure/android/communication/calling/Call;"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="true"
-      name="Call.10"
-      jni-signature="Lcom/azure/android/communication/calling/Call$10;"
-      source-file-name="Call.java"
-      static="true"
-      visibility="">
-      <implements
-        name="com.azure.android.communication.calling.ProjectedObjectCacheListener"
-        name-generic-aware="com.azure.android.communication.calling.ProjectedObjectCacheListener"
-        jni-type="Lcom/azure/android/communication/calling/ProjectedObjectCacheListener;" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="onCacheHit"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
-      enclosing-method-name="unmuteInternal"
-      enclosing-method-signature="()Ljava9/util/concurrent/CompletableFuture;"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="Call.2"
-      jni-signature="Lcom/azure/android/communication/calling/Call$2;"
-      source-file-name="Call.java"
-      static="false"
-      visibility="">
-      <implements
-        name="java.lang.Runnable"
-        name-generic-aware="java.lang.Runnable"
-        jni-type="Ljava/lang/Runnable;" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="run"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
-      enclosing-method-name="sendDtmf"
-      enclosing-method-signature="(Lcom/azure/android/communication/calling/DtmfTone;)Ljava9/util/concurrent/CompletableFuture;"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="Call.3"
-      jni-signature="Lcom/azure/android/communication/calling/Call$3;"
-      source-file-name="Call.java"
-      static="false"
-      visibility="">
-      <implements
-        name="java.lang.Runnable"
-        name-generic-aware="java.lang.Runnable"
-        jni-type="Ljava/lang/Runnable;" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="run"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
-      enclosing-method-name="startVideoInternal"
-      enclosing-method-signature="(Lcom/azure/android/communication/calling/OutgoingVideoStream;)Ljava9/util/concurrent/CompletableFuture;"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="Call.4"
-      jni-signature="Lcom/azure/android/communication/calling/Call$4;"
-      source-file-name="Call.java"
-      static="false"
-      visibility="">
-      <implements
-        name="java.lang.Runnable"
-        name-generic-aware="java.lang.Runnable"
-        jni-type="Ljava/lang/Runnable;" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="run"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
-      enclosing-method-name="stopVideoInternal"
-      enclosing-method-signature="(Lcom/azure/android/communication/calling/OutgoingVideoStream;)Ljava9/util/concurrent/CompletableFuture;"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="Call.5"
-      jni-signature="Lcom/azure/android/communication/calling/Call$5;"
-      source-file-name="Call.java"
-      static="false"
-      visibility="">
-      <implements
-        name="java.lang.Runnable"
-        name-generic-aware="java.lang.Runnable"
-        jni-type="Ljava/lang/Runnable;" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="run"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
-      enclosing-method-name="hangUp"
-      enclosing-method-signature="(Lcom/azure/android/communication/calling/HangUpOptions;)Ljava9/util/concurrent/CompletableFuture;"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="Call.6"
-      jni-signature="Lcom/azure/android/communication/calling/Call$6;"
-      source-file-name="Call.java"
-      static="false"
-      visibility="">
-      <implements
-        name="java.lang.Runnable"
-        name-generic-aware="java.lang.Runnable"
-        jni-type="Ljava/lang/Runnable;" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="run"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
       enclosing-method-name="removeParticipant"
       enclosing-method-signature="(Lcom/azure/android/communication/calling/RemoteParticipant;)Ljava9/util/concurrent/CompletableFuture;"
       jni-extends="Ljava/lang/Object;"
       extends="java.lang.Object"
       extends-generic-aware="java.lang.Object"
       final="false"
-      name="Call.7"
-      jni-signature="Lcom/azure/android/communication/calling/Call$7;"
+      name="Call.10"
+      jni-signature="Lcom/azure/android/communication/calling/Call$10;"
       source-file-name="Call.java"
       static="false"
       visibility="">
@@ -2208,8 +2375,8 @@
       extends="java.lang.Object"
       extends-generic-aware="java.lang.Object"
       final="false"
-      name="Call.8"
-      jni-signature="Lcom/azure/android/communication/calling/Call$8;"
+      name="Call.11"
+      jni-signature="Lcom/azure/android/communication/calling/Call$11;"
       source-file-name="Call.java"
       static="false"
       visibility="">
@@ -2238,6 +2405,312 @@
       enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
       enclosing-method-name="resume"
       enclosing-method-signature="()Ljava9/util/concurrent/CompletableFuture;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="Call.12"
+      jni-signature="Lcom/azure/android/communication/calling/Call$12;"
+      source-file-name="Call.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="getInstance"
+      enclosing-method-signature="(JZ)Lcom/azure/android/communication/calling/Call;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="Call.13"
+      jni-signature="Lcom/azure/android/communication/calling/Call$13;"
+      source-file-name="Call.java"
+      static="true"
+      visibility="">
+      <implements
+        name="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        name-generic-aware="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        jni-type="Lcom/azure/android/communication/calling/ProjectedObjectCacheListener;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onCacheHit"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="stopAudioInternal"
+      enclosing-method-signature="(Lcom/azure/android/communication/calling/MediaStreamDirection;)Ljava9/util/concurrent/CompletableFuture;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="Call.2"
+      jni-signature="Lcom/azure/android/communication/calling/Call$2;"
+      source-file-name="Call.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="muteSpeaker"
+      enclosing-method-signature="(Z)Ljava9/util/concurrent/CompletableFuture;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="Call.3"
+      jni-signature="Lcom/azure/android/communication/calling/Call$3;"
+      source-file-name="Call.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="muteInternal"
+      enclosing-method-signature="()Ljava9/util/concurrent/CompletableFuture;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="Call.4"
+      jni-signature="Lcom/azure/android/communication/calling/Call$4;"
+      source-file-name="Call.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="unmuteInternal"
+      enclosing-method-signature="()Ljava9/util/concurrent/CompletableFuture;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="Call.5"
+      jni-signature="Lcom/azure/android/communication/calling/Call$5;"
+      source-file-name="Call.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="sendDtmf"
+      enclosing-method-signature="(Lcom/azure/android/communication/calling/DtmfTone;)Ljava9/util/concurrent/CompletableFuture;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="Call.6"
+      jni-signature="Lcom/azure/android/communication/calling/Call$6;"
+      source-file-name="Call.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="startVideoInternal"
+      enclosing-method-signature="(Lcom/azure/android/communication/calling/OutgoingVideoStream;)Ljava9/util/concurrent/CompletableFuture;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="Call.7"
+      jni-signature="Lcom/azure/android/communication/calling/Call$7;"
+      source-file-name="Call.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="stopVideoInternal"
+      enclosing-method-signature="(Lcom/azure/android/communication/calling/OutgoingVideoStream;)Ljava9/util/concurrent/CompletableFuture;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="Call.8"
+      jni-signature="Lcom/azure/android/communication/calling/Call$8;"
+      source-file-name="Call.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/Call;"
+      enclosing-method-name="hangUp"
+      enclosing-method-signature="(Lcom/azure/android/communication/calling/HangUpOptions;)Ljava9/util/concurrent/CompletableFuture;"
       jni-extends="Ljava/lang/Object;"
       extends="java.lang.Object"
       extends-generic-aware="java.lang.Object"
@@ -4066,6 +4539,18 @@
         deprecated="not deprecated"
         final="true"
         name="NONE"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.CallingCommunicationErrors"
+        type-generic-aware="com.azure.android.communication.calling.CallingCommunicationErrors"
+        jni-signature="Lcom/azure/android/communication/calling/CallingCommunicationErrors;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="NO_ACTIVE_AUDIO_STREAM_TO_STOP"
         static="true"
         synthetic="false"
         transient="false"
@@ -5994,7 +6479,7 @@
         abstract="false"
         deprecated="not deprecated"
         final="false"
-        name="getTimestamp"
+        name="getTimestampInTicks"
         native="false"
         return="long"
         jni-return="J"
@@ -6198,6 +6683,18 @@
       <field
         deprecated="not deprecated"
         final="true"
+        name="LOCAL_AUDIO_STREAM"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.HandleType"
+        type-generic-aware="com.azure.android.communication.calling.HandleType"
+        jni-signature="Lcom/azure/android/communication/calling/HandleType;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
         name="LOCAL_VIDEO_STREAM"
         static="true"
         synthetic="false"
@@ -6211,6 +6708,18 @@
         deprecated="not deprecated"
         final="true"
         name="RECORDING_CALL_FEATURE"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.HandleType"
+        type-generic-aware="com.azure.android.communication.calling.HandleType"
+        jni-signature="Lcom/azure/android/communication/calling/HandleType;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="REMOTE_AUDIO_STREAM"
         static="true"
         synthetic="false"
         transient="false"
@@ -6695,6 +7204,18 @@
           jni-type="Landroid/graphics/SurfaceTexture;" />
       </method>
     </interface>
+    <class
+      abstract="true"
+      deprecated="not deprecated"
+      jni-extends="Lcom/azure/android/communication/calling/AudioStream;"
+      extends="com.azure.android.communication.calling.AudioStream"
+      extends-generic-aware="com.azure.android.communication.calling.AudioStream"
+      final="false"
+      name="IncomingAudioStream"
+      jni-signature="Lcom/azure/android/communication/calling/IncomingAudioStream;"
+      source-file-name="IncomingAudioStream.java"
+      static="false"
+      visibility="public" />
     <class
       abstract="false"
       deprecated="not deprecated"
@@ -7495,7 +8016,7 @@
         visibility="public"
         bridge="false"
         synthetic="false"
-        jni-signature="(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V">
+        jni-signature="(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V">
         <parameter
           name="token"
           type="java.lang.String"
@@ -7510,6 +8031,10 @@
           jni-type="Ljava/lang/String;" />
         <parameter
           name="resourceId"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+        <parameter
+          name="countryCode"
           type="java.lang.String"
           jni-type="Ljava/lang/String;" />
       </method>
@@ -7707,6 +8232,81 @@
         static="false"
         synchronized="false"
         visibility="protected"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Lcom/azure/android/communication/calling/OutgoingAudioStream;"
+      extends="com.azure.android.communication.calling.OutgoingAudioStream"
+      extends-generic-aware="com.azure.android.communication.calling.OutgoingAudioStream"
+      final="true"
+      name="LocalAudioStream"
+      jni-signature="Lcom/azure/android/communication/calling/LocalAudioStream;"
+      source-file-name="LocalAudioStream.java"
+      static="false"
+      visibility="public">
+      <constructor
+        deprecated="not deprecated"
+        final="false"
+        name="LocalAudioStream"
+        static="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/AudioDeviceCategory;)V">
+        <parameter
+          name="audioDeviceCategory"
+          type="com.azure.android.communication.calling.AudioDeviceCategory"
+          jni-type="Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
+      </constructor>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="getAudioDeviceCategory"
+        native="false"
+        return="com.azure.android.communication.calling.AudioDeviceCategory"
+        jni-return="Lcom/azure/android/communication/calling/AudioDeviceCategory;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/LocalAudioStream;"
+      enclosing-method-name="getInstance"
+      enclosing-method-signature="(JZ)Lcom/azure/android/communication/calling/LocalAudioStream;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="LocalAudioStream.1"
+      jni-signature="Lcom/azure/android/communication/calling/LocalAudioStream$1;"
+      source-file-name="LocalAudioStream.java"
+      static="true"
+      visibility="">
+      <implements
+        name="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        name-generic-aware="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        jni-type="Lcom/azure/android/communication/calling/ProjectedObjectCacheListener;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onCacheHit"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
         bridge="false"
         synthetic="false"
         jni-signature="()V" />
@@ -8059,6 +8659,88 @@
       source-file-name="Log.java"
       static="false"
       visibility="" />
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Enum;"
+      extends="java.lang.Enum"
+      extends-generic-aware="java.lang.Enum&lt;com.azure.android.communication.calling.MediaStreamDirection&gt;"
+      final="true"
+      name="MediaStreamDirection"
+      jni-signature="Lcom/azure/android/communication/calling/MediaStreamDirection;"
+      source-file-name="MediaStreamDirection.java"
+      static="false"
+      visibility="public">
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="valueOf"
+        native="false"
+        return="com.azure.android.communication.calling.MediaStreamDirection"
+        jni-return="Lcom/azure/android/communication/calling/MediaStreamDirection;"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)Lcom/azure/android/communication/calling/MediaStreamDirection;">
+        <parameter
+          name="name"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="values"
+        native="false"
+        return="com.azure.android.communication.calling.MediaStreamDirection[]"
+        jni-return="[Lcom/azure/android/communication/calling/MediaStreamDirection;"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()[Lcom/azure/android/communication/calling/MediaStreamDirection;" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="INCOMING"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.MediaStreamDirection"
+        type-generic-aware="com.azure.android.communication.calling.MediaStreamDirection"
+        jni-signature="Lcom/azure/android/communication/calling/MediaStreamDirection;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="NONE"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.MediaStreamDirection"
+        type-generic-aware="com.azure.android.communication.calling.MediaStreamDirection"
+        jni-signature="Lcom/azure/android/communication/calling/MediaStreamDirection;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="OUTGOING"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.MediaStreamDirection"
+        type-generic-aware="com.azure.android.communication.calling.MediaStreamDirection"
+        jni-signature="Lcom/azure/android/communication/calling/MediaStreamDirection;"
+        visibility="public"
+        volatile="false" />
+    </class>
     <class
       abstract="false"
       deprecated="not deprecated"
@@ -8501,6 +9183,18 @@
       <field
         deprecated="not deprecated"
         final="true"
+        name="LocalAudioStream"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.ModelClass"
+        type-generic-aware="com.azure.android.communication.calling.ModelClass"
+        jni-signature="Lcom/azure/android/communication/calling/ModelClass;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
         name="LocalVideoStream"
         static="true"
         synthetic="false"
@@ -8586,6 +9280,42 @@
         deprecated="not deprecated"
         final="true"
         name="RecordingCallFeature"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.ModelClass"
+        type-generic-aware="com.azure.android.communication.calling.ModelClass"
+        jni-signature="Lcom/azure/android/communication/calling/ModelClass;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="RecordingInfo"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.ModelClass"
+        type-generic-aware="com.azure.android.communication.calling.ModelClass"
+        jni-signature="Lcom/azure/android/communication/calling/ModelClass;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="RecordingUpdatedEvent"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.ModelClass"
+        type-generic-aware="com.azure.android.communication.calling.ModelClass"
+        jni-signature="Lcom/azure/android/communication/calling/ModelClass;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="RemoteAudioStream"
         static="true"
         synthetic="false"
         transient="false"
@@ -8845,6 +9575,18 @@
           jni-interfaceBounds="" />
       </typeParameters>
     </class>
+    <class
+      abstract="true"
+      deprecated="not deprecated"
+      jni-extends="Lcom/azure/android/communication/calling/AudioStream;"
+      extends="com.azure.android.communication.calling.AudioStream"
+      extends-generic-aware="com.azure.android.communication.calling.AudioStream"
+      final="false"
+      name="OutgoingAudioStream"
+      jni-signature="Lcom/azure/android/communication/calling/OutgoingAudioStream;"
+      source-file-name="OutgoingAudioStream.java"
+      static="false"
+      visibility="public" />
     <class
       abstract="true"
       deprecated="not deprecated"
@@ -10381,6 +11123,39 @@
         abstract="false"
         deprecated="not deprecated"
         final="false"
+        name="addOnRecordingUpdatedListener"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/RecordingUpdatedListener;)V">
+        <parameter
+          name="listener"
+          type="com.azure.android.communication.calling.RecordingUpdatedListener"
+          jni-type="Lcom/azure/android/communication/calling/RecordingUpdatedListener;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="getRecordings"
+        native="false"
+        return="java.util.List&lt;com.azure.android.communication.calling.RecordingInfo&gt;"
+        jni-return="Ljava/util/List&lt;Lcom/azure/android/communication/calling/RecordingInfo;&gt;;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Ljava/util/List;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
         name="isRecordingActive"
         native="false"
         return="boolean"
@@ -10410,6 +11185,25 @@
           type="com.azure.android.communication.calling.PropertyChangedListener"
           jni-type="Lcom/azure/android/communication/calling/PropertyChangedListener;" />
       </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="removeOnRecordingUpdatedListener"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/RecordingUpdatedListener;)V">
+        <parameter
+          name="listener"
+          type="com.azure.android.communication.calling.RecordingUpdatedListener"
+          jni-type="Lcom/azure/android/communication/calling/RecordingUpdatedListener;" />
+      </method>
     </class>
     <class
       abstract="false"
@@ -10424,6 +11218,342 @@
       name="RecordingCallFeature.1"
       jni-signature="Lcom/azure/android/communication/calling/RecordingCallFeature$1;"
       source-file-name="RecordingCallFeature.java"
+      static="true"
+      visibility="">
+      <implements
+        name="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        name-generic-aware="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        jni-type="Lcom/azure/android/communication/calling/ProjectedObjectCacheListener;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onCacheHit"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="RecordingInfo"
+      jni-signature="Lcom/azure/android/communication/calling/RecordingInfo;"
+      source-file-name="RecordingInfo.java"
+      static="false"
+      visibility="public">
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="finalize"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="protected"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="getState"
+        native="false"
+        return="com.azure.android.communication.calling.RecordingState"
+        jni-return="Lcom/azure/android/communication/calling/RecordingState;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/azure/android/communication/calling/RecordingState;" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/RecordingInfo;"
+      enclosing-method-name="getInstance"
+      enclosing-method-signature="(JZ)Lcom/azure/android/communication/calling/RecordingInfo;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="RecordingInfo.1"
+      jni-signature="Lcom/azure/android/communication/calling/RecordingInfo$1;"
+      source-file-name="RecordingInfo.java"
+      static="true"
+      visibility="">
+      <implements
+        name="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        name-generic-aware="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        jni-type="Lcom/azure/android/communication/calling/ProjectedObjectCacheListener;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onCacheHit"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Enum;"
+      extends="java.lang.Enum"
+      extends-generic-aware="java.lang.Enum&lt;com.azure.android.communication.calling.RecordingState&gt;"
+      final="true"
+      name="RecordingState"
+      jni-signature="Lcom/azure/android/communication/calling/RecordingState;"
+      source-file-name="RecordingState.java"
+      static="false"
+      visibility="public">
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="valueOf"
+        native="false"
+        return="com.azure.android.communication.calling.RecordingState"
+        jni-return="Lcom/azure/android/communication/calling/RecordingState;"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)Lcom/azure/android/communication/calling/RecordingState;">
+        <parameter
+          name="name"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="values"
+        native="false"
+        return="com.azure.android.communication.calling.RecordingState[]"
+        jni-return="[Lcom/azure/android/communication/calling/RecordingState;"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()[Lcom/azure/android/communication/calling/RecordingState;" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="ENDED"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.RecordingState"
+        type-generic-aware="com.azure.android.communication.calling.RecordingState"
+        jni-signature="Lcom/azure/android/communication/calling/RecordingState;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="PAUSED"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.RecordingState"
+        type-generic-aware="com.azure.android.communication.calling.RecordingState"
+        jni-signature="Lcom/azure/android/communication/calling/RecordingState;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="STARTED"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.RecordingState"
+        type-generic-aware="com.azure.android.communication.calling.RecordingState"
+        jni-signature="Lcom/azure/android/communication/calling/RecordingState;"
+        visibility="public"
+        volatile="false" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="RecordingUpdatedEvent"
+      jni-signature="Lcom/azure/android/communication/calling/RecordingUpdatedEvent;"
+      source-file-name="RecordingUpdatedEvent.java"
+      static="false"
+      visibility="public">
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="finalize"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="protected"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="getUpdatedRecording"
+        native="false"
+        return="com.azure.android.communication.calling.RecordingInfo"
+        jni-return="Lcom/azure/android/communication/calling/RecordingInfo;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/azure/android/communication/calling/RecordingInfo;" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/RecordingUpdatedEvent;"
+      enclosing-method-name="getInstance"
+      enclosing-method-signature="(JZ)Lcom/azure/android/communication/calling/RecordingUpdatedEvent;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="RecordingUpdatedEvent.1"
+      jni-signature="Lcom/azure/android/communication/calling/RecordingUpdatedEvent$1;"
+      source-file-name="RecordingUpdatedEvent.java"
+      static="true"
+      visibility="">
+      <implements
+        name="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        name-generic-aware="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        jni-type="Lcom/azure/android/communication/calling/ProjectedObjectCacheListener;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onCacheHit"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <interface
+      abstract="true"
+      deprecated="not deprecated"
+      final="false"
+      name="RecordingUpdatedListener"
+      jni-signature="Lcom/azure/android/communication/calling/RecordingUpdatedListener;"
+      source-file-name="RecordingUpdatedListener.java"
+      static="false"
+      visibility="public">
+      <method
+        abstract="true"
+        deprecated="not deprecated"
+        final="false"
+        name="onRecordingUpdated"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/RecordingUpdatedEvent;)V">
+        <parameter
+          name="p0"
+          type="com.azure.android.communication.calling.RecordingUpdatedEvent"
+          jni-type="Lcom/azure/android/communication/calling/RecordingUpdatedEvent;" />
+      </method>
+    </interface>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Lcom/azure/android/communication/calling/IncomingAudioStream;"
+      extends="com.azure.android.communication.calling.IncomingAudioStream"
+      extends-generic-aware="com.azure.android.communication.calling.IncomingAudioStream"
+      final="true"
+      name="RemoteAudioStream"
+      jni-signature="Lcom/azure/android/communication/calling/RemoteAudioStream;"
+      source-file-name="RemoteAudioStream.java"
+      static="false"
+      visibility="public">
+      <constructor
+        deprecated="not deprecated"
+        final="false"
+        name="RemoteAudioStream"
+        static="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/AudioDeviceCategory;)V">
+        <parameter
+          name="audioDeviceCategory"
+          type="com.azure.android.communication.calling.AudioDeviceCategory"
+          jni-type="Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
+      </constructor>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="getAudioDeviceCategory"
+        native="false"
+        return="com.azure.android.communication.calling.AudioDeviceCategory"
+        jni-return="Lcom/azure/android/communication/calling/AudioDeviceCategory;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/RemoteAudioStream;"
+      enclosing-method-name="getInstance"
+      enclosing-method-signature="(JZ)Lcom/azure/android/communication/calling/RemoteAudioStream;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="RemoteAudioStream.1"
+      jni-signature="Lcom/azure/android/communication/calling/RemoteAudioStream$1;"
+      source-file-name="RemoteAudioStream.java"
       static="true"
       visibility="">
       <implements
@@ -12149,6 +13279,18 @@
         deprecated="not deprecated"
         final="true"
         name="NOT_IMPLEMENTED"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.status"
+        type-generic-aware="com.azure.android.communication.calling.status"
+        jni-signature="Lcom/azure/android/communication/calling/status;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="NO_ACTIVE_AUDIO_STREAM_TO_STOP"
         static="true"
         synthetic="false"
         transient="false"
@@ -17547,6 +18689,20 @@
           type="java.lang.Throwable"
           jni-type="Ljava/lang/Throwable;" />
       </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="refreshMinLogLevelIfNeed"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="true"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
       <method
         abstract="false"
         deprecated="not deprecated"
@@ -25906,575 +27062,6 @@
     </class>
   </package>
   <package
-    name="com.microsoft.dl.video.capture.impl.real"
-    jni-name="com/microsoft/dl/video/capture/impl/real">
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="RealCameraImpl"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/RealCameraImpl;"
-      source-file-name="RealCameraImpl.java"
-      static="false"
-      visibility="public">
-      <implements
-        name="com.microsoft.dl.video.capture.api.Camera"
-        name-generic-aware="com.microsoft.dl.video.capture.api.Camera"
-        jni-type="Lcom/microsoft/dl/video/capture/api/Camera;" />
-      <constructor
-        deprecated="not deprecated"
-        final="false"
-        name="RealCameraImpl"
-        static="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Ljava/lang/String;)V">
-        <parameter
-          name="cameraId"
-          type="java.lang.String"
-          jni-type="Ljava/lang/String;" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </constructor>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="addCallbackBuffer"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="([B)V">
-        <parameter
-          name="callbackBuffer"
-          type="byte[]"
-          jni-type="[B" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="close"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V">
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="enableFaceDetection"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Z)V">
-        <parameter
-          name="faceDetectionEnabled"
-          type="boolean"
-          jni-type="Z" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="getFaceTransferMatrix"
-        native="false"
-        return="android.graphics.Matrix"
-        jni-return="Landroid/graphics/Matrix;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()Landroid/graphics/Matrix;" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="getParameters"
-        native="false"
-        return="com.microsoft.dl.video.capture.api.CameraParameters"
-        jni-return="Lcom/microsoft/dl/video/capture/api/CameraParameters;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()Lcom/microsoft/dl/video/capture/api/CameraParameters;">
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="setCallback"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Lcom/microsoft/dl/video/capture/api/CameraCallback;Z)V">
-        <parameter
-          name="cb"
-          type="com.microsoft.dl.video.capture.api.CameraCallback"
-          jni-type="Lcom/microsoft/dl/video/capture/api/CameraCallback;" />
-        <parameter
-          name="usingBufferMode"
-          type="boolean"
-          jni-type="Z" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="setDisplayOrientation"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(I)V">
-        <parameter
-          name="degrees"
-          type="int"
-          jni-type="I" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="setFlashTorchMode"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Z)V">
-        <parameter
-          name="torchTurnOn"
-          type="boolean"
-          jni-type="Z" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="setParameters"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Lcom/microsoft/dl/video/capture/api/CameraParameters;)V">
-        <parameter
-          name="parameters"
-          type="com.microsoft.dl.video.capture.api.CameraParameters"
-          jni-type="Lcom/microsoft/dl/video/capture/api/CameraParameters;" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="setPreviewDisplay"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Ljava/lang/Object;)V">
-        <parameter
-          name="display"
-          type="java.lang.Object"
-          jni-type="Ljava/lang/Object;" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="startPreview"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V">
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="stopPreview"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V">
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="RealCameraImpl.CallbackHandler"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/RealCameraImpl$CallbackHandler;"
-      source-file-name="RealCameraImpl.java"
-      static="true"
-      visibility="private">
-      <implements
-        name="android.hardware.Camera.PreviewCallback"
-        name-generic-aware="android.hardware.Camera.PreviewCallback"
-        jni-type="Landroid/hardware/Camera$PreviewCallback;" />
-      <implements
-        name="android.hardware.Camera.ErrorCallback"
-        name-generic-aware="android.hardware.Camera.ErrorCallback"
-        jni-type="Landroid/hardware/Camera$ErrorCallback;" />
-      <implements
-        name="android.hardware.Camera.FaceDetectionListener"
-        name-generic-aware="android.hardware.Camera.FaceDetectionListener"
-        jni-type="Landroid/hardware/Camera$FaceDetectionListener;" />
-      <constructor
-        deprecated="not deprecated"
-        final="false"
-        name="RealCameraImpl.CallbackHandler"
-        static="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Lcom/microsoft/dl/video/capture/api/CameraCallback;Lcom/microsoft/dl/video/capture/api/Camera;)V">
-        <parameter
-          name="cb"
-          type="com.microsoft.dl.video.capture.api.CameraCallback"
-          jni-type="Lcom/microsoft/dl/video/capture/api/CameraCallback;" />
-        <parameter
-          name="camera"
-          type="com.microsoft.dl.video.capture.api.Camera"
-          jni-type="Lcom/microsoft/dl/video/capture/api/Camera;" />
-      </constructor>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="onError"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(ILandroid/hardware/Camera;)V">
-        <parameter
-          name="error"
-          type="int"
-          jni-type="I" />
-        <parameter
-          name="hwCamera"
-          type="android.hardware.Camera"
-          jni-type="Landroid/hardware/Camera;" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="onFaceDetection"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="([Landroid/hardware/Camera$Face;Landroid/hardware/Camera;)V">
-        <parameter
-          name="faces"
-          type="android.hardware.Camera.Face[]"
-          jni-type="[Landroid/hardware/Camera$Face;" />
-        <parameter
-          name="camera"
-          type="android.hardware.Camera"
-          jni-type="Landroid/hardware/Camera;" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="onPreviewFrame"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="([BLandroid/hardware/Camera;)V">
-        <parameter
-          name="data"
-          type="byte[]"
-          jni-type="[B" />
-        <parameter
-          name="hwCamera"
-          type="android.hardware.Camera"
-          jni-type="Landroid/hardware/Camera;" />
-      </method>
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="RealCameraManagerImpl"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/RealCameraManagerImpl;"
-      source-file-name="RealCameraManagerImpl.java"
-      static="false"
-      visibility="public">
-      <implements
-        name="com.microsoft.dl.video.capture.api.CameraManager"
-        name-generic-aware="com.microsoft.dl.video.capture.api.CameraManager"
-        jni-type="Lcom/microsoft/dl/video/capture/api/CameraManager;" />
-      <constructor
-        deprecated="not deprecated"
-        final="false"
-        name="RealCameraManagerImpl"
-        static="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="close"
-        native="false"
-        return="void"
-        jni-return="V"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="getCameraCapabilities"
-        native="false"
-        return="com.microsoft.dl.video.capture.api.CameraCapabilities"
-        jni-return="Lcom/microsoft/dl/video/capture/api/CameraCapabilities;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Ljava/lang/String;)Lcom/microsoft/dl/video/capture/api/CameraCapabilities;">
-        <parameter
-          name="id"
-          type="java.lang.String"
-          jni-type="Ljava/lang/String;" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="getCameraIds"
-        native="false"
-        return="java.lang.String[]"
-        jni-return="[Ljava/lang/String;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()[Ljava/lang/String;" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="getStaticCameraCapabilities"
-        native="false"
-        return="com.microsoft.dl.video.capture.api.StaticCameraCapabilities"
-        jni-return="Lcom/microsoft/dl/video/capture/api/StaticCameraCapabilities;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Ljava/lang/String;)Lcom/microsoft/dl/video/capture/api/StaticCameraCapabilities;">
-        <parameter
-          name="id"
-          type="java.lang.String"
-          jni-type="Ljava/lang/String;" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="openCamera"
-        native="false"
-        return="com.microsoft.dl.video.capture.api.Camera"
-        jni-return="Lcom/microsoft/dl/video/capture/api/Camera;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="(Ljava/lang/String;)Lcom/microsoft/dl/video/capture/api/Camera;">
-        <parameter
-          name="id"
-          type="java.lang.String"
-          jni-type="Ljava/lang/String;" />
-        <exception
-          name="com/microsoft/dl/video/capture/api/CaptureException"
-          type="com.microsoft.dl.video.capture.api.CaptureException"
-          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
-      </method>
-    </class>
-    <class
-      abstract="false"
-      deprecated="not deprecated"
-      jni-extends="Ljava/lang/Object;"
-      extends="java.lang.Object"
-      extends-generic-aware="java.lang.Object"
-      final="false"
-      name="RealCameraManagerImpl.Factory"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/RealCameraManagerImpl$Factory;"
-      source-file-name="RealCameraManagerImpl.java"
-      static="true"
-      visibility="public">
-      <implements
-        name="com.microsoft.dl.video.capture.api.CameraManagerFactory"
-        name-generic-aware="com.microsoft.dl.video.capture.api.CameraManagerFactory"
-        jni-type="Lcom/microsoft/dl/video/capture/api/CameraManagerFactory;" />
-      <constructor
-        deprecated="not deprecated"
-        final="false"
-        name="RealCameraManagerImpl.Factory"
-        static="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()V" />
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="true"
-        name="createCameraManager"
-        native="false"
-        return="com.microsoft.dl.video.capture.api.CameraManager"
-        jni-return="Lcom/microsoft/dl/video/capture/api/CameraManager;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()Lcom/microsoft/dl/video/capture/api/CameraManager;" />
-    </class>
-  </package>
-  <package
     name="com.microsoft.dl.video.capture.impl.real.impl"
     jni-name="com/microsoft/dl/video/capture/impl/real/impl">
     <class
@@ -26928,10 +27515,575 @@
           jni-type="Ljava/lang/Throwable;" />
       </constructor>
     </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="RealCameraImpl"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl/RealCameraImpl;"
+      source-file-name="RealCameraImpl.java"
+      static="false"
+      visibility="public">
+      <implements
+        name="com.microsoft.dl.video.capture.api.Camera"
+        name-generic-aware="com.microsoft.dl.video.capture.api.Camera"
+        jni-type="Lcom/microsoft/dl/video/capture/api/Camera;" />
+      <constructor
+        deprecated="not deprecated"
+        final="false"
+        name="RealCameraImpl"
+        static="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)V">
+        <parameter
+          name="cameraId"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </constructor>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="addCallbackBuffer"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="([B)V">
+        <parameter
+          name="callbackBuffer"
+          type="byte[]"
+          jni-type="[B" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="close"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V">
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="enableFaceDetection"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Z)V">
+        <parameter
+          name="faceDetectionEnabled"
+          type="boolean"
+          jni-type="Z" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="getFaceTransferMatrix"
+        native="false"
+        return="android.graphics.Matrix"
+        jni-return="Landroid/graphics/Matrix;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Landroid/graphics/Matrix;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="getParameters"
+        native="false"
+        return="com.microsoft.dl.video.capture.api.CameraParameters"
+        jni-return="Lcom/microsoft/dl/video/capture/api/CameraParameters;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/microsoft/dl/video/capture/api/CameraParameters;">
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="setCallback"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/microsoft/dl/video/capture/api/CameraCallback;Z)V">
+        <parameter
+          name="cb"
+          type="com.microsoft.dl.video.capture.api.CameraCallback"
+          jni-type="Lcom/microsoft/dl/video/capture/api/CameraCallback;" />
+        <parameter
+          name="usingBufferMode"
+          type="boolean"
+          jni-type="Z" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="setDisplayOrientation"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(I)V">
+        <parameter
+          name="degrees"
+          type="int"
+          jni-type="I" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="setFlashTorchMode"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Z)V">
+        <parameter
+          name="torchTurnOn"
+          type="boolean"
+          jni-type="Z" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="setParameters"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/microsoft/dl/video/capture/api/CameraParameters;)V">
+        <parameter
+          name="parameters"
+          type="com.microsoft.dl.video.capture.api.CameraParameters"
+          jni-type="Lcom/microsoft/dl/video/capture/api/CameraParameters;" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="setPreviewDisplay"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/Object;)V">
+        <parameter
+          name="display"
+          type="java.lang.Object"
+          jni-type="Ljava/lang/Object;" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="startPreview"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V">
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="stopPreview"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V">
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="RealCameraImpl.CallbackHandler"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl/RealCameraImpl$CallbackHandler;"
+      source-file-name="RealCameraImpl.java"
+      static="true"
+      visibility="private">
+      <implements
+        name="android.hardware.Camera.PreviewCallback"
+        name-generic-aware="android.hardware.Camera.PreviewCallback"
+        jni-type="Landroid/hardware/Camera$PreviewCallback;" />
+      <implements
+        name="android.hardware.Camera.ErrorCallback"
+        name-generic-aware="android.hardware.Camera.ErrorCallback"
+        jni-type="Landroid/hardware/Camera$ErrorCallback;" />
+      <implements
+        name="android.hardware.Camera.FaceDetectionListener"
+        name-generic-aware="android.hardware.Camera.FaceDetectionListener"
+        jni-type="Landroid/hardware/Camera$FaceDetectionListener;" />
+      <constructor
+        deprecated="not deprecated"
+        final="false"
+        name="RealCameraImpl.CallbackHandler"
+        static="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/microsoft/dl/video/capture/api/CameraCallback;Lcom/microsoft/dl/video/capture/api/Camera;)V">
+        <parameter
+          name="cb"
+          type="com.microsoft.dl.video.capture.api.CameraCallback"
+          jni-type="Lcom/microsoft/dl/video/capture/api/CameraCallback;" />
+        <parameter
+          name="camera"
+          type="com.microsoft.dl.video.capture.api.Camera"
+          jni-type="Lcom/microsoft/dl/video/capture/api/Camera;" />
+      </constructor>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onError"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(ILandroid/hardware/Camera;)V">
+        <parameter
+          name="error"
+          type="int"
+          jni-type="I" />
+        <parameter
+          name="hwCamera"
+          type="android.hardware.Camera"
+          jni-type="Landroid/hardware/Camera;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onFaceDetection"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="([Landroid/hardware/Camera$Face;Landroid/hardware/Camera;)V">
+        <parameter
+          name="faces"
+          type="android.hardware.Camera.Face[]"
+          jni-type="[Landroid/hardware/Camera$Face;" />
+        <parameter
+          name="camera"
+          type="android.hardware.Camera"
+          jni-type="Landroid/hardware/Camera;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onPreviewFrame"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="([BLandroid/hardware/Camera;)V">
+        <parameter
+          name="data"
+          type="byte[]"
+          jni-type="[B" />
+        <parameter
+          name="hwCamera"
+          type="android.hardware.Camera"
+          jni-type="Landroid/hardware/Camera;" />
+      </method>
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="RealCameraManagerImpl"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl/RealCameraManagerImpl;"
+      source-file-name="RealCameraManagerImpl.java"
+      static="false"
+      visibility="public">
+      <implements
+        name="com.microsoft.dl.video.capture.api.CameraManager"
+        name-generic-aware="com.microsoft.dl.video.capture.api.CameraManager"
+        jni-type="Lcom/microsoft/dl/video/capture/api/CameraManager;" />
+      <constructor
+        deprecated="not deprecated"
+        final="false"
+        name="RealCameraManagerImpl"
+        static="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="close"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="getCameraCapabilities"
+        native="false"
+        return="com.microsoft.dl.video.capture.api.CameraCapabilities"
+        jni-return="Lcom/microsoft/dl/video/capture/api/CameraCapabilities;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)Lcom/microsoft/dl/video/capture/api/CameraCapabilities;">
+        <parameter
+          name="id"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="getCameraIds"
+        native="false"
+        return="java.lang.String[]"
+        jni-return="[Ljava/lang/String;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()[Ljava/lang/String;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="getStaticCameraCapabilities"
+        native="false"
+        return="com.microsoft.dl.video.capture.api.StaticCameraCapabilities"
+        jni-return="Lcom/microsoft/dl/video/capture/api/StaticCameraCapabilities;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)Lcom/microsoft/dl/video/capture/api/StaticCameraCapabilities;">
+        <parameter
+          name="id"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="openCamera"
+        native="false"
+        return="com.microsoft.dl.video.capture.api.Camera"
+        jni-return="Lcom/microsoft/dl/video/capture/api/Camera;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)Lcom/microsoft/dl/video/capture/api/Camera;">
+        <parameter
+          name="id"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+        <exception
+          name="com/microsoft/dl/video/capture/api/CaptureException"
+          type="com.microsoft.dl.video.capture.api.CaptureException"
+          type-generic-aware="com.microsoft.dl.video.capture.api.CaptureException" />
+      </method>
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="RealCameraManagerImpl.Factory"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl/RealCameraManagerImpl$Factory;"
+      source-file-name="RealCameraManagerImpl.java"
+      static="true"
+      visibility="public">
+      <implements
+        name="com.microsoft.dl.video.capture.api.CameraManagerFactory"
+        name-generic-aware="com.microsoft.dl.video.capture.api.CameraManagerFactory"
+        jni-type="Lcom/microsoft/dl/video/capture/api/CameraManagerFactory;" />
+      <constructor
+        deprecated="not deprecated"
+        final="false"
+        name="RealCameraManagerImpl.Factory"
+        static="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="true"
+        name="createCameraManager"
+        native="false"
+        return="com.microsoft.dl.video.capture.api.CameraManager"
+        jni-return="Lcom/microsoft/dl/video/capture/api/CameraManager;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Lcom/microsoft/dl/video/capture/api/CameraManager;" />
+    </class>
   </package>
   <package
-    name="com.microsoft.dl.video.capture.impl2"
-    jni-name="com/microsoft/dl/video/capture/impl2">
+    name="com.microsoft.dl.video.capture.impl.real.impl2"
+    jni-name="com/microsoft/dl/video/capture/impl/real/impl2">
     <class
       abstract="false"
       deprecated="not deprecated"
@@ -26940,7 +28092,7 @@
       extends-generic-aware="com.microsoft.dl.video.capture.impl.real.impl.CameraCapabilitiesUtils"
       final="true"
       name="Camera2CapabilitiesUtils"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/Camera2CapabilitiesUtils;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/Camera2CapabilitiesUtils;"
       source-file-name="Camera2CapabilitiesUtils.java"
       static="false"
       visibility="public">
@@ -27073,7 +28225,7 @@
       extends-generic-aware="java.lang.Object"
       final="false"
       name="RealCamera2Impl"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl;"
       source-file-name="RealCamera2Impl.java"
       static="false"
       visibility="public">
@@ -27466,13 +28618,13 @@
     <class
       abstract="false"
       deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl;"
+      enclosing-method-jni-type="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl;"
       jni-extends="Landroid/hardware/camera2/CameraDevice$StateCallback;"
       extends="android.hardware.camera2.CameraDevice.StateCallback"
       extends-generic-aware="android.hardware.camera2.CameraDevice.StateCallback"
       final="false"
       name="RealCamera2Impl.1"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl$1;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl$1;"
       source-file-name="RealCamera2Impl.java"
       static="false"
       visibility="">
@@ -27560,7 +28712,7 @@
     <class
       abstract="false"
       deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl;"
+      enclosing-method-jni-type="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl;"
       enclosing-method-name="startPreview"
       enclosing-method-signature="()V"
       jni-extends="Landroid/hardware/camera2/CameraCaptureSession$StateCallback;"
@@ -27568,7 +28720,7 @@
       extends-generic-aware="android.hardware.camera2.CameraCaptureSession.StateCallback"
       final="false"
       name="RealCamera2Impl.2"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl$2;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl$2;"
       source-file-name="RealCamera2Impl.java"
       static="false"
       visibility="">
@@ -27652,13 +28804,13 @@
     <class
       abstract="false"
       deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl;"
+      enclosing-method-jni-type="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl;"
       jni-extends="Landroid/hardware/camera2/CameraCaptureSession$CaptureCallback;"
       extends="android.hardware.camera2.CameraCaptureSession.CaptureCallback"
       extends-generic-aware="android.hardware.camera2.CameraCaptureSession.CaptureCallback"
       final="false"
       name="RealCamera2Impl.3"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl$3;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl$3;"
       source-file-name="RealCamera2Impl.java"
       static="false"
       visibility="">
@@ -27698,7 +28850,7 @@
       extends-generic-aware="java.lang.Thread"
       final="false"
       name="RealCamera2Impl.Camera2Thread"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl$Camera2Thread;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl$Camera2Thread;"
       source-file-name="RealCamera2Impl.java"
       static="false"
       visibility="private">
@@ -27710,7 +28862,7 @@
         visibility="public"
         bridge="false"
         synthetic="false"
-        jni-signature="(Lcom/microsoft/dl/video/capture/impl2/RealCamera2Impl;Landroid/hardware/camera2/CameraManager;Ljava/lang/String;)V">
+        jni-signature="(Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2Impl;Landroid/hardware/camera2/CameraManager;Ljava/lang/String;)V">
         <parameter
           name="this$0"
           type="android.hardware.camera2.CameraManager"
@@ -27743,7 +28895,7 @@
       extends-generic-aware="java.lang.Object"
       final="false"
       name="RealCamera2ManagerImpl"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2ManagerImpl;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2ManagerImpl;"
       source-file-name="RealCamera2ManagerImpl.java"
       static="false"
       visibility="public">
@@ -27857,13 +29009,13 @@
     <class
       abstract="false"
       deprecated="not deprecated"
-      enclosing-method-jni-type="Lcom/microsoft/dl/video/capture/impl2/RealCamera2ManagerImpl;"
+      enclosing-method-jni-type="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2ManagerImpl;"
       jni-extends="Landroid/hardware/camera2/CameraManager$AvailabilityCallback;"
       extends="android.hardware.camera2.CameraManager.AvailabilityCallback"
       extends-generic-aware="android.hardware.camera2.CameraManager.AvailabilityCallback"
       final="false"
       name="RealCamera2ManagerImpl.1"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2ManagerImpl$1;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2ManagerImpl$1;"
       source-file-name="RealCamera2ManagerImpl.java"
       static="false"
       visibility="">
@@ -27895,7 +29047,7 @@
       extends-generic-aware="java.lang.Thread"
       final="false"
       name="RealCamera2ManagerImpl.CollectCapabilitiesThread"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2ManagerImpl$CollectCapabilitiesThread;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2ManagerImpl$CollectCapabilitiesThread;"
       source-file-name="RealCamera2ManagerImpl.java"
       static="true"
       visibility="private">
@@ -27907,11 +29059,11 @@
         visibility="public"
         bridge="false"
         synthetic="false"
-        jni-signature="(Lcom/microsoft/dl/video/capture/impl2/RealCamera2ManagerImpl;Ljava/lang/String;)V">
+        jni-signature="(Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2ManagerImpl;Ljava/lang/String;)V">
         <parameter
           name="impl"
-          type="com.microsoft.dl.video.capture.impl2.RealCamera2ManagerImpl"
-          jni-type="Lcom/microsoft/dl/video/capture/impl2/RealCamera2ManagerImpl;" />
+          type="com.microsoft.dl.video.capture.impl.real.impl2.RealCamera2ManagerImpl"
+          jni-type="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2ManagerImpl;" />
         <parameter
           name="cameraId"
           type="java.lang.String"
@@ -27940,7 +29092,7 @@
       extends-generic-aware="java.lang.Object"
       final="false"
       name="RealCamera2ManagerImpl.Factory"
-      jni-signature="Lcom/microsoft/dl/video/capture/impl2/RealCamera2ManagerImpl$Factory;"
+      jni-signature="Lcom/microsoft/dl/video/capture/impl/real/impl2/RealCamera2ManagerImpl$Factory;"
       source-file-name="RealCamera2ManagerImpl.java"
       static="true"
       visibility="public">

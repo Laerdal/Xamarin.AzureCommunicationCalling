@@ -3,25 +3,24 @@ package com.laerdal.azurecommunicationhelper;
 import android.content.Context;
 
 import com.azure.android.communication.calling.AcceptCallOptions;
+import com.azure.android.communication.calling.AudioStream;
 import com.azure.android.communication.calling.Call;
 import com.azure.android.communication.calling.CallAgent;
 import com.azure.android.communication.calling.CallAgentOptions;
 import com.azure.android.communication.calling.CallClient;
-import com.azure.android.communication.calling.CallFeature;
 import com.azure.android.communication.calling.CallInfo;
 import com.azure.android.communication.calling.DeviceManager;
-import com.azure.android.communication.calling.Features;
 import com.azure.android.communication.calling.FrameConfirmation;
 import com.azure.android.communication.calling.HangUpOptions;
 import com.azure.android.communication.calling.HardwareBasedVideoFrameSender;
 import com.azure.android.communication.calling.IncomingCall;
 import com.azure.android.communication.calling.LocalVideoStream;
+import com.azure.android.communication.calling.MediaStreamDirection;
 import com.azure.android.communication.calling.OutgoingVideoStream;
 import com.azure.android.communication.calling.PushNotificationInfo;
 import com.azure.android.communication.calling.SoftwareBasedVideoFrameSender;
 import com.azure.android.communication.calling.StartCallOptions;
 import com.azure.android.communication.calling.VideoDeviceInfo;
-import com.azure.android.communication.calling.VideoFrameSender;
 import com.azure.android.communication.common.CommunicationIdentifier;
 import com.azure.android.communication.common.CommunicationTokenCredential;
 
@@ -104,6 +103,34 @@ public class CallClientHelper {
     }
     public static FrameConfirmation HardwareBasedVideoFrameSender(HardwareBasedVideoFrameSender hardwareBasedVideoFrameSender, int targetId, int[] textureIds, long timeStamp) throws ExecutionException, InterruptedException {
          return hardwareBasedVideoFrameSender.sendFrame(targetId, textureIds[0], timeStamp).get();
+    }
+        public static void MuteSpeaker(Call call, boolean mute) throws ExecutionException, InterruptedException {
+        call.muteSpeaker(mute).get();
+    }
+    public static void startAudio(Call call, Context context, AudioStream audioStream) throws ExecutionException, InterruptedException {
+        call.startAudio(context, audioStream).get();
+    }
+    public static void stopAudio(Call call, Context context, MediaStreamDirection mediaStreamDirection) throws ExecutionException, InterruptedException {
+        call.stopAudio(context, mediaStreamDirection).get();
+    }
+    public static FrameConfirmation SendFrame(
+            SoftwareBasedVideoFrameSender sender, ByteBuffer plane1, long timestamp) throws ExecutionException, InterruptedException {
+        return sender.sendFrame(plane1, timestamp).get();
+    }
+    public static FrameConfirmation SendFrame(
+            SoftwareBasedVideoFrameSender sender,
+            ByteBuffer plane1,
+            ByteBuffer plane2,
+            long timestamp) throws ExecutionException, InterruptedException {
+        return sender.sendFrame(plane1, plane2, timestamp).get();
+    }
+    public static FrameConfirmation SendFrame(
+            SoftwareBasedVideoFrameSender sender,
+            ByteBuffer plane1,
+            ByteBuffer plane2,
+            ByteBuffer plane3,
+            long timestamp) throws ExecutionException, InterruptedException {
+        return sender.sendFrame(plane1, plane2, plane3, timestamp).get();
     }
 }
 

@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCallingHelper.Android</id>
-    <version>2.4.0-beta.1.2</version>
+    <version>2.5.0-beta.1.1</version>
     <title>AzureCommunicationCallingHelper for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -13,12 +13,9 @@
 
         The nuget contains a few static methods, basically just exposing all the retrofutures
         from ACS as regular methods...
-
-        NB: Note that the 2.0.0-beta.1 version av ACS SDK has some more
-        features than the official 2.0.0, so this helper targets the beta...
     </description>
     <releaseNotes>
-      Methods for screensharing
+      Future methods introduced in 2.5.0-beta.1
 </releaseNotes>
     <copyright>Copyright Laerdal Medical 2022</copyright>
     <repository type="git" url="https://github.com/laerdal/Xamarin.AzureCommunicationCalling"/>
