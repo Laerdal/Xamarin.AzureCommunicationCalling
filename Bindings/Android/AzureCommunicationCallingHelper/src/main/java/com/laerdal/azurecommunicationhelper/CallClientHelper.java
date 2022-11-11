@@ -142,7 +142,7 @@ public class CallClientHelper {
             long timestamp) throws ExecutionException, InterruptedException {
         return sender.sendFrame(plane1, plane2, plane3, timestamp).get();
     }
-    public static FrameConfirmation FrameSender(
+    public static FrameConfirmation SendFrame(
             HardwareBasedVideoFrameSender hardwareBasedVideoFrameSender,
             int targetId,
             int textureIds,
