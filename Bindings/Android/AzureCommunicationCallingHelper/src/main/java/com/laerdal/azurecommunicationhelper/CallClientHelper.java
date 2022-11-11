@@ -10,6 +10,7 @@ import com.azure.android.communication.calling.CallAgentOptions;
 import com.azure.android.communication.calling.CallClient;
 import com.azure.android.communication.calling.CallInfo;
 import com.azure.android.communication.calling.DeviceManager;
+import com.azure.android.communication.calling.DtmfTone;
 import com.azure.android.communication.calling.FrameConfirmation;
 import com.azure.android.communication.calling.HangUpOptions;
 import com.azure.android.communication.calling.HardwareBasedVideoFrameSender;
@@ -18,6 +19,7 @@ import com.azure.android.communication.calling.LocalVideoStream;
 import com.azure.android.communication.calling.MediaStreamDirection;
 import com.azure.android.communication.calling.OutgoingVideoStream;
 import com.azure.android.communication.calling.PushNotificationInfo;
+import com.azure.android.communication.calling.RemoteParticipant;
 import com.azure.android.communication.calling.SoftwareBasedVideoFrameSender;
 import com.azure.android.communication.calling.StartCallOptions;
 import com.azure.android.communication.calling.VideoDeviceInfo;
@@ -98,13 +100,7 @@ public class CallClientHelper {
     public static void HandlePushNotification(CallAgent callAgent, PushNotificationInfo pushNotificationInfo) throws ExecutionException, InterruptedException {
         callAgent.handlePushNotification(pushNotificationInfo).get();
     }
-    public static FrameConfirmation SoftwareBasedVideoFrameSender(SoftwareBasedVideoFrameSender softwareBasedVideoFrameSender, ByteBuffer byteBuffer, long timeStamp) throws ExecutionException, InterruptedException {
-         return softwareBasedVideoFrameSender.sendFrame(byteBuffer, timeStamp).get();
-    }
-    public static FrameConfirmation HardwareBasedVideoFrameSender(HardwareBasedVideoFrameSender hardwareBasedVideoFrameSender, int targetId, int[] textureIds, long timeStamp) throws ExecutionException, InterruptedException {
-         return hardwareBasedVideoFrameSender.sendFrame(targetId, textureIds[0], timeStamp).get();
-    }
-        public static void MuteSpeaker(Call call, boolean mute) throws ExecutionException, InterruptedException {
+    public static void MuteSpeaker(Call call, boolean mute) throws ExecutionException, InterruptedException {
         call.muteSpeaker(mute).get();
     }
     public static void startAudio(Call call, Context context, AudioStream audioStream) throws ExecutionException, InterruptedException {
@@ -113,8 +109,22 @@ public class CallClientHelper {
     public static void stopAudio(Call call, Context context, MediaStreamDirection mediaStreamDirection) throws ExecutionException, InterruptedException {
         call.stopAudio(context, mediaStreamDirection).get();
     }
+    public static void hold(Call call) throws ExecutionException, InterruptedException {
+        call.hold().get();
+    }
+    public static void resume(Call call) throws ExecutionException, InterruptedException {
+        call.resume().get();
+    }
+    public static void removeParticipant(Call call, RemoteParticipant remoteParticipant) throws ExecutionException, InterruptedException {
+        call.removeParticipant(remoteParticipant).get();
+    }
+    public static void sendDtmf(Call call, DtmfTone dtmfTone) throws ExecutionException, InterruptedException {
+        call.sendDtmf(dtmfTone).get();
+    }
     public static FrameConfirmation SendFrame(
-            SoftwareBasedVideoFrameSender sender, ByteBuffer plane1, long timestamp) throws ExecutionException, InterruptedException {
+            SoftwareBasedVideoFrameSender sender,
+            ByteBuffer plane1,
+            long timestamp) throws ExecutionException, InterruptedException {
         return sender.sendFrame(plane1, timestamp).get();
     }
     public static FrameConfirmation SendFrame(
@@ -131,6 +141,13 @@ public class CallClientHelper {
             ByteBuffer plane3,
             long timestamp) throws ExecutionException, InterruptedException {
         return sender.sendFrame(plane1, plane2, plane3, timestamp).get();
+    }
+    public static FrameConfirmation FrameSender(
+            HardwareBasedVideoFrameSender hardwareBasedVideoFrameSender,
+            int targetId,
+            int textureIds,
+            long timeStamp) throws ExecutionException, InterruptedException {
+        return hardwareBasedVideoFrameSender.sendFrame(targetId, textureIds, timeStamp).get();
     }
 }
 
