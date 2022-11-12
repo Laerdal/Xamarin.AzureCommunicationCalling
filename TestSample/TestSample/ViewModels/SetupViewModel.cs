@@ -78,7 +78,7 @@ namespace TestSample.ViewModels
         {
             if (IsBusy)
                 return;
-            if (!await CheckAndAskForCameraPermission() || !await CheckAndAskForMicrophonePermission() || !await CheckAndAskForLocationPermission())
+            if (!await CheckAndAskForCameraPermission() || !await CheckAndAskForStorageReadPermission()|| !await CheckAndAskForMicrophonePermission() || !await CheckAndAskForLocationPermission()|| !await CheckAndAskForStorageWritePermission())
                 return;
             if (Name.Equals(""))
                 return;
@@ -108,6 +108,14 @@ namespace TestSample.ViewModels
         public async Task<bool> CheckAndAskForMicrophonePermission()
         {
             return await CheckAndAskPermission<Permissions.Microphone>();
+        }
+        public async Task<bool> CheckAndAskForStorageWritePermission()
+        {
+            return await CheckAndAskPermission<Permissions.StorageWrite>();
+        }
+        public async Task<bool> CheckAndAskForStorageReadPermission()
+        {
+            return await CheckAndAskPermission<Permissions.StorageRead>();
         }
         public async Task<bool> CheckAndAskForLocationPermission()
         {

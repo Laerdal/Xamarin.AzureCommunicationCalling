@@ -115,10 +115,10 @@
       <Version>1.0.10</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCommunicationCalling.Android">
-      <Version>2.4.0-beta.1</Version>
+      <Version>2.5.0-beta.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCommunicationCallingHelper.Android">
-      <Version>2.3.0-beta.1.5</Version>
+      <Version>2.5.0-beta.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AzureCommunicationCommon.Android">
       <Version>1.0.2.1</Version>
@@ -174,7 +174,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarTestSampleAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionAzureXamarinPOCAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionAzureXamarinPOCAndroidHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarTestSampleAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
