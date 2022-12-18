@@ -313,6 +313,7 @@ namespace TestSample.Droid.Implementations
         {
             try
             {
+                
                 if (sender != null)
                 {
                     var stateConference = ((Call)sender);
@@ -427,6 +428,10 @@ namespace TestSample.Droid.Implementations
         }
         private void PublishRemoteVideoStream(RemoteParticipant remoteParticipant, RemoteVideoStream v)
         {
+            if(v.MediaStreamType == MediaStreamType.Video) 
+            { }
+            if(v.MediaStreamType == MediaStreamType.ScreenSharing) 
+            { }
             var renderer = new VideoStreamRenderer(v, _appContext);
             var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
             var nativeView = renderer.CreateView(renderingOptions);
@@ -460,71 +465,39 @@ namespace TestSample.Droid.Implementations
             }
             return result;
         }
-        public ImageReader mImageReader;
-        private Android.OS.Handler mHandler = new Android.OS.Handler();
         public static Intent ReturnDataFromPermission { get; private set; }
         public static Android.App.Result ReturnResultFromPermission { get; private set; }
         private void ActivityOnActivityResult(int requestCode, Android.App.Result resultCode, Intent data)
         {
             if (requestCode == 256 && resultCode == Android.App.Result.Ok)
             {
-                //_mediaProjection.RegisterCallback(new MediaProjection.Callback { });
                 ReturnDataFromPermission = data;
                 ReturnResultFromPermission = resultCode;
-                //RetriveProje();
-                //   CreatemDisplay();
-                Intent startRecordingServiceIntent = new Intent(_appContext, typeof(ScreenRecorderService));
+
+                if (videoOptions == null)
+                    videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
+                try
+                {
+                    CallClientHelper.StartVideo(_call, videoOptions, _appContext);
+                }
+                catch (System.Exception ex)
+                {
+                    new ConferenceExceptions(ex); return;
+                }
+
+                Intent startRecordingServiceIntent = new Intent(_appContext, typeof(ScreenSharingService));
                 startRecordingServiceIntent.SetAction("START_SERVICE");
-                _appContext.StartService(startRecordingServiceIntent);
-                //mImageReader.SetOnImageAvailableListener(new FrameGenerator(), mHandler);
-                videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
-                CallClientHelper.StartVideo(_call, videoOptions, _appContext);
+                _appContext.StartForegroundService(startRecordingServiceIntent);
             }
             else
             {
                 Toast.MakeText(_appContext, "Screensharing permission denied", ToastLength.Long).Show();
             }
 
-        }
-        public void RetriveProje()
-        {
-            _mediaProjection = _mediaProjectionManager.GetMediaProjection((int)ReturnResultFromPermission, ReturnDataFromPermission);
-
-        }
-        private HandlerThread mHandlerThread2 = null;
-
-        private Android.OS.Handler mHandler2 = null;
-        public void CreatemDisplay()
-        {
-            mHandlerThread2 = new HandlerThread("ZegoScreenCapture");
-            mHandlerThread2.Start();
-            mHandler = new Android.OS.Handler(mHandlerThread2.Looper);
-            mImageReader = ImageReader.NewInstance(720, 1280, (ImageFormatType)Android.Graphics.Format.Rgba8888, 2);
-            mImageReader.SetOnImageAvailableListener(frameGenerator, mHandler);
-            mDisplay = _mediaProjection.CreateVirtualDisplay("sijk", Resources.System.DisplayMetrics.WidthPixels, Resources.System.DisplayMetrics.HeightPixels, (int)Android.Util.DisplayMetricsDensity.Medium, DisplayFlags.Presentation, mImageReader.Surface, null, mHandler);
-        }
-        public Android.Hardware.Display.VirtualDisplay mDisplay
-        {
-            get;
-            private set;
-        }
-        private Android.OS.Handler mBackgroundHandler { get; set; }
-
-        private Android.OS.Handler getBackgroundHandler()
-        {
-            if (mBackgroundHandler == null)
-            {
-                Android.OS.HandlerThread backgroundThread = new Android.OS.HandlerThread("catwindow", (int)Android.OS.ThreadPriority.Background);
-                backgroundThread.Start();
-                mBackgroundHandler = new Android.OS.Handler(backgroundThread.Looper);
-            }
-
-            return mBackgroundHandler;
-        }
+        }       
         public void StartScreensharing()
         {
             this.MainActivity.ActivityResult += ActivityOnActivityResult;
-
             RequestScreenSharePermissions();
         }
         public void RequestScreenSharePermissions()
@@ -543,7 +516,11 @@ namespace TestSample.Droid.Implementations
         public void StopScreensharing()
         {
             this.MainActivity.ActivityResult -= ActivityOnActivityResult;
-            frameGenerator.StopFrameIterator();
+            CallClientHelper.StopVideo(_call, videoOptions, _appContext);
+            videoOptions = null;
+            Intent startRecordingServiceIntent = new Intent(_appContext, typeof(ScreenSharingService));
+            startRecordingServiceIntent.SetAction("STOP_SERVICE");
+            _appContext.StartService(startRecordingServiceIntent);
         }
 
 
@@ -586,11 +563,6 @@ namespace TestSample.Droid.Implementations
             }
         }
 
-        private void Options_VideoFrameSenderChanged(object sender, VideoFrameSenderChangedEventArgs e)
-        {
-
-        }
-        Com.Azure.Android.Communication.Calling.VirtualRawOutgoingVideoStream VirtualRawOutgoingVideoStream;
         private RawOutgoingVideoStreamOptions CreateRawOutgoingVideoStreamOptions(FrameGenerator frameGenerator)
         {
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
@@ -644,15 +616,14 @@ namespace TestSample.Droid.Implementations
             {
                 try
                 {
-                    StartScreensharing();
-                    //var cameras = _deviceManager.Cameras.FirstOrDefault();
-                    //if (cameras != null)
-                    //{
-                    //    if(_currentVideoStream == null)
-                    //    _currentVideoStream = new LocalVideoStream(_videoDeviceInfo, _appContext);
-                    //    LocalVideoAdded?.Invoke(this, ShowPreview(_currentVideoStream));
-                    //    CallClientHelper.StartVideo(_call, _currentVideoStream, _appContext);
-                    //}
+                    var cameras = _deviceManager.Cameras.FirstOrDefault();
+                    if (cameras != null)
+                    {
+                        if (_currentVideoStream == null)
+                            _currentVideoStream = new LocalVideoStream(_videoDeviceInfo, _appContext);
+                        LocalVideoAdded?.Invoke(this, ShowPreview(_currentVideoStream));
+                        CallClientHelper.StartVideo(_call, _currentVideoStream, _appContext);
+                    }
                 }
                 catch (CallingCommunicationException ex)
                 {
@@ -689,14 +660,10 @@ namespace TestSample.Droid.Implementations
             {
                 try
                 {
-                    StopScreensharing();
-                    //CallClientHelper.StopVideo(_call, _currentVideoStream, _appContext);
-                    CallClientHelper.StopVideo(_call, videoOptions, _appContext);
-
-                    //LocalVideoAdded?.Invoke(this, null);
-                    //_previewRenderer.Dispose();
-                    //_previewRenderer = null;
-                    //CallClientHelper.StopVideo(_call, _currentVideoStream, _appContext);
+                    LocalVideoAdded?.Invoke(this, null);
+                    _previewRenderer.Dispose();
+                    _previewRenderer = null;
+                    CallClientHelper.StopVideo(_call, _currentVideoStream, _appContext);
                 }
                 catch (CallingCommunicationException acsException)
                 {
@@ -739,41 +706,21 @@ namespace TestSample.Droid.Implementations
             return Task.CompletedTask;
         }
     }
-    [Service(ForegroundServiceType = Android.Content.PM.ForegroundService.TypeMediaProjection)]
-    public class ScreenRecorderService:Service
-    {
-        public void RetriveProje()
-        {
-
-        }
-        private HandlerThread _handlerThread2 = null;
+    [Service(ForegroundServiceType = Android.Content.PM.ForegroundService.TypeMediaProjection, Exported = true)]
+    public class ScreenSharingService:Service
+    {     
+        private HandlerThread _handlerThread = null;
         public ImageReader _imageReader;
         private MediaProjection _mediaProjection;
-        public MediaRecorder mMediaRecorder { get; set; }
 
         private Android.OS.Handler _handler = new Android.OS.Handler();
-        public Android.Hardware.Display.VirtualDisplay mDisplay
+        public Android.Hardware.Display.VirtualDisplay _virtualDisplay
         {
             get;
             private set;
         }
-        private Android.OS.Handler mHandler2 = null;
-        public void CreatemDisplay()
-        {
-            _mediaProjection = ConferenceManagerSpecificPlatformAndroid._mediaProjectionManager.GetMediaProjection((int)ConferenceManagerSpecificPlatformAndroid.ReturnResultFromPermission, ConferenceManagerSpecificPlatformAndroid.ReturnDataFromPermission);
+       
 
-            _handlerThread2 = new HandlerThread("ScreenCapture");
-            _handlerThread2.Start();
-            _handler = new Android.OS.Handler(_handlerThread2.Looper);
-            //DisplayMetrics metrics = new DisplayMetrics();
-            var windowMetrics = Xamarin.Essentials.Platform.CurrentActivity.WindowManager.CurrentWindowMetrics;
-            Android.Graphics.Rect bounds = windowMetrics.Bounds;
-            //Xamarin.Essentials.Platform.CurrentActivity.WindowManager.DefaultDisplay.GetRealMetrics(metrics);
-            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
-            _imageReader = ImageReader.NewInstance(Convert.ToInt32(mainDisplayInfo.Width), Convert.ToInt32(mainDisplayInfo.Height), (ImageFormatType)Android.Graphics.Format.Rgba8888, 10);
-            _imageReader.SetOnImageAvailableListener(ConferenceManagerSpecificPlatformAndroid.frameGenerator, _handler);
-            mDisplay = _mediaProjection.CreateVirtualDisplay("CreateVirtual", Convert.ToInt32(mainDisplayInfo.Width), Convert.ToInt32(mainDisplayInfo.Height), (int)mainDisplayInfo.Density, (DisplayFlags)VirtualDisplayFlags.AutoMirror, _imageReader.Surface, null, _handler);
-        }
         [return: GeneratedEnum]
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
@@ -792,67 +739,25 @@ namespace TestSample.Droid.Implementations
 
         public void StartRecording()
         {
-            mMediaRecorder = new MediaRecorder();
-            //var mManager = MainActivity.CurrentActivity.GetSystemService(Context.MediaProjectionService) as MediaProjectionManager;
-            //mediaProjection = mManager.GetMediaProjection((int)MainActivity.ReturnResultFromPermission, MainActivity.ReturnDataFromPermission);
-            //DisplayManager dManager = GetSystemService(Context.DisplayService) as DisplayManager;
-            //var displayMetrics = new DisplayMetrics();
-            //dManager.GetDisplay(0).GetMetrics(displayMetrics);
-
-            //mediaRecorder = new MediaRecorder();
-            //mediaRecorder.SetAudioSource(AudioSource.Mic);
-            //mediaRecorder.SetVideoSource(VideoSource.Surface);
-
-            //var profile = CamcorderProfile.Get(CamcorderQuality.High);
-            //profile.FileFormat = OutputFormat.Mpeg4;
-            //profile.VideoFrameHeight = displayMetrics.HeightPixels;
-            //profile.VideoFrameWidth = displayMetrics.WidthPixels;
-
-            //mediaRecorder.SetProfile(profile);
-            //mediaRecorder.SetOutputFile($"{Android.OS.Environment.ExternalStorageDirectory}/demovideo.mp4");
-            //mediaRecorder.Prepare();
-
-            //recordingDisplay = mediaProjection.CreateVirtualDisplay("Rec display", displayMetrics.WidthPixels, displayMetrics.HeightPixels,
-            //                                                        (int)displayMetrics.Density, Android.Views.DisplayFlags.Round,
-            //                                                        mediaRecorder.Surface, null, null);
-            //CreatemDisplay();
-            //mediaRecorder.Start();
-
-
             _mediaProjection = ConferenceManagerSpecificPlatformAndroid._mediaProjectionManager.GetMediaProjection((int)ConferenceManagerSpecificPlatformAndroid.ReturnResultFromPermission, ConferenceManagerSpecificPlatformAndroid.ReturnDataFromPermission);
 
-            _handlerThread2 = new HandlerThread("ScreenCapture");
-            _handlerThread2.Start();
-            _handler = new Android.OS.Handler(_handlerThread2.Looper);
+            _handlerThread = new HandlerThread("ScreenCapture");
+            _handlerThread.Start();
+            _handler = new Android.OS.Handler(_handlerThread.Looper);
             //DisplayMetrics metrics = new DisplayMetrics();
             var windowMetrics = Xamarin.Essentials.Platform.CurrentActivity.WindowManager.CurrentWindowMetrics;
             Android.Graphics.Rect bounds = windowMetrics.Bounds;
             //Xamarin.Essentials.Platform.CurrentActivity.WindowManager.DefaultDisplay.GetRealMetrics(metrics);
             var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
             _imageReader = ImageReader.NewInstance(1280, 720, (ImageFormatType)Android.Graphics.Format.Rgba8888, 20);
-            mMediaRecorder.SetVideoSource(VideoSource.Surface);
-            mMediaRecorder.SetOutputFormat(OutputFormat.Webm);
-            //mMediaRecorder.SetVideoEncodingBitRate(512 * 1000);
-            mMediaRecorder.SetVideoEncoder(VideoEncoder.Vp8);
-            mMediaRecorder.SetVideoSize(480, 640);
-            string path = Application.Context.GetExternalFilesDir(null).AbsolutePath + "/test.mp4";
-            mMediaRecorder.SetOutputFile(path);
-            //mMediaRecorder.Prepare();
-            //mMediaRecorder.Start();
-            mDisplay = _mediaProjection.CreateVirtualDisplay("CreateVirtual", 1280, 720, (int)mainDisplayInfo.Density, (DisplayFlags)VirtualDisplayFlags.AutoMirror, _imageReader.Surface, null, _handler);
+            _virtualDisplay = _mediaProjection.CreateVirtualDisplay("CreateVirtual", 1280, 720, (int)mainDisplayInfo.Density, (DisplayFlags)VirtualDisplayFlags.AutoMirror, _imageReader.Surface, null, _handler);
             _imageReader.SetOnImageAvailableListener(ConferenceManagerSpecificPlatformAndroid.frameGenerator, _handler);
 
         }
 
         public void StopRecording()
         {
-            //mediaRecorder.Stop();
-            //mediaProjection.Stop();
-            //recordingDisplay.Release();
-
-            //Intent stopIntent = new Intent(MainActivity.CurrentActivity, this.Class);
-            //stopIntent.SetAction("STOP_SERVICE");
-            //MainActivity.CurrentActivity.StartService(stopIntent);
+            _handlerThread.Stop();
         }
 
         private void RegisterForegroundService()
@@ -879,123 +784,5 @@ namespace TestSample.Droid.Implementations
             throw new NotImplementedException();
         }
     }
-    public class ScreenCapturer
-    {
-
-        private int screenDensity;
-
-        private int resultCode;
-        private Intent resultData;
-
-        private Surface surface;
-        private MediaProjection mediaProjection;
-        private VirtualDisplay virtualDisplay;
-        private MediaProjectionManager mediaProjectionManager;
-        private SurfaceView surfaceView;
-        public MediaRecorder mMediaRecorder { get; set; }
-        public ScreenCapturer()
-        {
-            mMediaRecorder = new MediaRecorder();
-        }
-        private void SetUpMediaProjection()
-        {
-            mediaProjection = mediaProjectionManager.GetMediaProjection(resultCode, resultData);
-
-        }
-
-        private void TearDownMediaProjection()
-        {
-            if (mediaProjection != null)
-            {
-                mediaProjection.Stop();
-                mediaProjection = null;
-            }
-        }
-
-        private void StartScreenCapture()
-        {
-            try
-            {
-                //if (surface == null || Activity == null)
-                //    return;
-                if (mediaProjection != null)
-                {
-                    SetUpVirtualDisplay();
-                }
-                else if (resultCode != 0 && resultData != null)
-                {
-                    SetUpMediaProjection();
-                    SetUpVirtualDisplay();
-
-      // This initiates a prompt for the user to confirm screen projection.
-                }
-            }
-            catch (System.Exception e)
-            {
-
-            }
-
-        }
-
-        private void SetUpVirtualDisplay()
-        {
-            StartRecording();
-
-            virtualDisplay = mediaProjection.CreateVirtualDisplay("ScreenCapture",
-                surfaceView.Width, surfaceView.Height, screenDensity,
-                (DisplayFlags)VirtualDisplayFlags.Presentation, mMediaRecorder.Surface, null, null);
-
-            mMediaRecorder.Start();
-        }
-
-        private void StopScreenCapture()
-        {
-            try
-            {
-                if (virtualDisplay == null)
-                    return;
-                mMediaRecorder.Stop();
-                mMediaRecorder.Release();
-                virtualDisplay.Release();
-                virtualDisplay = null;
-
-            }
-            catch (System.Exception e)
-            {
-                mMediaRecorder.Release();
-                virtualDisplay.Release();
-                virtualDisplay = null;
-            }
-
-        }
-        //[get: Android.Runtime.Register("getSurface", "()Landroid/view/Surface;", "GetGetSurfaceHandler", ApiSince = 21)]
-        //public virtual Android.Views.Surface Surface { get; }
-        private void StartRecording()
-        {
-            try
-            {
-                string path = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/test.mp4";
-                mMediaRecorder.SetVideoSource(VideoSource.Surface);
-                mMediaRecorder.SetOutputFormat(OutputFormat.Webm);
-                //mMediaRecorder.SetVideoEncodingBitRate(512 * 1000);
-                mMediaRecorder.SetVideoEncoder(VideoEncoder.Vp8);
-                mMediaRecorder.SetVideoSize(480, 640);
-                //mMediaRecorder.SetVideoFrameRate(10);
-                mMediaRecorder.SetOutputFile(path);
-                mMediaRecorder.Prepare();
-
-
-
-            }
-            catch (System.Exception e)
-            {
-
-            }
-
-
-        }
-    }
-
-
 }
 
