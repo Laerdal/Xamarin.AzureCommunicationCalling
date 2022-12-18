@@ -77,7 +77,7 @@ namespace TestSample.Droid.Implementations.Screensharing
                     SoftwareBasedVideoFrameSender sender = (SoftwareBasedVideoFrameSender)videoFrameSender;
 
                     long timeStamp = sender.TimestampInTicks;
-                    CallClientHelper.SoftwareBasedVideoFrameSender(sender, plane, timeStamp);
+                    CallClientHelper.SendFrame(sender, plane, timeStamp);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace TestSample.Droid.Implementations.Screensharing
                             plane);
 
                     long timeStamp = sender.TimestampInTicks;
-                    CallClientHelper.HardwareBasedVideoFrameSender(sender, targetId, textureIds, timeStamp);
+                    CallClientHelper.SendFrame(sender, targetId, textureIds.FirstOrDefault(), timeStamp);
                 };
                 Thread.Sleep((long)(1000.0f / videoFormat.FramesPerSecond));
             }
