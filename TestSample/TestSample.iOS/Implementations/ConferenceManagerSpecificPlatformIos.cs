@@ -15,6 +15,16 @@ using CallKit;
 using AVFoundation;
 using PushKit;
 using Xamarin.Essentials;
+using UIKit;
+using static Xamarin.Essentials.AppleSignInAuthenticator;
+using ReplayKit;
+using CoreMedia;
+using ARKit;
+using System.Numerics;
+using CoreFoundation;
+using CoreVideo;
+using System.Threading;
+using CoreGraphics;
 
 namespace TestSample.iOS.Implementations
 {
@@ -29,6 +39,12 @@ namespace TestSample.iOS.Implementations
         private ACSLocalVideoStream _localVideoStream;
         private ACSVideoStreamRenderer _previewRenderer;
         private ACSVideoStreamRendererView _preview;
+        #region Screensharing
+        ACSScreenShareRawOutgoingVideoStream screenShareRawOutgoingVideoStream;
+        NSRecursiveLock recursiveLock = new NSRecursiveLock();
+        ACSRawOutgoingVideoStreamOptions options;
+        ACSOutgoingVideoStreamState outgoingVideoStreamState = ACSOutgoingVideoStreamState.None;
+        #endregion
         private readonly CallingCallbackManager _videoCallbackManager;
         public event EventHandler<View> LocalVideoAdded;
         public event EventHandler<ConferenceStateChangedEnventArgs> StateChanged = delegate { };
@@ -82,7 +98,12 @@ namespace TestSample.iOS.Implementations
                 LocalStateChanged,
                 RemoteParticipantSpeaking,
                 IncomingCall,
-                IncomingCallEnd);
+                IncomingCallEnd,
+                ScreenSharing);
+        }
+        public void ScreenSharing(ACSRawOutgoingVideoStreamOptions aCSRawOutgoingVideoStreamOptions, ACSOutgoingVideoStreamStateChangedEventArgs aCSOutgoingVideoStreamStateChangedEventArgs)
+        {
+            outgoingVideoStreamState = aCSOutgoingVideoStreamStateChangedEventArgs.OutgoingVideoStreamState;
         }
         public void IncomingCallEnd(ACSIncomingCall aCSIncomingCall)
         {
@@ -142,6 +163,14 @@ namespace TestSample.iOS.Implementations
             RemoteVideoRemoved?.Invoke(this, new ParticipantVideoStatusChangedArgs(CommunicationIdentifierExtension.IdentifierExtension(remoteParticipant), remoteParticipant.IsMuted, null));
 
         }
+        private void configureAudioSession()
+        {
+            var session = AVAudioSession.SharedInstance();
+            session.SetCategory(AVAudioSessionCategory.PlayAndRecord, AVAudioSessionCategoryOptions.AllowBluetoothA2DP);
+            session.SetPreferredSampleRate(48000, out var N);
+            session.SetPreferredIOBufferDuration(0.05, out var N2);
+         session.SetActive(true);
+        }
         public void StateCall(ACSCallState acsCallState)
         {
             switch (acsCallState)
@@ -151,6 +180,7 @@ namespace TestSample.iOS.Implementations
                     break;
                 case ACSCallState.Connected:
                     StateChanged?.Invoke(this, new ConferenceStateChangedEnventArgs(ConferenceState.Connected));
+                    configureAudioSession();
                     break;
                 case ACSCallState.Connecting:
                     StateChanged?.Invoke(this, new ConferenceStateChangedEnventArgs(ConferenceState.Connecting));
@@ -258,7 +288,7 @@ namespace TestSample.iOS.Implementations
 
             //Callkit no implemented
             completion();
-        }      
+        }
         public void PushNotification(NSError nSError)
         {
         }
@@ -336,8 +366,8 @@ namespace TestSample.iOS.Implementations
                     RemoteVideoStreamAdded(new VideoStream(remoteParticipant, remoteVideoStream));
                 }
             }
-            if(VideoEnabled)
-            _call.StartVideo(_localVideoStream, OnVideoStarted);
+            if (VideoEnabled)
+                _call.StartVideo(_localVideoStream, OnVideoStarted);
 
         }
 
@@ -362,7 +392,7 @@ namespace TestSample.iOS.Implementations
                     case SelectedCamera.Back:
                         _videoDeviceInfo = _deviceManager.Cameras.First(c => c.CameraFacing == ACSCameraFacing.Front);
                         break;
-                }                
+                }
 
                 VideoEnabled = azureSetupRoom.VideoEnabled;
                 if (azureSetupRoom.VideoEnabled)
@@ -402,11 +432,89 @@ namespace TestSample.iOS.Implementations
         }
         void OnVideoStarted(NSError error)
         {
-             LoggerService.Debug("Video started");
+            LoggerService.Debug("Video started");
             if (error != null) throw new Exception(error.Description);
 
         }
-        public void StartScreensharing() { }
+        public async void StartScreensharing() 
+        {
+
+            options = CreateRawOutgoingVideoStreamOptions();
+            screenShareRawOutgoingVideoStream = new ACSScreenShareRawOutgoingVideoStream(options);
+
+
+            var recorder = RPScreenRecorder.SharedRecorder;
+            recorder.MicrophoneEnabled = false;
+            recorder.CameraEnabled = false;
+            if (recorder.Available)
+                await recorder.StartCaptureAsync(async (buffer, rPSampleBufferType, error) =>
+                {
+
+                    if (error != null)
+                    {
+                        return;
+                    }
+
+                    switch (rPSampleBufferType)
+                    {
+                        case RPSampleBufferType.Video:
+                            if (ScreenSharingDelegate.aCSVideoFrameSender != null)
+                            {
+                                if (outgoingVideoStreamState == ACSOutgoingVideoStreamState.Started)
+                                {
+                                    DispatchQueue.GetGlobalQueue(DispatchQueuePriority.Default).DispatchAsync(() =>
+                                    {
+                                        DispatchQueue.MainQueue.DispatchAsync(() =>
+                                        {
+                                            if (buffer != null)
+                                            {
+                                                recursiveLock.Lock();
+
+                                                var frameBuffer = buffer.GetImageBuffer();
+                                                ACSSoftwareBasedVideoFrameSender sender = (ACSSoftwareBasedVideoFrameSender)ScreenSharingDelegate.aCSVideoFrameSender;
+                                                var timeStamp = sender.TimestampInTicks;
+                                                if (frameBuffer != null)
+                                                {
+                                                    sender.SendFrame(frameBuffer, timeStamp, SendFrameCallBack);
+
+                                                }
+                                                buffer.Dispose();
+                                                recursiveLock.Unlock();
+
+                                            }
+                                        });
+                                    });
+
+
+
+                                }
+                            }
+                            break;
+                        case RPSampleBufferType.AudioApp:
+                            break;
+                        case RPSampleBufferType.AudioMic:
+                            break;
+                        default:
+                            break;
+                    }
+                });
+
+
+            #region Screensharing background await next version
+            //var bundle = NSBundle.MainBundle.GetUrlForResource("TestSample.iOS.ScreensharingExtension", "appex", "PlugIns");
+
+            //var frame = new CGRect(0, 0, 100, 100);
+            //var broadcastPicker = new RPSystemBroadcastPickerView(frame);
+            //var bundle2 = new NSBundle(bundle);
+            //broadcastPicker.ShowsMicrophoneButton = false;
+            //broadcastPicker.Hidden = false;
+            //broadcastPicker.PreferredExtension = bundle2.BundleIdentifier;
+            //var viewController = UIApplication.SharedApplication.KeyWindow.RootViewController;
+            //viewController.ModalInPopover = true;
+            //viewController.View.Add(broadcastPicker); 
+            #endregion
+            _call.StartVideo(screenShareRawOutgoingVideoStream, OnVideoStarted);
+        }
         public void StartCamera()
         {
             var cameras = _deviceManager.Cameras.FirstOrDefault();
@@ -454,7 +562,11 @@ namespace TestSample.iOS.Implementations
             else
                 ServerCallId = nSString.ToString();
         }
-        public void StopScreensharing() { }
+        public void StopScreensharing()
+        {
+            StopRecording();
+            _call.StopVideo(screenShareRawOutgoingVideoStream, OnVideoStarted);
+        }
         public void StopCamera()
         {
             try
@@ -505,10 +617,57 @@ namespace TestSample.iOS.Implementations
         {
 
         }
-        public async void Screensharing()
+       
+        public void toggleSendingScreenShareOutgoingVideo()
         {
-            //RPScreenRecorder rp = RPScreenRecorder.SharedRecorder;
+            var sendingScreenShare = false;
+            if (sendingScreenShare)
+            {
 
+            }
+        }
+        private ACSRawOutgoingVideoStreamOptions CreateRawOutgoingVideoStreamOptions()
+        {
+
+            var videoFormats = new List<ACSVideoFormat>();
+            var videoFormat = new ACSVideoFormat();
+            videoFormat.Width = (int)UIScreen.MainScreen.NativeBounds.Width;
+            videoFormat.Height = (int)UIScreen.MainScreen.NativeBounds.Height;
+            videoFormat.PixelFormat = ACSPixelFormat.Nv12;
+            videoFormat.VideoFrameKind = ACSVideoFrameKind.VideoSoftware;
+            videoFormat.FramesPerSecond = 30;
+            videoFormat.Stride1 = (int)UIScreen.MainScreen.NativeBounds.Width;
+            videoFormat.Stride2 = (int)UIScreen.MainScreen.NativeBounds.Width;
+            videoFormats.Add(videoFormat);
+
+            ACSRawOutgoingVideoStreamOptions options = new ACSRawOutgoingVideoStreamOptions();
+            options.VideoFormats = videoFormats.ToArray();
+            options.Delegate = new ScreenSharingDelegate(_videoCallbackManager);
+
+            return options;
+        }
+        private SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+       
+        public CVImageBuffer NextFrame(CMSampleBuffer cMSampleBuffer)
+        {
+            return cMSampleBuffer.GetImageBuffer();
+        }
+        public void SendFrameCallBack(ACSFrameConfirmation aCSFrameConfirmation, NSError nSError)
+        {
+
+        }
+        public async void StopRecording()
+        {
+            if (RPScreenRecorder.SharedRecorder.Recording)
+            {
+            }
+            else
+            {
+            }
+            await RPScreenRecorder.SharedRecorder.StopCaptureAsync();
+        }
+        public void OnReadyCallback()
+        {
         }
         public void Hangup()
         {
@@ -580,5 +739,52 @@ namespace TestSample.iOS.Implementations
         }
         public ACSRemoteParticipant RemoteParticipant { get; set; }
         public ACSRemoteVideoStream RemoteVideoStream { get; set; }
+    }
+    public class FrameProducerProtocol
+    {
+        public FrameProducerProtocol()
+        {
+        }
+        public FrameProducerProtocol(ACSVideoFormat aCSVideoFormat)
+        {
+        }
+    }
+    public class ScreenSharingProducer : NSObject, IRPScreenRecorderDelegate
+    {
+
+    }
+   
+    public class RawOutgoingVideoSender : ACSRawOutgoingVideoStreamOptionsDelegate
+    {
+        public RawOutgoingVideoSender() { }
+    }
+    public class RPBroadcastSampleHandler2 : RPBroadcastSampleHandler
+    {
+        public override void ProcessSampleBuffer(CoreMedia.CMSampleBuffer sampleBuffer, RPSampleBufferType sampleBufferType)
+        {
+            switch (sampleBufferType)
+            {
+                case RPSampleBufferType.Video:
+                    break;
+                case RPSampleBufferType.AudioApp:
+                    break;
+                case RPSampleBufferType.AudioMic:
+                    break;
+            }
+        }
+        public override void BroadcastPaused()
+        {
+            Console.WriteLine("BroadcastPaused");
+        }
+
+        public override void BroadcastResumed()
+        {
+            Console.WriteLine("BroadcastResumed");
+        }
+
+        public override void BroadcastFinished()
+        {
+            Console.WriteLine("BroadcastFinished");
+        }
     }
 }
