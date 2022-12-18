@@ -37,6 +37,7 @@ Windows support is official.
 | Start calls inside sdk                            | ✅             | ✅               |✅                |
 | Receive calls inside sdk                             | ✅          | ✅               | ✅             |
 | Add participants during calls                   | ✅         | ✅            | ✅           |
+| Remove participants during calls                   | :x:         | :x:            | :x:           |
 | call notification                             | :x:          | ✅               | ✅            |
 | answer calls with locked screen               | :construction:          | :hourglass:               | :x:         |
 | Switch layout between different call cases: only-local video view, one-on-one call view and group call with multiple participants                             | ✅             | ✅               |✅               |
@@ -45,13 +46,16 @@ Windows support is official.
 | Show remote participants with microphone on/off   | ✅            | ✅               |✅               |
 | Turning local video stream from camera on/off | ✅           | ✅               |✅               |
 | switch between cameras                         | ✅            | ✅               |:x:                 |
-| View remote screen sharing                     | :x:            | :x:                |:x:                 |
+| View remote screen sharing                     | :construction:            | :construction:                |:construction:                 |
 | Request permission to use audio and/or video   | ✅             | ✅               |✅               |
 | Mute/unmute local microphone audio      | ✅           | ✅               |✅               |
+| Mute/unmute local speaker audio      | :x:           | :x:               |:x:               |
+| Call in Hold      | :x:           | :x:               |:x:               |
 | Show dominant speaker                         | ✅             | ✅                 |✅                 |
 | Turn off screen on calls      | :hourglass:           | :hourglass:                |:x:               |
 | Toggle audio output                       | ✅           | ✅               |:x:               |
-| Screensharing                 | :x:               |:hourglass:            |:x:
+| Sharing Audio                | :x:              |:x:           |:x:
+| Screensharing                 | ✅               |✅           |:construction:
 | Background Voip API           | ✅  Services              |:construction:  Callkit           |:x:  VoipPhoneCall 
 ## Subtitle
 
