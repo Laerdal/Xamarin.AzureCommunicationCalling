@@ -15,7 +15,26 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
-
+using static Xamarin.Essentials.AppleSignInAuthenticator;
+using Windows.Graphics.Capture;
+using Microsoft.Graphics.Canvas;
+using Windows.Graphics.DirectX;
+using Windows.Graphics;
+using Microsoft.Graphics.Canvas.UI.Composition;
+using SkiaSharp;
+using Windows.UI;
+using Windows.UI.Composition;
+using Windows.Security.Authorization.AppCapabilityAccess;
+using System.IO;
+using Windows.Foundation;
+using Windows.Graphics.Imaging;
+using System.Collections;
+using Windows.Storage.Streams;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Graphics.DirectX.Direct3D11;
+using Windows.Media.Capture;
+using System.Runtime.InteropServices;
+using Xamarin.Essentials;
 
 namespace TestSample.UWP.Implementations
 {
@@ -37,6 +56,7 @@ namespace TestSample.UWP.Implementations
         public event EventHandler<ConferenceStateChangedEnventArgs> StateChanged;
         public event EventHandler<ParticipantSpeakingStatusChangedArgs> SpeakingChanged = delegate { };
 
+        private OutgoingVideoStream videoOptions;
         private readonly List<RemoteVideoStream> _remoteVideoStreams;
         private IncomingCall _incomingCall;
         public bool MicrophoneMute => _call.IsMuted;
@@ -91,6 +111,10 @@ namespace TestSample.UWP.Implementations
         public ConferenceManagerSpecificPlatformWindows()
         {
             _remoteVideoStreams = new List<RemoteVideoStream>();
+#if DEBUG
+            // Force graphicscapture.dll.
+            var picker = new GraphicsCapturePicker();
+#endif
         }
         public string CodeConference()
         {
@@ -398,16 +422,129 @@ namespace TestSample.UWP.Implementations
             }
         }
         public void StartScreensharing()
-        { }
+        {
+            videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
+        }
+
+        private RawOutgoingVideoStreamOptions CreateRawOutgoingVideoStreamOptions()
+        {
+            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+
+            var width = 1280;
+            var height = 720;
+            var videoFormats = new List<VideoFormat>();
+            VideoFormat videoFormat = new VideoFormat();
+            videoFormat.Width = 1280;
+            videoFormat.Height = 720;
+            videoFormat.PixelFormat = PixelFormat.Rgba;
+            videoFormat.VideoFrameKind = VideoFrameKind.VideoSoftware;
+            videoFormat.FramesPerSecond = 30;
+            videoFormat.Stride1 = width * 4;  
+            videoFormats.Add(videoFormat);
+            var options = new RawOutgoingVideoStreamOptions();
+            options.SetVideoFormats(videoFormats.ToArray());
+            options.OnVideoFrameSenderChanged += Options_OnVideoFrameSenderChanged1;
+            return options;
+        }
+        private VideoFrameSender videoFrameSender = null;
+
+        private void Options_OnVideoFrameSenderChanged1(object sender, VideoFrameSenderChangedEventArgs args)
+        {
+            videoFrameSender = args.VideoFrameSender;
+        }
+
+        private void Options_OnOutgoingVideoStreamStateChanged(object sender, OutgoingVideoStreamStateChangedEventArgs args)
+        {
+        }
+
+        private void Options_OnVideoFrameSenderChanged(object sender, VideoFrameSenderChangedEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static OutgoingVideoStreamState outgoingVideoStreamState = OutgoingVideoStreamState.None;
+        private RawOutgoingVideoStreamOptions options;
+        private OutgoingVideoStream outgoingVideoStream;
+        private ScreenShareRawOutgoingVideoStream screenShareRawOutgoingVideoStream;
+
+        private OutgoingVideoStream CreateVideoOptions(OutgoingVideoStreamKind outgoingVideoStreamKind)
+        {
+            options = CreateRawOutgoingVideoStreamOptions();
+
+            if (outgoingVideoStreamKind == OutgoingVideoStreamKind.Virtual)
+            {
+
+                outgoingVideoStream = new VirtualRawOutgoingVideoStream(options);
+            }
+            else
+            {
+
+                outgoingVideoStream = screenShareRawOutgoingVideoStream = new ScreenShareRawOutgoingVideoStream(options);
+                screenShareRawOutgoingVideoStream.OnOutgoingVideoStreamStateChanged += ScreenShareRawOutgoingVideoStream_OnOutgoingVideoStreamStateChanged;
+            }
+
+            return outgoingVideoStream;
+        }
+
+        private void ScreenShareRawOutgoingVideoStream_OnOutgoingVideoStreamStateChanged(object sender, OutgoingVideoStreamStateChangedEventArgs args)
+        {
+            switch (outgoingVideoStreamState = args.OutgoingVideoStreamState)
+            {
+                case OutgoingVideoStreamState.None:
+                    break;
+                case OutgoingVideoStreamState.Started:
+                    break;
+                case OutgoingVideoStreamState.Stopped:
+                    break;
+                case OutgoingVideoStreamState.Failed:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public async void SharingAudio()
+        {
+
+            RawOutgoingAudioProperties outgoingAudioOptions = new RawOutgoingAudioProperties(AudioSampleRate.SampleRate_48000, AudioChannelMode.ChannelMode_Stereo, AudioFormat.Pcm_16_Bit, OutgoingAudioMsOfDataPerBlock.Ms_20);
+            RawIncomingAudioProperties rawIncomingAudioProperties = new RawIncomingAudioProperties(AudioSampleRate.SampleRate_48000, AudioChannelMode.ChannelMode_Stereo, AudioFormat.Pcm_16_Bit);
+            RawOutgoingAudioStream outgoingAudioStream_ = new RawOutgoingAudioStream(outgoingAudioOptions);
+            RawIncomingAudioStream rawIncomingAudioStream = new RawIncomingAudioStream(rawIncomingAudioProperties);
+            OutgoingAudioBuffer outgoingAudioBuffer = new OutgoingAudioBuffer(outgoingAudioOptions);
+            //outgoingAudioStream_.SendOutgoingAudioBuffer(outgoingAudioBuffer);
+            //outgoingAudioStream_.OnAudioStreamReady += OutgoingAudioStream__OnAudioStreamReady;
+            rawIncomingAudioStream.OnNewAudioBufferAvailable += RawIncomingAudioStream_OnNewAudioBufferAvailable;
+            await _call.StartIncomingAudioStreamAsync(rawIncomingAudioStream);
+        }
+
+        private void RawIncomingAudioStream_OnNewAudioBufferAvailable(object sender, IncomingAudioEventArgs args)
+        {
+
+        }
+
+        private void OutgoingAudioStream__OnAudioStreamReady(object sender, PropertyChangedEventArgs args)
+        {
+
+        }
+
         public async void StartCamera()
         {
             await global::Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(global::Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                    LocalVideoAdded.Invoke(this, await GetCameraViewAsync());
-                    if (_localVideoStream[0] != null)
-                        await _call.StartVideo(_localVideoStream[0]);
+                   // SharingAudio();
+                    // StartScreensharing();
+                    videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
+                    if (videoOptions != null && _call != null)
+                        await _call.StartVideo(videoOptions);
+
+
+
+
+                    //LocalVideoAdded.Invoke(this, await GetCameraViewAsync());
+                    //if (_localVideoStream[0] != null)
+                    //    await _call.StartVideo(_localVideoStream[0]);
                 }
                 catch (Exception ex)
                 {
@@ -415,15 +552,284 @@ namespace TestSample.UWP.Implementations
                     new ConferenceExceptions(ex);
                 }
             });
+            await StartCaptureAsync();
+
+        }
+        public async Task StartCaptureAsync()
+        {
+            // The GraphicsCapturePicker follows the same pattern the
+            // file pickers do.
+
+            var picker = new GraphicsCapturePicker();
+            var item = await picker.PickSingleItemAsync();
+
+            if (item == null)
+                return;
+            // The item may be null if the user dismissed the
+            // control without making a selection or hit Cancel.
+            if (item != null)
+            {
+                // We'll define this method later in the document.
+                StartCaptureInternal(item);
+            }
+        }
+        private SizeInt32 _lastSize;
+        private GraphicsCaptureItem _item;
+        private Direct3D11CaptureFramePool _framePool;
+        private GraphicsCaptureSession _session;
+        private CanvasDevice _canvasDevice;
+        private CanvasBitmap _currentFrame;
+        private CompositionDrawingSurface _surface;
+        private CompositionGraphicsDevice _compositionGraphicsDevice;
+        public void StartCaptureInternal(GraphicsCaptureItem item)
+        {
+            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
+
+            _item = item;
+            if (_canvasDevice == null)
+            {
+                _canvasDevice = new CanvasDevice();
+            }
+            _compositionGraphicsDevice = CanvasComposition.CreateCompositionGraphicsDevice(
+                Window.Current.Compositor,
+                _canvasDevice);
+            _surface = _compositionGraphicsDevice.CreateDrawingSurface(
+                new Windows.Foundation.Size(1280, 720),
+                DirectXPixelFormat.B8G8R8A8UIntNormalized,
+                DirectXAlphaMode.Premultiplied);
+            _framePool = Direct3D11CaptureFramePool.Create(
+                _canvasDevice, // D3D device
+                DirectXPixelFormat.B8G8R8A8UIntNormalized, // Pixel format
+                2, // Number of frames
+                _item.Size); // Size of the buffers
+            _session = _framePool.CreateCaptureSession(item);
+            _framePool.FrameArrived += FramePool_FrameArrived;
+
+            _session.StartCapture();
+
+            //_framePool.FrameArrived += (s, a) =>
+            //{
+            //    // The FrameArrived event fires for every frame on the thread that
+            //    // created the Direct3D11CaptureFramePool. This means we don't have to
+            //    // do a null-check here, as we know we're the only one  
+            //    // dequeueing frames in our application.  
+
+            //    // NOTE: Disposing the frame retires it and returns  
+            //    // the buffer to the pool.
+            //    using (var frame = _framePool.TryGetNextFrame())
+            //    {
+            //        // We'll define this method later in the document.
+            //        ProcessFrame(frame);
+            //    }
+            //};
+        }
+        private async void FramePool_FrameArrived2(Direct3D11CaptureFramePool sender, object args)
+        {
+            using (var frame = _framePool.TryGetNextFrame())
+            {
+                using (var sbmp = await this.CreateSoftwareBitmapFromSurface(frame.Surface))
+                {
+                    _processBitmap(sbmp);
+
+
+                    //var array = await this.EncodeImageAsync(sbmp);
+                    //var cf = new CapturedFrame(array, sbmp.PixelWidth, sbmp.PixelHeight);
+                    //if (outgoingVideoStreamState == OutgoingVideoStreamState.Started)
+                    //{
+                    //    SoftwareBasedVideoFrameSender sender2 = (SoftwareBasedVideoFrameSender)videoFrameSender;
+                    //    //IBuffer buffer = byteArray.AsBuffer();
+                    //    //var buffer = Windows.Storage.Streams.Buffer.CreateCopyFromMemoryBuffer(stream.GetBuffer());
+                    //    //var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(buffer);
+                    //    //var output = dataReader.ReadString(Data.Length);
+                    //    //byteArray = cf.AsBuffer();
+                    //    VideoFormat videoFormat = sender2.VideoFormat;
+
+                    //    uint bufferSize = (uint)(videoFormat.Width * videoFormat.Height) * 4;
+                    //    MemoryBuffer memoryBuffer = new MemoryBuffer(bufferSize);
+                    //    IMemoryBufferReference memoryBufferReference = memoryBuffer.CreateReference();
+
+                    //    IMemoryBufferByteAccess memoryBufferByteAccess = memoryBufferReference as IMemoryBufferByteAccess;
+                        
+
+
+
+                    //    memoryBuffer = Windows.Storage.Streams.Buffer.CreateMemoryBufferOverIBuffer(array.AsBuffer());
+                    //    //MemoryBuffer memoryBuffer = new MemoryBuffer((uint)stream.Length);
+                    //    if (sender != null)
+                    //        await sender2.SendFrameAsync(memoryBuffer, sender2.TimestampInTicks);
+                    //}
+                }
+                //this.OnCapturedFrame?.Invoke(this, new CapturedFrameEventArgs(cf));
+              
+            }
+        }
+        private unsafe void _processBitmap(SoftwareBitmap bitmap)
+        {
+            using (var buffer = bitmap.LockBuffer(BitmapBufferAccessMode.Read))
+            {
+                var reference = (IMemoryBufferByteAccess)buffer.CreateReference();
+
+                reference.GetBuffer(out byte* nativeBuffer, out uint capacity);
+                byte[] frameBuffer = new byte[capacity];
+                for (int i = 0; i < bitmap.PixelHeight; i++)
+                {
+                    for (int j = 0; j < bitmap.PixelWidth; j++)
+                    {
+                        var indexManaged = (i * bitmap.PixelWidth + j) * 4;
+                        var indexNative = ((bitmap.PixelHeight - 1 - i) * bitmap.PixelWidth + j) * 4;
+                        frameBuffer[indexManaged + 0] = nativeBuffer[indexNative + 0];
+                        frameBuffer[indexManaged + 1] = nativeBuffer[indexNative + 1];
+                        frameBuffer[indexManaged + 2] = nativeBuffer[indexNative + 2];
+                        frameBuffer[indexManaged + 3] = nativeBuffer[indexNative + 3];
+                    }
+                }
+               // _mediaEncoder.WriteVideoFrame(frameBuffer, duration.Ticks);
+            }
+        }
+        private async Task<SoftwareBitmap> CreateSoftwareBitmapFromSurface(IDirect3DSurface surface)
+        {
+            return await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface);
+        }
+
+        private async Task<byte[]> EncodeImageAsync(SoftwareBitmap bitmap)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.BmpEncoderId, stream.AsRandomAccessStream());
+                encoder.SetSoftwareBitmap(bitmap);
+                await encoder.FlushAsync();
+                return stream.ToArray();
+            }
+        }
+        public bool IsBusy { get; set; } = false;
+        private void FramePool_FrameArrived(Direct3D11CaptureFramePool sender, object args)
+        {
+            using (var frame = _framePool.TryGetNextFrame())
+            {
+                if (frame == null)
+                    return;
+                // We'll define this method later in the document.
+                if(!IsBusy)
+                ProcessFrame(frame);
+            }
+        }
+
+        private void ProcessFrame(Direct3D11CaptureFrame frame)
+        {
+            IsBusy = true;
+            // Resize and device-lost leverage the same function on the
+            // Direct3D11CaptureFramePool. Refactoring it this way avoids
+            // throwing in the catch block below (device creation could always
+            // fail) along with ensuring that resize completes successfully and
+            // isn’t vulnerable to device-lost.
+            bool needsReset = false;
+            bool recreateDevice = false;
+
+            if ((frame.ContentSize.Width != _lastSize.Width) ||
+                (frame.ContentSize.Height != _lastSize.Height))
+            {
+                needsReset = true;
+                _lastSize = frame.ContentSize;
+            }
+
+            try
+            {
+                // Take the D3D11 surface and draw it into a  
+                // Composition surface.
+
+                // Convert our D3D11 surface into a Win2D object.
+                CanvasBitmap canvasBitmap = CanvasBitmap.CreateFromDirect3D11Surface(
+                    _canvasDevice,
+                    frame.Surface);
+
+                _currentFrame = canvasBitmap;
+                // Helper that handles the drawing for us.
+                FillSurfaceWithBitmap(canvasBitmap);
+            }
+
+            // This is the device-lost convention for Win2D.
+            catch (Exception e) when (_canvasDevice.IsDeviceLost(e.HResult))
+            {
+                // We lost our graphics device. Recreate it and reset
+                // our Direct3D11CaptureFramePool.  
+                needsReset = true;
+                recreateDevice = true;
+            }
+
+            if (needsReset)
+            {
+                ResetFramePool(frame.ContentSize, recreateDevice);
+            }
+        }
+        public IBuffer byteArray;
+        MemoryBuffer memoryBuffer;
+        private async void FillSurfaceWithBitmap(CanvasBitmap canvasBitmap)
+        {
+            try
+            {
+                Windows.Foundation.Size sizeInPixels = new Windows.Foundation.Size(canvasBitmap.Size.Width, canvasBitmap.Size.Height);
+                CanvasComposition.Resize(_surface, sizeInPixels);
+                using (var session = CanvasComposition.CreateDrawingSession(_surface))
+                {
+                    session.Clear(Colors.Transparent);
+                    session.DrawImage(canvasBitmap);
+                }
+                //var stream = new MemoryStream(byteArray);
+                if (outgoingVideoStreamState == OutgoingVideoStreamState.Started)
+                {
+                    SoftwareBasedVideoFrameSender sender = (SoftwareBasedVideoFrameSender)videoFrameSender;
+                    //IBuffer buffer = byteArray.AsBuffer();
+                    //var buffer = Windows.Storage.Streams.Buffer.CreateCopyFromMemoryBuffer(stream.GetBuffer());
+                    //var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(buffer);
+                    //var output = dataReader.ReadString(Data.Length);
+                    byteArray = canvasBitmap.GetPixelBytes().AsBuffer();
+                    memoryBuffer = Windows.Storage.Streams.Buffer.CreateMemoryBufferOverIBuffer(byteArray);
+                    //MemoryBuffer memoryBuffer = new MemoryBuffer((uint)stream.Length);
+                    if (sender != null)
+                        await sender.SendFrameAsync(memoryBuffer, sender.TimestampInTicks);
+                    IsBusy = false;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void ResetFramePool(SizeInt32 size, bool recreateDevice)
+        {
+            do
+            {
+                try
+                {
+                    if (recreateDevice)
+                    {
+                        _canvasDevice = new CanvasDevice();
+                    }
+
+                    _framePool.Recreate(
+                        _canvasDevice,
+                        DirectXPixelFormat.B8G8R8A8UIntNormalized,
+                        2,
+                        size);
+
+                }
+                // This is the device-lost convention for Win2D.
+                catch (Exception e) when (_canvasDevice.IsDeviceLost(e.HResult))
+                {
+                    _canvasDevice = null;
+                    recreateDevice = true;
+                }
+            } while (_canvasDevice == null);
         }
         public void StopScreensharing() { }
         public async Task<string> GetServerCallId()
         {
             return await _call.Info.GetServerCallIdAsync();
         }
-        public void SwitchCamera()
+        public async void SwitchCamera()
         {
-
+            await _call.StartOutgoingAudioStreamAsync(new OutgoingAudioStream());
         }
         public async void RetrieveCameraPreview()
         {
@@ -464,9 +870,12 @@ namespace TestSample.UWP.Implementations
             {
                 try
                 {
-                    LocalVideoAdded.Invoke(this, null);
-                    if (_localVideoStream[0] != null)
-                        await _call.StopVideo(_localVideoStream[0]);
+                    if (videoOptions != null)
+                        await _call.StopVideo(videoOptions);
+
+                    //LocalVideoAdded.Invoke(this, null);
+                    //if (_localVideoStream[0] != null)
+                    //    await _call.StopVideo(_localVideoStream[0]);
                 }
                 catch (Exception ex)
                 {
@@ -476,6 +885,30 @@ namespace TestSample.UWP.Implementations
 
             });
         }
+    }
+    public class CapturedFrame
+    {
+        public CapturedFrame(byte[] bitmap, int width, int height)
+        {
+            this.ImageData = bitmap;
+            this.Width = width;
+            this.Height = height;
+        }
+
+        public int Width { get; }
+
+        public int Height { get; }
+
+        public byte[] ImageData { get; internal set; } = new byte[0];
+
+        public object Raw => this.ImageData;
+    }
+    [ComImport]
+    [Guid("5b0d3235-4dba-4d44-865e-8f1d0e4fd04d")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    unsafe interface IMemoryBufferByteAccess
+    {
+        void GetBuffer(out byte* buffer, out uint capacity);
     }
 }
 
