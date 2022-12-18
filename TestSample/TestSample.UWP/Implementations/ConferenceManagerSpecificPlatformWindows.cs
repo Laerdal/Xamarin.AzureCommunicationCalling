@@ -423,7 +423,10 @@ namespace TestSample.UWP.Implementations
         }
         public void StartScreensharing()
         {
-            videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
+            //wait for the next version
+            //videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
+            //if (videoOptions != null && _call != null)
+            //    await _call.StartVideo(videoOptions);
         }
 
         private RawOutgoingVideoStreamOptions CreateRawOutgoingVideoStreamOptions()
@@ -503,24 +506,24 @@ namespace TestSample.UWP.Implementations
             }
         }
 
-        public async void SharingAudio()
-        {
+        //public async void SharingAudio()
+        //{
+        //wait for the next version
+        //    RawOutgoingAudioProperties outgoingAudioOptions = new RawOutgoingAudioProperties(AudioSampleRate.SampleRate_48000, AudioChannelMode.ChannelMode_Stereo, AudioFormat.Pcm_16_Bit, OutgoingAudioMsOfDataPerBlock.Ms_20);
+        //    RawIncomingAudioProperties rawIncomingAudioProperties = new RawIncomingAudioProperties(AudioSampleRate.SampleRate_48000, AudioChannelMode.ChannelMode_Stereo, AudioFormat.Pcm_16_Bit);
+        //    RawOutgoingAudioStream outgoingAudioStream_ = new RawOutgoingAudioStream(outgoingAudioOptions);
+        //    RawIncomingAudioStream rawIncomingAudioStream = new RawIncomingAudioStream(rawIncomingAudioProperties);
+        //    OutgoingAudioBuffer outgoingAudioBuffer = new OutgoingAudioBuffer(outgoingAudioOptions);
+        //    //outgoingAudioStream_.SendOutgoingAudioBuffer(outgoingAudioBuffer);
+        //    //outgoingAudioStream_.OnAudioStreamReady += OutgoingAudioStream__OnAudioStreamReady;
+        //    rawIncomingAudioStream.OnNewAudioBufferAvailable += RawIncomingAudioStream_OnNewAudioBufferAvailable;
+        //    await _call.StartIncomingAudioStreamAsync(rawIncomingAudioStream);
+        //}
 
-            RawOutgoingAudioProperties outgoingAudioOptions = new RawOutgoingAudioProperties(AudioSampleRate.SampleRate_48000, AudioChannelMode.ChannelMode_Stereo, AudioFormat.Pcm_16_Bit, OutgoingAudioMsOfDataPerBlock.Ms_20);
-            RawIncomingAudioProperties rawIncomingAudioProperties = new RawIncomingAudioProperties(AudioSampleRate.SampleRate_48000, AudioChannelMode.ChannelMode_Stereo, AudioFormat.Pcm_16_Bit);
-            RawOutgoingAudioStream outgoingAudioStream_ = new RawOutgoingAudioStream(outgoingAudioOptions);
-            RawIncomingAudioStream rawIncomingAudioStream = new RawIncomingAudioStream(rawIncomingAudioProperties);
-            OutgoingAudioBuffer outgoingAudioBuffer = new OutgoingAudioBuffer(outgoingAudioOptions);
-            //outgoingAudioStream_.SendOutgoingAudioBuffer(outgoingAudioBuffer);
-            //outgoingAudioStream_.OnAudioStreamReady += OutgoingAudioStream__OnAudioStreamReady;
-            rawIncomingAudioStream.OnNewAudioBufferAvailable += RawIncomingAudioStream_OnNewAudioBufferAvailable;
-            await _call.StartIncomingAudioStreamAsync(rawIncomingAudioStream);
-        }
+        //private void RawIncomingAudioStream_OnNewAudioBufferAvailable(object sender, IncomingAudioEventArgs args)
+        //{
 
-        private void RawIncomingAudioStream_OnNewAudioBufferAvailable(object sender, IncomingAudioEventArgs args)
-        {
-
-        }
+        //}
 
         private void OutgoingAudioStream__OnAudioStreamReady(object sender, PropertyChangedEventArgs args)
         {
@@ -532,23 +535,13 @@ namespace TestSample.UWP.Implementations
             await global::Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(global::Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
             {
                 try
-                {
-                   // SharingAudio();
-                    // StartScreensharing();
-                    videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
-                    if (videoOptions != null && _call != null)
-                        await _call.StartVideo(videoOptions);
-
-
-
-
-                    //LocalVideoAdded.Invoke(this, await GetCameraViewAsync());
-                    //if (_localVideoStream[0] != null)
-                    //    await _call.StartVideo(_localVideoStream[0]);
+                {                   
+                    LocalVideoAdded.Invoke(this, await GetCameraViewAsync());
+                    if (_localVideoStream[0] != null)
+                        await _call.StartVideo(_localVideoStream[0]);
                 }
                 catch (Exception ex)
                 {
-
                     new ConferenceExceptions(ex);
                 }
             });
@@ -822,14 +815,18 @@ namespace TestSample.UWP.Implementations
                 }
             } while (_canvasDevice == null);
         }
-        public void StopScreensharing() { }
+        public async void StopScreensharing() 
+        {
+            //wait for the next version
+            //if (videoOptions != null)
+               // await _call.StopVideo(videoOptions);
+        }
         public async Task<string> GetServerCallId()
         {
             return await _call.Info.GetServerCallIdAsync();
         }
         public async void SwitchCamera()
         {
-            await _call.StartOutgoingAudioStreamAsync(new OutgoingAudioStream());
         }
         public async void RetrieveCameraPreview()
         {
@@ -870,12 +867,9 @@ namespace TestSample.UWP.Implementations
             {
                 try
                 {
-                    if (videoOptions != null)
-                        await _call.StopVideo(videoOptions);
-
-                    //LocalVideoAdded.Invoke(this, null);
-                    //if (_localVideoStream[0] != null)
-                    //    await _call.StopVideo(_localVideoStream[0]);
+                    LocalVideoAdded.Invoke(this, null);
+                    if (_localVideoStream[0] != null)
+                        await _call.StopVideo(_localVideoStream[0]);
                 }
                 catch (Exception ex)
                 {
