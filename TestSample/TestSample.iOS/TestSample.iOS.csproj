@@ -51,8 +51,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>
-    </CodesignKey>
+    <CodesignKey></CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
@@ -81,6 +80,7 @@
     <Compile Include="Implementations\AzureCallback\CallingCallbackManager.cs" />
     <Compile Include="Implementations\AzureCallback\CallManagerIncomingCall.cs" />
     <Compile Include="Implementations\AzureCallback\RemoteParticipantDelegate.cs" />
+    <Compile Include="Implementations\AzureCallback\ScreenSharingDelegate.cs" />
     <Compile Include="Implementations\CallKit\ProviderDelegate.cs" />
     <Compile Include="Implementations\CommunicationIdentifierExtension.cs" />
     <Compile Include="Implementations\ConferenceManagerSpecificPlatformIos.cs" />
@@ -183,6 +183,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\Extension\TestSample.iOS.ScreensharingExtension\TestSample.iOS.ScreensharingExtension.csproj">
+      <Project>{70d09660-fdc9-478e-a376-f97463644ee7}</Project>
+      <Name>TestSample.iOS.ScreensharingExtension</Name>
+      <IsAppExtension>true</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\TestSample\TestSample.csproj">
       <Project>{E769322D-D4A3-46DD-AC1A-E70E6CC1FC5F}</Project>
       <Name>TestSample</Name>
@@ -190,5 +196,8 @@
   </ItemGroup>
   <ItemGroup>
     <LinkDescription Include="linker.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extension\" />
   </ItemGroup>
 </Project>
