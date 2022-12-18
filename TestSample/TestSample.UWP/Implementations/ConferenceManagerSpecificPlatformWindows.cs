@@ -550,19 +550,13 @@ namespace TestSample.UWP.Implementations
         }
         public async Task StartCaptureAsync()
         {
-            // The GraphicsCapturePicker follows the same pattern the
-            // file pickers do.
-
             var picker = new GraphicsCapturePicker();
             var item = await picker.PickSingleItemAsync();
 
             if (item == null)
                 return;
-            // The item may be null if the user dismissed the
-            // control without making a selection or hit Cancel.
             if (item != null)
             {
-                // We'll define this method later in the document.
                 StartCaptureInternal(item);
             }
         }
@@ -598,23 +592,7 @@ namespace TestSample.UWP.Implementations
             _session = _framePool.CreateCaptureSession(item);
             _framePool.FrameArrived += FramePool_FrameArrived;
 
-            _session.StartCapture();
-
-            //_framePool.FrameArrived += (s, a) =>
-            //{
-            //    // The FrameArrived event fires for every frame on the thread that
-            //    // created the Direct3D11CaptureFramePool. This means we don't have to
-            //    // do a null-check here, as we know we're the only one  
-            //    // dequeueing frames in our application.  
-
-            //    // NOTE: Disposing the frame retires it and returns  
-            //    // the buffer to the pool.
-            //    using (var frame = _framePool.TryGetNextFrame())
-            //    {
-            //        // We'll define this method later in the document.
-            //        ProcessFrame(frame);
-            //    }
-            //};
+            _session.StartCapture();           
         }
         private async void FramePool_FrameArrived2(Direct3D11CaptureFramePool sender, object args)
         {
@@ -623,36 +601,7 @@ namespace TestSample.UWP.Implementations
                 using (var sbmp = await this.CreateSoftwareBitmapFromSurface(frame.Surface))
                 {
                     _processBitmap(sbmp);
-
-
-                    //var array = await this.EncodeImageAsync(sbmp);
-                    //var cf = new CapturedFrame(array, sbmp.PixelWidth, sbmp.PixelHeight);
-                    //if (outgoingVideoStreamState == OutgoingVideoStreamState.Started)
-                    //{
-                    //    SoftwareBasedVideoFrameSender sender2 = (SoftwareBasedVideoFrameSender)videoFrameSender;
-                    //    //IBuffer buffer = byteArray.AsBuffer();
-                    //    //var buffer = Windows.Storage.Streams.Buffer.CreateCopyFromMemoryBuffer(stream.GetBuffer());
-                    //    //var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(buffer);
-                    //    //var output = dataReader.ReadString(Data.Length);
-                    //    //byteArray = cf.AsBuffer();
-                    //    VideoFormat videoFormat = sender2.VideoFormat;
-
-                    //    uint bufferSize = (uint)(videoFormat.Width * videoFormat.Height) * 4;
-                    //    MemoryBuffer memoryBuffer = new MemoryBuffer(bufferSize);
-                    //    IMemoryBufferReference memoryBufferReference = memoryBuffer.CreateReference();
-
-                    //    IMemoryBufferByteAccess memoryBufferByteAccess = memoryBufferReference as IMemoryBufferByteAccess;
-                        
-
-
-
-                    //    memoryBuffer = Windows.Storage.Streams.Buffer.CreateMemoryBufferOverIBuffer(array.AsBuffer());
-                    //    //MemoryBuffer memoryBuffer = new MemoryBuffer((uint)stream.Length);
-                    //    if (sender != null)
-                    //        await sender2.SendFrameAsync(memoryBuffer, sender2.TimestampInTicks);
-                    //}
                 }
-                //this.OnCapturedFrame?.Invoke(this, new CapturedFrameEventArgs(cf));
               
             }
         }
@@ -676,7 +625,6 @@ namespace TestSample.UWP.Implementations
                         frameBuffer[indexManaged + 3] = nativeBuffer[indexNative + 3];
                     }
                 }
-               // _mediaEncoder.WriteVideoFrame(frameBuffer, duration.Ticks);
             }
         }
         private async Task<SoftwareBitmap> CreateSoftwareBitmapFromSurface(IDirect3DSurface surface)
@@ -701,7 +649,6 @@ namespace TestSample.UWP.Implementations
             {
                 if (frame == null)
                     return;
-                // We'll define this method later in the document.
                 if(!IsBusy)
                 ProcessFrame(frame);
             }
@@ -710,11 +657,6 @@ namespace TestSample.UWP.Implementations
         private void ProcessFrame(Direct3D11CaptureFrame frame)
         {
             IsBusy = true;
-            // Resize and device-lost leverage the same function on the
-            // Direct3D11CaptureFramePool. Refactoring it this way avoids
-            // throwing in the catch block below (device creation could always
-            // fail) along with ensuring that resize completes successfully and
-            // isn’t vulnerable to device-lost.
             bool needsReset = false;
             bool recreateDevice = false;
 
@@ -727,24 +669,16 @@ namespace TestSample.UWP.Implementations
 
             try
             {
-                // Take the D3D11 surface and draw it into a  
-                // Composition surface.
-
-                // Convert our D3D11 surface into a Win2D object.
                 CanvasBitmap canvasBitmap = CanvasBitmap.CreateFromDirect3D11Surface(
                     _canvasDevice,
                     frame.Surface);
 
                 _currentFrame = canvasBitmap;
-                // Helper that handles the drawing for us.
                 FillSurfaceWithBitmap(canvasBitmap);
             }
 
-            // This is the device-lost convention for Win2D.
             catch (Exception e) when (_canvasDevice.IsDeviceLost(e.HResult))
             {
-                // We lost our graphics device. Recreate it and reset
-                // our Direct3D11CaptureFramePool.  
                 needsReset = true;
                 recreateDevice = true;
             }
@@ -767,17 +701,11 @@ namespace TestSample.UWP.Implementations
                     session.Clear(Colors.Transparent);
                     session.DrawImage(canvasBitmap);
                 }
-                //var stream = new MemoryStream(byteArray);
                 if (outgoingVideoStreamState == OutgoingVideoStreamState.Started)
                 {
                     SoftwareBasedVideoFrameSender sender = (SoftwareBasedVideoFrameSender)videoFrameSender;
-                    //IBuffer buffer = byteArray.AsBuffer();
-                    //var buffer = Windows.Storage.Streams.Buffer.CreateCopyFromMemoryBuffer(stream.GetBuffer());
-                    //var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(buffer);
-                    //var output = dataReader.ReadString(Data.Length);
                     byteArray = canvasBitmap.GetPixelBytes().AsBuffer();
                     memoryBuffer = Windows.Storage.Streams.Buffer.CreateMemoryBufferOverIBuffer(byteArray);
-                    //MemoryBuffer memoryBuffer = new MemoryBuffer((uint)stream.Length);
                     if (sender != null)
                         await sender.SendFrameAsync(memoryBuffer, sender.TimestampInTicks);
                     IsBusy = false;
@@ -807,7 +735,6 @@ namespace TestSample.UWP.Implementations
                         size);
 
                 }
-                // This is the device-lost convention for Win2D.
                 catch (Exception e) when (_canvasDevice.IsDeviceLost(e.HResult))
                 {
                     _canvasDevice = null;
