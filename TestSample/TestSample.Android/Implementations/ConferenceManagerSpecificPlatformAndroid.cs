@@ -27,6 +27,15 @@ using Android.Hardware.Lights;
 using TestSample.Droid.Implementations.Screensharing;
 using Android.Media.Projection;
 using Android.Widget;
+using Android.Graphics;
+using Java.Util.Logging;
+using Java.Lang;
+using Android.Hardware.Display;
+using Android.Views;
+using Android.Nfc;
+using Android.Content.Res;
+using Android.App;
+using Android.Util;
 
 [assembly: Dependency(typeof(ConferenceManagerSpecificPlatformAndroid))]
 
@@ -46,17 +55,18 @@ namespace TestSample.Droid.Implementations
         private Call _call;
 
         #region Screensharing
-        private MediaProjectionManager mediaProjectionManager;
+        public static MediaProjectionManager _mediaProjectionManager;
+        private MediaProjection _mediaProjection;
         private OutgoingVideoStream outgoingVideoStream;
-        private FrameGenerator frameGenerator;
+        public static FrameGenerator frameGenerator;
         private RawOutgoingVideoStreamOptions options;
         private ScreenShareRawOutgoingVideoStream screenShareRawOutgoingVideoStream;
-        private OutgoingVideoStream videoOptions; 
+        private OutgoingVideoStream videoOptions;
         #endregion
         Context _appContext = Xamarin.Essentials.Platform.AppContext;
 
 
-        public event EventHandler<View> LocalVideoAdded;
+        public event EventHandler<Xamarin.Forms.View> LocalVideoAdded;
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoAdded;
         public event EventHandler<ParticipantVideoStatusChangedArgs> RemoteVideoRemoved;
         public event EventHandler<ParticipantJoinArgs> ParticipantJoined;
@@ -303,6 +313,7 @@ namespace TestSample.Droid.Implementations
         {
             try
             {
+                
                 if (sender != null)
                 {
                     var stateConference = ((Call)sender);
@@ -417,6 +428,10 @@ namespace TestSample.Droid.Implementations
         }
         private void PublishRemoteVideoStream(RemoteParticipant remoteParticipant, RemoteVideoStream v)
         {
+            if(v.MediaStreamType == MediaStreamType.Video) 
+            { }
+            if(v.MediaStreamType == MediaStreamType.ScreenSharing) 
+            { }
             var renderer = new VideoStreamRenderer(v, _appContext);
             var renderingOptions = new CreateViewOptions(ScalingMode.Crop);
             var nativeView = renderer.CreateView(renderingOptions);
@@ -450,22 +465,39 @@ namespace TestSample.Droid.Implementations
             }
             return result;
         }
+        public static Intent ReturnDataFromPermission { get; private set; }
+        public static Android.App.Result ReturnResultFromPermission { get; private set; }
         private void ActivityOnActivityResult(int requestCode, Android.App.Result resultCode, Intent data)
         {
             if (requestCode == 256 && resultCode == Android.App.Result.Ok)
             {
-                videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
-                //Wait for android nuget helper publication to add. CallClientHelper.StartScreenShare(_call, videoOptions, _appContext);
+                ReturnDataFromPermission = data;
+                ReturnResultFromPermission = resultCode;
+
+                if (videoOptions == null)
+                    videoOptions = CreateVideoOptions(OutgoingVideoStreamKind.ScreenShare);
+                try
+                {
+                    CallClientHelper.StartVideo(_call, videoOptions, _appContext);
+                }
+                catch (System.Exception ex)
+                {
+                    new ConferenceExceptions(ex); return;
+                }
+
+                Intent startRecordingServiceIntent = new Intent(_appContext, typeof(ScreenSharingService));
+                startRecordingServiceIntent.SetAction("START_SERVICE");
+                _appContext.StartForegroundService(startRecordingServiceIntent);
             }
             else
             {
                 Toast.MakeText(_appContext, "Screensharing permission denied", ToastLength.Long).Show();
             }
-           
-        }
-        public void StartScreensharing() {
-            this.MainActivity.ActivityResult += ActivityOnActivityResult;
 
+        }       
+        public void StartScreensharing()
+        {
+            this.MainActivity.ActivityResult += ActivityOnActivityResult;
             RequestScreenSharePermissions();
         }
         public void RequestScreenSharePermissions()
@@ -473,19 +505,24 @@ namespace TestSample.Droid.Implementations
             try
             {
 
-                mediaProjectionManager = (MediaProjectionManager)Xamarin.Essentials.Platform.CurrentActivity.GetSystemService(Context.MediaProjectionService);
-                Xamarin.Essentials.Platform.CurrentActivity.StartActivityForResult(mediaProjectionManager.CreateScreenCaptureIntent(), 256);
+                _mediaProjectionManager = (MediaProjectionManager)Xamarin.Essentials.Platform.CurrentActivity.GetSystemService(Context.MediaProjectionService);
+                Xamarin.Essentials.Platform.CurrentActivity.StartActivityForResult(_mediaProjectionManager.CreateScreenCaptureIntent(), 256);
             }
             catch (System.Exception e)
             {
                 new ConferenceExceptions(e);
             }
         }
-        public void StopScreensharing() {
+        public void StopScreensharing()
+        {
             this.MainActivity.ActivityResult -= ActivityOnActivityResult;
-            frameGenerator.StopFrameIterator();
+            CallClientHelper.StopVideo(_call, videoOptions, _appContext);
+            videoOptions = null;
+            Intent startRecordingServiceIntent = new Intent(_appContext, typeof(ScreenSharingService));
+            startRecordingServiceIntent.SetAction("STOP_SERVICE");
+            _appContext.StartService(startRecordingServiceIntent);
         }
-       
+
 
         private OutgoingVideoStream CreateVideoOptions(OutgoingVideoStreamKind outgoingVideoStreamKind)
         {
@@ -503,15 +540,16 @@ namespace TestSample.Droid.Implementations
 
                 outgoingVideoStream = screenShareRawOutgoingVideoStream = new ScreenShareRawOutgoingVideoStream(options);
                 screenShareRawOutgoingVideoStream.OutgoingVideoStreamStateChanged += ScreenShareRawOutgoingVideoStream_OutgoingVideoStreamStateChanged; ;
-                options.VideoFrameSenderChanged += Options_VideoFrameSenderChanged; ;
+                //options.VideoFrameSenderChanged += Options_VideoFrameSenderChanged; ;
             }
 
             return outgoingVideoStream;
         }
-
+        public static OutgoingVideoStreamState outgoingVideoStreamState = OutgoingVideoStreamState.None;
         private void ScreenShareRawOutgoingVideoStream_OutgoingVideoStreamStateChanged(object sender, OutgoingVideoStreamStateChangedEventArgs e)
         {
-            if(e.P0.OutgoingVideoStreamState == OutgoingVideoStreamState.Started)
+            outgoingVideoStreamState = e.P0.OutgoingVideoStreamState;
+            if (e.P0.OutgoingVideoStreamState == OutgoingVideoStreamState.Started)
             {
 
             }
@@ -525,13 +563,9 @@ namespace TestSample.Droid.Implementations
             }
         }
 
-        private void Options_VideoFrameSenderChanged(object sender, VideoFrameSenderChangedEventArgs e)
-        {
-
-        }
-
         private RawOutgoingVideoStreamOptions CreateRawOutgoingVideoStreamOptions(FrameGenerator frameGenerator)
         {
+            var mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
 
             var width = 1280;
             var height = 720;
@@ -543,9 +577,10 @@ namespace TestSample.Droid.Implementations
             videoFormat.SetVideoFrameKind(VideoFrameKind.VideoSoftware);
             videoFormat.SetFramesPerSecond(30);
             videoFormat.SetStride1(width * 4);
+            videoFormat.SetStride2(width * 4);
+            videoFormat.SetStride3(width * 4);
             videoFormats.Add(videoFormat);
             RawOutgoingVideoStreamOptions options = new RawOutgoingVideoStreamOptions();
-
             options.SetVideoFormats(videoFormats);
             options.AddOnVideoFrameSenderChangedListener(frameGenerator);
 
@@ -584,8 +619,8 @@ namespace TestSample.Droid.Implementations
                     var cameras = _deviceManager.Cameras.FirstOrDefault();
                     if (cameras != null)
                     {
-                        if(_currentVideoStream == null)
-                        _currentVideoStream = new LocalVideoStream(_videoDeviceInfo, _appContext);
+                        if (_currentVideoStream == null)
+                            _currentVideoStream = new LocalVideoStream(_videoDeviceInfo, _appContext);
                         LocalVideoAdded?.Invoke(this, ShowPreview(_currentVideoStream));
                         CallClientHelper.StartVideo(_call, _currentVideoStream, _appContext);
                     }
@@ -609,7 +644,7 @@ namespace TestSample.Droid.Implementations
                 LocalVideoAdded?.Invoke(this, ShowPreview(_currentVideoStream));
             }
         }
-        public View ShowPreview(LocalVideoStream stream)
+        public Xamarin.Forms.View ShowPreview(LocalVideoStream stream)
         {
             if (stream != null)
             {
@@ -635,7 +670,7 @@ namespace TestSample.Droid.Implementations
                     new ConferenceExceptions(acsException);
 
                 }
-                catch (Exception acsException)
+                catch (System.Exception acsException)
                 {
                     new ConferenceExceptions(acsException);
 
@@ -670,5 +705,6 @@ namespace TestSample.Droid.Implementations
             CallClientHelper.Reject(_incomingCall);
             return Task.CompletedTask;
         }
-    }
+    }   
 }
+

@@ -18,7 +18,8 @@ namespace TestSample.iOS.Implementations
             Action<ACSCall> localStateChanged,
             Action<ACSRemoteParticipant> remoteParticipantSpeaking,
             Action<ACSIncomingCall> incomingCall,
-            Action<ACSIncomingCall> callEnded)
+            Action<ACSIncomingCall> callEnded,
+            Action<ACSRawOutgoingVideoStreamOptions, ACSOutgoingVideoStreamStateChangedEventArgs> screenSharing)
         {
             RemoteVideoStreamRemoved = remoteVideoStreamRemoved;
             RemoteParticipantAdded = remoteParticipantAdded;
@@ -29,6 +30,7 @@ namespace TestSample.iOS.Implementations
             RemoteParticipantSpeaking = remoteParticipantSpeaking;
             IncomingCall = incomingCall;
             CallEnded = callEnded;
+            ScreenSharing = screenSharing;
         }
         public Action<VideoStream> RemoteVideoStreamAdded { get; }
         public Action<VideoStream> RemoteVideoStreamRemoved { get; }
@@ -39,6 +41,7 @@ namespace TestSample.iOS.Implementations
         public Action<ACSIncomingCall> IncomingCall { get; }
         public Action<ACSIncomingCall> CallEnded { get; }
         public Action<ACSCall> LocalStateChanged { get; }
+        public Action<ACSRawOutgoingVideoStreamOptions, ACSOutgoingVideoStreamStateChangedEventArgs> ScreenSharing { get; }
         //public Action<VideoStream> RemoteStreamAdded { get; }
 
         public void HandleRemoteParticipantAdded(ACSRemoteParticipant participant)

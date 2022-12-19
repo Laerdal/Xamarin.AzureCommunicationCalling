@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static Android.Renderscripts.Sampler;
 
 namespace TestSample.Droid.Implementations.Screensharing
 {
@@ -64,7 +65,11 @@ namespace TestSample.Droid.Implementations.Screensharing
                 {
 
                     byte greyValue = (byte)random.NextInt(254);
-                    //Wait for android nuget helper publication to add. CallClientHelper.FillFrame(plane, bandBegin, bandBegin + bandThickness, (sbyte)greyValue);
+                    //Fill(plane, bandBegin, bandBegin + bandThickness, (sbyte)greyValue);
+                    //byte[] arr = new byte[plane.()];
+                    //var bt1 = plane.Get(arr); 
+                    //Java.Util.Arrays.Fill(arr, bandBegin, bandBegin + bandThickness, (sbyte)greyValue);
+                    //Java.Util.Arrays.Fill((sbyte)plane.Get(arr), bandBegin, bandBegin + bandThickness, (sbyte)greyValue);
                     bandBegin += bandThickness;
                 }
                 if (videoFrameSender is SoftwareBasedVideoFrameSender)
@@ -72,7 +77,7 @@ namespace TestSample.Droid.Implementations.Screensharing
                     SoftwareBasedVideoFrameSender sender = (SoftwareBasedVideoFrameSender)videoFrameSender;
 
                     long timeStamp = sender.TimestampInTicks;
-                    //Wait for android nuget helper publication to add. CallClientHelper.ScreensharingVideoFrameSender(sender, plane, timeStamp);
+                    CallClientHelper.SendFrame(sender, plane, timeStamp);
                 }
                 else
                 {
@@ -96,7 +101,7 @@ namespace TestSample.Droid.Implementations.Screensharing
                             plane);
 
                     long timeStamp = sender.TimestampInTicks;
-                    //Wait for android nuget helper publication to add. CallClientHelper.ScreensharingVideoFrameSender(sender, targetId, textureIds, timeStamp);
+                    CallClientHelper.SendFrame(sender, targetId, textureIds.FirstOrDefault(), timeStamp);
                 };
                 Thread.Sleep((long)(1000.0f / videoFormat.FramesPerSecond));
             }
@@ -111,7 +116,6 @@ namespace TestSample.Droid.Implementations.Screensharing
 
             return plane;
         }
-
         private void StartFrameIterator()
         {
 
@@ -145,37 +149,60 @@ namespace TestSample.Droid.Implementations.Screensharing
         public void OnVideoFrameSenderChanged(VideoFrameSenderChangedEvent p0)
         {
             StopFrameIterator();
-            this.videoFrameSender = p0.VideoFrameSender;         
-            StartFrameIterator();
+            this.videoFrameSender = p0.VideoFrameSender;
+            //StartFrameIterator();
         }
 
         public void OnImageAvailable(ImageReader reader)
         {
             //We are going to use this feature to send our screen frames to the application,
             //I am analyzing the possible possibilities for the best implementation of this.
-            Image image = reader.AcquireLatestImage();
-            if (image != null)
+            if (ConferenceManagerSpecificPlatformAndroid.outgoingVideoStreamState == OutgoingVideoStreamState.Started)
             {
-
-                var planes = image.GetPlanes();
-                if (planes.Length > 0)
+                Image image = reader.AcquireLatestImage();
+                if (image != null)
                 {
-
-                    Image.Plane plane = planes[0];
-                    var buffer = plane.Buffer;
-                    try
+                    if (reader.MaxImages > 1)
+                    {
+                    }
+                    var planes = image.GetPlanes();
+                    if (planes.Length > 0)
                     {
 
-                        SoftwareBasedVideoFrameSender sender = (SoftwareBasedVideoFrameSender)videoFrameSender;
-                        //Wait for android nuget helper publication to add. CallClientHelper.ScreensharingVideoFrameSender(sender, buffer, sender.TimestampInTicks);
-                    }
-                    catch (System.Exception ex)
-                    {
-                        new ConferenceExceptions(ex);
+                        Image.Plane plane = planes[0];
+                        var buffer1 = plane.Buffer;
+                        try
+                        {
+                            SoftwareBasedVideoFrameSender sender = (SoftwareBasedVideoFrameSender)videoFrameSender;
+                            if (planes.Length == 2)
+                            {
+                                var plane1 = planes[0].Buffer.AsReadOnlyBuffer();
+                                var plane2 = planes[1].Buffer.AsReadOnlyBuffer();
+                                CallClientHelper.SendFrame(sender, plane1, plane2, sender.TimestampInTicks);
 
+                            }
+                            else
+                            if (planes.Length == 3)
+                            {
+                                var plane1 = planes[0].Buffer.AsReadOnlyBuffer();
+                                var plane2 = planes[1].Buffer.AsReadOnlyBuffer();
+                                var plane3 = planes[2].Buffer.AsReadOnlyBuffer();
+                                CallClientHelper.SendFrame(sender, plane1, plane2, plane3, sender.TimestampInTicks);
+
+                            }
+                            else
+                            {
+                                CallClientHelper.SendFrame(sender, buffer1, sender.TimestampInTicks);
+                            }
+                        }
+                        catch (System.Exception ex)
+                        {
+                            new ConferenceExceptions(ex);
+
+                        }
                     }
+                    image.Close();
                 }
-                image.Close();
             }
         }
     }

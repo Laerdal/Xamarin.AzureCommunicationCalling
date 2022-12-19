@@ -4,7 +4,8 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6"
+  IgnorableNamespaces="uap mp uap6">
 
   <Identity
     Name="C6DA515B-6695-445E-9242-D3F0422C461E"
@@ -52,6 +53,7 @@
 	<Capabilities>
 		<Capability Name="internetClient" />
 		<Capability Name="internetClientServer"/>
+		<uap6:Capability Name="graphicsCapture"/>
 		<DeviceCapability Name="microphone"/>
 		<DeviceCapability Name="webcam"/>
 		<DeviceCapability Name="location"/>

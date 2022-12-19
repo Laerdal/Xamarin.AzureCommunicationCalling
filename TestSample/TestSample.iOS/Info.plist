@@ -58,5 +58,12 @@
 	<string>We use the microphone during an emergency to communicate with a dispatcher.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We use the camera during an emergency to communicate with a dispatcher</string>
+	<key>RPBroadcastProcessMode</key>
+	<string>RPBroadcastProcessModeSampleBuffer</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
 </dict>
 </plist>
