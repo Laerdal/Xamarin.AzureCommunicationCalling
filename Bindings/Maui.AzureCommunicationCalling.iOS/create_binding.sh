@@ -31,7 +31,7 @@ patch -s -p0 -N < headers.patch
 sharpie bind \
     -sdk iphoneos16.0 \
     -o tmp \
-    -namespace "Xamarin.AzureCommunicationCalling.iOS" \
+    -namespace "Maui.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
     nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
     -c -fmodules
