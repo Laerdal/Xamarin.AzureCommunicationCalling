@@ -815,21 +815,21 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	[DisableDefaultCtor]
 	interface ACSVideoOptions
 	{
-		// -(void)dealloc;
-		[Export ("dealloc")]
+        // -(instancetype _Nonnull)init:(NSArray<ACSOutgoingVideoStream *> * _Nonnull)outgoingVideoStreams __attribute__((swift_name("init(outgoingVideoStreams:)")));
+        [Export("init:")]
+        IntPtr Constructor(ACSOutgoingVideoStream[] outgoingVideoStreams);
+
+        // -(void)dealloc;
+        [Export ("dealloc")]
 		void Dealloc ();
 
 		// @property (readonly, copy) NSArray<ACSLocalVideoStream *> * _Nonnull localVideoStreams;
 		[Export("localVideoStreams", ArgumentSemantic.Copy)]
 		ACSLocalVideoStream[] LocalVideoStreams { get; }
 
-        // -(instancetype _Nonnull)init:(NSArray<ACSLocalVideoStream *> * _Nonnull)localVideoStreams __attribute__((swift_name("init(localVideoStreams:)")));
-        [Export("init:")]
-        IntPtr Constructor(ACSLocalVideoStream[] localVideoStreams);
-
-        // -(instancetype _Nonnull)initWithOutgoingVideoStreams:(NSArray<ACSOutgoingVideoStream *> * _Nonnull)outgoingVideoStreams __attribute__((swift_name("init(outgoingVideoStreams:)")));
-        [Export("initWithOutgoingVideoStreams:")]
-        IntPtr Constructor(ACSOutgoingVideoStream[] outgoingVideoStreams);
+        // -(instancetype _Nonnull)initWithLocalVideoStreams:(NSArray<ACSLocalVideoStream *> * _Nonnull)localVideoStreams __attribute__((swift_name("init(localVideoStreams:)")));
+        [Export("initWithLocalVideoStreams:")]
+		IntPtr Constructor(ACSLocalVideoStream[] localVideoStreams);
     }
 
     // @interface ACSLocalVideoStream : ACSOutgoingVideoStream
@@ -921,8 +921,12 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("muted")]
 		bool Muted { get; set; }
 
-		// @property (retain) ACSIncomingAudioStream * _Nullable incomingAudioStream;
-		[NullAllowed, Export ("incomingAudioStream", ArgumentSemantic.Retain)]
+        // @property BOOL speakerMuted;
+        [Export("speakerMuted")]
+        bool SpeakerMuted { get; set; }
+
+        // @property (retain) ACSIncomingAudioStream * _Nullable incomingAudioStream;
+        [NullAllowed, Export ("incomingAudioStream", ArgumentSemantic.Retain)]
 		ACSIncomingAudioStream IncomingAudioStream { get; set; }
 
 		// @property (retain) ACSOutgoingAudioStream * _Nullable outgoingAudioStream;
@@ -2079,29 +2083,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
     // @interface ACSLocalAudioStream : ACSOutgoingAudioStream
     [BaseType (typeof(ACSOutgoingAudioStream))]
-    [DisableDefaultCtor]
     interface ACSLocalAudioStream
     {
-	    // -(instancetype _Nonnull)init:(ACSAudioDeviceCategory)audioDeviceCategory __attribute__((swift_name("init(audioDeviceCategory:)")));
-	    [Export ("init:")]
-	    IntPtr Constructor (ACSAudioDeviceCategory audioDeviceCategory);
-
-	    // @property (readonly) ACSAudioDeviceCategory audioDeviceCategory;
-	    [Export ("audioDeviceCategory")]
-	    ACSAudioDeviceCategory AudioDeviceCategory { get; }
     }
 
     // @interface ACSRemoteAudioStream : ACSIncomingAudioStream
     [BaseType (typeof(ACSIncomingAudioStream))]
-    [DisableDefaultCtor]
     interface ACSRemoteAudioStream
     {
-	    // -(instancetype _Nonnull)init:(ACSAudioDeviceCategory)audioDeviceCategory __attribute__((swift_name("init(audioDeviceCategory:)")));
-	    [Export ("init:")]
-	    IntPtr Constructor (ACSAudioDeviceCategory audioDeviceCategory);
-
-	    // @property (readonly) ACSAudioDeviceCategory audioDeviceCategory;
-	    [Export ("audioDeviceCategory")]
-	    ACSAudioDeviceCategory AudioDeviceCategory { get; }
     }
 }

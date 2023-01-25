@@ -812,6 +812,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	[DisableDefaultCtor]
 	interface ACSVideoOptions
 	{
+		// -(instancetype _Nonnull)init:(NSArray<ACSOutgoingVideoStream *> * _Nonnull)outgoingVideoStreams __attribute__((swift_name("init(outgoingVideoStreams:)")));
+		[Export ("init:")]
+		NativeHandle Constructor (ACSOutgoingVideoStream[] outgoingVideoStreams);
+
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
@@ -820,13 +824,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		[Export ("localVideoStreams", ArgumentSemantic.Copy)]
 		ACSLocalVideoStream[] LocalVideoStreams { get; }
 
-		// -(instancetype _Nonnull)init:(NSArray<ACSLocalVideoStream *> * _Nonnull)localVideoStreams __attribute__((swift_name("init(localVideoStreams:)")));
-		[Export ("init:")]
+		// -(instancetype _Nonnull)initWithLocalVideoStreams:(NSArray<ACSLocalVideoStream *> * _Nonnull)localVideoStreams __attribute__((swift_name("init(localVideoStreams:)")));
+		[Export ("initWithLocalVideoStreams:")]
 		NativeHandle Constructor (ACSLocalVideoStream[] localVideoStreams);
-
-		// -(instancetype _Nonnull)initWithOutgoingVideoStreams:(NSArray<ACSOutgoingVideoStream *> * _Nonnull)outgoingVideoStreams __attribute__((swift_name("init(outgoingVideoStreams:)")));
-		[Export ("initWithOutgoingVideoStreams:")]
-		NativeHandle Constructor (ACSOutgoingVideoStream[] outgoingVideoStreams);
 	}
 
 	// @interface ACSLocalVideoStream : ACSOutgoingVideoStream
@@ -918,6 +918,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		// @property BOOL muted;
 		[Export ("muted")]
 		bool Muted { get; set; }
+
+		// @property BOOL speakerMuted;
+		[Export ("speakerMuted")]
+		bool SpeakerMuted { get; set; }
 
 		// @property (retain) ACSIncomingAudioStream * _Nullable incomingAudioStream;
 		[NullAllowed, Export ("incomingAudioStream", ArgumentSemantic.Retain)]
@@ -2078,29 +2082,13 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 
 	// @interface ACSLocalAudioStream : ACSOutgoingAudioStream
 	[BaseType (typeof(ACSOutgoingAudioStream))]
-	[DisableDefaultCtor]
 	interface ACSLocalAudioStream
 	{
-		// -(instancetype _Nonnull)init:(ACSAudioDeviceCategory)audioDeviceCategory __attribute__((swift_name("init(audioDeviceCategory:)")));
-		[Export ("init:")]
-		NativeHandle Constructor (ACSAudioDeviceCategory audioDeviceCategory);
-
-		// @property (readonly) ACSAudioDeviceCategory audioDeviceCategory;
-		[Export ("audioDeviceCategory")]
-		ACSAudioDeviceCategory AudioDeviceCategory { get; }
 	}
 
 	// @interface ACSRemoteAudioStream : ACSIncomingAudioStream
 	[BaseType (typeof(ACSIncomingAudioStream))]
-	[DisableDefaultCtor]
 	interface ACSRemoteAudioStream
 	{
-		// -(instancetype _Nonnull)init:(ACSAudioDeviceCategory)audioDeviceCategory __attribute__((swift_name("init(audioDeviceCategory:)")));
-		[Export ("init:")]
-		NativeHandle Constructor (ACSAudioDeviceCategory audioDeviceCategory);
-
-		// @property (readonly) ACSAudioDeviceCategory audioDeviceCategory;
-		[Export ("audioDeviceCategory")]
-		ACSAudioDeviceCategory AudioDeviceCategory { get; }
 	}
 }

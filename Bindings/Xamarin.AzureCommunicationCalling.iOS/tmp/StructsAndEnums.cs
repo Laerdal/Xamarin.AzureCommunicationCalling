@@ -215,11 +215,4 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		Intermediate = 0,
 		Final = 1
 	}
-
-	[Native]
-	public enum ACSAudioDeviceCategory : long
-	{
-		Physical = 0,
-		Dummy = 1
-	}
 }
