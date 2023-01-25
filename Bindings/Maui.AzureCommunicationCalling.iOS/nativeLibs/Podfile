@@ -1,7 +1,0 @@
-plugin 'cocoapods-binary'
-platform :ios, '14.0'
-use_frameworks!
-
-target 'nativeLibsPlaceholder' do
-   pod 'AzureCommunicationCalling', '~> 2.3.0-beta.1', :binary => true
-end

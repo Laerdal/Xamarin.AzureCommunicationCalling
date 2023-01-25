@@ -5,7 +5,7 @@ using UIKit;
 using CallKit;
 using CoreVideo;
 
-namespace Maui.AzureCommunicationCalling.iOS
+namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 {
 	[Static]
 	partial interface Constants

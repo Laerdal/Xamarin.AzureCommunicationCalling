@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using ObjCRuntime;
 
-namespace Maui.AzureCommunicationCalling.iOS
+namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct ACSStreamSize
