@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using ObjCRuntime;
 
-namespace Xamarin.AzureCommunicationCalling.iOS
+namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 {
 	[StructLayout (LayoutKind.Sequential)]
 	public struct ACSStreamSize
@@ -214,12 +214,5 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	{
 		Intermediate = 0,
 		Final = 1
-	}
-
-	[Native]
-	public enum ACSAudioDeviceCategory : long
-	{
-		Physical = 0,
-		Dummy = 1
 	}
 }

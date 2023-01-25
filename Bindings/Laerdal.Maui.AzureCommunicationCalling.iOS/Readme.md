@@ -7,3 +7,5 @@ Use it to setup and join ACS and/or Teams video/voice calls.
 
 See this url for more info:
 https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features
+
+To manually compile and update the wrapper to the latest native ios version, read the create_bindings.sh carefully.
