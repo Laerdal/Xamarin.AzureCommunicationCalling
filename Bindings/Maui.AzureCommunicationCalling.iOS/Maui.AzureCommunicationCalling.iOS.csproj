@@ -2,16 +2,16 @@
    <PropertyGroup>
      <PackageId>Maui.AzureCommunicationCalling.iOS</PackageId>
      <version>2.3.0-beta.2.1</version>
-     <TargetFramework>net7.0-ios</TargetFramework>
+     <TargetFrameworks>net7.0-ios;net6.0-ios</TargetFrameworks>
      <Nullable>enable</Nullable>
      <ImplicitUsings>true</ImplicitUsings>
      <IsBindingProject>true</IsBindingProject>
      <AssemblyName>Maui.AzureCommunicationCalling.iOS</AssemblyName>
-     <Title>AzureCommunicationCalling for net7.0-ios</Title>
+     <Title>AzureCommunicationCalling for net6.0-ios and net7.0-ios</Title>
      <Authors>Laerdal Medical</Authors>
      <Owners>Laerdal Medical</Owners>
      <Description>
-Naive binding for Azure Communication Calling SDK for iOS.
+Binding for Azure Communication Calling SDK for iOS.
 
 This nuget is just a binding library for this native iOS library : https://github.com/Azure/Communication/releases
      </Description>
