@@ -44,7 +44,8 @@ This nuget is just a binding library for this native iOS library : https://githu
    </ItemGroup>
    <ItemGroup>
      <None Include="Readme.md" Pack="true" PackagePath="\"/>
-     <Compile Remove="tmp\StructsAndEnums.cs" />
-     <Compile Remove="tmp\ApiDefinitions.cs" />
    </ItemGroup>
+   <PropertyGroup>
+  <DefaultItemExcludes>$(DefaultItemExcludes);tmp\**;nativeLibs\**</DefaultItemExcludes>
+</PropertyGroup>
  </Project>
