@@ -23,6 +23,7 @@ This nuget is just a binding library for this native iOS library : https://githu
      <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
      <License>MIT</License>
      <tags>Maui Azure Communication Services iOS</tags>
+     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
    </PropertyGroup>
 
    <ItemGroup>
