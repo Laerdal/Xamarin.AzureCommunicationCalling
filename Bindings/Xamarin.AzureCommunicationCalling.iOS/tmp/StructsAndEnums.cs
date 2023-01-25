@@ -35,39 +35,9 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		ParticipantAddedToUnconnectedCall = 0x8000,
 		ParticipantAlreadyAddedToCall = 0x10000,
 		CallFeatureExtensionNotFound = 0x20000,
-		DuplicateDeviceId = 0x40000,
-		DelegateIsRequired = 0x80000,
-		VirtualDeviceNotStarted = 0x100000,
-		InvalidVideoStreamCombination = 0x400000,
 		DisplayNameLengthLongerThanSupported = 0x800000,
 		FailedToHangupForEveryone = 0x1000000,
-		NoMultipleConnectionsWithDifferentClouds = 0x2000000,
-		NoActiveAudioStreamToStop = 0x4000000
-	}
-
-	[Native]
-	public enum ACSMediaStreamType : long
-	{
-		Video = 1,
-		ScreenSharing = 2
-	}
-
-	[Native]
-	public enum ACSOutgoingVideoStreamKind : long
-	{
-		None = 0,
-		Local = 1,
-		Virtual = 2,
-		ScreenShare = 3
-	}
-
-	[Native]
-	public enum ACSOutgoingVideoStreamState : long
-	{
-		None = 0,
-		Started = 1,
-		Stopped = 2,
-		Failed = 3
+		NoMultipleConnectionsWithDifferentClouds = 0x2000000
 	}
 
 	[Native]
@@ -92,21 +62,10 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSAudioStreamKind : long
+	public enum ACSMediaStreamType : long
 	{
-		None = 0,
-		Local = 1,
-		Virtual = 2
-	}
-
-	[Native]
-	public enum ACSParticipantRole : long
-	{
-		Unknown = 0,
-		Attendee = 1,
-		Consumer = 2,
-		Presenter = 3,
-		Organizer = 4
+		Video = 1,
+		ScreenSharing = 2
 	}
 
 	[Native]
@@ -145,14 +104,6 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSMediaStreamDirection : long
-	{
-		None = 0,
-		Incoming = 1,
-		Outgoing = 2
-	}
-
-	[Native]
 	public enum ACSDtmfTone : long
 	{
 		Zero = 0,
@@ -179,40 +130,5 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	{
 		Crop = 1,
 		Fit = 2
-	}
-
-	[Native]
-	public enum ACSRecordingState : long
-	{
-		Started = 0,
-		Paused = 1,
-		Ended = 2
-	}
-
-	[Native]
-	public enum ACSVideoFrameKind : long
-	{
-		None = 0,
-		VideoSoftware = 1,
-		VideoHardware = 2
-	}
-
-	[Native]
-	public enum ACSPixelFormat : long
-	{
-		None = 0,
-		Bgrx = 1,
-		Bgr24 = 2,
-		Rgbx = 3,
-		Rgba = 4,
-		Nv12 = 5,
-		I420 = 6
-	}
-
-	[Native]
-	public enum ACSResultType : long
-	{
-		Intermediate = 0,
-		Final = 1
 	}
 }
