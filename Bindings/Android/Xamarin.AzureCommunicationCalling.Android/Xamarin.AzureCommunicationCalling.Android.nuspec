@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCalling.Android</id>
-    <version>2.5.0-beta.1.1</version>
+    <version>2.5.1-beta.3.1</version>
     <title>AzureommunicationCalling for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -13,21 +13,16 @@ Naive binding for Azure Communication Calling SDK for Android.
 This nuget is just a binding library for https://search.maven.org/artifact/com.azure.android/azure-communication-calling
     </description>
     <releaseNotes>
-        2.5.0-beta.1
-
-        New Features
-Added support for audio start/stop.
-Added new API for muteSpeaker and property isSpeakerMuted.
-Add support for RecordingsUpdated event which will be triggered when a recording is started or stopped, Recordings property to list all current recordings and RecordingState indicates the state of a recording.
+        2.5.1-beta.3
     </releaseNotes>
-    <copyright>Copyright Laerdal Medical 2020</copyright>
+    <copyright>Copyright Laerdal Medical 2023</copyright>
     <repository type="git" url="https://github.com/laerdal/Xamarin.AzureCommunicationCalling"/>
     <projectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling></projectUrl>
     <license type="expression">MIT</license>
     <tags>Xamarin Azure Communication Calling Android</tags>
     <dependencies>
          <group targetFramework="MonoAndroid0.0">
-             <dependency id="Xamarin.AzureCommunicationCommon.Android" version="1.0.2.1"/>
+             <dependency id="Xamarin.AzureCommunicationCommon.Android" version="1.1.0.1"/>
          </group>
      </dependencies>        
   </metadata>

@@ -407,6 +407,20 @@
         abstract="false"
         deprecated="not deprecated"
         final="false"
+        name="isSpeakerMuted"
+        native="false"
+        return="boolean"
+        jni-return="Z"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Z" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
         name="setIncomingAudioStream"
         native="false"
         return="com.azure.android.communication.calling.AudioOptions"
@@ -459,6 +473,25 @@
           name="value"
           type="com.azure.android.communication.calling.OutgoingAudioStream"
           jni-type="Lcom/azure/android/communication/calling/OutgoingAudioStream;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="setSpeakerMuted"
+        native="false"
+        return="com.azure.android.communication.calling.AudioOptions"
+        jni-return="Lcom/azure/android/communication/calling/AudioOptions;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Z)Lcom/azure/android/communication/calling/AudioOptions;">
+        <parameter
+          name="value"
+          type="boolean"
+          jni-type="Z" />
       </method>
     </class>
     <class
@@ -1515,7 +1548,7 @@
         type="java.lang.String"
         type-generic-aware="java.lang.String"
         jni-signature="Ljava/lang/String;"
-        value="&quot;2.5.0-beta.1&quot;"
+        value="&quot;2.5.1-beta.3&quot;"
         visibility="public"
         volatile="false" />
     </class>
@@ -7747,6 +7780,143 @@
       extends="java.lang.Object"
       extends-generic-aware="java.lang.Object"
       final="true"
+      name="InternalCallClientEvents"
+      jni-signature="Lcom/azure/android/communication/calling/InternalCallClientEvents;"
+      source-file-name="InternalCallClientEvents.java"
+      static="false"
+      visibility="">
+      <constructor
+        deprecated="not deprecated"
+        final="false"
+        name="InternalCallClientEvents"
+        static="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="addOnCallAgentRegisteredIdentifierChangedListener"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/InternalIdentifiersListUpdatedListener;)V">
+        <parameter
+          name="listener"
+          type="com.azure.android.communication.calling.InternalIdentifiersListUpdatedListener"
+          jni-type="Lcom/azure/android/communication/calling/InternalIdentifiersListUpdatedListener;" />
+      </method>
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="finalize"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="protected"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="removeOnCallAgentRegisteredIdentifierChangedListener"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/InternalIdentifiersListUpdatedListener;)V">
+        <parameter
+          name="listener"
+          type="com.azure.android.communication.calling.InternalIdentifiersListUpdatedListener"
+          jni-type="Lcom/azure/android/communication/calling/InternalIdentifiersListUpdatedListener;" />
+      </method>
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/InternalCallClientEvents;"
+      enclosing-method-name="getInstance"
+      enclosing-method-signature="(JZ)Lcom/azure/android/communication/calling/InternalCallClientEvents;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="InternalCallClientEvents.1"
+      jni-signature="Lcom/azure/android/communication/calling/InternalCallClientEvents$1;"
+      source-file-name="InternalCallClientEvents.java"
+      static="true"
+      visibility="">
+      <implements
+        name="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        name-generic-aware="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        jni-type="Lcom/azure/android/communication/calling/ProjectedObjectCacheListener;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onCacheHit"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <interface
+      abstract="true"
+      deprecated="not deprecated"
+      final="false"
+      name="InternalIdentifiersListUpdatedListener"
+      jni-signature="Lcom/azure/android/communication/calling/InternalIdentifiersListUpdatedListener;"
+      source-file-name="InternalIdentifiersListUpdatedListener.java"
+      static="false"
+      visibility="">
+      <method
+        abstract="true"
+        deprecated="not deprecated"
+        final="false"
+        name="onInternalIdentifiersListUpdated"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Lcom/azure/android/communication/calling/InternalRegisteredIdentifiersChangedEvent;)V">
+        <parameter
+          name="p0"
+          type="com.azure.android.communication.calling.InternalRegisteredIdentifiersChangedEvent"
+          jni-type="Lcom/azure/android/communication/calling/InternalRegisteredIdentifiersChangedEvent;" />
+      </method>
+    </interface>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
       name="InternalPreviewRenderer"
       jni-signature="Lcom/azure/android/communication/calling/InternalPreviewRenderer;"
       source-file-name="InternalPreviewRenderer.java"
@@ -7918,6 +8088,81 @@
       extends="java.lang.Object"
       extends-generic-aware="java.lang.Object"
       final="true"
+      name="InternalRegisteredIdentifiersChangedEvent"
+      jni-signature="Lcom/azure/android/communication/calling/InternalRegisteredIdentifiersChangedEvent;"
+      source-file-name="InternalRegisteredIdentifiersChangedEvent.java"
+      static="false"
+      visibility="">
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="finalize"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="protected"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="getRegisteredIdentifiers"
+        native="false"
+        return="java.util.List&lt;java.lang.String&gt;"
+        jni-return="Ljava/util/List&lt;Ljava/lang/String;&gt;;"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()Ljava/util/List;" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/azure/android/communication/calling/InternalRegisteredIdentifiersChangedEvent;"
+      enclosing-method-name="getInstance"
+      enclosing-method-signature="(JZ)Lcom/azure/android/communication/calling/InternalRegisteredIdentifiersChangedEvent;"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
+      name="InternalRegisteredIdentifiersChangedEvent.1"
+      jni-signature="Lcom/azure/android/communication/calling/InternalRegisteredIdentifiersChangedEvent$1;"
+      source-file-name="InternalRegisteredIdentifiersChangedEvent.java"
+      static="true"
+      visibility="">
+      <implements
+        name="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        name-generic-aware="com.azure.android.communication.calling.ProjectedObjectCacheListener"
+        jni-type="Lcom/azure/android/communication/calling/ProjectedObjectCacheListener;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="onCacheHit"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="true"
       name="InternalTokenProvider"
       jni-signature="Lcom/azure/android/communication/calling/InternalTokenProvider;"
       source-file-name="InternalTokenProvider.java"
@@ -7965,6 +8210,25 @@
         bridge="false"
         synthetic="false"
         jni-signature="()V" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="parseToken"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="(Ljava/lang/String;)V">
+        <parameter
+          name="token"
+          type="java.lang.String"
+          jni-type="Ljava/lang/String;" />
+      </method>
       <method
         abstract="false"
         deprecated="not deprecated"
@@ -8256,26 +8520,7 @@
         visibility="public"
         bridge="false"
         synthetic="false"
-        jni-signature="(Lcom/azure/android/communication/calling/AudioDeviceCategory;)V">
-        <parameter
-          name="audioDeviceCategory"
-          type="com.azure.android.communication.calling.AudioDeviceCategory"
-          jni-type="Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
-      </constructor>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="getAudioDeviceCategory"
-        native="false"
-        return="com.azure.android.communication.calling.AudioDeviceCategory"
-        jni-return="Lcom/azure/android/communication/calling/AudioDeviceCategory;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
+        jni-signature="()V" />
     </class>
     <class
       abstract="false"
@@ -9148,6 +9393,30 @@
         deprecated="not deprecated"
         final="true"
         name="InitializationOptions"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.ModelClass"
+        type-generic-aware="com.azure.android.communication.calling.ModelClass"
+        jni-signature="Lcom/azure/android/communication/calling/ModelClass;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="InternalCallClientEvents"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.azure.android.communication.calling.ModelClass"
+        type-generic-aware="com.azure.android.communication.calling.ModelClass"
+        jni-signature="Lcom/azure/android/communication/calling/ModelClass;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="InternalRegisteredIdentifiersChangedEvent"
         static="true"
         synthetic="false"
         transient="false"
@@ -11520,26 +11789,7 @@
         visibility="public"
         bridge="false"
         synthetic="false"
-        jni-signature="(Lcom/azure/android/communication/calling/AudioDeviceCategory;)V">
-        <parameter
-          name="audioDeviceCategory"
-          type="com.azure.android.communication.calling.AudioDeviceCategory"
-          jni-type="Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
-      </constructor>
-      <method
-        abstract="false"
-        deprecated="not deprecated"
-        final="false"
-        name="getAudioDeviceCategory"
-        native="false"
-        return="com.azure.android.communication.calling.AudioDeviceCategory"
-        jni-return="Lcom/azure/android/communication/calling/AudioDeviceCategory;"
-        static="false"
-        synchronized="false"
-        visibility="public"
-        bridge="false"
-        synthetic="false"
-        jni-signature="()Lcom/azure/android/communication/calling/AudioDeviceCategory;" />
+        jni-signature="()V" />
     </class>
     <class
       abstract="false"
@@ -12995,10 +13245,10 @@
       deprecated="not deprecated"
       jni-extends="Ljava/lang/Enum;"
       extends="java.lang.Enum"
-      extends-generic-aware="java.lang.Enum&lt;com.azure.android.communication.calling.status&gt;"
+      extends-generic-aware="java.lang.Enum&lt;com.azure.android.communication.calling.Status&gt;"
       final="true"
-      name="status"
-      jni-signature="Lcom/azure/android/communication/calling/status;"
+      name="Status"
+      jni-signature="Lcom/azure/android/communication/calling/Status;"
       source-file-name="status.java"
       static="false"
       visibility="">
@@ -13008,14 +13258,14 @@
         final="false"
         name="valueOf"
         native="false"
-        return="com.azure.android.communication.calling.status"
-        jni-return="Lcom/azure/android/communication/calling/status;"
+        return="com.azure.android.communication.calling.Status"
+        jni-return="Lcom/azure/android/communication/calling/Status;"
         static="true"
         synchronized="false"
         visibility="public"
         bridge="false"
         synthetic="false"
-        jni-signature="(Ljava/lang/String;)Lcom/azure/android/communication/calling/status;">
+        jni-signature="(Ljava/lang/String;)Lcom/azure/android/communication/calling/Status;">
         <parameter
           name="name"
           type="java.lang.String"
@@ -13027,14 +13277,14 @@
         final="false"
         name="values"
         native="false"
-        return="com.azure.android.communication.calling.status[]"
-        jni-return="[Lcom/azure/android/communication/calling/status;"
+        return="com.azure.android.communication.calling.Status[]"
+        jni-return="[Lcom/azure/android/communication/calling/Status;"
         static="true"
         synchronized="false"
         visibility="public"
         bridge="false"
         synthetic="false"
-        jni-signature="()[Lcom/azure/android/communication/calling/status;" />
+        jni-signature="()[Lcom/azure/android/communication/calling/Status;" />
       <field
         deprecated="not deprecated"
         final="true"
@@ -13042,9 +13292,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13054,9 +13304,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13066,9 +13316,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13078,9 +13328,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13090,9 +13340,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13102,9 +13352,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13114,9 +13364,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13126,9 +13376,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13138,9 +13388,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13150,9 +13400,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13162,9 +13412,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13174,9 +13424,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13186,9 +13436,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13198,9 +13448,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13210,9 +13460,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13222,9 +13472,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13234,9 +13484,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13246,9 +13496,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13258,9 +13508,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13270,9 +13520,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13282,9 +13532,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13294,9 +13544,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13306,9 +13556,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13318,9 +13568,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13330,9 +13580,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13342,9 +13592,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13354,9 +13604,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13366,9 +13616,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13378,9 +13628,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13390,9 +13640,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13402,9 +13652,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13414,9 +13664,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13426,9 +13676,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13438,9 +13688,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13450,9 +13700,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
       <field
@@ -13462,9 +13712,9 @@
         static="true"
         synthetic="false"
         transient="false"
-        type="com.azure.android.communication.calling.status"
-        type-generic-aware="com.azure.android.communication.calling.status"
-        jni-signature="Lcom/azure/android/communication/calling/status;"
+        type="com.azure.android.communication.calling.Status"
+        type-generic-aware="com.azure.android.communication.calling.Status"
+        jni-signature="Lcom/azure/android/communication/calling/Status;"
         visibility="public"
         volatile="false" />
     </class>
@@ -20120,7 +20370,7 @@
       <field
         deprecated="not deprecated"
         final="true"
-        name="REAL_CAMERAv1"
+        name="REAL_CAMERA_v1"
         static="true"
         synthetic="false"
         transient="false"
@@ -20132,7 +20382,19 @@
       <field
         deprecated="not deprecated"
         final="true"
-        name="REAL_CAMERAv2"
+        name="REAL_CAMERA_v2"
+        static="true"
+        synthetic="false"
+        transient="false"
+        type="com.microsoft.dl.video.VideoPlatform.CameraManagerFactoryType"
+        type-generic-aware="com.microsoft.dl.video.VideoPlatform.CameraManagerFactoryType"
+        jni-signature="Lcom/microsoft/dl/video/VideoPlatform$CameraManagerFactoryType;"
+        visibility="public"
+        volatile="false" />
+      <field
+        deprecated="not deprecated"
+        final="true"
+        name="REAL_CAMERA_X"
         static="true"
         synthetic="false"
         transient="false"
@@ -73298,6 +73560,8 @@
       abstract="false"
       deprecated="not deprecated"
       enclosing-method-jni-type="Lcom/skype/android/video/render/GLESBindingRenderer;"
+      enclosing-method-name="onBindingReleased"
+      enclosing-method-signature="()V"
       jni-extends="Ljava/lang/Object;"
       extends="java.lang.Object"
       extends-generic-aware="java.lang.Object"
@@ -73305,8 +73569,61 @@
       name="GLESBindingRenderer.1"
       jni-signature="Lcom/skype/android/video/render/GLESBindingRenderer$1;"
       source-file-name="GLESBindingRenderer.java"
-      static="true"
-      visibility="" />
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/skype/android/video/render/GLESBindingRenderer;"
+      enclosing-method-name="cleanupEGL"
+      enclosing-method-signature="(Ljava/lang/Runnable;)V"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="GLESBindingRenderer.2"
+      jni-signature="Lcom/skype/android/video/render/GLESBindingRenderer$2;"
+      source-file-name="GLESBindingRenderer.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
     <class
       abstract="false"
       deprecated="not deprecated"
@@ -73393,6 +73710,40 @@
           type="int"
           jni-type="I" />
       </method>
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      enclosing-method-jni-type="Lcom/skype/android/video/render/GLESBindingRenderer$Renderer;"
+      enclosing-method-name="detach"
+      enclosing-method-signature="()V"
+      jni-extends="Ljava/lang/Object;"
+      extends="java.lang.Object"
+      extends-generic-aware="java.lang.Object"
+      final="false"
+      name="GLESBindingRenderer.Renderer.1"
+      jni-signature="Lcom/skype/android/video/render/GLESBindingRenderer$Renderer$1;"
+      source-file-name="GLESBindingRenderer.java"
+      static="false"
+      visibility="">
+      <implements
+        name="java.lang.Runnable"
+        name-generic-aware="java.lang.Runnable"
+        jni-type="Ljava/lang/Runnable;" />
+      <method
+        abstract="false"
+        deprecated="not deprecated"
+        final="false"
+        name="run"
+        native="false"
+        return="void"
+        jni-return="V"
+        static="false"
+        synchronized="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
     </class>
     <class
       abstract="false"
@@ -78505,6 +78856,28 @@
         deprecated="not deprecated"
         final="false"
         name="SysInfo"
+        static="false"
+        visibility="public"
+        bridge="false"
+        synthetic="false"
+        jni-signature="()V" />
+    </class>
+    <class
+      abstract="false"
+      deprecated="not deprecated"
+      jni-extends="Lcom/skype/rt/RtContext;"
+      extends="com.skype.rt.RtContext"
+      extends-generic-aware="com.skype.rt.RtContext"
+      final="false"
+      name="SysResources"
+      jni-signature="Lcom/skype/rt/SysResources;"
+      source-file-name="SysResources.java"
+      static="false"
+      visibility="public">
+      <constructor
+        deprecated="not deprecated"
+        final="false"
+        name="SysResources"
         static="false"
         visibility="public"
         bridge="false"
