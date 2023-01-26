@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Xamarin.AzureCommunicationCommon.Android</id>
-    <version>1.0.2.1</version>
+    <version>1.1.0.1</version>
     <title>AzureCommunicationCommon for Xamarin.Android</title>
     <authors>Laerdal Medical</authors>
     <owners>Laerdal Medical</owners>
@@ -12,7 +12,7 @@ Naive binding for Azure Communication Common SDK for Android.
 
 This nuget is just a binding library for https://search.maven.org/artifact/com.azure.android/azure-communication-common
     </description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>The android team for ACS are not doing release notes...</releaseNotes>
     <copyright>Copyright Laerdal Medical 2020</copyright>
     <repository type="git" url="https://github.com/laerdal/Xamarin.AzureCommunicationCalling"/>
     <projectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling></projectUrl>
