@@ -21,7 +21,7 @@ configurations {
 }
 
 dependencies {
-    azureCalling 'com.azure.android:azure-communication-calling:2.5.0-beta.1'
+    azureCalling 'com.azure.android:azure-communication-calling:2.5.1-beta.3'
     azureCommon 'com.azure.android:azure-communication-common:1.+'
     azureCore 'com.azure.android:azure-core:1.+'
     azureLogging 'com.azure.android:azure-core-logging:1.+'
@@ -29,17 +29,17 @@ dependencies {
 
 task downloadAzureCalling(type: Copy) {
     from configurations.azureCalling 
-    into 'Xamarin.AzureCommunicationCalling.Android/Jars'
+    into 'Laerdal.Maui.AzureCommunicationCalling.Android/Jars'
 }
 task downloadAzureCommon(type: Copy) {
     from configurations.azureCommon 
-    into 'Xamarin.AzureCommunicationCommon.Android/Jars'
+    into 'Laerdal.Maui.AzureCommunicationCommon.Android/Jars'
 }
 task downloadAzureCore(type: Copy) {
     from configurations.azureCore 
-    into 'Xamarin.AzureCore.Android/Jars'
+    into 'Laerdal.Maui.AzureCore.Android/Jars'
 }
 task downloadAzureLogging(type: Copy) {
     from configurations.azureLogging 
-    into 'Xamarin.AzureCoreLogging.Android/Jars'
+    into 'Laerdal.Maui.AzureCoreLogging.Android/Jars'
 }

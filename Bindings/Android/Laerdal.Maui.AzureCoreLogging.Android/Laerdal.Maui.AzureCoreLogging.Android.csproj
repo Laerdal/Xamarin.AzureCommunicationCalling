@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <PackageId>Laerdal.Maui.AzureCoreLogging.android</PackageId>
+      <version>1.0.0-beta.12.1</version>
+      <TargetFrameworks>net6.0-android</TargetFrameworks>
+      <Nullable>enable</Nullable>
+      <ImplicitUsings>true</ImplicitUsings>
+      <IsBindingProject>true</IsBindingProject>
+      <AssemblyName>Laerdal.Maui.AzureCoreLogging.Android</AssemblyName>
+      <Title>AzureCoreLogging for net6.0-android</Title>
+      <Authors>Laerdal Medical</Authors>
+      <Owners>Laerdal Medical</Owners>
+      <Description>
+ Binding for Azure Core Logging for Android.
+
+ This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-core-logging/ 
+
+          When binding this house of cards, remember the mind boggling fact
+          that azure-core depends on this, so bind this first, THEN core.
+      </Description>
+      <ReleaseNotes>
+          1.0.0-beta.12
+      </ReleaseNotes>
+      <Copyright>Copyright Laerdal Medical 2023</Copyright>
+      <Repository>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</Repository>
+      <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
+      <License>MIT</License>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
+      <tags>Maui Azure Android</tags>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+  <ItemGroup>
+    <LibraryProjectZip Include="Jars\azure-core-logging-1.0.0-beta.12.aar" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedReferenceJar Include="Jars\slf4j-api-1.7.32.jar" />
+  </ItemGroup>
+</Project>
