@@ -39,6 +39,7 @@
     <remove-node path="/api/package[@name='com.skype.android.video.hw.format']/*"/>
     <remove-node path="/api/package[@name='com.skype.android.video.graphics.egl']/*"/>
     <remove-node path="/api/package[@name='com.skype.android.jipc.omx.inout']/class[@name='OutCodecs']"/>
+    <remove-node path="/api/package[@name='com.skype.rt']/*"/>
 
     <!--
     <add-node path="/api/package[@name='com.microsoft.dl.video.capture.api']/class[@name='FpsRange']">
