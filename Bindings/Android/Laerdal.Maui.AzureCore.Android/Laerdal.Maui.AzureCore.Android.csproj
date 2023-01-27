@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <PackageId>Laerdal.Maui.AzureCore.android</PackageId>
+      <version>1.0.0-beta.12.1</version>
+      <TargetFrameworks>net6.0-android</TargetFrameworks>
+      <Nullable>enable</Nullable>
+      <ImplicitUsings>true</ImplicitUsings>
+      <IsBindingProject>true</IsBindingProject>
+      <AssemblyName>Laerdal.Maui.AzureCore.Android</AssemblyName>
+      <Title>AzureCore for net6.0-android</Title>
+      <Authors>Laerdal Medical</Authors>
+      <Owners>Laerdal Medical</Owners>
+      <Description>
+ Binding for Azure Core for Android.
+ 
+ This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-core/ 
+      </Description>
+      <ReleaseNotes>
+          1.0.0-beta.12
+      </ReleaseNotes>
+      <Copyright>Copyright Laerdal Medical 2023</Copyright>
+      <Repository>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</Repository>
+      <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
+      <License>MIT</License>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
+      <tags>Maui Azure Android</tags>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Laerdal.Maui.AzureCoreLogging.Android" Version="1.0.0-beta.12.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryProjectZip Include="Jars\azure-core-1.0.0-beta.12.aar" />
+  </ItemGroup>
+</Project>
