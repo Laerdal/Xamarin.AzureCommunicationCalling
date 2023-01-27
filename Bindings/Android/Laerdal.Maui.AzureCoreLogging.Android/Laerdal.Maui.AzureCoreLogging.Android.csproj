@@ -9,7 +9,6 @@
       <AssemblyName>Laerdal.Maui.AzureCoreLogging.Android</AssemblyName>
       <Title>AzureCoreLogging for net6.0-android</Title>
       <Authors>Laerdal Medical</Authors>
-      <Owners>Laerdal Medical</Owners>
       <Description>
  Binding for Azure Core Logging for Android.
 
@@ -18,15 +17,14 @@
           When binding this house of cards, remember the mind boggling fact
           that azure-core depends on this, so bind this first, THEN core.
       </Description>
-      <ReleaseNotes>
+      <PackagesReleaseNotes>
           1.0.0-beta.12
-      </ReleaseNotes>
+      </PackagesReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2023</Copyright>
-      <Repository>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</Repository>
+      <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
       <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
-      <License>MIT</License>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
-      <tags>Maui Azure Android</tags>
+      <PackageTags>Maui Azure Android</PackageTags>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
   <ItemGroup>

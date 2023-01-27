@@ -7,24 +7,22 @@
      <ImplicitUsings>true</ImplicitUsings>
      <IsBindingProject>true</IsBindingProject>
      <AssemblyName>Laerdal.Maui.AzureCommunicationCalling.iOS</AssemblyName>
-     <Title>AzureCommunicationCalling for net6.0-ios and net7.0-ios</Title>
+     <Title>AzureCommunicationCalling for net6.0-ios</Title>
      <Authors>Laerdal Medical</Authors>
-     <Owners>Laerdal Medical</Owners>
      <PackageReadmeFile>Readme.md</PackageReadmeFile>
      <Description>
 Binding for Azure Communication Calling SDK for iOS.
 
 This nuget is just a binding library for this native iOS library : https://github.com/Azure/Communication/releases
      </Description>
-     <ReleaseNotes>
+     <PackageReleaseNotes>
         Update to 2.3.0-beta.4.
-     </ReleaseNotes>
+     </PackageReleaseNotes>
      <Copyright>Copyright Laerdal Medical 2023</Copyright>
-     <Repository>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</Repository>
-     <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
-     <License>MIT</License>
+     <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
+     <PackageProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</PackageProjectUrl>
      <PackageLicenseExpression>MIT</PackageLicenseExpression>
-     <tags>Maui Azure Communication Services iOS</tags>
+     <PackageTags>Maui Azure Communication Services iOS</PackageTags>
      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
    </PropertyGroup>
 
