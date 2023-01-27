@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <PackageId>Laerdal.Maui.AzureCommunicationHelper.android</PackageId>
+      <version>2.5.1-beta.3.2</version>
+      <TargetFrameworks>net6.0-android</TargetFrameworks>
+      <Nullable>enable</Nullable>
+      <ImplicitUsings>true</ImplicitUsings>
+      <IsBindingProject>true</IsBindingProject>
+      <AssemblyName>Laerdal.Maui.AzureCommunicationCallingHelper.Android</AssemblyName>
+      <Title>AzureCoreLogging for net6.0-android</Title>
+      <Authors>Laerdal Medical</Authors>
+      <Description>
+        This  nuget is a horrible hack to solve the problem of ACS using retrofuture in its
+        public facing API, which I never managed to bind...
+
+        The nuget contains a few static methods, basically just exposing all the retrofutures
+        from ACS as regular methods...
+      </Description>
+      <PackagesReleaseNotes>
+        2.5.1-beta.3.2
+      </PackagesReleaseNotes>
+      <Copyright>Copyright Laerdal Medical 2023</Copyright>
+      <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
+      <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
+      <PackageTags>Maui Azure Android</PackageTags>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+     <ItemGroup>
+     <PackageReference Include="Laerdal.Maui.AzureCommunicationCalling.android" Version="2.5.1-beta.3.1" />
+   </ItemGroup>
+</Project>
