@@ -42,7 +42,12 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		DisplayNameLengthLongerThanSupported = 0x800000,
 		FailedToHangupForEveryone = 0x1000000,
 		NoMultipleConnectionsWithDifferentClouds = 0x2000000,
-		NoActiveAudioStreamToStop = 0x4000000
+		NoActiveAudioStreamToStop = 0x4000000,
+		TeamsCaptionsCallFeatureStartFailed = 0x20000000,
+		TeamsCaptionsCallFeatureSetSpokenLanguageFailed = 0x2000,
+		TeamsCaptionsCallFeatureSetCaptionLanguageFailed = 0x200000,
+		FeatureExtensionNotFound = 0x8000000,
+		VideoEffectNotSupported = 0x10000000
 	}
 
 	[Native]
@@ -97,6 +102,16 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		None = 0,
 		Local = 1,
 		Virtual = 2
+	}
+
+	[Native]
+	public enum ACSPushNotificationEventType : long
+	{
+		None = 0,
+		IncomingCall = 107,
+		IncomingGroupCall = 109,
+		IncomingPstnCall = 111,
+		StopRinging = 110
 	}
 
 	[Native]
@@ -190,6 +205,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSCaptionsResultType : long
+	{
+		Partial = 0,
+		Final = 1
+	}
+
+	[Native]
 	public enum ACSVideoFrameKind : long
 	{
 		None = 0,
@@ -214,5 +236,14 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	{
 		Intermediate = 0,
 		Final = 1
+	}
+
+	[Native]
+	public enum ACSDiagnosticQuality : long
+	{
+		Unknown = 0,
+		Good = 1,
+		Poor = 2,
+		Bad = 3
 	}
 }
