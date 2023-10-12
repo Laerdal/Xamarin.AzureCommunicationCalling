@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCoreLogging.android</PackageId>
-      <version>1.0.0-beta.12.2</version>
+      <version>1.0.0-beta.12.3</version>
       <TargetFrameworks>net7.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
@@ -18,7 +18,7 @@
           that azure-core depends on this, so bind this first, THEN core.
       </Description>
       <PackagesReleaseNotes>
-          1.0.0-beta.12.2
+          1.0.0-beta.12.3
       </PackagesReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2023</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
@@ -31,6 +31,6 @@
     <LibraryProjectZip Include="Jars\azure-core-logging-1.0.0-beta.12.aar" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedReferenceJar Include="Jars\slf4j-api-1.7.32.jar" />
+    <AndroidLibrary Include="Jars\slf4j-api-1.7.32.jar" Bind="false"/>
   </ItemGroup>
 </Project>
