@@ -25,7 +25,7 @@
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Laerdal.Maui.AzureCore.Android" Version="1.0.0-beta.12.2" />
+    <PackageReference Include="Laerdal.Maui.AzureCore.Android" Version="1.0.0-beta.12.3" />
   </ItemGroup>
   <PropertyGroup>
     <AndroidGenerateResourceDesigner>false</AndroidGenerateResourceDesigner>

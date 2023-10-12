@@ -21,8 +21,8 @@ configurations {
 }
 
 dependencies {
-    azureCalling 'com.azure.android:azure-communication-calling:2.5.1-beta.5'
-    azureCommon 'com.azure.android:azure-communication-common:1.+'
+    azureCalling 'com.azure.android:azure-communication-calling:2.5.0'
+    azureCommon 'com.azure.android:azure-communication-common:1.1.0'
     azureCore 'com.azure.android:azure-core:1.+'
     azureLogging 'com.azure.android:azure-core-logging:1.+'
 }

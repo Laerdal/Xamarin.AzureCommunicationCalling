@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCoreLogging.android</PackageId>
-      <version>1.0.0-beta.12.1</version>
-      <TargetFrameworks>net6.0-android</TargetFrameworks>
+      <version>1.0.0-beta.12.2</version>
+      <TargetFrameworks>net7.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>
@@ -18,7 +18,7 @@
           that azure-core depends on this, so bind this first, THEN core.
       </Description>
       <PackagesReleaseNotes>
-          1.0.0-beta.12
+          1.0.0-beta.12.2
       </PackagesReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2023</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
