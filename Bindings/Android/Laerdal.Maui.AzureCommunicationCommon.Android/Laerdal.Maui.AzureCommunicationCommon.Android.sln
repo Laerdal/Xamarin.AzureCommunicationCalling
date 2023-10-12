@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 25.0.1704.3
+VisualStudioVersion = 25.0.1706.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laerdal.Maui.AzureCommunicationCommon.Android", "Laerdal.Maui.AzureCommunicationCommon.Android.csproj", "{EC56518D-8E0B-400C-BAAB-460444517E2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laerdal.Maui.AzureCommunicationCommon.Android", "Laerdal.Maui.AzureCommunicationCommon.Android.csproj", "{22E59B85-02FF-46D1-B151-431D50B0AF85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EC56518D-8E0B-400C-BAAB-460444517E2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC56518D-8E0B-400C-BAAB-460444517E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC56518D-8E0B-400C-BAAB-460444517E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC56518D-8E0B-400C-BAAB-460444517E2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E59B85-02FF-46D1-B151-431D50B0AF85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E59B85-02FF-46D1-B151-431D50B0AF85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E59B85-02FF-46D1-B151-431D50B0AF85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E59B85-02FF-46D1-B151-431D50B0AF85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {84BD9759-9BBA-422A-BA0F-917C39B8CCA3}
+		SolutionGuid = {8F4875D4-CF53-48E4-A972-ADCFF6299626}
 	EndGlobalSection
 EndGlobal
