@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using ObjCRuntime;
 
-namespace Xamarin.AzureCommunicationCalling.iOS
+namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct ACSStreamSize
@@ -37,8 +37,84 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 		CallFeatureExtensionNotFound = 0x20000,
 		DisplayNameLengthLongerThanSupported = 0x800000,
 		FailedToHangupForEveryone = 0x1000000,
-        NoMultipleConnectionsWithDifferentClouds = 0x2000000,
-    }
+		NoMultipleConnectionsWithDifferentClouds = 0x2000000,
+		DuplicateDeviceId = 0x40000,
+		VirtualDeviceNotStarted = 0x100000,
+		InvalidVideoStreamCombination = 0x400000,
+		InvalidVideoFormat = 0x101,
+		InvalidBuffer = 0x102,
+		RawVideoFrameNotSent = 0x103,
+		UnsupportedVideoStreamResolution = 0x104,
+		FeatureExtensionNotFound = 0x4000000,
+		VideoEffectNotSupported = 0x8000000,
+		FailedToSendRawAudioBuffer = 0x5,
+		CannotMuteVirtualAudioStream = 0x6,
+		CaptionsFailedToStart = 0x105,
+		CaptionsDisabledByConfigurations = 0x106,
+		CaptionsPolicyDisabled = 0x107,
+		CaptionsNotActive = 0x108,
+		CaptionsRequestedLanguageNotSupported = 0x109,
+		FailedToSetCaptionLanguage = 0x10a,
+		SetCaptionLanguageDisabled = 0x10b,
+		SetCaptionLanguageTeamsPremiumLicenseNeeded = 0x10c,
+		CaptionsFailedToSetSpokenLanguage = 0x10d,
+		CaptionsSetSpokenLanguageDisabled = 0x10e,
+		GetCaptionsFailedCallStateNotConnected = 0x10f,
+		GetCaptionsFailed = 0x110,
+	}
+
+	[Native]
+	public enum ACSVideoStreamType : long
+	{
+		RemoteIncoming = 1,
+		RawIncoming = 2,
+		LocalOutgoing = 3,
+		VirtualOutgoing = 4,
+		ScreenShareOutgoing = 5,
+	}
+
+	[Native]
+	public enum ACSVideoStreamSourceType : long
+	{
+		Video = 1,
+		ScreenSharing = 2,
+	}
+
+	[Native]
+	public enum ACSVideoStreamState : long
+	{
+		Available = 0,
+		Started = 1,
+		Stopping = 2,
+		Stopped = 3,
+		NotAvailable = 4,
+	}
+
+	[Native]
+	public enum ACSStreamDirection : long
+	{
+		Incoming = 0,
+		Outgoing = 1,
+	}
+
+	[Native]
+	public enum ACSPushNotificationEventType : long
+	{
+		IncomingCall = 107,
+		IncomingGroupCall = 109,
+		IncomingPstnCall = 111,
+		StopRinging = 110,
+	}
+
+	[Native]
+	public enum ACSCallParticipantRole : long
+	{
+		Uninitialized = 0,
+		Attendee = 1,
+		Consumer = 2,
+		Presenter = 3,
+		Organizer = 4,
+	}
 
 	[Native]
 	public enum ACSCameraFacing : long
@@ -103,6 +179,22 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSAudioStreamType : long
+	{
+		RemoteIncoming = 1,
+		RawIncoming = 2,
+		LocalOutgoing = 3,
+		VirtualOutgoing = 4,
+	}
+
+	[Native]
+	public enum ACSAudioStreamState : long
+	{
+		arted = 0,
+		opped = 1,
+	}
+
+	[Native]
 	public enum ACSMediaStreamDirection : long
 	{
 		None = 0,
@@ -137,5 +229,94 @@ namespace Xamarin.AzureCommunicationCalling.iOS
 	{
 		Crop = 1,
 		Fit = 2,
+	}
+
+	[Native]
+	public enum ACSCaptionsResultType : long
+	{
+		Partial = 0,
+		Final = 1
+	}
+
+	[Native]
+	public enum ACSCaptionsType : long
+	{
+		ACSCaptionsTypeTeamsCaptions = 0
+	}
+
+	[Native]
+	public enum ACSRawVideoFrameType : long
+	{
+		Buffer = 0,
+		Texture = 1
+	}
+
+	[Native]
+	public enum ACSVideoStreamPixelFormat : long
+	{
+		Bgrx = 0,
+		Bgr24 = 1,
+		Rgbx = 2,
+		Rgba = 3,
+		Nv12 = 4,
+		I420 = 5
+	}
+
+	[Native]
+	public enum ACSVideoStreamResolution : long
+	{
+		Unknown = 0,
+		P1080 = 1,
+		P720 = 2,
+		P540 = 3,
+		P480 = 4,
+		P360 = 5,
+		P270 = 6,
+		P240 = 7,
+		P180 = 8,
+		FullHd = 9,
+		Hd = 10,
+		Vga = 11,
+		Qvga = 12
+	}
+
+	[Native]
+	public enum ACSAudioStreamSampleRate : long
+	{
+		ACSAudioStreamSampleRateHz_16000 = 0,
+		ACSAudioStreamSampleRateHz_22050 = 1,
+		ACSAudioStreamSampleRateHz_24000 = 2,
+		ACSAudioStreamSampleRateHz_32000 = 3,
+		ACSAudioStreamSampleRateHz_44100 = 4,
+		ACSAudioStreamSampleRateHz_48000 = 5
+	}
+
+	[Native]
+	public enum ACSAudioStreamChannelMode : long
+	{
+		Mono = 0,
+		Stereo = 1
+	}
+
+	[Native]
+	public enum ACSAudioStreamFormat : long
+	{
+		ACSAudioStreamFormatPcm16Bit = 0
+	}
+
+	[Native]
+	public enum ACSAudioStreamBufferDuration : long
+	{
+		ACSAudioStreamBufferDurationMs10 = 0,
+		ACSAudioStreamBufferDurationMs20 = 1
+	}
+
+	[Native]
+	public enum ACSDiagnosticQuality : long
+	{
+		Unknown = 0,
+		Good = 1,
+		Poor = 2,
+		Bad = 3
 	}
 }

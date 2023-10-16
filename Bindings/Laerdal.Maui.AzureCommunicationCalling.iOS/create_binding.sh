@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # First get the latest version of the native pods:
-# (if the version you want is not in cocoapod yet,
+# (if the version you want is not in cocoapod yet(it probably isnt...),
 #  skip the below steps and instead unzip file from
 #  github release page in nativeLibs/Pods/AzureCommunicationCalling)
 # Release page: https://github.com/Azure/Communication/releases
@@ -14,13 +14,16 @@ cd nativeLibs/Pods/AzureCommunicationCalling/
 mkdir AzureCommunicationCalling.framework
 cp -R AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/* \
     AzureCommunicationCalling.framework/.
+
+# I used to bundle the x86 simulator version also, but seems MS stopped shipping it...
+# (Tried bundling the new "os-arm64_x86_64-simulator", but lipo complains about it being arm64,
+#  and hence can not be in the same lib...)
 lipo -create \
     AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/AzureCommunicationCalling \
-    AzureCommunicationCalling.xcframework/ios-x86_64-simulator/AzureCommunicationCalling.framework/AzureCommunicationCalling \
     -output AzureCommunicationCalling.framework/AzureCommunicationCalling
 cd ../../../
 
-# For this to work, change includes of azure deps(core and communicationCommon) header files
+# For this to work, change includes of azure deps(AzureCommunicationCommon) header files
 # in below .h file, to reltive includes.
 # Instead of :
 #
@@ -36,10 +39,10 @@ cd ../../../
 
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
 # Make sure you have the latest Sharpie version:
-# 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
+# 3.5.73 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 sharpie bind \
-    -sdk iphoneos16.2 \
+    -sdk iphoneos16.4 \
     -o tmp \
     -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
