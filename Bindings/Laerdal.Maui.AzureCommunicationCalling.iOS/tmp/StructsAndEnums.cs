@@ -35,19 +35,70 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		ParticipantAddedToUnconnectedCall = 0x8000,
 		ParticipantAlreadyAddedToCall = 0x10000,
 		CallFeatureExtensionNotFound = 0x20000,
-		DuplicateDeviceId = 0x40000,
-		DelegateIsRequired = 0x80000,
-		VirtualDeviceNotStarted = 0x100000,
-		InvalidVideoStreamCombination = 0x400000,
 		DisplayNameLengthLongerThanSupported = 0x800000,
 		FailedToHangupForEveryone = 0x1000000,
 		NoMultipleConnectionsWithDifferentClouds = 0x2000000,
-		NoActiveAudioStreamToStop = 0x4000000,
-		TeamsCaptionsCallFeatureStartFailed = 0x20000000,
-		TeamsCaptionsCallFeatureSetSpokenLanguageFailed = 0x2000,
-		TeamsCaptionsCallFeatureSetCaptionLanguageFailed = 0x200000,
-		FeatureExtensionNotFound = 0x8000000,
-		VideoEffectNotSupported = 0x10000000
+		DuplicateDeviceId = 0x40000,
+		VirtualDeviceNotStarted = 0x100000,
+		InvalidVideoStreamCombination = 0x400000,
+		InvalidVideoFormat = 0x101,
+		InvalidBuffer = 0x102,
+		RawVideoFrameNotSent = 0x103,
+		UnsupportedVideoStreamResolution = 0x104,
+		FeatureExtensionNotFound = 0x4000000,
+		VideoEffectNotSupported = 0x8000000,
+		FailedToSendRawAudioBuffer = 0x5,
+		CannotMuteVirtualAudioStream = 0x6,
+		CaptionsFailedToStart = 0x105,
+		CaptionsDisabledByConfigurations = 0x106,
+		CaptionsPolicyDisabled = 0x107,
+		CaptionsNotActive = 0x108,
+		CaptionsRequestedLanguageNotSupported = 0x109,
+		FailedToSetCaptionLanguage = 0x10a,
+		SetCaptionLanguageDisabled = 0x10b,
+		SetCaptionLanguageTeamsPremiumLicenseNeeded = 0x10c,
+		CaptionsFailedToSetSpokenLanguage = 0x10d,
+		CaptionsSetSpokenLanguageDisabled = 0x10e,
+		GetCaptionsFailedCallStateNotConnected = 0x10f,
+		GetCaptionsFailed = 0x110,
+		SpotlightDisabledByConfigurations = 0x111,
+		MaxSpotlightReached = 0x112,
+		SpotlightParticipantEmptyList = 0x113,
+		SignalingOperationFailed = 0x114
+	}
+
+	[Native]
+	public enum ACSVideoStreamType : long
+	{
+		RemoteIncoming = 1,
+		RawIncoming = 2,
+		LocalOutgoing = 3,
+		VirtualOutgoing = 4,
+		ScreenShareOutgoing = 5
+	}
+
+	[Native]
+	public enum ACSVideoStreamSourceType : long
+	{
+		Video = 1,
+		ScreenSharing = 2
+	}
+
+	[Native]
+	public enum ACSVideoStreamState : long
+	{
+		Available = 0,
+		Started = 1,
+		Stopping = 2,
+		Stopped = 3,
+		NotAvailable = 4
+	}
+
+	[Native]
+	public enum ACSStreamDirection : long
+	{
+		Incoming = 0,
+		Outgoing = 1
 	}
 
 	[Native]
@@ -55,24 +106,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	{
 		Video = 1,
 		ScreenSharing = 2
-	}
-
-	[Native]
-	public enum ACSOutgoingVideoStreamKind : long
-	{
-		None = 0,
-		Local = 1,
-		Virtual = 2,
-		ScreenShare = 3
-	}
-
-	[Native]
-	public enum ACSOutgoingVideoStreamState : long
-	{
-		None = 0,
-		Started = 1,
-		Stopped = 2,
-		Failed = 3
 	}
 
 	[Native]
@@ -97,17 +130,8 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSAudioStreamKind : long
-	{
-		None = 0,
-		Local = 1,
-		Virtual = 2
-	}
-
-	[Native]
 	public enum ACSPushNotificationEventType : long
 	{
-		None = 0,
 		IncomingCall = 107,
 		IncomingGroupCall = 109,
 		IncomingPstnCall = 111,
@@ -115,9 +139,9 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSParticipantRole : long
+	public enum ACSCallParticipantRole : long
 	{
-		Unknown = 0,
+		Uninitialized = 0,
 		Attendee = 1,
 		Consumer = 2,
 		Presenter = 3,
@@ -160,11 +184,19 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSMediaStreamDirection : long
+	public enum ACSAudioStreamType : long
 	{
-		None = 0,
-		Incoming = 1,
-		Outgoing = 2
+		RemoteIncoming = 1,
+		RawIncoming = 2,
+		LocalOutgoing = 3,
+		VirtualOutgoing = 4
+	}
+
+	[Native]
+	public enum ACSAudioStreamState : long
+	{
+		arted = 0,
+		opped = 1
 	}
 
 	[Native]
@@ -197,14 +229,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSRecordingState : long
-	{
-		Started = 0,
-		Paused = 1,
-		Ended = 2
-	}
-
-	[Native]
 	public enum ACSCaptionsResultType : long
 	{
 		Partial = 0,
@@ -212,30 +236,76 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSVideoFrameKind : long
+	public enum ACSCaptionsType : long
 	{
-		None = 0,
-		VideoSoftware = 1,
-		VideoHardware = 2
+		ACSCaptionsTypeTeamsCaptions = 0
 	}
 
 	[Native]
-	public enum ACSPixelFormat : long
+	public enum ACSRawVideoFrameType : long
 	{
-		None = 0,
-		Bgrx = 1,
-		Bgr24 = 2,
-		Rgbx = 3,
-		Rgba = 4,
-		Nv12 = 5,
-		I420 = 6
+		Buffer = 0,
+		Texture = 1
 	}
 
 	[Native]
-	public enum ACSResultType : long
+	public enum ACSVideoStreamPixelFormat : long
 	{
-		Intermediate = 0,
-		Final = 1
+		Bgrx = 0,
+		Bgr24 = 1,
+		Rgbx = 2,
+		Rgba = 3,
+		Nv12 = 4,
+		I420 = 5
+	}
+
+	[Native]
+	public enum ACSVideoStreamResolution : long
+	{
+		Unknown = 0,
+		P1080 = 1,
+		P720 = 2,
+		P540 = 3,
+		P480 = 4,
+		P360 = 5,
+		P270 = 6,
+		P240 = 7,
+		P180 = 8,
+		FullHd = 9,
+		Hd = 10,
+		Vga = 11,
+		Qvga = 12
+	}
+
+	[Native]
+	public enum ACSAudioStreamSampleRate : long
+	{
+		ACSAudioStreamSampleRateHz_16000 = 0,
+		ACSAudioStreamSampleRateHz_22050 = 1,
+		ACSAudioStreamSampleRateHz_24000 = 2,
+		ACSAudioStreamSampleRateHz_32000 = 3,
+		ACSAudioStreamSampleRateHz_44100 = 4,
+		ACSAudioStreamSampleRateHz_48000 = 5
+	}
+
+	[Native]
+	public enum ACSAudioStreamChannelMode : long
+	{
+		Mono = 0,
+		Stereo = 1
+	}
+
+	[Native]
+	public enum ACSAudioStreamFormat : long
+	{
+		ACSAudioStreamFormatPcm16Bit = 0
+	}
+
+	[Native]
+	public enum ACSAudioStreamBufferDuration : long
+	{
+		ACSAudioStreamBufferDurationMs10 = 0,
+		ACSAudioStreamBufferDurationMs20 = 1
 	}
 
 	[Native]

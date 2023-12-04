@@ -11,14 +11,24 @@ cd ..
 
 # Now make a fat framework containing both x86 and arm64 binaries
 cd nativeLibs/Pods/AzureCommunicationCalling/
+rm -rf AzureCommunicationCalling.framework
 mkdir AzureCommunicationCalling.framework
-cp -R AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/* \
+cp -R AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/* \
     AzureCommunicationCalling.framework/.
-lipo -create \
-    AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/AzureCommunicationCalling \
-    AzureCommunicationCalling.xcframework/ios-x86_64-simulator/AzureCommunicationCalling.framework/AzureCommunicationCalling \
-    -output AzureCommunicationCalling.framework/AzureCommunicationCalling
-cd ../../../
+
+cd ..
+rm -rf AzureCommunicationCommon # delete the symlink
+mkdir AzureCommunicationCommon  # create real folder
+cd AzureCommunicationCommon
+mkdir AzureCommunicationCommon.framework   # create .framework subfolder
+cd ..
+cp -R _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework/* \
+    AzureCommunicationCommon/AzureCommunicationCommon.framework/.
+# since AzureCommunicationCalling uses ios-arm64_x86_64-simulator lipo is potentialy not needed?    
+# lipo -create \
+#     AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/AzureCommunicationCalling \
+#     -output AzureCommunicationCalling.framework/AzureCommunicationCalling
+cd ../../    # go back to folder of the 
 
 # For this to work, change includes of azure deps(core and communicationCommon) header files
 # in below .h file, to reltive includes.
@@ -28,18 +38,17 @@ cd ../../../
 #
 # Make it look like this:
 #
-#import "../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"
-#
-# The below patch command worked a long time ago, its not maintained.... just do it manually....
-# patch -s -p0 -N < headers.patch
+#import "../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"#
 
+sed -i '' 's|import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|import "../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' \
+ nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h
 
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
 # Make sure you have the latest Sharpie version:
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 sharpie bind \
-    -sdk iphoneos16.2 \
+    -sdk iphoneos17.0 \
     -o tmp \
     -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
@@ -49,4 +58,9 @@ sharpie bind \
 # Lastly: manually copy tmp bindings into this folder and make it work
 # This is the time consuming work: to through bindings, sometimes sharpie
 # fails to get method name, sometime there is a check annotation etc....
+# WHAT SHOULD BE DONE
+# NativeHandle to IntPtr
+# CXHandle to IntPtr
+# comment out body of CommunicationTokenRefreshOptions
+# get rid of all [Verify] tags
 echo "Remember to merge new tmp/*.cs into ./*.cs"
