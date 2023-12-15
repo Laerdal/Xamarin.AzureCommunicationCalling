@@ -24,11 +24,11 @@ mkdir AzureCommunicationCommon.framework   # create .framework subfolder
 cd ..
 cp -R _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework/* \
     AzureCommunicationCommon/AzureCommunicationCommon.framework/.
-# since AzureCommunicationCalling uses ios-arm64_x86_64-simulator lipo is potentialy not needed?    
+# since AzureCommunicationCalling uses ios-arm64_x86_64-simulator lipo is potentialy not needed?
 # lipo -create \
 #     AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/AzureCommunicationCalling \
 #     -output AzureCommunicationCalling.framework/AzureCommunicationCalling
-cd ../../    # go back to folder of the 
+cd ../../    # go back to folder of the
 
 # For this to work, change includes of azure deps(core and communicationCommon) header files
 # in below .h file, to reltive includes.
@@ -48,7 +48,7 @@ sed -i '' 's|import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 sharpie bind \
-    -sdk iphoneos17.0 \
+    -sdk iphoneos16.4 \
     -o tmp \
     -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
