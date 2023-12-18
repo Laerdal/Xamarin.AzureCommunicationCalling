@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationCommon.android</PackageId>
-      <version>1.1.0.2</version>
+      <version>1.1.1.1</version>
       <TargetFrameworks>net7.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
@@ -16,7 +16,7 @@
  This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-communication-common
       </Description>
       <PackageReleaseNotes>
-          1.1.0.2
+          1.1.1.1
       </PackageReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2023</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
@@ -25,20 +25,19 @@
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Laerdal.Maui.AzureCore.Android" Version="1.0.0-beta.12.2" />
+    <PackageReference Include="Laerdal.Maui.AzureCore.Android" Version="1.0.0-beta.13.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Jars\azure-communication-common-1.1.1.aar" />
   </ItemGroup>
   <PropertyGroup>
     <AndroidGenerateResourceDesigner>false</AndroidGenerateResourceDesigner>
-    <EnableDefaultItems>false</EnableDefaultItems>
   </PropertyGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\azure-communication-common-1.1.0.aar" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedReferenceJar Include="Jars\android-retrofuture-1.7.4.jar" />
-    <EmbeddedReferenceJar Include="Jars\android-retrostreams-1.7.4.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-annotations-2.12.7.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-core-2.12.7.jar" />
-    <EmbeddedReferenceJar Include="Jars\jackson-databind-2.12.7.1.jar" />
+    <AndroidLibrary Update="Jars\android-retrofuture-1.7.4.jar" Bind="false"/>
+    <AndroidLibrary Update="Jars\android-retrostreams-1.7.4.jar" Bind="false"/>
+    <AndroidLibrary Update="Jars\jackson-annotations-2.12.7.jar" Bind="false"/>
+    <AndroidLibrary Update="Jars\jackson-core-2.12.7.jar" Bind="false"/>
+    <AndroidLibrary Update="Jars\jackson-databind-2.12.7.1.jar" Bind="false"/>
   </ItemGroup>
 </Project>
