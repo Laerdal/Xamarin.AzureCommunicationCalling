@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationCalling.android</PackageId>
-      <version>2.6.0-beta.5.1</version>
+      <version>2.6.0-beta.5.4</version>
       <TargetFrameworks>net7.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
@@ -15,19 +15,20 @@
  This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-communication-calling
       </Description>
       <PackageReleaseNotes>
-          2.6.0-beta.5.1
+          2.6.0-beta.5
       </PackageReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2023</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageTags>Maui Azure Communication Android</PackageTags>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      <EnableDefaultItems>false</EnableDefaultItems>
     </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Laerdal.Maui.AzureCommunicationCommon.Android" Version="1.1.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <Update Include="Jars\gson-2.8.6.jar" Bind="false"/>
+    <AndroidLibrary Include="Jars\azure-communication-calling-2.6.0-beta.5.aar"/>
   </ItemGroup>
   <ItemGroup>
     <TransformFile Include="Transforms\Metadata.xml" />
