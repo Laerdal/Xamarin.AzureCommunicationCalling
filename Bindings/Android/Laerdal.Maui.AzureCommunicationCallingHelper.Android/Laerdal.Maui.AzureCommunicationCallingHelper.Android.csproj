@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationHelper.android</PackageId>
-      <version>2.5.0.2</version>
+      <version>2.6.0-beta.5.2</version>
       <TargetFrameworks>net7.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
@@ -17,7 +17,7 @@
         from ACS as regular methods...
       </Description>
       <PackagesReleaseNotes>
-        2.5.0.2
+        2.6.0-beta.5.2
       </PackagesReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2023</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
@@ -25,12 +25,8 @@
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageTags>Maui Azure Android</PackageTags>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-      <EnableDefaultItems>false</EnableDefaultItems>
     </PropertyGroup>
      <ItemGroup>
-     <PackageReference Include="Laerdal.Maui.AzureCommunicationCalling.android" Version="2.5.0.3" />
+     <PackageReference Include="Laerdal.Maui.AzureCommunicationCalling.android" Version="2.6.0-beta.5.4" />
    </ItemGroup>
-   <ItemGroup>                                                                                                                                                       
-     <LibraryProjectZip Include="Jars\AzureCommunicationCallingHelper-release.aar" />                                                                                      
-   </ItemGroup>  
 </Project>

@@ -323,6 +323,11 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("isRendering")]
 		[Verify (MethodToProperty)]
 		bool IsRendering { get; }
+
+		// -(struct ACSStreamSize)videoFrameSize;
+		[Export ("videoFrameSize")]
+		[Verify (MethodToProperty)]
+		ACSStreamSize VideoFrameSize { get; }
 	}
 
 	// @protocol ACSVideoStreamRendererDelegate <NSObject>
@@ -345,6 +350,18 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	[DisableDefaultCtor]
 	interface ACSVideoStreamRenderer
 	{
+		// @property (readonly) struct ACSStreamSize size;
+		[Export ("size")]
+		ACSStreamSize Size { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSVideoStreamRendererDelegate Delegate { get; set; }
+
+		// @property (assign, nonatomic) id<ACSVideoStreamRendererDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
+		NSObject WeakDelegate { get; set; }
+
 		// -(instancetype _Nonnull)initWithLocalVideoStream:(ACSLocalVideoStream * _Nonnull)localVideoStream withError:(NSError * _Nullable * _Nonnull)nonnull_error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("init(localVideoStream:)")));
 		[Export ("initWithLocalVideoStream:withError:")]
 		NativeHandle Constructor (ACSLocalVideoStream localVideoStream, [NullAllowed] out NSError nonnull_error);
@@ -364,18 +381,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)dispose;
 		[Export ("dispose")]
 		void Dispose ();
-
-		// @property (readonly) struct ACSStreamSize size;
-		[Export ("size")]
-		ACSStreamSize Size { get; }
-
-		[Wrap ("WeakDelegate")]
-		[NullAllowed]
-		ACSVideoStreamRendererDelegate Delegate { get; set; }
-
-		// @property (assign, nonatomic) id<ACSVideoStreamRendererDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Assign)]
-		NSObject WeakDelegate { get; set; }
 	}
 
 	// @interface ACSFeatures : NSObject
@@ -392,6 +397,11 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("transcription")]
 		Class Transcription { get; }
 
+		// @property (readonly, class) Class captions __attribute__((swift_private));
+		[Static]
+		[Export ("captions")]
+		Class Captions { get; }
+
 		// @property (readonly, class) Class dominantSpeakers __attribute__((swift_private));
 		[Static]
 		[Export ("dominantSpeakers")]
@@ -401,6 +411,11 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Static]
 		[Export ("localUserDiagnostics")]
 		Class LocalUserDiagnostics { get; }
+
+		// @property (readonly, class) Class dataChannel __attribute__((swift_private));
+		[Static]
+		[Export ("dataChannel")]
+		Class DataChannel { get; }
 
 		// @property (readonly, class) Class raisedHands __attribute__((swift_private));
 		[Static]
@@ -412,10 +427,20 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("localVideoEffects")]
 		Class LocalVideoEffects { get; }
 
-		// @property (readonly, class) Class captions __attribute__((swift_private));
+		// @property (readonly, class) Class mediaStats __attribute__((swift_private));
 		[Static]
-		[Export ("captions")]
-		Class Captions { get; }
+		[Export ("mediaStats")]
+		Class MediaStats { get; }
+
+		// @property (readonly, class) Class spotlight __attribute__((swift_private));
+		[Static]
+		[Export ("spotlight")]
+		Class Spotlight { get; }
+
+		// @property (readonly, class) Class survey __attribute__((swift_private));
+		[Static]
+		[Export ("survey")]
+		Class Survey { get; }
 	}
 
 	// @interface ACSLocalVideoStreamEvents : NSObject
@@ -556,6 +581,81 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void RemoveAll ();
 	}
 
+	// @interface ACSTeamsCallAgentEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSTeamsCallAgentEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSTeamsCallsUpdatedEventArgs * _Nonnull) onCallsUpdated;
+		[NullAllowed, Export ("onCallsUpdated", ArgumentSemantic.Copy)]
+		Action<ACSTeamsCallsUpdatedEventArgs> OnCallsUpdated { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSTeamsIncomingCall * _Nonnull) onIncomingCall;
+		[NullAllowed, Export ("onIncomingCall", ArgumentSemantic.Copy)]
+		Action<ACSTeamsIncomingCall> OnIncomingCall { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSTeamsCallEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSTeamsCallEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIdChanged;
+		[NullAllowed, Export ("onIdChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIdChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onStateChanged;
+		[NullAllowed, Export ("onStateChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnStateChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onRoleChanged;
+		[NullAllowed, Export ("onRoleChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnRoleChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSParticipantsUpdatedEventArgs * _Nonnull) onRemoteParticipantsUpdated;
+		[NullAllowed, Export ("onRemoteParticipantsUpdated", ArgumentSemantic.Copy)]
+		Action<ACSParticipantsUpdatedEventArgs> OnRemoteParticipantsUpdated { get; set; }
+
+		// @property (copy) DEPRECATED_MSG_ATTRIBUTE("Use onStateChanged in VideoStream types instead") void (^)(ACSLocalVideoStreamsUpdatedEventArgs * _Nonnull) onLocalVideoStreamsUpdated __attribute__((deprecated("Use onStateChanged in VideoStream types instead")));
+		[Export ("onLocalVideoStreamsUpdated", ArgumentSemantic.Copy)]
+		Action<ACSLocalVideoStreamsUpdatedEventArgs> OnLocalVideoStreamsUpdated { get; set; }
+
+		// @property (copy) DEPRECATED_MSG_ATTRIBUTE("Use OnOutgoingAudioStateChanged instead") void (^)(ACSPropertyChangedEventArgs * _Nonnull) onIsMutedChanged __attribute__((deprecated("Use OnOutgoingAudioStateChanged instead")));
+		[Export ("onIsMutedChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIsMutedChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onOutgoingAudioStateChanged;
+		[NullAllowed, Export ("onOutgoingAudioStateChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnOutgoingAudioStateChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIncomingAudioStateChanged;
+		[NullAllowed, Export ("onIncomingAudioStateChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnIncomingAudioStateChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onTotalParticipantCountChanged;
+		[NullAllowed, Export ("onTotalParticipantCountChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnTotalParticipantCountChanged { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSTeamsIncomingCallEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSTeamsIncomingCallEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onCallEnded;
+		[NullAllowed, Export ("onCallEnded", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnCallEnded { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
 	// @interface ACSDeviceManagerEvents : NSObject
 	[BaseType (typeof(NSObject))]
 	interface ACSDeviceManagerEvents
@@ -563,6 +663,19 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (copy) void (^ _Nullable)(ACSVideoDevicesUpdatedEventArgs * _Nonnull) onCamerasUpdated;
 		[NullAllowed, Export ("onCamerasUpdated", ArgumentSemantic.Copy)]
 		Action<ACSVideoDevicesUpdatedEventArgs> OnCamerasUpdated { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSCallLobbyEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCallLobbyEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSParticipantsUpdatedEventArgs * _Nonnull) onLobbyParticipantsUpdated;
+		[NullAllowed, Export ("onLobbyParticipantsUpdated", ArgumentSemantic.Copy)]
+		Action<ACSParticipantsUpdatedEventArgs> OnLobbyParticipantsUpdated { get; set; }
 
 		// -(void)removeAll;
 		[Export ("removeAll")]
@@ -577,6 +690,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[NullAllowed, Export ("onIsRecordingActiveChanged", ArgumentSemantic.Copy)]
 		Action<ACSPropertyChangedEventArgs> OnIsRecordingActiveChanged { get; set; }
 
+		// @property (copy) void (^ _Nullable)(ACSRecordingUpdatedEventArgs * _Nonnull) onRecordingUpdated;
+		[NullAllowed, Export ("onRecordingUpdated", ArgumentSemantic.Copy)]
+		Action<ACSRecordingUpdatedEventArgs> OnRecordingUpdated { get; set; }
+
 		// -(void)removeAll;
 		[Export ("removeAll")]
 		void RemoveAll ();
@@ -589,6 +706,27 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onIsTranscriptionActiveChanged;
 		[NullAllowed, Export ("onIsTranscriptionActiveChanged", ArgumentSemantic.Copy)]
 		Action<ACSPropertyChangedEventArgs> OnIsTranscriptionActiveChanged { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSCommunicationCaptionsEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCommunicationCaptionsEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onActiveSpokenLanguageChanged;
+		[NullAllowed, Export ("onActiveSpokenLanguageChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnActiveSpokenLanguageChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onCaptionsEnabledChanged;
+		[NullAllowed, Export ("onCaptionsEnabledChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnCaptionsEnabledChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSCommunicationCaptionsReceivedEventArgs * _Nonnull) onCaptionsReceived;
+		[NullAllowed, Export ("onCaptionsReceived", ArgumentSemantic.Copy)]
+		Action<ACSCommunicationCaptionsReceivedEventArgs> OnCaptionsReceived { get; set; }
 
 		// -(void)removeAll;
 		[Export ("removeAll")]
@@ -620,6 +758,19 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void RemoveAll ();
 	}
 
+	// @interface ACSCaptionsCallFeatureEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCaptionsCallFeatureEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onActiveCaptionsTypeChanged;
+		[NullAllowed, Export ("onActiveCaptionsTypeChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnActiveCaptionsTypeChanged { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
 	// @interface ACSDominantSpeakersCallFeatureEvents : NSObject
 	[BaseType (typeof(NSObject))]
 	interface ACSDominantSpeakersCallFeatureEvents
@@ -644,6 +795,19 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (copy) void (^ _Nullable)(ACSLoweredHandChangedEventArgs * _Nonnull) onHandLowered;
 		[NullAllowed, Export ("onHandLowered", ArgumentSemantic.Copy)]
 		Action<ACSLoweredHandChangedEventArgs> OnHandLowered { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSSpotlightCallFeatureEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSSpotlightCallFeatureEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSSpotlightChangedEventArgs * _Nonnull) onSpotlightChanged;
+		[NullAllowed, Export ("onSpotlightChanged", ArgumentSemantic.Copy)]
+		Action<ACSSpotlightChangedEventArgs> OnSpotlightChanged { get; set; }
 
 		// -(void)removeAll;
 		[Export ("removeAll")]
@@ -735,6 +899,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[NullAllowed, Export ("onMixedAudioBufferReceived", ArgumentSemantic.Copy)]
 		Action<ACSIncomingMixedAudioEventArgs> OnMixedAudioBufferReceived { get; set; }
 
+		// @property (copy) void (^ _Nullable)(ACSIncomingUnmixedAudioEventArgs * _Nonnull) onUnmixedAudioBufferReceived;
+		[NullAllowed, Export ("onUnmixedAudioBufferReceived", ArgumentSemantic.Copy)]
+		Action<ACSIncomingUnmixedAudioEventArgs> OnUnmixedAudioBufferReceived { get; set; }
+
 		// @property (copy) void (^ _Nullable)(ACSAudioStreamStateChangedEventArgs * _Nonnull) onStateChanged;
 		[NullAllowed, Export ("onStateChanged", ArgumentSemantic.Copy)]
 		Action<ACSAudioStreamStateChangedEventArgs> OnStateChanged { get; set; }
@@ -772,6 +940,36 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (copy) void (^ _Nullable)(ACSVideoEffectErrorEventArgs * _Nonnull) onVideoEffectError;
 		[NullAllowed, Export ("onVideoEffectError", ArgumentSemantic.Copy)]
 		Action<ACSVideoEffectErrorEventArgs> OnVideoEffectError { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSDataChannelReceiverEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSDataChannelReceiverEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSDataChannelReceiverMessageReceivedEventArgs * _Nonnull) onMessageReceived;
+		[NullAllowed, Export ("onMessageReceived", ArgumentSemantic.Copy)]
+		Action<ACSDataChannelReceiverMessageReceivedEventArgs> OnMessageReceived { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSDataChannelReceiverClosedEventArgs * _Nonnull) onClosed;
+		[NullAllowed, Export ("onClosed", ArgumentSemantic.Copy)]
+		Action<ACSDataChannelReceiverClosedEventArgs> OnClosed { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSDataChannelCallFeatureEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSDataChannelCallFeatureEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSDataChannelReceiverCreatedEventArgs * _Nonnull) onDataChannelReceiverCreated;
+		[NullAllowed, Export ("onDataChannelReceiverCreated", ArgumentSemantic.Copy)]
+		Action<ACSDataChannelReceiverCreatedEventArgs> OnDataChannelReceiverCreated { get; set; }
 
 		// -(void)removeAll;
 		[Export ("removeAll")]
@@ -872,6 +1070,36 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void RemoveAll ();
 	}
 
+	// @interface ACSMediaStatsCallFeatureEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSMediaStatsCallFeatureEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSMediaStatsReportEventArgs * _Nonnull) onSampleReported;
+		[NullAllowed, Export ("onSampleReported", ArgumentSemantic.Copy)]
+		Action<ACSMediaStatsReportEventArgs> OnSampleReported { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
+	// @interface ACSContentSharingCallFeatureEvents : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSContentSharingCallFeatureEvents
+	{
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onContentSharingInfoChanged;
+		[NullAllowed, Export ("onContentSharingInfoChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnContentSharingInfoChanged { get; set; }
+
+		// @property (copy) void (^ _Nullable)(ACSPropertyChangedEventArgs * _Nonnull) onStateChanged;
+		[NullAllowed, Export ("onStateChanged", ArgumentSemantic.Copy)]
+		Action<ACSPropertyChangedEventArgs> OnStateChanged { get; set; }
+
+		// -(void)removeAll;
+		[Export ("removeAll")]
+		void RemoveAll ();
+	}
+
 	// @protocol ACSLocalVideoStreamDelegate <NSObject>
 	[Protocol, Model (AutoGeneratedName = true)]
 	[BaseType (typeof(NSObject))]
@@ -917,11 +1145,11 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("onRemoteParticipantsUpdated::")]
 		void OnRemoteParticipantsUpdated (ACSCall call, ACSParticipantsUpdatedEventArgs args);
 
-		// @optional -(void)onLocalVideoStreamsUpdated:(ACSCall * _Nonnull)call :(ACSLocalVideoStreamsUpdatedEventArgs * _Nonnull)args __attribute__((swift_name("call(_:didUpdateLocalVideoStreams:)"))) __attribute__((deprecated("Use didChangeState on VideoStream types instead")));
+		// @optional -(void)onLocalVideoStreamsUpdated:(ACSCall * _Nonnull)call :(ACSLocalVideoStreamsUpdatedEventArgs * _Nonnull)args __attribute__((swift_name("call(_:didUpdateLocalVideoStreams:)"))) __attribute__((deprecated("Use didChangeState on VideoStream types instead.")));
 		[Export ("onLocalVideoStreamsUpdated::")]
 		void OnLocalVideoStreamsUpdated (ACSCall call, ACSLocalVideoStreamsUpdatedEventArgs args);
 
-		// @optional -(void)onIsMutedChanged:(ACSCall * _Nonnull)call :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("call(_:didChangeMuteState:)"))) __attribute__((deprecated("Use call(_:didUpdateOutgoingAudioState:) instead")));
+		// @optional -(void)onIsMutedChanged:(ACSCall * _Nonnull)call :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("call(_:didChangeMuteState:)"))) __attribute__((deprecated("Use call(_:didUpdateOutgoingAudioState:) instead.")));
 		[Export ("onIsMutedChanged::")]
 		void OnIsMutedChanged (ACSCall call, ACSPropertyChangedEventArgs args);
 
@@ -992,6 +1220,72 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void  (ACSIncomingCall incomingCall, ACSPropertyChangedEventArgs args);
 	}
 
+	// @protocol ACSTeamsCallAgentDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSTeamsCallAgentDelegate
+	{
+		// @optional -(void)onCallsUpdated:(ACSTeamsCallAgent * _Nonnull)teamsCallAgent :(ACSTeamsCallsUpdatedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCallAgent(_:didUpdateCalls:)")));
+		[Export ("onCallsUpdated::")]
+		void OnCallsUpdated (ACSTeamsCallAgent teamsCallAgent, ACSTeamsCallsUpdatedEventArgs args);
+
+		// @optional -(void)onIncomingCall:(ACSTeamsCallAgent * _Nonnull)teamsCallAgent :(ACSTeamsIncomingCall * _Nonnull)incomingCall __attribute__((swift_name("teamsCallAgent(_:didRecieveIncomingCall:)")));
+		[Export ("onIncomingCall::")]
+		void OnIncomingCall (ACSTeamsCallAgent teamsCallAgent, ACSTeamsIncomingCall incomingCall);
+	}
+
+	// @protocol ACSTeamsCallDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSTeamsCallDelegate
+	{
+		// @optional -(void)onIdChanged:(ACSTeamsCall * _Nonnull)teamsCall :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCall(_:didChangeId:)")));
+		[Export ("onIdChanged::")]
+		void OnIdChanged (ACSTeamsCall teamsCall, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onStateChanged:(ACSTeamsCall * _Nonnull)teamsCall :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCall(_:didChangeState:)")));
+		[Export ("onStateChanged::")]
+		void OnStateChanged (ACSTeamsCall teamsCall, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onRoleChanged:(ACSTeamsCall * _Nonnull)teamsCall :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCall(_:didChangeRole:)")));
+		[Export ("onRoleChanged::")]
+		void OnRoleChanged (ACSTeamsCall teamsCall, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onRemoteParticipantsUpdated:(ACSTeamsCall * _Nonnull)teamsCall :(ACSParticipantsUpdatedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCall(_:didUpdateRemoteParticipant:)")));
+		[Export ("onRemoteParticipantsUpdated::")]
+		void OnRemoteParticipantsUpdated (ACSTeamsCall teamsCall, ACSParticipantsUpdatedEventArgs args);
+
+		// @optional -(void)onLocalVideoStreamsUpdated:(ACSTeamsCall * _Nonnull)teamsCall :(ACSLocalVideoStreamsUpdatedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCall(_:didUpdateLocalVideoStreams:)"))) __attribute__((deprecated("Use didChangeState on VideoStream types instead.")));
+		[Export ("onLocalVideoStreamsUpdated::")]
+		void OnLocalVideoStreamsUpdated (ACSTeamsCall teamsCall, ACSLocalVideoStreamsUpdatedEventArgs args);
+
+		// @optional -(void)onIsMutedChanged:(ACSTeamsCall * _Nonnull)teamsCall :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCall(_:didChangeMuteState:)"))) __attribute__((deprecated("Use call(_:didUpdateOutgoingAudioState:) instead.")));
+		[Export ("onIsMutedChanged::")]
+		void OnIsMutedChanged (ACSTeamsCall teamsCall, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onOutgoingAudioStateChanged:(ACSTeamsCall * _Nonnull)teamsCall :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCall(_:didUpdateOutgoingAudioState:)")));
+		[Export ("onOutgoingAudioStateChanged::")]
+		void OnOutgoingAudioStateChanged (ACSTeamsCall teamsCall, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onIncomingAudioStateChanged:(ACSTeamsCall * _Nonnull)teamsCall :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("call(_:didUpdateIncomingAudioState:)")));
+		[Export ("onIncomingAudioStateChanged::")]
+		void OnIncomingAudioStateChanged (ACSTeamsCall teamsCall, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onTotalParticipantCountChanged:(ACSTeamsCall * _Nonnull)teamsCall :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("teamsCall(_:didChangeTotalParticipantCount:)")));
+		[Export ("onTotalParticipantCountChanged::")]
+		void OnTotalParticipantCountChanged (ACSTeamsCall teamsCall, ACSPropertyChangedEventArgs args);
+	}
+
+	// @protocol ACSTeamsIncomingCallDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSTeamsIncomingCallDelegate
+	{
+		// @optional -(void)onCallEnded:(ACSTeamsIncomingCall * _Nonnull)teamsIncomingCall :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("teamsIncomingCall(_:didEnd:)")));
+		[Export ("onCallEnded::")]
+		void  (ACSTeamsIncomingCall teamsIncomingCall, ACSPropertyChangedEventArgs args);
+	}
+
 	// @protocol ACSDeviceManagerDelegate <NSObject>
 	[Protocol, Model (AutoGeneratedName = true)]
 	[BaseType (typeof(NSObject))]
@@ -1002,6 +1296,16 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void  (ACSDeviceManager deviceManager, ACSVideoDevicesUpdatedEventArgs args);
 	}
 
+	// @protocol ACSCallLobbyDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSCallLobbyDelegate
+	{
+		// @optional -(void)onLobbyParticipantsUpdated:(ACSCallLobby * _Nonnull)callLobby :(ACSParticipantsUpdatedEventArgs * _Nonnull)args __attribute__((swift_name("callLobby(_:didUpdateLobbyParticipants:)")));
+		[Export ("onLobbyParticipantsUpdated::")]
+		void  (ACSCallLobby callLobby, ACSParticipantsUpdatedEventArgs args);
+	}
+
 	// @protocol ACSRecordingCallFeatureDelegate <NSObject>
 	[Protocol, Model (AutoGeneratedName = true)]
 	[BaseType (typeof(NSObject))]
@@ -1009,7 +1313,11 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	{
 		// @optional -(void)onIsRecordingActiveChanged:(ACSRecordingCallFeature * _Nonnull)recordingCallFeature :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("recordingCallFeature(_:didChangeRecordingState:)")));
 		[Export ("onIsRecordingActiveChanged::")]
-		void  (ACSRecordingCallFeature recordingCallFeature, ACSPropertyChangedEventArgs args);
+		void OnIsRecordingActiveChanged (ACSRecordingCallFeature recordingCallFeature, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onRecordingUpdated:(ACSRecordingCallFeature * _Nonnull)recordingCallFeature :(ACSRecordingUpdatedEventArgs * _Nonnull)args __attribute__((swift_name("recordingCallFeature(_:didUpdateRecording:)")));
+		[Export ("onRecordingUpdated::")]
+		void OnRecordingUpdated (ACSRecordingCallFeature recordingCallFeature, ACSRecordingUpdatedEventArgs args);
 	}
 
 	// @protocol ACSTranscriptionCallFeatureDelegate <NSObject>
@@ -1020,6 +1328,24 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @optional -(void)onIsTranscriptionActiveChanged:(ACSTranscriptionCallFeature * _Nonnull)transcriptionCallFeature :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("transcriptionCallFeature(_:didChangeTranscriptionState:)")));
 		[Export ("onIsTranscriptionActiveChanged::")]
 		void  (ACSTranscriptionCallFeature transcriptionCallFeature, ACSPropertyChangedEventArgs args);
+	}
+
+	// @protocol ACSCommunicationCaptionsDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSCommunicationCaptionsDelegate
+	{
+		// @optional -(void)onActiveSpokenLanguageChanged:(ACSCommunicationCaptions * _Nonnull)communicationCaptions :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("communicationCaptions(_:didChangeActiveSpokenLanguageState:)")));
+		[Export ("onActiveSpokenLanguageChanged::")]
+		void OnActiveSpokenLanguageChanged (ACSCommunicationCaptions communicationCaptions, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onCaptionsEnabledChanged:(ACSCommunicationCaptions * _Nonnull)communicationCaptions :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("communicationCaptions(_:didChangeCaptionsEnabledState:)")));
+		[Export ("onCaptionsEnabledChanged::")]
+		void OnCaptionsEnabledChanged (ACSCommunicationCaptions communicationCaptions, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onCaptionsReceived:(ACSCommunicationCaptions * _Nonnull)communicationCaptions :(ACSCommunicationCaptionsReceivedEventArgs * _Nonnull)args __attribute__((swift_name("communicationCaptions(_:didReceiveCaptions:)")));
+		[Export ("onCaptionsReceived::")]
+		void OnCaptionsReceived (ACSCommunicationCaptions communicationCaptions, ACSCommunicationCaptionsReceivedEventArgs args);
 	}
 
 	// @protocol ACSTeamsCaptionsDelegate <NSObject>
@@ -1044,6 +1370,16 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void OnCaptionsReceived (ACSTeamsCaptions teamsCaptions, ACSTeamsCaptionsReceivedEventArgs args);
 	}
 
+	// @protocol ACSCaptionsCallFeatureDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSCaptionsCallFeatureDelegate
+	{
+		// @optional -(void)onActiveCaptionsTypeChanged:(ACSCaptionsCallFeature * _Nonnull)captionsCallFeature :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("captionsCallFeature(_:didChangeActiveCaptionsType:)")));
+		[Export ("onActiveCaptionsTypeChanged::")]
+		void  (ACSCaptionsCallFeature captionsCallFeature, ACSPropertyChangedEventArgs args);
+	}
+
 	// @protocol ACSDominantSpeakersCallFeatureDelegate <NSObject>
 	[Protocol, Model (AutoGeneratedName = true)]
 	[BaseType (typeof(NSObject))]
@@ -1066,6 +1402,16 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @optional -(void)onHandLowered:(ACSRaiseHandCallFeature * _Nonnull)raiseHandCallFeature :(ACSLoweredHandChangedEventArgs * _Nonnull)args __attribute__((swift_name("raiseHandCallFeature(_:didLowerHand:)")));
 		[Export ("onHandLowered::")]
 		void OnHandLowered (ACSRaiseHandCallFeature raiseHandCallFeature, ACSLoweredHandChangedEventArgs args);
+	}
+
+	// @protocol ACSSpotlightCallFeatureDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSSpotlightCallFeatureDelegate
+	{
+		// @optional -(void)onSpotlightChanged:(ACSSpotlightCallFeature * _Nonnull)spotlightCallFeature :(ACSSpotlightChangedEventArgs * _Nonnull)args __attribute__((swift_name("spotlightCallFeature(_:didChangeSpotlight:)")));
+		[Export ("onSpotlightChanged::")]
+		void  (ACSSpotlightCallFeature spotlightCallFeature, ACSSpotlightChangedEventArgs args);
 	}
 
 	// @protocol ACSScreenShareOutgoingVideoStreamDelegate <NSObject>
@@ -1139,6 +1485,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("onMixedAudioBufferReceived::")]
 		void OnMixedAudioBufferReceived (ACSRawIncomingAudioStream rawIncomingAudioStream, ACSIncomingMixedAudioEventArgs args);
 
+		// @optional -(void)onUnmixedAudioBufferReceived:(ACSRawIncomingAudioStream * _Nonnull)rawIncomingAudioStream :(ACSIncomingUnmixedAudioEventArgs * _Nonnull)args __attribute__((swift_name("rawIncomingAudioStream(_:didReceiveUnmixedAudioBuffer:)")));
+		[Export ("onUnmixedAudioBufferReceived::")]
+		void OnUnmixedAudioBufferReceived (ACSRawIncomingAudioStream rawIncomingAudioStream, ACSIncomingUnmixedAudioEventArgs args);
+
 		// @optional -(void)onStateChanged:(ACSRawIncomingAudioStream * _Nonnull)rawIncomingAudioStream :(ACSAudioStreamStateChangedEventArgs * _Nonnull)args __attribute__((swift_name("rawIncomingAudioStream(_:didChangeState:)")));
 		[Export ("onStateChanged::")]
 		void OnStateChanged (ACSRawIncomingAudioStream rawIncomingAudioStream, ACSAudioStreamStateChangedEventArgs args);
@@ -1170,6 +1520,30 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @optional -(void)onVideoEffectError:(ACSLocalVideoEffectsFeature * _Nonnull)localVideoEffectsFeature :(ACSVideoEffectErrorEventArgs * _Nonnull)args __attribute__((swift_name("localVideoEffectsFeature(_:didReceiveVideoEffectError:)")));
 		[Export ("onVideoEffectError::")]
 		void OnVideoEffectError (ACSLocalVideoEffectsFeature localVideoEffectsFeature, ACSVideoEffectErrorEventArgs args);
+	}
+
+	// @protocol ACSDataChannelReceiverDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSDataChannelReceiverDelegate
+	{
+		// @optional -(void)onMessageReceived:(ACSDataChannelReceiver * _Nonnull)dataChannelReceiver :(ACSDataChannelReceiverMessageReceivedEventArgs * _Nonnull)args __attribute__((swift_name("dataChannelReceiver(_:didReceiveMessage:)")));
+		[Export ("onMessageReceived::")]
+		void OnMessageReceived (ACSDataChannelReceiver dataChannelReceiver, ACSDataChannelReceiverMessageReceivedEventArgs args);
+
+		// @optional -(void)onClosed:(ACSDataChannelReceiver * _Nonnull)dataChannelReceiver :(ACSDataChannelReceiverClosedEventArgs * _Nonnull)args __attribute__((swift_name("dataChannelReceiver(_:didClose:)")));
+		[Export ("onClosed::")]
+		void OnClosed (ACSDataChannelReceiver dataChannelReceiver, ACSDataChannelReceiverClosedEventArgs args);
+	}
+
+	// @protocol ACSDataChannelCallFeatureDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSDataChannelCallFeatureDelegate
+	{
+		// @optional -(void)onDataChannelReceiverCreated:(ACSDataChannelCallFeature * _Nonnull)dataChannelCallFeature :(ACSDataChannelReceiverCreatedEventArgs * _Nonnull)args __attribute__((swift_name("dataChannelCallFeature(_:didCreateDataChannelReceiver:)")));
+		[Export ("onDataChannelReceiverCreated::")]
+		void  (ACSDataChannelCallFeature dataChannelCallFeature, ACSDataChannelReceiverCreatedEventArgs args);
 	}
 
 	// @protocol ACSNetworkDiagnosticsDelegate <NSObject>
@@ -1260,6 +1634,30 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void OnIsCameraPermissionDeniedChanged (ACSMediaDiagnostics mediaDiagnostics, ACSDiagnosticFlagChangedEventArgs args);
 	}
 
+	// @protocol ACSMediaStatsCallFeatureDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSMediaStatsCallFeatureDelegate
+	{
+		// @optional -(void)onSampleReported:(ACSMediaStatsCallFeature * _Nonnull)mediaStatsCallFeature :(ACSMediaStatsReportEventArgs * _Nonnull)args __attribute__((swift_name("mediaStatsCallFeature(_:didReceiveSample:)")));
+		[Export ("onSampleReported::")]
+		void  (ACSMediaStatsCallFeature mediaStatsCallFeature, ACSMediaStatsReportEventArgs args);
+	}
+
+	// @protocol ACSContentSharingCallFeatureDelegate <NSObject>
+	[Protocol, Model (AutoGeneratedName = true)]
+	[BaseType (typeof(NSObject))]
+	interface ACSContentSharingCallFeatureDelegate
+	{
+		// @optional -(void)onContentSharingInfoChanged:(ACSContentSharingCallFeature * _Nonnull)contentSharingCallFeature :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("ContentSharingCallFeature(_:didChangeContentSharing:)")));
+		[Export ("onContentSharingInfoChanged::")]
+		void OnContentSharingInfoChanged (ACSContentSharingCallFeature contentSharingCallFeature, ACSPropertyChangedEventArgs args);
+
+		// @optional -(void)onStateChanged:(ACSContentSharingCallFeature * _Nonnull)contentSharingCallFeature :(ACSPropertyChangedEventArgs * _Nonnull)args __attribute__((swift_name("remoteParticipant(_:didChangeState:)")));
+		[Export ("onStateChanged::")]
+		void OnStateChanged (ACSContentSharingCallFeature contentSharingCallFeature, ACSPropertyChangedEventArgs args);
+	}
+
 	// @interface ACSCallVideoStream : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
@@ -1322,6 +1720,31 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (copy) NSArray<ACSOutgoingVideoStream *> * _Nonnull streams;
 		[Export ("streams", ArgumentSemantic.Copy)]
 		ACSOutgoingVideoStream[] Streams { get; set; }
+
+		// @property (retain) ACSOutgoingVideoConstraints * _Nullable constraints;
+		[NullAllowed, Export ("constraints", ArgumentSemantic.Retain)]
+		ACSOutgoingVideoConstraints Constraints { get; set; }
+	}
+
+	// @interface ACSOutgoingVideoConstraints : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSOutgoingVideoConstraints
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property int maxHeight;
+		[Export ("maxHeight")]
+		int MaxHeight { get; set; }
+
+		// @property int maxWidth;
+		[Export ("maxWidth")]
+		int MaxWidth { get; set; }
+
+		// @property int maxFrameRate;
+		[Export ("maxFrameRate")]
+		int MaxFrameRate { get; set; }
 	}
 
 	// @interface ACSIncomingVideoOptions : NSObject
@@ -1335,6 +1758,27 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property ACSVideoStreamType streamType;
 		[Export ("streamType", ArgumentSemantic.Assign)]
 		ACSVideoStreamType StreamType { get; set; }
+
+		// @property (retain) ACSIncomingVideoConstraints * _Nullable constraints;
+		[NullAllowed, Export ("constraints", ArgumentSemantic.Retain)]
+		ACSIncomingVideoConstraints Constraints { get; set; }
+	}
+
+	// @interface ACSIncomingVideoConstraints : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSIncomingVideoConstraints
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property int maxHeight;
+		[Export ("maxHeight")]
+		int MaxHeight { get; set; }
+
+		// @property int maxWidth;
+		[Export ("maxWidth")]
+		int MaxWidth { get; set; }
 	}
 
 	// @interface ACSVideoOptions : NSObject
@@ -1451,6 +1895,57 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		string Message { get; }
 	}
 
+	// @interface ACSOutgoingAudioFilters : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSOutgoingAudioFilters
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property BOOL analogAutomaticGainControlEnabled;
+		[Export ("analogAutomaticGainControlEnabled")]
+		bool AnalogAutomaticGainControlEnabled { get; set; }
+
+		// @property BOOL digitalAutomaticGainControlEnabled;
+		[Export ("digitalAutomaticGainControlEnabled")]
+		bool DigitalAutomaticGainControlEnabled { get; set; }
+
+		// @property ACSNoiseSuppressionMode noiseSuppressionMode;
+		[Export ("noiseSuppressionMode", ArgumentSemantic.Assign)]
+		ACSNoiseSuppressionMode NoiseSuppressionMode { get; set; }
+
+		// @property BOOL musicModeEnabled;
+		[Export ("musicModeEnabled")]
+		bool MusicModeEnabled { get; set; }
+
+		// @property BOOL acousticEchoCancellationEnabled;
+		[Export ("acousticEchoCancellationEnabled")]
+		bool AcousticEchoCancellationEnabled { get; set; }
+	}
+
+	// @interface ACSLiveOutgoingAudioFilters : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSLiveOutgoingAudioFilters
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property ACSNoiseSuppressionMode noiseSuppressionMode;
+		[Export ("noiseSuppressionMode", ArgumentSemantic.Assign)]
+		ACSNoiseSuppressionMode NoiseSuppressionMode { get; set; }
+
+		// @property BOOL musicModeEnabled;
+		[Export ("musicModeEnabled")]
+		bool MusicModeEnabled { get; set; }
+
+		// @property BOOL acousticEchoCancellationEnabled;
+		[Export ("acousticEchoCancellationEnabled")]
+		bool AcousticEchoCancellationEnabled { get; set; }
+	}
+
 	// @interface ACSAudioOptions : NSObject
 	[BaseType (typeof(NSObject))]
 	interface ACSAudioOptions
@@ -1459,7 +1954,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("dealloc")]
 		void Dealloc ();
 
-		// @property BOOL muted __attribute__((deprecated("Deprecated use muted property in OutgoingAudioOptions instead")));
+		// @property BOOL muted;
 		[Export ("muted")]
 		bool Muted { get; set; }
 	}
@@ -1522,6 +2017,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("muted")]
 		bool Muted { get; set; }
 
+		// @property (retain) ACSOutgoingAudioFilters * _Nullable filters;
+		[NullAllowed, Export ("filters", ArgumentSemantic.Retain)]
+		ACSOutgoingAudioFilters Filters { get; set; }
+
 		// @property (retain) ACSOutgoingAudioStream * _Nullable stream;
 		[NullAllowed, Export ("stream", ArgumentSemantic.Retain)]
 		ACSOutgoingAudioStream Stream { get; set; }
@@ -1542,6 +2041,14 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
+
+		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use IncomingVideoOptions and OutgoingVideoOptions instead") ACSVideoOptions * videoOptions __attribute__((deprecated("Use IncomingVideoOptions and OutgoingVideoOptions instead")));
+		[Export ("videoOptions", ArgumentSemantic.Retain)]
+		ACSVideoOptions VideoOptions { get; set; }
+
+		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingAudioOptions and outgoingAudioOptions instead.") ACSAudioOptions * audioOptions __attribute__((deprecated("Use incomingAudioOptions and outgoingAudioOptions instead.")));
+		[Export ("audioOptions", ArgumentSemantic.Retain)]
+		ACSAudioOptions AudioOptions { get; set; }
 
 		// @property (retain) ACSIncomingVideoOptions * _Nullable incomingVideoOptions;
 		[NullAllowed, Export ("incomingVideoOptions", ArgumentSemantic.Retain)]
@@ -1568,39 +2075,38 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	[BaseType (typeof(ACSCallOptions))]
 	interface ACSJoinCallOptions
 	{
-		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingVideoOptions and outgoingVideoOptions instead") ACSVideoOptions * videoOptions __attribute__((deprecated("Use incomingVideoOptions and outgoingVideoOptions instead")));
-		[Export ("videoOptions", ArgumentSemantic.Retain)]
-		ACSVideoOptions VideoOptions { get; set; }
-
-		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingAudioOptions and outgoingAudioOptions instead") ACSAudioOptions * audioOptions __attribute__((deprecated("Use incomingAudioOptions and outgoingAudioOptions instead")));
-		[Export ("audioOptions", ArgumentSemantic.Retain)]
-		ACSAudioOptions AudioOptions { get; set; }
 	}
 
 	// @interface ACSAcceptCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
 	interface ACSAcceptCallOptions
 	{
-		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingVideoOptions and outgoingVideoOptions instead") ACSVideoOptions * videoOptions __attribute__((deprecated("Use incomingVideoOptions and outgoingVideoOptions instead")));
-		[Export ("videoOptions", ArgumentSemantic.Retain)]
-		ACSVideoOptions VideoOptions { get; set; }
 	}
 
 	// @interface ACSStartCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
 	interface ACSStartCallOptions
 	{
-		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingVideoOptions and outgoingVideoOptions instead") ACSVideoOptions * videoOptions __attribute__((deprecated("Use incomingVideoOptions and outgoingVideoOptions instead")));
-		[Export ("videoOptions", ArgumentSemantic.Retain)]
-		ACSVideoOptions VideoOptions { get; set; }
-
-		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingAudioOptions and outgoingAudioOptions instead") ACSAudioOptions * audioOptions __attribute__((deprecated("Use incomingAudioOptions and outgoingAudioOptions instead")));
-		[Export ("audioOptions", ArgumentSemantic.Retain)]
-		ACSAudioOptions AudioOptions { get; set; }
-
 		// @property (nonatomic) PhoneNumberIdentifier * _Nonnull alternateCallerId;
 		[Export ("alternateCallerId", ArgumentSemantic.Assign)]
 		PhoneNumberIdentifier AlternateCallerId { get; set; }
+	}
+
+	// @interface ACSVideoConstraints : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSVideoConstraints
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (retain) ACSIncomingVideoConstraints * _Nullable incomingVideoConstraints;
+		[NullAllowed, Export ("incomingVideoConstraints", ArgumentSemantic.Retain)]
+		ACSIncomingVideoConstraints IncomingVideoConstraints { get; set; }
+
+		// @property (retain) ACSOutgoingVideoConstraints * _Nullable outgoingVideoConstraints;
+		[NullAllowed, Export ("outgoingVideoConstraints", ArgumentSemantic.Retain)]
+		ACSOutgoingVideoConstraints OutgoingVideoConstraints { get; set; }
 	}
 
 	// @interface ACSAddPhoneNumberOptions : NSObject
@@ -1624,6 +2130,20 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
+	}
+
+	// @interface ACSGroupChatCallLocator : ACSJoinMeetingLocator
+	[BaseType (typeof(ACSJoinMeetingLocator))]
+	[DisableDefaultCtor]
+	interface ACSGroupChatCallLocator
+	{
+		// -(instancetype _Nonnull)init:(NSString * _Nonnull)threadId __attribute__((swift_name("init(threadId:)")));
+		[Export ("init:")]
+		NativeHandle Constructor (string threadId);
+
+		// @property (readonly, retain) NSString * _Nonnull threadId;
+		[Export ("threadId", ArgumentSemantic.Retain)]
+		string ThreadId { get; }
 	}
 
 	// @interface ACSGroupCallLocator : ACSJoinMeetingLocator
@@ -1771,15 +2291,37 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		string CountryCode { get; set; }
 	}
 
-	// @interface ACSCallAgent : NSObject
+	// @interface ACSCallAgentBase : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
-	interface ACSCallAgent
+	interface ACSCallAgentBase
 	{
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
 
+		// -(void)dispose;
+		[Export ("dispose")]
+		void Dispose ();
+
+		// -(void)unregisterPushNotificationWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("unregisterPushNotification(completionHandler:)")));
+		[Export ("unregisterPushNotificationWithCompletionHandler:")]
+		void UnregisterPushNotificationWithCompletionHandler (Action<NSError> completionHandler);
+
+		// -(void)registerPushNotifications:(NSData * _Nonnull)deviceToken withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("registerPushNotifications(deviceToken:completionHandler:)")));
+		[Export ("registerPushNotifications:withCompletionHandler:")]
+		void RegisterPushNotifications (NSData deviceToken, Action<NSError> completionHandler);
+
+		// -(void)handlePushNotification:(ACSPushNotificationInfo * _Nonnull)notification withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("handlePush(notification:completionHandler:)")));
+		[Export ("handlePushNotification:withCompletionHandler:")]
+		void HandlePushNotification (ACSPushNotificationInfo notification, Action<NSError> completionHandler);
+	}
+
+	// @interface ACSCallAgent : ACSCallAgentBase
+	[BaseType (typeof(ACSCallAgentBase))]
+	[DisableDefaultCtor]
+	interface ACSCallAgent
+	{
 		// @property (readonly, copy) NSArray<ACSCall *> * _Nonnull calls;
 		[Export ("calls", ArgumentSemantic.Copy)]
 		ACSCall[] Calls { get; }
@@ -1796,14 +2338,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("events", ArgumentSemantic.Strong)]
 		ACSCallAgentEvents Events { get; }
 
-		// -(void)dispose;
-		[Export ("dispose")]
-		void Dispose ();
-
-		// -(void)unregisterPushNotificationWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("unregisterPushNotification(completionHandler:)")));
-		[Export ("unregisterPushNotificationWithCompletionHandler:")]
-		void UnregisterPushNotificationWithCompletionHandler (Action<NSError> completionHandler);
-
 		// -(void)startCall:(NSArray<id<CommunicationIdentifier>> * _Nonnull)participants options:(ACSStartCallOptions * _Nullable)options withCompletionHandler:(void (^ _Nonnull)(ACSCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("startCall(participants:options:completionHandler:)")));
 		[Export ("startCall:options:withCompletionHandler:")]
 		void StartCall (CommunicationIdentifier[] participants, [NullAllowed] ACSStartCallOptions options, Action<ACSCall, NSError> completionHandler);
@@ -1811,20 +2345,12 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)joinWithMeetingLocator:(ACSJoinMeetingLocator * _Nonnull)meetingLocator joinCallOptions:(ACSJoinCallOptions * _Nullable)joinCallOptions withCompletionHandler:(void (^ _Nonnull)(ACSCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("join(with:joinCallOptions:completionHandler:)")));
 		[Export ("joinWithMeetingLocator:joinCallOptions:withCompletionHandler:")]
 		void JoinWithMeetingLocator (ACSJoinMeetingLocator meetingLocator, [NullAllowed] ACSJoinCallOptions joinCallOptions, Action<ACSCall, NSError> completionHandler);
-
-		// -(void)registerPushNotifications:(NSData * _Nonnull)deviceToken withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("registerPushNotifications(deviceToken:completionHandler:)")));
-		[Export ("registerPushNotifications:withCompletionHandler:")]
-		void RegisterPushNotifications (NSData deviceToken, Action<NSError> completionHandler);
-
-		// -(void)handlePushNotification:(ACSPushNotificationInfo * _Nonnull)notification withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("handlePush(notification:completionHandler:)")));
-		[Export ("handlePushNotification:withCompletionHandler:")]
-		void HandlePushNotification (ACSPushNotificationInfo notification, Action<NSError> completionHandler);
 	}
 
-	// @interface ACSCall : NSObject
+	// @interface ACSCallBase : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
-	interface ACSCall
+	interface ACSCallBase
 	{
 		// -(void)dealloc;
 		[Export ("dealloc")]
@@ -1850,7 +2376,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("direction")]
 		ACSCallDirection Direction { get; }
 
-		// @property (readonly) BOOL isMuted __attribute__((deprecated("Use isOutgoingAudioMuted instead")));
+		// @property (readonly) BOOL isMuted __attribute__((deprecated("Use isOutgoingAudioMuted instead.")));
 		[Export ("isMuted")]
 		bool IsMuted { get; }
 
@@ -1865,6 +2391,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (readonly, retain) ACSCallerInfo * _Nonnull callerInfo;
 		[Export ("callerInfo", ArgumentSemantic.Retain)]
 		ACSCallerInfo CallerInfo { get; }
+
+		// @property (readonly, retain) ACSCallLobby * _Nonnull callLobby;
+		[Export ("callLobby", ArgumentSemantic.Retain)]
+		ACSCallLobby CallLobby { get; }
 
 		// @property (readonly, retain) ACSIncomingAudioStream * _Nonnull activeIncomingAudioStream;
 		[Export ("activeIncomingAudioStream", ArgumentSemantic.Retain)]
@@ -1890,17 +2420,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("totalParticipantCount")]
 		int TotalParticipantCount { get; }
 
-		[Wrap ("WeakDelegate")]
-		[NullAllowed]
-		ACSCallDelegate Delegate { get; set; }
+		// @property (readonly, retain) ACSLiveOutgoingAudioFilters * _Nonnull liveOutgoingAudioFilters;
+		[Export ("liveOutgoingAudioFilters", ArgumentSemantic.Retain)]
+		ACSLiveOutgoingAudioFilters LiveOutgoingAudioFilters { get; }
 
-		// @property (nonatomic, weak) id<ACSCallDelegate> _Nullable delegate;
-		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
-		NSObject WeakDelegate { get; set; }
-
-		// @property (readonly, nonatomic, strong) ACSCallEvents * _Nonnull events;
-		[Export ("events", ArgumentSemantic.Strong)]
-		ACSCallEvents Events { get; }
+		// -(void)dispose;
+		[Export ("dispose")]
+		void Dispose ();
 
 		// -(void)startAudio:(ACSCallAudioStream * _Nonnull)stream withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("startAudio(stream:completionHandler:)")));
 		[Export ("startAudio:withCompletionHandler:")]
@@ -1910,11 +2436,15 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("stopAudio:withCompletionHandler:")]
 		void StopAudio (ACSCallAudioStream stream, Action<NSError> completionHandler);
 
-		// -(void)muteWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("mute(completionHandler:)"))) __attribute__((deprecated("Use muteOutgoingAudio instead")));
+		// -(void)muteAllRemoteParticipantsWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("muteAllRemoteParticipants(completionHandler:)")));
+		[Export ("muteAllRemoteParticipantsWithCompletionHandler:")]
+		void MuteAllRemoteParticipantsWithCompletionHandler (Action<NSError> completionHandler);
+
+		// -(void)muteWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("mute(completionHandler:)"))) __attribute__((deprecated("Use muteOutgoingAudio instead.")));
 		[Export ("muteWithCompletionHandler:")]
 		void MuteWithCompletionHandler (Action<NSError> completionHandler);
 
-		// -(void)unmuteWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("unmute(completionHandler:)"))) __attribute__((deprecated("Use unmuteOutgoingAudio instead")));
+		// -(void)unmuteWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("unmute(completionHandler:)"))) __attribute__((deprecated("Use unmuteOutgoingAudio instead.")));
 		[Export ("unmuteWithCompletionHandler:")]
 		void UnmuteWithCompletionHandler (Action<NSError> completionHandler);
 
@@ -1962,6 +2492,36 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("resumeWithCompletionHandler:")]
 		void ResumeWithCompletionHandler (Action<NSError> completionHandler);
 
+		// -(void)setVideoConstraints:(ACSVideoConstraints * _Nonnull)constraints __attribute__((swift_name("set(videoConstraints:)")));
+		[Export ("setVideoConstraints:")]
+		void SetVideoConstraints (ACSVideoConstraints constraints);
+
+		// -(id _Nonnull)feature:(Class _Nonnull)featureClass __attribute__((swift_private));
+		[Export ("feature:")]
+		NSObject Feature (Class featureClass);
+	}
+
+	// @interface ACSCall : ACSCallBase
+	[BaseType (typeof(ACSCallBase))]
+	[DisableDefaultCtor]
+	interface ACSCall
+	{
+		// @property (readonly, retain) ACSCallInfo * _Nonnull info;
+		[Export ("info", ArgumentSemantic.Retain)]
+		ACSCallInfo Info { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSCallDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSCallDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSCallEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSCallEvents Events { get; }
+
 		// -(ACSRemoteParticipant * _Nullable)addParticipant:(id<CommunicationIdentifier> _Nonnull)participant withError:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("add(participant:)")));
 		[Export ("addParticipant:withError:")]
 		[return: NullAllowed]
@@ -1971,10 +2531,55 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("addParticipant:options:withError:")]
 		[return: NullAllowed]
 		ACSRemoteParticipant AddParticipant (PhoneNumberIdentifier participant, [NullAllowed] ACSAddPhoneNumberOptions options, [NullAllowed] out NSError error);
+	}
 
-		// -(id _Nonnull)feature:(Class _Nonnull)featureClass __attribute__((swift_private));
-		[Export ("feature:")]
-		NSObject Feature (Class featureClass);
+	// @interface ACSCallInfoBase : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSCallInfoBase
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// -(void)getServerCallIdWithCompletionHandler:(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getServerCallId(completionHandler:)")));
+		[Export ("getServerCallIdWithCompletionHandler:")]
+		void GetServerCallIdWithCompletionHandler (Action<NSString, NSError> completionHandler);
+	}
+
+	// @interface ACSCallInfo : ACSCallInfoBase
+	[BaseType (typeof(ACSCallInfoBase))]
+	[DisableDefaultCtor]
+	interface ACSCallInfo
+	{
+	}
+
+	// @interface ACSPropertyChangedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSPropertyChangedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+	}
+
+	// @interface ACSParticipantsUpdatedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSParticipantsUpdatedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, copy) NSArray<ACSRemoteParticipant *> * _Nonnull addedParticipants;
+		[Export ("addedParticipants", ArgumentSemantic.Copy)]
+		ACSRemoteParticipant[] AddedParticipants { get; }
+
+		// @property (readonly, copy) NSArray<ACSRemoteParticipant *> * _Nonnull removedParticipants;
+		[Export ("removedParticipants", ArgumentSemantic.Copy)]
+		ACSRemoteParticipant[] RemovedParticipants { get; }
 	}
 
 	// @interface ACSRemoteParticipant : NSObject
@@ -1986,13 +2591,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("dealloc")]
 		void Dealloc ();
 
-		// @property (readonly) ACSCallParticipantRole callParticipantRole;
-		[Export ("callParticipantRole")]
-		ACSCallParticipantRole CallParticipantRole { get; }
-
 		// @property (readonly, retain) NSString * _Nonnull displayName;
 		[Export ("displayName", ArgumentSemantic.Retain)]
 		string DisplayName { get; }
+
+		// @property (readonly) ACSCallParticipantRole callParticipantRole;
+		[Export ("callParticipantRole")]
+		ACSCallParticipantRole CallParticipantRole { get; }
 
 		// @property (readonly) BOOL isMuted;
 		[Export ("isMuted")]
@@ -2010,7 +2615,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("state")]
 		ACSParticipantState State { get; }
 
-		// @property (readonly, copy) DEPRECATED_MSG_ATTRIBUTE("Use incomingVideoStreams instead") NSArray<ACSRemoteVideoStream *> * videoStreams __attribute__((deprecated("Use incomingVideoStreams instead")));
+		// @property (readonly, copy) DEPRECATED_MSG_ATTRIBUTE("Use IncomingVideoStreams getter instead") NSArray<ACSRemoteVideoStream *> * videoStreams __attribute__((deprecated("Use IncomingVideoStreams getter instead")));
 		[Export ("videoStreams", ArgumentSemantic.Copy)]
 		ACSRemoteVideoStream[] VideoStreams { get; }
 
@@ -2029,6 +2634,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (readonly, nonatomic, strong) ACSRemoteParticipantEvents * _Nonnull events;
 		[Export ("events", ArgumentSemantic.Strong)]
 		ACSRemoteParticipantEvents Events { get; }
+
+		// -(void)muteWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("mute(completionHandler:)")));
+		[Export ("muteWithCompletionHandler:")]
+		void MuteWithCompletionHandler (Action<NSError> completionHandler);
 
 		// @property (readonly, nonatomic) id<CommunicationIdentifier> _Nonnull identifier;
 		[Export ("identifier")]
@@ -2075,16 +2684,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		ACSRemoteVideoStreamEvents Events { get; }
 	}
 
-	// @interface ACSPropertyChangedEventArgs : NSObject
-	[BaseType (typeof(NSObject))]
-	[DisableDefaultCtor]
-	interface ACSPropertyChangedEventArgs
-	{
-		// -(void)dealloc;
-		[Export ("dealloc")]
-		void Dealloc ();
-	}
-
 	// @interface ACSRemoteVideoStreamsEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
@@ -2101,24 +2700,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (readonly, copy) NSArray<ACSRemoteVideoStream *> * _Nonnull removedRemoteVideoStreams;
 		[Export ("removedRemoteVideoStreams", ArgumentSemantic.Copy)]
 		ACSRemoteVideoStream[] RemovedRemoteVideoStreams { get; }
-	}
-
-	// @interface ACSParticipantsUpdatedEventArgs : NSObject
-	[BaseType (typeof(NSObject))]
-	[DisableDefaultCtor]
-	interface ACSParticipantsUpdatedEventArgs
-	{
-		// -(void)dealloc;
-		[Export ("dealloc")]
-		void Dealloc ();
-
-		// @property (readonly, copy) NSArray<ACSRemoteParticipant *> * _Nonnull addedParticipants;
-		[Export ("addedParticipants", ArgumentSemantic.Copy)]
-		ACSRemoteParticipant[] AddedParticipants { get; }
-
-		// @property (readonly, copy) NSArray<ACSRemoteParticipant *> * _Nonnull removedParticipants;
-		[Export ("removedParticipants", ArgumentSemantic.Copy)]
-		ACSRemoteParticipant[] RemovedParticipants { get; }
 	}
 
 	// @interface ACSLocalVideoStreamsUpdatedEventArgs : NSObject
@@ -2139,33 +2720,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		ACSLocalVideoStream[] RemovedStreams { get; }
 	}
 
-	// @interface ACSHangUpOptions : NSObject
-	[BaseType (typeof(NSObject))]
-	interface ACSHangUpOptions
-	{
-		// -(void)dealloc;
-		[Export ("dealloc")]
-		void Dealloc ();
-
-		// @property BOOL forEveryone;
-		[Export ("forEveryone")]
-		bool ForEveryone { get; set; }
-	}
-
-	// @interface ACSCallFeature : NSObject
-	[BaseType (typeof(NSObject))]
-	[DisableDefaultCtor]
-	interface ACSCallFeature
-	{
-		// -(void)dealloc;
-		[Export ("dealloc")]
-		void Dealloc ();
-
-		// @property (readonly, retain) NSString * _Nonnull name;
-		[Export ("name", ArgumentSemantic.Retain)]
-		string Name { get; }
-	}
-
 	// @interface ACSCallsUpdatedEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
@@ -2184,10 +2738,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		ACSCall[] RemovedCalls { get; }
 	}
 
-	// @interface ACSIncomingCall : NSObject
+	// @interface ACSIncomingCallBase : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
-	interface ACSIncomingCall
+	interface ACSIncomingCallBase
 	{
 		// -(void)dealloc;
 		[Export ("dealloc")]
@@ -2209,6 +2763,16 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("isVideoEnabled")]
 		bool IsVideoEnabled { get; }
 
+		// -(void)rejectWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("reject(completionHandler:)")));
+		[Export ("rejectWithCompletionHandler:")]
+		void RejectWithCompletionHandler (Action<NSError> completionHandler);
+	}
+
+	// @interface ACSIncomingCall : ACSIncomingCallBase
+	[BaseType (typeof(ACSIncomingCallBase))]
+	[DisableDefaultCtor]
+	interface ACSIncomingCall
+	{
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
 		ACSIncomingCallDelegate Delegate { get; set; }
@@ -2224,10 +2788,20 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)accept:(ACSAcceptCallOptions * _Nonnull)options withCompletionHandler:(void (^ _Nonnull)(ACSCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("accept(options:completionHandler:)")));
 		[Export ("accept:withCompletionHandler:")]
 		void Accept (ACSAcceptCallOptions options, Action<ACSCall, NSError> completionHandler);
+	}
 
-		// -(void)rejectWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("reject(completionHandler:)")));
-		[Export ("rejectWithCompletionHandler:")]
-		void RejectWithCompletionHandler (Action<NSError> completionHandler);
+	// @interface ACSCallDebugInfo : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSCallDebugInfo
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, nonatomic, strong) NSArray<NSURL *> * _Nonnull supportFiles;
+		[Export ("supportFiles", ArgumentSemantic.Strong)]
+		NSUrl[] SupportFiles { get; }
 	}
 
 	// @interface ACSCallClient : NSObject
@@ -2242,6 +2816,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("dealloc")]
 		void Dealloc ();
 
+		// @property (readonly, retain) ACSCallDebugInfo * _Nonnull debugInfo;
+		[Export ("debugInfo", ArgumentSemantic.Retain)]
+		ACSCallDebugInfo DebugInfo { get; }
+
 		// -(void)dispose;
 		[Export ("dispose")]
 		void Dispose ();
@@ -2253,6 +2831,14 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)createCallAgentWithOptions:(CommunicationTokenCredential * _Nonnull)userCredential callAgentOptions:(ACSCallAgentOptions * _Nullable)callAgentOptions withCompletionHandler:(void (^ _Nonnull)(ACSCallAgent * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("createCallAgent(userCredential:options:completionHandler:)")));
 		[Export ("createCallAgentWithOptions:callAgentOptions:withCompletionHandler:")]
 		void CreateCallAgentWithOptions (CommunicationTokenCredential userCredential, [NullAllowed] ACSCallAgentOptions callAgentOptions, Action<ACSCallAgent, NSError> completionHandler);
+
+		// -(void)createTeamsCallAgent:(CommunicationTokenCredential * _Nonnull)userCredential withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCallAgent * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("createTeamsCallAgent(userCredential:completionHandler:)")));
+		[Export ("createTeamsCallAgent:withCompletionHandler:")]
+		void CreateTeamsCallAgent (CommunicationTokenCredential userCredential, Action<ACSTeamsCallAgent, NSError> completionHandler);
+
+		// -(void)createTeamsCallAgentWithOptions:(CommunicationTokenCredential * _Nonnull)userCredential teamsCallAgentOptions:(ACSTeamsCallAgentOptions * _Nullable)options withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCallAgent * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("createTeamsCallAgent(userCredential:options:completionHandler:)")));
+		[Export ("createTeamsCallAgentWithOptions:teamsCallAgentOptions:withCompletionHandler:")]
+		void CreateTeamsCallAgentWithOptions (CommunicationTokenCredential userCredential, [NullAllowed] ACSTeamsCallAgentOptions options, Action<ACSTeamsCallAgent, NSError> completionHandler);
 
 		// +(void)reportIncomingCall:(ACSPushNotificationInfo * _Nonnull)payload callKitOptions:(ACSCallKitOptions * _Nonnull)callKitOptions withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("reportIncomingCall(with:callKitOptions:completionHandler:)")));
 		[Static]
@@ -2279,6 +2865,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (retain) ACSCallDiagnosticsOptions * _Nullable diagnostics;
 		[NullAllowed, Export ("diagnostics", ArgumentSemantic.Retain)]
 		ACSCallDiagnosticsOptions Diagnostics { get; set; }
+
+		// @property (retain) ACSCallNetworkOptions * _Nullable networkOptions;
+		[NullAllowed, Export ("networkOptions", ArgumentSemantic.Retain)]
+		ACSCallNetworkOptions NetworkOptions { get; set; }
 	}
 
 	// @interface ACSCallDiagnosticsOptions : NSObject
@@ -2300,6 +2890,257 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (copy) NSArray<NSString *> * _Nonnull tags;
 		[Export ("tags", ArgumentSemantic.Copy)]
 		string[] Tags { get; set; }
+	}
+
+	// @interface ACSCallNetworkOptions : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCallNetworkOptions
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (retain) NSString * _Nonnull proxyAddress;
+		[Export ("proxyAddress", ArgumentSemantic.Retain)]
+		string ProxyAddress { get; set; }
+
+		// @property (copy) NSArray<ACSIceServerInfo *> * _Nonnull iceServers;
+		[Export ("iceServers", ArgumentSemantic.Copy)]
+		ACSIceServerInfo[] IceServers { get; set; }
+	}
+
+	// @interface ACSIceServerInfo : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSIceServerInfo
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (copy) NSArray<NSString *> * _Nonnull urls;
+		[Export ("urls", ArgumentSemantic.Copy)]
+		string[] Urls { get; set; }
+
+		// @property (retain) NSString * _Nonnull realm;
+		[Export ("realm", ArgumentSemantic.Retain)]
+		string Realm { get; set; }
+
+		// @property int tcpPort;
+		[Export ("tcpPort")]
+		int TcpPort { get; set; }
+
+		// @property int udpPort;
+		[Export ("udpPort")]
+		int UdpPort { get; set; }
+
+		// @property (retain) NSString * _Nonnull username;
+		[Export ("username", ArgumentSemantic.Retain)]
+		string Username { get; set; }
+
+		// @property (retain) NSString * _Nonnull credential;
+		[Export ("credential", ArgumentSemantic.Retain)]
+		string Credential { get; set; }
+
+		// @property BOOL standardTURN;
+		[Export ("standardTURN")]
+		bool StandardTURN { get; set; }
+	}
+
+	// @interface ACSTeamsCallAgentOptions : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSTeamsCallAgentOptions
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (retain) ACSCallKitOptions * _Nullable callKitOptions;
+		[NullAllowed, Export ("callKitOptions", ArgumentSemantic.Retain)]
+		ACSCallKitOptions CallKitOptions { get; set; }
+	}
+
+	// @interface ACSTeamsCallAgent : ACSCallAgentBase
+	[BaseType (typeof(ACSCallAgentBase))]
+	[DisableDefaultCtor]
+	interface ACSTeamsCallAgent
+	{
+		// @property (readonly, copy) NSArray<ACSTeamsCall *> * _Nonnull calls;
+		[Export ("calls", ArgumentSemantic.Copy)]
+		ACSTeamsCall[] Calls { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSTeamsCallAgentDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSTeamsCallAgentDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSTeamsCallAgentEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSTeamsCallAgentEvents Events { get; }
+
+		// -(void)startCallWithParticipantWithOptions:(id<CommunicationIdentifier> _Nonnull)participant options:(ACSStartTeamsCallOptions * _Nullable)options withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("startCall(participant:options:completionHandler:)")));
+		[Export ("startCallWithParticipantWithOptions:options:withCompletionHandler:")]
+		void StartCallWithParticipantWithOptions (CommunicationIdentifier participant, [NullAllowed] ACSStartTeamsCallOptions options, Action<ACSTeamsCall, NSError> completionHandler);
+
+		// -(void)startCallWithParticipant:(id<CommunicationIdentifier> _Nonnull)participant withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("startCall(participant:completionHandler:)")));
+		[Export ("startCallWithParticipant:withCompletionHandler:")]
+		void StartCallWithParticipant (CommunicationIdentifier participant, Action<ACSTeamsCall, NSError> completionHandler);
+
+		// -(void)startCallWithParticipants:(NSArray<id<CommunicationIdentifier>> * _Nonnull)participants options:(ACSStartTeamsGroupCallOptions * _Nonnull)options withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("startCall(participants:options:completionHandler:)")));
+		[Export ("startCallWithParticipants:options:withCompletionHandler:")]
+		void StartCallWithParticipants (CommunicationIdentifier[] participants, ACSStartTeamsGroupCallOptions options, Action<ACSTeamsCall, NSError> completionHandler);
+
+		// -(void)joinWithTeamsMeetingLinkLocatorWithOptions:(ACSTeamsMeetingLinkLocator * _Nonnull)meetingLocator joinCallOptions:(ACSJoinCallOptions * _Nonnull)joinCallOptions withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("join(teamsMeetingLinkLocator:joinCallOptions:completionHandler:)")));
+		[Export ("joinWithTeamsMeetingLinkLocatorWithOptions:joinCallOptions:withCompletionHandler:")]
+		void JoinWithTeamsMeetingLinkLocatorWithOptions (ACSTeamsMeetingLinkLocator meetingLocator, ACSJoinCallOptions joinCallOptions, Action<ACSTeamsCall, NSError> completionHandler);
+
+		// -(void)joinWithTeamsMeetingLinkLocator:(ACSTeamsMeetingLinkLocator * _Nonnull)meetingLocator withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("join(teamsMeetingLinkLocator:completionHandler:)")));
+		[Export ("joinWithTeamsMeetingLinkLocator:withCompletionHandler:")]
+		void JoinWithTeamsMeetingLinkLocator (ACSTeamsMeetingLinkLocator meetingLocator, Action<ACSTeamsCall, NSError> completionHandler);
+
+		// -(void)joinWithMeetingCoordinatesLocatorWithOptions:(ACSTeamsMeetingCoordinatesLocator * _Nonnull)meetingLocator joinCallOptions:(ACSJoinCallOptions * _Nonnull)joinCallOptions withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("join(teamsMeetingCoordinatesLocator:joinCallOptions:completionHandler:)")));
+		[Export ("joinWithMeetingCoordinatesLocatorWithOptions:joinCallOptions:withCompletionHandler:")]
+		void JoinWithMeetingCoordinatesLocatorWithOptions (ACSTeamsMeetingCoordinatesLocator meetingLocator, ACSJoinCallOptions joinCallOptions, Action<ACSTeamsCall, NSError> completionHandler);
+
+		// -(void)joinWithMeetingCoordinatesLocator:(ACSTeamsMeetingCoordinatesLocator * _Nonnull)meetingLocator withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("join(teamsMeetingCoordinatesLocator:completionHandler:)")));
+		[Export ("joinWithMeetingCoordinatesLocator:withCompletionHandler:")]
+		void JoinWithMeetingCoordinatesLocator (ACSTeamsMeetingCoordinatesLocator meetingLocator, Action<ACSTeamsCall, NSError> completionHandler);
+	}
+
+	// @interface ACSTeamsCall : ACSCallBase
+	[BaseType (typeof(ACSCallBase))]
+	[DisableDefaultCtor]
+	interface ACSTeamsCall
+	{
+		// @property (readonly, retain) ACSTeamsCallInfo * _Nonnull info;
+		[Export ("info", ArgumentSemantic.Retain)]
+		ACSTeamsCallInfo Info { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSTeamsCallDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSTeamsCallDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSTeamsCallEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSTeamsCallEvents Events { get; }
+
+		// -(ACSRemoteParticipant * _Nullable)addParticipant:(id<CommunicationIdentifier> _Nonnull)participant options:(ACSAddTeamsParticipantOptions * _Nonnull)options withError:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("add(participant:options:)")));
+		[Export ("addParticipant:options:withError:")]
+		[return: NullAllowed]
+		ACSRemoteParticipant AddParticipant (CommunicationIdentifier participant, ACSAddTeamsParticipantOptions options, [NullAllowed] out NSError error);
+
+		// -(ACSRemoteParticipant * _Nullable)addUnknownParticipant:(UnknownIdentifier * _Nonnull)participant options:(ACSAddTeamsParticipantOptions * _Nonnull)options withError:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("add(participant:options:)")));
+		[Export ("addUnknownParticipant:options:withError:")]
+		[return: NullAllowed]
+		ACSRemoteParticipant AddUnknownParticipant (UnknownIdentifier participant, ACSAddTeamsParticipantOptions options, [NullAllowed] out NSError error);
+
+		// -(ACSRemoteParticipant * _Nullable)addTeamsParticipant:(MicrosoftTeamsUserIdentifier * _Nonnull)participant options:(ACSAddTeamsParticipantOptions * _Nonnull)options withError:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("add(participant:options:)")));
+		[Export ("addTeamsParticipant:options:withError:")]
+		[return: NullAllowed]
+		ACSRemoteParticipant AddTeamsParticipant (MicrosoftTeamsUserIdentifier participant, ACSAddTeamsParticipantOptions options, [NullAllowed] out NSError error);
+
+		// -(ACSRemoteParticipant * _Nullable)addPhoneNumberParticipant:(PhoneNumberIdentifier * _Nonnull)participant options:(ACSAddTeamsParticipantOptions * _Nonnull)options withError:(NSError * _Nullable * _Nonnull)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_name("add(phoneNumber:options:)")));
+		[Export ("addPhoneNumberParticipant:options:withError:")]
+		[return: NullAllowed]
+		ACSRemoteParticipant AddPhoneNumberParticipant (PhoneNumberIdentifier participant, ACSAddTeamsParticipantOptions options, [NullAllowed] out NSError error);
+	}
+
+	// @interface ACSTeamsCallInfo : ACSCallInfoBase
+	[BaseType (typeof(ACSCallInfoBase))]
+	[DisableDefaultCtor]
+	interface ACSTeamsCallInfo
+	{
+		// @property (readonly, retain) NSString * _Nonnull threadId;
+		[Export ("threadId", ArgumentSemantic.Retain)]
+		string ThreadId { get; }
+	}
+
+	// @interface ACSAddTeamsParticipantOptions : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSAddTeamsParticipantOptions
+	{
+		// -(instancetype _Nonnull)init:(NSString * _Nonnull)threadId __attribute__((swift_name("init(threadId:)")));
+		[Export ("init:")]
+		NativeHandle Constructor (string threadId);
+
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull threadId;
+		[Export ("threadId", ArgumentSemantic.Retain)]
+		string ThreadId { get; }
+	}
+
+	// @interface ACSStartTeamsCallOptions : ACSCallOptions
+	[BaseType (typeof(ACSCallOptions))]
+	interface ACSStartTeamsCallOptions
+	{
+	}
+
+	// @interface ACSStartTeamsGroupCallOptions : ACSStartTeamsCallOptions
+	[BaseType (typeof(ACSStartTeamsCallOptions))]
+	[DisableDefaultCtor]
+	interface ACSStartTeamsGroupCallOptions
+	{
+		// -(instancetype _Nonnull)init:(NSString * _Nonnull)threadId __attribute__((swift_name("init(threadId:)")));
+		[Export ("init:")]
+		NativeHandle Constructor (string threadId);
+
+		// @property (readonly, retain) NSString * _Nonnull threadId;
+		[Export ("threadId", ArgumentSemantic.Retain)]
+		string ThreadId { get; }
+	}
+
+	// @interface ACSTeamsCallsUpdatedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSTeamsCallsUpdatedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, copy) NSArray<ACSTeamsCall *> * _Nonnull addedCalls;
+		[Export ("addedCalls", ArgumentSemantic.Copy)]
+		ACSTeamsCall[] AddedCalls { get; }
+
+		// @property (readonly, copy) NSArray<ACSTeamsCall *> * _Nonnull removedCalls;
+		[Export ("removedCalls", ArgumentSemantic.Copy)]
+		ACSTeamsCall[] RemovedCalls { get; }
+	}
+
+	// @interface ACSTeamsIncomingCall : ACSIncomingCallBase
+	[BaseType (typeof(ACSIncomingCallBase))]
+	[DisableDefaultCtor]
+	interface ACSTeamsIncomingCall
+	{
+		// @property (readonly, retain) ACSTeamsCallInfo * _Nonnull callInfo;
+		[Export ("callInfo", ArgumentSemantic.Retain)]
+		ACSTeamsCallInfo CallInfo { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSTeamsIncomingCallDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSTeamsIncomingCallDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSTeamsIncomingCallEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSTeamsIncomingCallEvents Events { get; }
+
+		// -(void)accept:(ACSAcceptCallOptions * _Nonnull)options withCompletionHandler:(void (^ _Nonnull)(ACSTeamsCall * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("accept(options:completionHandler:)")));
+		[Export ("accept:withCompletionHandler:")]
+		void Accept (ACSAcceptCallOptions options, Action<ACSTeamsCall, NSError> completionHandler);
 	}
 
 	// @interface ACSDeviceManager : NSObject
@@ -2346,6 +3187,135 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		ACSVideoDeviceInfo[] RemovedVideoDevices { get; }
 	}
 
+	// @interface ACSHangUpOptions : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSHangUpOptions
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property BOOL forEveryone;
+		[Export ("forEveryone")]
+		bool ForEveryone { get; set; }
+	}
+
+	// @interface ACSRecordingUpdatedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSRecordingUpdatedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) ACSRecordingInfo * _Nonnull updatedRecording;
+		[Export ("updatedRecording", ArgumentSemantic.Retain)]
+		ACSRecordingInfo UpdatedRecording { get; }
+	}
+
+	// @interface ACSRecordingInfo : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSRecordingInfo
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly) ACSRecordingState state;
+		[Export ("state")]
+		ACSRecordingState State { get; }
+	}
+
+	// @interface ACSCallLobby : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSCallLobby
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, copy) NSArray<ACSRemoteParticipant *> * _Nonnull participants;
+		[Export ("participants", ArgumentSemantic.Copy)]
+		ACSRemoteParticipant[] Participants { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSCallLobbyDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSCallLobbyDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSCallLobbyEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSCallLobbyEvents Events { get; }
+
+		// -(void)admitAllWithCompletionHandler:(void (^ _Nonnull)(ACSAdmitAllParticipantsResult * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("admitAll(completionHandler:)")));
+		[Export ("admitAllWithCompletionHandler:")]
+		void AdmitAllWithCompletionHandler (Action<ACSAdmitAllParticipantsResult, NSError> completionHandler);
+
+		// -(void)admit:(NSArray<id<CommunicationIdentifier>> * _Nonnull)identifiers withCompletionHandler:(void (^ _Nonnull)(ACSAdmitParticipantsResult * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("admit(identifiers:completionHandler:)")));
+		[Export ("admit:withCompletionHandler:")]
+		void Admit (CommunicationIdentifier[] identifiers, Action<ACSAdmitParticipantsResult, NSError> completionHandler);
+
+		// -(void)reject:(id<CommunicationIdentifier> _Nonnull)identifier withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("reject(identifier:completionHandler:)")));
+		[Export ("reject:withCompletionHandler:")]
+		void Reject (CommunicationIdentifier identifier, Action<NSError> completionHandler);
+	}
+
+	// @interface ACSAdmitParticipantsResult : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSAdmitParticipantsResult
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly) int successCount;
+		[Export ("successCount")]
+		int SuccessCount { get; }
+
+		// @property (readonly, copy) NSArray<ACSRemoteParticipant *> * _Nonnull failedParticipants;
+		[Export ("failedParticipants", ArgumentSemantic.Copy)]
+		ACSRemoteParticipant[] FailedParticipants { get; }
+	}
+
+	// @interface ACSAdmitAllParticipantsResult : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSAdmitAllParticipantsResult
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly) int successCount;
+		[Export ("successCount")]
+		int SuccessCount { get; }
+
+		// @property (readonly) int failureCount;
+		[Export ("failureCount")]
+		int FailureCount { get; }
+	}
+
+	// @interface ACSCallFeature : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSCallFeature
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull name;
+		[Export ("name", ArgumentSemantic.Retain)]
+		string Name { get; }
+	}
+
 	// @interface ACSRecordingCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
@@ -2354,6 +3324,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (readonly) BOOL isRecordingActive;
 		[Export ("isRecordingActive")]
 		bool IsRecordingActive { get; }
+
+		// @property (readonly, copy) NSArray<ACSRecordingInfo *> * _Nonnull recordings;
+		[Export ("recordings", ArgumentSemantic.Copy)]
+		ACSRecordingInfo[] Recordings { get; }
 
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
@@ -2441,6 +3415,36 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		NSDate Timestamp { get; }
 	}
 
+	// @interface ACSCommunicationCaptionsReceivedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSCommunicationCaptionsReceivedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) ACSCallerInfo * _Nonnull speaker;
+		[Export ("speaker", ArgumentSemantic.Retain)]
+		ACSCallerInfo Speaker { get; }
+
+		// @property (readonly) ACSCaptionsResultType resultType;
+		[Export ("resultType")]
+		ACSCaptionsResultType ResultType { get; }
+
+		// @property (readonly, retain) NSDate * _Nonnull timestamp;
+		[Export ("timestamp", ArgumentSemantic.Retain)]
+		NSDate Timestamp { get; }
+
+		// @property (readonly, retain) NSString * _Nonnull spokenText;
+		[Export ("spokenText", ArgumentSemantic.Retain)]
+		string SpokenText { get; }
+
+		// @property (readonly, retain) NSString * _Nonnull spokenLanguage;
+		[Export ("spokenLanguage", ArgumentSemantic.Retain)]
+		string SpokenLanguage { get; }
+	}
+
 	// @interface ACSCallCaptions : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
@@ -2479,6 +3483,24 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void SetSpokenLanguage (string language, Action<NSError> completionHandler);
 	}
 
+	// @interface ACSCommunicationCaptions : ACSCallCaptions
+	[BaseType (typeof(ACSCallCaptions))]
+	[DisableDefaultCtor]
+	interface ACSCommunicationCaptions
+	{
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSCommunicationCaptionsDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSCommunicationCaptionsDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSCommunicationCaptionsEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSCommunicationCaptionsEvents Events { get; }
+	}
+
 	// @interface ACSTeamsCaptions : ACSCallCaptions
 	[BaseType (typeof(ACSCallCaptions))]
 	[DisableDefaultCtor]
@@ -2514,6 +3536,18 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	[DisableDefaultCtor]
 	interface ACSCaptionsCallFeature
 	{
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSCaptionsCallFeatureDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSCaptionsCallFeatureDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSCaptionsCallFeatureEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSCaptionsCallFeatureEvents Events { get; }
+
 		// -(void)getCaptionsWithCompletionHandler:(void (^ _Nonnull)(ACSCallCaptions * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getCaptions(completionHandler:)")));
 		[Export ("getCaptionsWithCompletionHandler:")]
 		void GetCaptionsWithCompletionHandler (Action<ACSCallCaptions, NSError> completionHandler);
@@ -2641,6 +3675,76 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (readonly, nonatomic) id<CommunicationIdentifier> _Nonnull identifier;
 		[Export ("identifier")]
 		CommunicationIdentifier Identifier { get; }
+	}
+
+	// @interface ACSSpotlightCallFeature : ACSCallFeature
+	[BaseType (typeof(ACSCallFeature))]
+	[DisableDefaultCtor]
+	interface ACSSpotlightCallFeature
+	{
+		// @property (readonly) int maxSpotlightedParticipants;
+		[Export ("maxSpotlightedParticipants")]
+		int MaxSpotlightedParticipants { get; }
+
+		// @property (readonly, copy) NSArray<ACSSpotlightedParticipant *> * _Nonnull spotlightedParticipants;
+		[Export ("spotlightedParticipants", ArgumentSemantic.Copy)]
+		ACSSpotlightedParticipant[] SpotlightedParticipants { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSSpotlightCallFeatureDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSSpotlightCallFeatureDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSSpotlightCallFeatureEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSSpotlightCallFeatureEvents Events { get; }
+
+		// -(void)cancelAllSpotlightsWithCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("cancelAllSpotlights(completionHandler:)")));
+		[Export ("cancelAllSpotlightsWithCompletionHandler:")]
+		void CancelAllSpotlightsWithCompletionHandler (Action<NSError> completionHandler);
+
+		// -(void)spotlight:(NSArray<id<CommunicationIdentifier>> * _Nonnull)identifiers withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("spotlight(identifiers:completionHandler:)")));
+		[Export ("spotlight:withCompletionHandler:")]
+		void Spotlight (CommunicationIdentifier[] identifiers, Action<NSError> completionHandler);
+
+		// -(void)cancelSpotlights:(NSArray<id<CommunicationIdentifier>> * _Nonnull)identifiers withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("cancelSpotlights(identifiers:completionHandler:)")));
+		[Export ("cancelSpotlights:withCompletionHandler:")]
+		void CancelSpotlights (CommunicationIdentifier[] identifiers, Action<NSError> completionHandler);
+	}
+
+	// @interface ACSSpotlightedParticipant : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSSpotlightedParticipant
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, nonatomic) id<CommunicationIdentifier> _Nonnull identifier;
+		[Export ("identifier")]
+		CommunicationIdentifier Identifier { get; }
+	}
+
+	// @interface ACSSpotlightChangedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSSpotlightChangedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, copy) NSArray<ACSSpotlightedParticipant *> * _Nonnull added;
+		[Export ("added", ArgumentSemantic.Copy)]
+		ACSSpotlightedParticipant[] Added { get; }
+
+		// @property (readonly, copy) NSArray<ACSSpotlightedParticipant *> * _Nonnull removed;
+		[Export ("removed", ArgumentSemantic.Copy)]
+		ACSSpotlightedParticipant[] Removed { get; }
 	}
 
 	// @interface ACSCreateViewOptions : NSObject
@@ -2870,6 +3974,20 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void Stop ();
 	}
 
+	// @interface ACSRoomCallLocator : ACSJoinMeetingLocator
+	[BaseType (typeof(ACSJoinMeetingLocator))]
+	[DisableDefaultCtor]
+	interface ACSRoomCallLocator
+	{
+		// -(instancetype _Nonnull)init:(NSString * _Nonnull)roomId __attribute__((swift_name("init(roomId:)")));
+		[Export ("init:")]
+		NativeHandle Constructor (string roomId);
+
+		// @property (readonly, retain) NSString * _Nonnull roomId;
+		[Export ("roomId", ArgumentSemantic.Retain)]
+		string RoomId { get; }
+	}
+
 	// @interface ACSIncomingMixedAudioEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
@@ -2937,6 +4055,28 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		AVAudioBuffer Buffer { get; set; }
 	}
 
+	// @interface ACSIncomingUnmixedAudioEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSIncomingUnmixedAudioEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, copy) NSArray<ACSRawAudioBuffer *> * _Nonnull audioBuffer;
+		[Export ("audioBuffer", ArgumentSemantic.Copy)]
+		ACSRawAudioBuffer[] AudioBuffer { get; }
+
+		// @property (readonly, copy) NSArray<NSString *> * _Nonnull remoteParticipantIds;
+		[Export ("remoteParticipantIds", ArgumentSemantic.Copy)]
+		string[] RemoteParticipantIds { get; }
+
+		// @property (readonly, retain) ACSRawIncomingAudioStreamProperties * _Nonnull streamProperties;
+		[Export ("streamProperties", ArgumentSemantic.Retain)]
+		ACSRawIncomingAudioStreamProperties StreamProperties { get; }
+	}
+
 	// @interface ACSAudioStreamStateChangedEventArgs : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
@@ -2990,6 +4130,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (retain) ACSRawIncomingAudioStreamProperties * _Nonnull properties;
 		[Export ("properties", ArgumentSemantic.Retain)]
 		ACSRawIncomingAudioStreamProperties Properties { get; set; }
+
+		// @property BOOL receiveUnmixedAudio;
+		[Export ("receiveUnmixedAudio")]
+		bool ReceiveUnmixedAudio { get; set; }
 	}
 
 	// @interface ACSLocalOutgoingAudioStream : ACSOutgoingAudioStream
@@ -3080,20 +4224,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)sendRawAudioBuffer:(ACSRawAudioBuffer * _Nonnull)rawAudioBuffer withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("send(buffer:completionHandler:)")));
 		[Export ("sendRawAudioBuffer:withCompletionHandler:")]
 		void SendRawAudioBuffer (ACSRawAudioBuffer rawAudioBuffer, Action<NSError> completionHandler);
-	}
-
-	// @interface ACSRoomCallLocator : ACSJoinMeetingLocator
-	[BaseType (typeof(ACSJoinMeetingLocator))]
-	[DisableDefaultCtor]
-	interface ACSRoomCallLocator
-	{
-		// -(instancetype _Nonnull)init:(NSString * _Nonnull)roomId __attribute__((swift_name("init(roomId:)")));
-		[Export ("init:")]
-		NativeHandle Constructor (string roomId);
-
-		// @property (readonly, retain) NSString * _Nonnull roomId;
-		[Export ("roomId", ArgumentSemantic.Retain)]
-		string RoomId { get; }
 	}
 
 	// @interface ACSVideoEffect : NSObject
@@ -3194,6 +4324,183 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// @property (readonly, retain) NSString * _Nonnull message;
 		[Export ("message", ArgumentSemantic.Retain)]
 		string Message { get; }
+	}
+
+	// @interface ACSDataChannelReceiverCreatedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSDataChannelReceiverCreatedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) ACSDataChannelReceiver * _Nonnull receiver;
+		[Export ("receiver", ArgumentSemantic.Retain)]
+		ACSDataChannelReceiver Receiver { get; }
+	}
+
+	// @interface ACSDataChannelReceiver : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSDataChannelReceiver
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly) int channelId;
+		[Export ("channelId")]
+		int ChannelId { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSDataChannelReceiverDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSDataChannelReceiverDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSDataChannelReceiverEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSDataChannelReceiverEvents Events { get; }
+
+		// -(ACSDataChannelMessage * _Nonnull)readMessage;
+		[Export ("readMessage")]
+		[Verify (MethodToProperty)]
+		ACSDataChannelMessage ReadMessage { get; }
+
+		// @property (readonly, nonatomic) id<CommunicationIdentifier> _Nonnull senderIdentifier;
+		[Export ("senderIdentifier")]
+		CommunicationIdentifier SenderIdentifier { get; }
+	}
+
+	// @interface ACSDataChannelMessage : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSDataChannelMessage
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly) unsigned int sequenceNumber;
+		[Export ("sequenceNumber")]
+		uint SequenceNumber { get; }
+
+		// @property (readonly, copy) NSData * _Nonnull data;
+		[Export ("data", ArgumentSemantic.Copy)]
+		NSData Data { get; }
+
+		// -(void)dispose;
+		[Export ("dispose")]
+		void Dispose ();
+	}
+
+	// @interface ACSDataChannelReceiverMessageReceivedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSDataChannelReceiverMessageReceivedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) ACSDataChannelReceiver * _Nonnull receiver;
+		[Export ("receiver", ArgumentSemantic.Retain)]
+		ACSDataChannelReceiver Receiver { get; }
+	}
+
+	// @interface ACSDataChannelReceiverClosedEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSDataChannelReceiverClosedEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) ACSDataChannelReceiver * _Nonnull receiver;
+		[Export ("receiver", ArgumentSemantic.Retain)]
+		ACSDataChannelReceiver Receiver { get; }
+	}
+
+	// @interface ACSDataChannelSenderCreateOptions : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSDataChannelSenderCreateOptions
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property int channelId;
+		[Export ("channelId")]
+		int ChannelId { get; set; }
+
+		// @property int bitrateInKbps;
+		[Export ("bitrateInKbps")]
+		int BitrateInKbps { get; set; }
+
+		// @property ACSDataChannelPriority priority;
+		[Export ("priority", ArgumentSemantic.Assign)]
+		ACSDataChannelPriority Priority { get; set; }
+
+		// @property ACSDataChannelReliability reliability;
+		[Export ("reliability", ArgumentSemantic.Assign)]
+		ACSDataChannelReliability Reliability { get; set; }
+
+		// @property (readonly, nonatomic) NSArray<id<CommunicationIdentifier>> * _Nonnull participants;
+		[Export ("participants")]
+		CommunicationIdentifier[] Participants { get; }
+	}
+
+	// @interface ACSDataChannelSender : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSDataChannelSender
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly) int channelId;
+		[Export ("channelId")]
+		int ChannelId { get; }
+
+		// @property (readonly) int maxMessageSize;
+		[Export ("maxMessageSize")]
+		int MaxMessageSize { get; }
+
+		// -(void)sendMessage:(NSData * _Nonnull)data withCompletionHandler:(void (^ _Nonnull)(NSError * _Nullable))completionHandler __attribute__((swift_name("sendMessage(data:completionHandler:)")));
+		[Export ("sendMessage:withCompletionHandler:")]
+		void SendMessage (NSData data, Action<NSError> completionHandler);
+
+		// -(void)close;
+		[Export ("close")]
+		void Close ();
+
+		// -(void)setParticipants:(NSArray<id<CommunicationIdentifier>> * _Nonnull)participants;
+		[Export ("setParticipants:")]
+		void SetParticipants (CommunicationIdentifier[] participants);
+	}
+
+	// @interface ACSDataChannelCallFeature : ACSCallFeature
+	[BaseType (typeof(ACSCallFeature))]
+	[DisableDefaultCtor]
+	interface ACSDataChannelCallFeature
+	{
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSDataChannelCallFeatureDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSDataChannelCallFeatureDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSDataChannelCallFeatureEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSDataChannelCallFeatureEvents Events { get; }
+
+		// -(ACSDataChannelSender * _Nonnull)createDataChannelSender:(ACSDataChannelSenderCreateOptions * _Nonnull)options __attribute__((swift_name("createDataChannelSender(options:)")));
+		[Export ("createDataChannelSender:")]
+		ACSDataChannelSender CreateDataChannelSender (ACSDataChannelSenderCreateOptions options);
 	}
 
 	// @interface ACSLocalUserDiagnosticsCallFeature : ACSCallFeature
@@ -3403,5 +4710,724 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(BOOL)valueForCameraPermissionDenied:(NSError * _Nullable * _Nullable)error __attribute__((swift_error("nonnull_error"))) __attribute__((swift_private));
 		[Export ("valueForCameraPermissionDenied:")]
 		bool ValueForCameraPermissionDenied ([NullAllowed] out NSError error);
+	}
+
+	// @interface ACSMediaStatsCallFeature : ACSCallFeature
+	[BaseType (typeof(ACSCallFeature))]
+	[DisableDefaultCtor]
+	interface ACSMediaStatsCallFeature
+	{
+		// @property int sampleIntervalInSeconds;
+		[Export ("sampleIntervalInSeconds")]
+		int SampleIntervalInSeconds { get; set; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSMediaStatsCallFeatureDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSMediaStatsCallFeatureDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSMediaStatsCallFeatureEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSMediaStatsCallFeatureEvents Events { get; }
+	}
+
+	// @interface ACSMediaStatsReportEventArgs : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSMediaStatsReportEventArgs
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) ACSMediaStatsReport * _Nonnull report;
+		[Export ("report", ArgumentSemantic.Retain)]
+		ACSMediaStatsReport Report { get; }
+	}
+
+	// @interface ACSMediaStatsReport : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSMediaStatsReport
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) ACSOutgoingMediaStatsInfo * _Nonnull outgoingMediaStats;
+		[Export ("outgoingMediaStats", ArgumentSemantic.Retain)]
+		ACSOutgoingMediaStatsInfo OutgoingMediaStats { get; }
+
+		// @property (readonly, retain) ACSIncomingMediaStatsInfo * _Nonnull incomingMediaStats;
+		[Export ("incomingMediaStats", ArgumentSemantic.Retain)]
+		ACSIncomingMediaStatsInfo IncomingMediaStats { get; }
+
+		// @property (readonly, retain) NSDate * _Nonnull generatedAt;
+		[Export ("generatedAt", ArgumentSemantic.Retain)]
+		NSDate GeneratedAt { get; }
+
+		// -(ACSIncomingMediaStatsInfo * _Nonnull)incomingMediaStatsFromParticipant:(id<CommunicationIdentifier> _Nonnull)identifier;
+		[Export ("incomingMediaStatsFromParticipant:")]
+		ACSIncomingMediaStatsInfo IncomingMediaStatsFromParticipant (CommunicationIdentifier identifier);
+	}
+
+	// @interface ACSOutgoingMediaStatsInfo : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSOutgoingMediaStatsInfo
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, copy) NSArray<ACSOutgoingAudioMediaStats *> * _Nonnull audio;
+		[Export ("audio", ArgumentSemantic.Copy)]
+		ACSOutgoingAudioMediaStats[] Audio { get; }
+
+		// @property (readonly, copy) NSArray<ACSOutgoingVideoMediaStats *> * _Nonnull video;
+		[Export ("video", ArgumentSemantic.Copy)]
+		ACSOutgoingVideoMediaStats[] Video { get; }
+
+		// @property (readonly, copy) NSArray<ACSOutgoingScreenShareMediaStats *> * _Nonnull screenShare;
+		[Export ("screenShare", ArgumentSemantic.Copy)]
+		ACSOutgoingScreenShareMediaStats[] ScreenShare { get; }
+	}
+
+	// @interface ACSOutgoingAudioMediaStats : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSOutgoingAudioMediaStats
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull codecName;
+		[Export ("codecName", ArgumentSemantic.Retain)]
+		string CodecName { get; }
+
+		// @property (readonly) NSNumber * _Nullable bitrate;
+		[NullAllowed, Export ("bitrate")]
+		NSNumber Bitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterInMs;
+		[NullAllowed, Export ("jitterInMs")]
+		NSNumber JitterInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsPerSecond;
+		[NullAllowed, Export ("packetsPerSecond")]
+		NSNumber PacketsPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsLostPerSecond;
+		[NullAllowed, Export ("packetsLostPerSecond")]
+		NSNumber PacketsLostPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable roundTripTimeInMs;
+		[NullAllowed, Export ("roundTripTimeInMs")]
+		NSNumber RoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable pairRoundTripTimeInMs;
+		[NullAllowed, Export ("pairRoundTripTimeInMs")]
+		NSNumber PairRoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable availableBitrate;
+		[NullAllowed, Export ("availableBitrate")]
+		NSNumber AvailableBitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable audioInputLevel;
+		[NullAllowed, Export ("audioInputLevel")]
+		NSNumber AudioInputLevel { get; }
+	}
+
+	// @interface ACSOutgoingVideoMediaStats : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSOutgoingVideoMediaStats
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull codecName;
+		[Export ("codecName", ArgumentSemantic.Retain)]
+		string CodecName { get; }
+
+		// @property (readonly) NSNumber * _Nullable bitrate;
+		[NullAllowed, Export ("bitrate")]
+		NSNumber Bitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterInMs;
+		[NullAllowed, Export ("jitterInMs")]
+		NSNumber JitterInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsPerSecond;
+		[NullAllowed, Export ("packetsPerSecond")]
+		NSNumber PacketsPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsLostPerSecond;
+		[NullAllowed, Export ("packetsLostPerSecond")]
+		NSNumber PacketsLostPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable roundTripTimeInMs;
+		[NullAllowed, Export ("roundTripTimeInMs")]
+		NSNumber RoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable pairRoundTripTimeInMs;
+		[NullAllowed, Export ("pairRoundTripTimeInMs")]
+		NSNumber PairRoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable availableBitrate;
+		[NullAllowed, Export ("availableBitrate")]
+		NSNumber AvailableBitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateInput;
+		[NullAllowed, Export ("frameRateInput")]
+		NSNumber FrameRateInput { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameWidthInput;
+		[NullAllowed, Export ("frameWidthInput")]
+		NSNumber FrameWidthInput { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameHeightInput;
+		[NullAllowed, Export ("frameHeightInput")]
+		NSNumber FrameHeightInput { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateEncoded;
+		[NullAllowed, Export ("frameRateEncoded")]
+		NSNumber FrameRateEncoded { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateSent;
+		[NullAllowed, Export ("frameRateSent")]
+		NSNumber FrameRateSent { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameWidthSent;
+		[NullAllowed, Export ("frameWidthSent")]
+		NSNumber FrameWidthSent { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameHeightSent;
+		[NullAllowed, Export ("frameHeightSent")]
+		NSNumber FrameHeightSent { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesSent;
+		[NullAllowed, Export ("framesSent")]
+		NSNumber FramesSent { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesEncoded;
+		[NullAllowed, Export ("framesEncoded")]
+		NSNumber FramesEncoded { get; }
+
+		// @property (readonly) NSNumber * _Nullable keyFramesEncoded;
+		[NullAllowed, Export ("keyFramesEncoded")]
+		NSNumber KeyFramesEncoded { get; }
+	}
+
+	// @interface ACSOutgoingScreenShareMediaStats : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSOutgoingScreenShareMediaStats
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull codecName;
+		[Export ("codecName", ArgumentSemantic.Retain)]
+		string CodecName { get; }
+
+		// @property (readonly) NSNumber * _Nullable bitrate;
+		[NullAllowed, Export ("bitrate")]
+		NSNumber Bitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterInMs;
+		[NullAllowed, Export ("jitterInMs")]
+		NSNumber JitterInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsPerSecond;
+		[NullAllowed, Export ("packetsPerSecond")]
+		NSNumber PacketsPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsLostPerSecond;
+		[NullAllowed, Export ("packetsLostPerSecond")]
+		NSNumber PacketsLostPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable roundTripTimeInMs;
+		[NullAllowed, Export ("roundTripTimeInMs")]
+		NSNumber RoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable pairRoundTripTimeInMs;
+		[NullAllowed, Export ("pairRoundTripTimeInMs")]
+		NSNumber PairRoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable availableBitrate;
+		[NullAllowed, Export ("availableBitrate")]
+		NSNumber AvailableBitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateInput;
+		[NullAllowed, Export ("frameRateInput")]
+		NSNumber FrameRateInput { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameWidthInput;
+		[NullAllowed, Export ("frameWidthInput")]
+		NSNumber FrameWidthInput { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameHeightInput;
+		[NullAllowed, Export ("frameHeightInput")]
+		NSNumber FrameHeightInput { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateEncoded;
+		[NullAllowed, Export ("frameRateEncoded")]
+		NSNumber FrameRateEncoded { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateSent;
+		[NullAllowed, Export ("frameRateSent")]
+		NSNumber FrameRateSent { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameWidthSent;
+		[NullAllowed, Export ("frameWidthSent")]
+		NSNumber FrameWidthSent { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameHeightSent;
+		[NullAllowed, Export ("frameHeightSent")]
+		NSNumber FrameHeightSent { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesSent;
+		[NullAllowed, Export ("framesSent")]
+		NSNumber FramesSent { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesEncoded;
+		[NullAllowed, Export ("framesEncoded")]
+		NSNumber FramesEncoded { get; }
+
+		// @property (readonly) NSNumber * _Nullable keyFramesEncoded;
+		[NullAllowed, Export ("keyFramesEncoded")]
+		NSNumber KeyFramesEncoded { get; }
+	}
+
+	// @interface ACSIncomingMediaStatsInfo : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSIncomingMediaStatsInfo
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, copy) NSArray<ACSIncomingAudioMediaStats *> * _Nonnull audio;
+		[Export ("audio", ArgumentSemantic.Copy)]
+		ACSIncomingAudioMediaStats[] Audio { get; }
+
+		// @property (readonly, copy) NSArray<ACSIncomingVideoMediaStats *> * _Nonnull video;
+		[Export ("video", ArgumentSemantic.Copy)]
+		ACSIncomingVideoMediaStats[] Video { get; }
+
+		// @property (readonly, copy) NSArray<ACSIncomingScreenShareMediaStats *> * _Nonnull screenShare;
+		[Export ("screenShare", ArgumentSemantic.Copy)]
+		ACSIncomingScreenShareMediaStats[] ScreenShare { get; }
+	}
+
+	// @interface ACSIncomingAudioMediaStats : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSIncomingAudioMediaStats
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull codecName;
+		[Export ("codecName", ArgumentSemantic.Retain)]
+		string CodecName { get; }
+
+		// @property (readonly) NSNumber * _Nullable bitrate;
+		[NullAllowed, Export ("bitrate")]
+		NSNumber Bitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterInMs;
+		[NullAllowed, Export ("jitterInMs")]
+		NSNumber JitterInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsPerSecond;
+		[NullAllowed, Export ("packetsPerSecond")]
+		NSNumber PacketsPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsLostPerSecond;
+		[NullAllowed, Export ("packetsLostPerSecond")]
+		NSNumber PacketsLostPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable roundTripTimeInMs;
+		[NullAllowed, Export ("roundTripTimeInMs")]
+		NSNumber RoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable pairRoundTripTimeInMs;
+		[NullAllowed, Export ("pairRoundTripTimeInMs")]
+		NSNumber PairRoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable availableBitrate;
+		[NullAllowed, Export ("availableBitrate")]
+		NSNumber AvailableBitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterBufferInMs;
+		[NullAllowed, Export ("jitterBufferInMs")]
+		NSNumber JitterBufferInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable audioOutputLevel;
+		[NullAllowed, Export ("audioOutputLevel")]
+		NSNumber AudioOutputLevel { get; }
+
+		// @property (readonly) NSNumber * _Nullable healedRatio;
+		[NullAllowed, Export ("healedRatio")]
+		NSNumber HealedRatio { get; }
+	}
+
+	// @interface ACSIncomingVideoMediaStats : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSIncomingVideoMediaStats
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull codecName;
+		[Export ("codecName", ArgumentSemantic.Retain)]
+		string CodecName { get; }
+
+		// @property (readonly) NSNumber * _Nullable bitrate;
+		[NullAllowed, Export ("bitrate")]
+		NSNumber Bitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterInMs;
+		[NullAllowed, Export ("jitterInMs")]
+		NSNumber JitterInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsPerSecond;
+		[NullAllowed, Export ("packetsPerSecond")]
+		NSNumber PacketsPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsLostPerSecond;
+		[NullAllowed, Export ("packetsLostPerSecond")]
+		NSNumber PacketsLostPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable roundTripTimeInMs;
+		[NullAllowed, Export ("roundTripTimeInMs")]
+		NSNumber RoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable pairRoundTripTimeInMs;
+		[NullAllowed, Export ("pairRoundTripTimeInMs")]
+		NSNumber PairRoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable availableBitrate;
+		[NullAllowed, Export ("availableBitrate")]
+		NSNumber AvailableBitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterBufferInMs;
+		[NullAllowed, Export ("jitterBufferInMs")]
+		NSNumber JitterBufferInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable streamId;
+		[NullAllowed, Export ("streamId")]
+		NSNumber StreamId { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateOutput;
+		[NullAllowed, Export ("frameRateOutput")]
+		NSNumber FrameRateOutput { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateDecoded;
+		[NullAllowed, Export ("frameRateDecoded")]
+		NSNumber FrameRateDecoded { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateReceived;
+		[NullAllowed, Export ("frameRateReceived")]
+		NSNumber FrameRateReceived { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameWidthReceived;
+		[NullAllowed, Export ("frameWidthReceived")]
+		NSNumber FrameWidthReceived { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameHeightReceived;
+		[NullAllowed, Export ("frameHeightReceived")]
+		NSNumber FrameHeightReceived { get; }
+
+		// @property (readonly) NSNumber * _Nullable longestFreezeDurationInMs;
+		[NullAllowed, Export ("longestFreezeDurationInMs")]
+		NSNumber LongestFreezeDurationInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable totalFreezeDurationInMs;
+		[NullAllowed, Export ("totalFreezeDurationInMs")]
+		NSNumber TotalFreezeDurationInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesReceived;
+		[NullAllowed, Export ("framesReceived")]
+		NSNumber FramesReceived { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesDropped;
+		[NullAllowed, Export ("framesDropped")]
+		NSNumber FramesDropped { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesDecoded;
+		[NullAllowed, Export ("framesDecoded")]
+		NSNumber FramesDecoded { get; }
+
+		// @property (readonly) NSNumber * _Nullable keyFramesDecoded;
+		[NullAllowed, Export ("keyFramesDecoded")]
+		NSNumber KeyFramesDecoded { get; }
+	}
+
+	// @interface ACSIncomingScreenShareMediaStats : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSIncomingScreenShareMediaStats
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull codecName;
+		[Export ("codecName", ArgumentSemantic.Retain)]
+		string CodecName { get; }
+
+		// @property (readonly) NSNumber * _Nullable bitrate;
+		[NullAllowed, Export ("bitrate")]
+		NSNumber Bitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterInMs;
+		[NullAllowed, Export ("jitterInMs")]
+		NSNumber JitterInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsPerSecond;
+		[NullAllowed, Export ("packetsPerSecond")]
+		NSNumber PacketsPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable packetsLostPerSecond;
+		[NullAllowed, Export ("packetsLostPerSecond")]
+		NSNumber PacketsLostPerSecond { get; }
+
+		// @property (readonly) NSNumber * _Nullable roundTripTimeInMs;
+		[NullAllowed, Export ("roundTripTimeInMs")]
+		NSNumber RoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable pairRoundTripTimeInMs;
+		[NullAllowed, Export ("pairRoundTripTimeInMs")]
+		NSNumber PairRoundTripTimeInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable availableBitrate;
+		[NullAllowed, Export ("availableBitrate")]
+		NSNumber AvailableBitrate { get; }
+
+		// @property (readonly) NSNumber * _Nullable jitterBufferInMs;
+		[NullAllowed, Export ("jitterBufferInMs")]
+		NSNumber JitterBufferInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable streamId;
+		[NullAllowed, Export ("streamId")]
+		NSNumber StreamId { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateOutput;
+		[NullAllowed, Export ("frameRateOutput")]
+		NSNumber FrameRateOutput { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateDecoded;
+		[NullAllowed, Export ("frameRateDecoded")]
+		NSNumber FrameRateDecoded { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameRateReceived;
+		[NullAllowed, Export ("frameRateReceived")]
+		NSNumber FrameRateReceived { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameWidthReceived;
+		[NullAllowed, Export ("frameWidthReceived")]
+		NSNumber FrameWidthReceived { get; }
+
+		// @property (readonly) NSNumber * _Nullable frameHeightReceived;
+		[NullAllowed, Export ("frameHeightReceived")]
+		NSNumber FrameHeightReceived { get; }
+
+		// @property (readonly) NSNumber * _Nullable longestFreezeDurationInMs;
+		[NullAllowed, Export ("longestFreezeDurationInMs")]
+		NSNumber LongestFreezeDurationInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable totalFreezeDurationInMs;
+		[NullAllowed, Export ("totalFreezeDurationInMs")]
+		NSNumber TotalFreezeDurationInMs { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesReceived;
+		[NullAllowed, Export ("framesReceived")]
+		NSNumber FramesReceived { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesDropped;
+		[NullAllowed, Export ("framesDropped")]
+		NSNumber FramesDropped { get; }
+
+		// @property (readonly) NSNumber * _Nullable framesDecoded;
+		[NullAllowed, Export ("framesDecoded")]
+		NSNumber FramesDecoded { get; }
+
+		// @property (readonly) NSNumber * _Nullable keyFramesDecoded;
+		[NullAllowed, Export ("keyFramesDecoded")]
+		NSNumber KeyFramesDecoded { get; }
+	}
+
+	// @interface ACSCallSurveyResult : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSCallSurveyResult
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (readonly, retain) NSString * _Nonnull surveyId;
+		[Export ("surveyId", ArgumentSemantic.Retain)]
+		string SurveyId { get; }
+
+		// @property (readonly, retain) NSString * _Nonnull callId;
+		[Export ("callId", ArgumentSemantic.Retain)]
+		string CallId { get; }
+
+		// @property (readonly, retain) NSString * _Nonnull anonymizedParticipantId;
+		[Export ("anonymizedParticipantId", ArgumentSemantic.Retain)]
+		string AnonymizedParticipantId { get; }
+	}
+
+	// @interface ACSSurveyCallFeature : ACSCallFeature
+	[BaseType (typeof(ACSCallFeature))]
+	[DisableDefaultCtor]
+	interface ACSSurveyCallFeature
+	{
+		// -(void)startSurveyWithCompletionHandler:(void (^ _Nonnull)(ACSCallSurvey * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("startSurvey(completionHandler:)")));
+		[Export ("startSurveyWithCompletionHandler:")]
+		void StartSurveyWithCompletionHandler (Action<ACSCallSurvey, NSError> completionHandler);
+
+		// -(void)submitSurvey:(ACSCallSurvey * _Nonnull)survey withCompletionHandler:(void (^ _Nonnull)(ACSCallSurveyResult * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("submit(survey:completionHandler:)")));
+		[Export ("submitSurvey:withCompletionHandler:")]
+		void SubmitSurvey (ACSCallSurvey survey, Action<ACSCallSurveyResult, NSError> completionHandler);
+	}
+
+	// @interface ACSCallSurvey : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSCallSurvey
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property (retain) ACSCallSurveyScore * _Nonnull overallScore;
+		[Export ("overallScore", ArgumentSemantic.Retain)]
+		ACSCallSurveyScore OverallScore { get; set; }
+
+		// @property (retain) ACSCallSurveyScore * _Nonnull audioScore;
+		[Export ("audioScore", ArgumentSemantic.Retain)]
+		ACSCallSurveyScore AudioScore { get; set; }
+
+		// @property (retain) ACSCallSurveyScore * _Nonnull videoScore;
+		[Export ("videoScore", ArgumentSemantic.Retain)]
+		ACSCallSurveyScore VideoScore { get; set; }
+
+		// @property (retain) ACSCallSurveyScore * _Nonnull screenShareScore;
+		[Export ("screenShareScore", ArgumentSemantic.Retain)]
+		ACSCallSurveyScore ScreenShareScore { get; set; }
+
+		// @property ACSCallIssues overallIssues;
+		[Export ("overallIssues", ArgumentSemantic.Assign)]
+		ACSCallIssues OverallIssues { get; set; }
+
+		// @property ACSAudioIssues audioIssues;
+		[Export ("audioIssues", ArgumentSemantic.Assign)]
+		ACSAudioIssues AudioIssues { get; set; }
+
+		// @property ACSVideoIssues videoIssues;
+		[Export ("videoIssues", ArgumentSemantic.Assign)]
+		ACSVideoIssues VideoIssues { get; set; }
+
+		// @property ACSScreenShareIssues screenShareIssues;
+		[Export ("screenShareIssues", ArgumentSemantic.Assign)]
+		ACSScreenShareIssues ScreenShareIssues { get; set; }
+	}
+
+	// @interface ACSCallSurveyScore : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCallSurveyScore
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property int score;
+		[Export ("score")]
+		int Score { get; set; }
+
+		// @property (retain) ACSCallSurveyRatingScale * _Nonnull scale;
+		[Export ("scale", ArgumentSemantic.Retain)]
+		ACSCallSurveyRatingScale Scale { get; set; }
+	}
+
+	// @interface ACSCallSurveyRatingScale : NSObject
+	[BaseType (typeof(NSObject))]
+	interface ACSCallSurveyRatingScale
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+
+		// @property int lowerBound;
+		[Export ("lowerBound")]
+		int LowerBound { get; set; }
+
+		// @property int upperBound;
+		[Export ("upperBound")]
+		int UpperBound { get; set; }
+
+		// @property int lowScoreThreshold;
+		[Export ("lowScoreThreshold")]
+		int LowScoreThreshold { get; set; }
+	}
+
+	// @interface ACSContentSharingCallFeature : ACSCallFeature
+	[BaseType (typeof(ACSCallFeature))]
+	[DisableDefaultCtor]
+	interface ACSContentSharingCallFeature
+	{
+		// @property (readonly) ACSContentSharingState state;
+		[Export ("state")]
+		ACSContentSharingState State { get; }
+
+		// @property (readonly) ACSContentSharingType type;
+		[Export ("type")]
+		ACSContentSharingType Type { get; }
+
+		// @property (readonly, retain) ACSContentSharingInfo * _Nonnull contentSharingInfo;
+		[Export ("contentSharingInfo", ArgumentSemantic.Retain)]
+		ACSContentSharingInfo ContentSharingInfo { get; }
+
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		ACSContentSharingCallFeatureDelegate Delegate { get; set; }
+
+		// @property (nonatomic, weak) id<ACSContentSharingCallFeatureDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Weak)]
+		NSObject WeakDelegate { get; set; }
+
+		// @property (readonly, nonatomic, strong) ACSContentSharingCallFeatureEvents * _Nonnull events;
+		[Export ("events", ArgumentSemantic.Strong)]
+		ACSContentSharingCallFeatureEvents Events { get; }
+	}
+
+	// @interface ACSContentSharingInfo : NSObject
+	[BaseType (typeof(NSObject))]
+	[DisableDefaultCtor]
+	interface ACSContentSharingInfo
+	{
+		// -(void)dealloc;
+		[Export ("dealloc")]
+		void Dealloc ();
+	}
+
+	// @interface ACSPowerPointInfo : ACSContentSharingInfo
+	[BaseType (typeof(ACSContentSharingInfo))]
+	[DisableDefaultCtor]
+	interface ACSPowerPointInfo
+	{
+		// @property (readonly) int slideIndex;
+		[Export ("slideIndex")]
+		int SlideIndex { get; }
+
+		// @property (readonly) BOOL isPrivateViewingEnabled;
+		[Export ("isPrivateViewingEnabled")]
+		bool IsPrivateViewingEnabled { get; }
 	}
 }
