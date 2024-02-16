@@ -5,6 +5,8 @@
 #  skip the below steps and instead unzip file from
 #  github release page in nativeLibs/Pods/AzureCommunicationCalling)
 # Release page: https://github.com/Azure/Communication/releases
+#
+# If pod complains, run pod install --repo-update
 cd nativeLibs
 sh fetchPods.sh
 cd ..
@@ -48,7 +50,7 @@ sed -i '' 's|import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 sharpie bind \
-    -sdk iphoneos16.4 \
+    -sdk iphoneos17.2 \
     -o tmp \
     -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
