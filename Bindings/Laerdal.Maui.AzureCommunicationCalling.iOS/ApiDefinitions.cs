@@ -2224,6 +2224,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
+		
+		// @property (readonly) ACSCommunicationType type;
+		[Export ("type")]
+		ACSCommunicationType Type { get; }
 
 		// @property (readonly) ACSCommunicationCallType type;
 		[Export ("type")]
@@ -2292,6 +2296,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
+		
+		// @property (readonly) ACSCommunicationType type;
+		[Export ("type")]
+		ACSCommunicationType Type { get; }
 
 		// @property (readonly) ACSCommunicationCallType type;
 		[Export ("type")]
@@ -2646,6 +2654,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		// -(void)dealloc;
 		[Export ("dealloc")]
 		void Dealloc ();
+		
+		// @property (readonly) ACSCommunicationType type;
+		[Export ("type")]
+		ACSCommunicationType Type { get; }
 
 		// @property (readonly) ACSCommunicationCallType type;
 		[Export ("type")]
@@ -2929,7 +2941,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		string MeetingThreadId { get; }
 	}
 
-	// @interface ACSStartTeamsCallOptions : ACSCallOptions
+	// @interface ACSStartTeamsGroupCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
 	interface ACSStartTeamsCallOptions
 	{

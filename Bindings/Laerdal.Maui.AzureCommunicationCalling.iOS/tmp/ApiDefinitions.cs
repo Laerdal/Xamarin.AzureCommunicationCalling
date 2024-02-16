@@ -2432,6 +2432,14 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		[Export ("localVideoStreams", ArgumentSemantic.Copy)]
 		ACSLocalVideoStream[] LocalVideoStreams { get; }
 
+		// @property (readonly) BOOL isMuted __attribute__((deprecated("Use isOutgoingAudioMuted instead.")));
+		[Export ("isMuted")]
+		bool IsMuted { get; }
+
+		// @property (readonly, copy) DEPRECATED_MSG_ATTRIBUTE("Use outgoingVideoStreams instead") NSArray<ACSLocalVideoStream *> * localVideoStreams __attribute__((deprecated("Use outgoingVideoStreams instead")));
+		[Export ("localVideoStreams", ArgumentSemantic.Copy)]
+		ACSLocalVideoStream[] LocalVideoStreams { get; }
+
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
 		ACSCallDelegate Delegate { get; set; }
@@ -2934,7 +2942,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		string MeetingThreadId { get; }
 	}
 
-	// @interface ACSStartTeamsCallOptions : ACSCallOptions
+	// @interface ACSStartTeamsGroupCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
 	interface ACSStartTeamsCallOptions
 	{
