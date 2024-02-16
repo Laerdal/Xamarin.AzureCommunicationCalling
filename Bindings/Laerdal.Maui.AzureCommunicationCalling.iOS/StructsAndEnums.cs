@@ -82,7 +82,9 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		SurveyRatingScaleInvalidThreshold = 0x120,
 		SurveyScoreOutOfBounds = 0x121,
 		SurveyDoubleSubmissionNotAllowed = 0x122,
-		LobbyAdmitOperationFailure = 0x123
+		LobbyAdmitOperationFailure = 0x123,
+		FailedToSetMediaProxy = 0x124,
+		InvalidTokenProvider = 0x125,
 	}
 
 	[Native]
@@ -187,6 +189,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		InLobby = 5,
 		Disconnected = 6,
 		Ringing = 7
+	}
+
+	[Native]
+	public enum ACSCommunicationType : long
+	{
+		AzureCommunicationCall = 1,
+		TeamsCall = 2
 	}
 
 	[Native]
@@ -367,65 +376,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		Poor = 2,
 		Bad = 3
 	}
-
-	[Flags]
-	[Native]
-	public enum ACSCallIssues : long
-	{
-		None = 0x0,
-		CannotJoin = 0x1,
-		CannotInvite = 0x2,
-		HadToRejoin = 0x4,
-		EndedUnexpectedly = 0x8,
-		OtherIssues = 0x10
-	}
-
-	[Flags]
-	[Native]
-	public enum ACSAudioIssues : long
-	{
-		None = 0x0,
-		NoLocalAudio = 0x1,
-		NoRemoteAudio = 0x2,
-		Echo = 0x4,
-		AudioNoise = 0x8,
-		LowVolume = 0x10,
-		AudioStoppedUnexpectedly = 0x20,
-		DistortedSpeech = 0x40,
-		AudioInterruption = 0x80,
-		OtherIssues = 0x100
-	}
-
-	[Flags]
-	[Native]
-	public enum ACSVideoIssues : long
-	{
-		None = 0x0,
-		NoVideoReceived = 0x1,
-		NoVideoSent = 0x2,
-		LowQuality = 0x4,
-		Freezes = 0x8,
-		StoppedUnexpectedly = 0x10,
-		DarkVideoReceived = 0x20,
-		AudioVideoOutOfSync = 0x40,
-		OtherIssues = 0x80
-	}
-
-	[Flags]
-	[Native]
-	public enum ACSScreenShareIssues : long
-	{
-		None = 0x0,
-		NoContentLocal = 0x1,
-		NoContentRemote = 0x2,
-		CannotPresent = 0x4,
-		LowQuality = 0x8,
-		Freezes = 0x10,
-		StoppedUnexpectedly = 0x20,
-		LargeDelay = 0x40,
-		OtherIssues = 0x80
-	}
-
+	
 	[Native]
 	public enum ACSContentSharingState : long
 	{
