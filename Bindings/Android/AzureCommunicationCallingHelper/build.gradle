@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         minSdk 24
@@ -28,5 +28,5 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.azure.android:azure-communication-calling:2.6.0-beta.5'
+    implementation 'com.azure.android:azure-communication-calling:2.9.0-beta.1'
 }

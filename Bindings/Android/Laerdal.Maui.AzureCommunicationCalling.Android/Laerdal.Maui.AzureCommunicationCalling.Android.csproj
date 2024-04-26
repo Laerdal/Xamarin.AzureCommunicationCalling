@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationCalling.android</PackageId>
-      <version>2.6.0-beta.5.4</version>
-      <TargetFrameworks>net7.0-android</TargetFrameworks>
+      <version>2.9.0-beta.1.4</version>
+      <TargetFrameworks>net8.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>
       <AssemblyName>Laerdal.Maui.AzureCommunicationCalling.Android</AssemblyName>
-      <Title>AzureCommunicationCalling for net7.0-android</Title>
+      <Title>AzureCommunicationCalling for net</Title>
       <Authors>Laerdal Medical</Authors>
       <Description>
  Binding for Azure Communication Calling library for Android.
@@ -15,9 +15,9 @@
  This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-communication-calling
       </Description>
       <PackageReleaseNotes>
-          2.6.0-beta.5
+          2.9.0-beta.1
       </PackageReleaseNotes>
-      <Copyright>Copyright Laerdal Medical 2023</Copyright>
+      <Copyright>Copyright Laerdal Medical 2024</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageTags>Maui Azure Communication Android</PackageTags>
@@ -25,10 +25,10 @@
       <EnableDefaultItems>false</EnableDefaultItems>
     </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Laerdal.Maui.AzureCommunicationCommon.Android" Version="1.1.1.1" />
+    <PackageReference Include="Laerdal.Maui.AzureCommunicationCommon.Android" Version="1.1.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidLibrary Include="Jars\azure-communication-calling-2.6.0-beta.5.aar"/>
+    <AndroidLibrary Include="Jars\azure-communication-calling-2.9.0-beta.1.aar"/>
   </ItemGroup>
   <ItemGroup>
     <TransformFile Include="Transforms\Metadata.xml" />
