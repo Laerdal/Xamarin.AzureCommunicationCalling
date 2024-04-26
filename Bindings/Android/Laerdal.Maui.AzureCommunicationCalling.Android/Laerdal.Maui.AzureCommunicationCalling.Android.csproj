@@ -17,7 +17,7 @@
       <PackageReleaseNotes>
           2.9.0.1
       </PackageReleaseNotes>
-      <Copyright>Copyright Laerdal Medical 2023</Copyright>
+      <Copyright>Copyright Laerdal Medical 2024</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageTags>Maui Azure Communication Android</PackageTags>
@@ -25,7 +25,7 @@
       <EnableDefaultItems>false</EnableDefaultItems>
     </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Laerdal.Maui.AzureCommunicationCommon.Android" Version="1.1.1.1" />
+    <PackageReference Include="Laerdal.Maui.AzureCommunicationCommon.Android" Version="1.1.0.4" />
   </ItemGroup>
   <ItemGroup>
     <AndroidLibrary Include="Jars\azure-communication-calling-2.9.0.aar"/>

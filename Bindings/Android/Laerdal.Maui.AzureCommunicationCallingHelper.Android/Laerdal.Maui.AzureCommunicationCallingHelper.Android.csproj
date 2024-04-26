@@ -7,7 +7,7 @@
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>
       <AssemblyName>Laerdal.Maui.AzureCommunicationCallingHelper.Android</AssemblyName>
-      <Title>AzureCoreLogging for net7.0-android</Title>
+      <Title>AzureCoreLogging for NET</Title>
       <Authors>Laerdal Medical</Authors>
       <Description>
         This  nuget is a horrible hack to solve the problem of ACS using retrofuture in its
@@ -19,7 +19,7 @@
       <PackagesReleaseNotes>
         2.9.0
       </PackagesReleaseNotes>
-      <Copyright>Copyright Laerdal Medical 2023</Copyright>
+      <Copyright>Copyright Laerdal Medical 2024</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
       <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
