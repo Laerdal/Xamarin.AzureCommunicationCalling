@@ -5,5 +5,5 @@ platform :ios, '14.0'
 use_frameworks!
 
 target 'nativeLibsPlaceholder' do
-   pod 'AzureCommunicationCalling', '~> 2.8.0', :binary => true
+   pod 'AzureCommunicationCalling', '~> 2.11.0', :binary => true
 end

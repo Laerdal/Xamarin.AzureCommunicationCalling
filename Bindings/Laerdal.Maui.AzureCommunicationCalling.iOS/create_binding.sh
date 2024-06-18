@@ -50,7 +50,7 @@ sed -i '' 's|import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 sharpie bind \
-    -sdk iphoneos17.2 \
+    -sdk iphoneos \
     -o tmp \
     -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
     -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \

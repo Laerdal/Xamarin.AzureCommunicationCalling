@@ -71,7 +71,20 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		LobbyMeetingRoleNotAllowed = 0x11c,
 		LobbyParticipantNotExist = 0x11d,
 		RemoveParticipantOperationFailure = 0x11e,
-		LobbyAdmitOperationFailure = 0x11f
+		LobbyAdmitOperationFailure = 0x11f,
+		ProxyNotAvailableForTeams = 0x120,
+		FailedToSetMediaProxy = 0x121,
+		MediaStatisticsInvalidReportInterval = 0x122,
+		DataChannelFailedToStart = 0x123,
+		DataChannelSenderClosed = 0x124,
+		DataChannelRandomIdNotAvailable = 0x125,
+		DataChannelMessageSizeOverLimit = 0x126,
+		DataChannelMessageFailureForBandwidth = 0x127,
+		DataChannelMessageFailureForTrafficLimit = 0x128,
+		InvalidParticipantAddedToCall = 0x20000000,
+		InvalidTokenProvider = 0x129,
+		TeamsForLifeMeetingJoinNotSupported = 0x12a,
+		SwitchSourceBlocked = 0x131
 	}
 
 	[Native]
@@ -113,6 +126,21 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	{
 		Video = 1,
 		ScreenSharing = 2
+	}
+
+	[Native]
+	public enum ACSCallState : long
+	{
+		None = 0,
+		EarlyMedia = 1,
+		Connecting = 3,
+		Ringing = 4,
+		Connected = 5,
+		LocalHold = 6,
+		Disconnecting = 7,
+		Disconnected = 8,
+		InLobby = 9,
+		RemoteHold = 10
 	}
 
 	[Native]
@@ -179,41 +207,17 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSCallState : long
+	public enum ACSCommunicationCallType : long
 	{
-		None = 0,
-		EarlyMedia = 1,
-		Connecting = 3,
-		Ringing = 4,
-		Connected = 5,
-		LocalHold = 6,
-		Disconnecting = 7,
-		Disconnected = 8,
-		InLobby = 9,
-		RemoteHold = 10
+		Call = 0,
+		TeamsCall = 1
 	}
 
 	[Native]
-	public enum ACSCallDirection : long
+	public enum ACSScalingMode : long
 	{
-		Outgoing = 1,
-		Incoming = 2
-	}
-
-	[Native]
-	public enum ACSAudioStreamType : long
-	{
-		RemoteIncoming = 1,
-		RawIncoming = 2,
-		LocalOutgoing = 3,
-		VirtualOutgoing = 4
-	}
-
-	[Native]
-	public enum ACSAudioStreamState : long
-	{
-		arted = 0,
-		opped = 1
+		Crop = 1,
+		Fit = 2
 	}
 
 	[Native]
@@ -239,10 +243,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSScalingMode : long
+	public enum ACSCallDirection : long
 	{
-		Crop = 1,
-		Fit = 2
+		Outgoing = 1,
+		Incoming = 2
 	}
 
 	[Native]
@@ -295,6 +299,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSAudioStreamState : long
+	{
+		arted = 0,
+		opped = 1
+	}
+
+	[Native]
 	public enum ACSAudioStreamSampleRate : long
 	{
 		ACSAudioStreamSampleRateHz_16000 = 0,
@@ -326,11 +337,74 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSAudioStreamType : long
+	{
+		RemoteIncoming = 1,
+		RawIncoming = 2,
+		LocalOutgoing = 3,
+		VirtualOutgoing = 4
+	}
+
+	[Native]
 	public enum ACSDiagnosticQuality : long
 	{
 		Unknown = 0,
 		Good = 1,
 		Poor = 2,
 		Bad = 3
+	}
+
+	[Native]
+	public enum ACSDataChannelPriority : long
+	{
+		Normal = 0,
+		High = 1
+	}
+
+	[Native]
+	public enum ACSDataChannelReliability : long
+	{
+		ACSDataChannelReliabilityLossy = 0
+	}
+
+	[Native]
+	public enum ACSParticipantCapabilityType : long
+	{
+		TurnVideoOn = 0,
+		UnmuteMicrophone = 1,
+		ShareScreen = 2,
+		RemoveParticipant = 3,
+		HangUpForEveryone = 4,
+		AddTeamsUser = 5,
+		AddCommunicationUser = 6,
+		AddPhoneNumber = 7,
+		ManageLobby = 8,
+		SpotlightParticipant = 9,
+		RemoveParticipantSpotlight = 10,
+		BlurBackground = 11,
+		CustomBackground = 12,
+		StartLiveCaptions = 13,
+		RaiseHand = 14
+	}
+
+	[Native]
+	public enum ACSCapabilitiesChangedReason : long
+	{
+		RoleChanged = 0,
+		UserPolicyChanged = 1,
+		MeetingDetailsChanged = 2
+	}
+
+	[Native]
+	public enum ACSCapabilityResolutionReason : long
+	{
+		Capable = 0,
+		CallTypeRestricted = 1,
+		UserPolicyRestricted = 2,
+		RoleRestricted = 3,
+		MeetingRestricted = 4,
+		FeatureNotSupported = 5,
+		NotInitialized = 6,
+		NotCapable = 7
 	}
 }
