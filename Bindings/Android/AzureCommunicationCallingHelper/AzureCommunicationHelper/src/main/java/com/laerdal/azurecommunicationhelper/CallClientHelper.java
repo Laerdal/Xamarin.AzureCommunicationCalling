@@ -7,7 +7,6 @@ import com.azure.android.communication.calling.Call;
 import com.azure.android.communication.calling.CallAgent;
 import com.azure.android.communication.calling.CallAgentOptions;
 import com.azure.android.communication.calling.CallClient;
-import com.azure.android.communication.calling.CallInfo;
 import com.azure.android.communication.calling.DeviceManager;
 import com.azure.android.communication.calling.DtmfTone;
 import com.azure.android.communication.calling.HangUpOptions;
@@ -30,7 +29,13 @@ public class CallClientHelper {
             CallClient callClient,
             Context context,
             CommunicationTokenCredential credentials) throws ExecutionException, InterruptedException {
-        return callClient.createCallAgent(context, credentials).get();
+
+        // There seems to be a bug in Azure Communication Calling 2.9.0, where this constructor
+        // leads to a nullpointer exception. It was reported to MS(internal early access teams)
+        // during 2.9.0 beta, but not fixed...
+        // Workaround is simply newing the CallAgentOptions and passing it to the other constructor.
+        CallAgentOptions callAgentOptions = new CallAgentOptions();
+        return callClient.createCallAgent(context, credentials, callAgentOptions).get();
     }
 
     public static CallAgent GetCallAgent(
@@ -42,7 +47,6 @@ public class CallClientHelper {
     }
 
     public static void HangUp(Call call, HangUpOptions options) throws ExecutionException, InterruptedException {
-
         call.hangUp(options).get();
     }
 
@@ -67,10 +71,6 @@ public class CallClientHelper {
 
     public static void UnMute(Call call, Context context) throws ExecutionException, InterruptedException {
         call.unmute(context).get();
-    }
-
-    public static String GetServerCallId(CallInfo callInfo) throws ExecutionException, InterruptedException {
-        return callInfo.getServerCallId().get();
     }
 
     public static void SwitchCameraSource(LocalVideoStream localVideoStream, VideoDeviceInfo camera) throws ExecutionException, InterruptedException {
@@ -129,3 +129,4 @@ public class CallClientHelper {
         call.sendDtmf(dtmfTone).get();
     }
 }
+
