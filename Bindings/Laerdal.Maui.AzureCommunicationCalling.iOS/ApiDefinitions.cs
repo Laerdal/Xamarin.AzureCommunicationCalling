@@ -1690,14 +1690,14 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSOutgoingVideoStream : ACSCallVideoStream
 	[BaseType (typeof(ACSCallVideoStream))]
 	[DisableDefaultCtor]
-	interface ACSOutgoingVideoStream
+	interface ACSOutgoingVideoStream : ACSCallVideoStream
 	{
 	}
 
 	// @interface ACSIncomingVideoStream : ACSCallVideoStream
 	[BaseType (typeof(ACSCallVideoStream))]
 	[DisableDefaultCtor]
-	interface ACSIncomingVideoStream
+	interface ACSIncomingVideoStream : ACSCallVideoStream
 	{
 		// @property (readonly, retain) NSString * _Nonnull participantSourceId;
 		[Export ("participantSourceId", ArgumentSemantic.Retain)]
@@ -1751,7 +1751,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSLocalVideoStream : ACSOutgoingVideoStream
 	[BaseType (typeof(ACSOutgoingVideoStream))]
 	[DisableDefaultCtor]
-	interface ACSLocalVideoStream
+	interface ACSLocalVideoStream : ACSOutgoingVideoStream
 	{
 		// -(instancetype _Nonnull)init:(ACSVideoDeviceInfo * _Nonnull)camera __attribute__((swift_name("init(camera:)")));
 		[Export ("init:")]
@@ -1950,7 +1950,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSIncomingAudioStream : ACSCallAudioStream
 	[BaseType (typeof(ACSCallAudioStream))]
 	[DisableDefaultCtor]
-	interface ACSIncomingAudioStream
+	interface ACSIncomingAudioStream : ACSCallAudioStream
 	{
 	}
 
@@ -1978,7 +1978,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSOutgoingAudioStream : ACSCallAudioStream
 	[BaseType (typeof(ACSCallAudioStream))]
 	[DisableDefaultCtor]
-	interface ACSOutgoingAudioStream
+	interface ACSOutgoingAudioStream : ACSCallAudioStream
 	{
 		// @property (readonly) float volumeLevel;
 		[Export ("volumeLevel")]
@@ -2017,13 +2017,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSJoinTeamsCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
-	interface ACSJoinTeamsCallOptions
+	interface ACSJoinTeamsCallOptions : ACSCallOptions
 	{
 	}
 
 	// @interface ACSJoinCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
-	interface ACSJoinCallOptions
+	interface ACSJoinCallOptions : ACSCallOptions
 	{
 		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingVideoOptions and outgoingVideoOptions instead") ACSVideoOptions * videoOptions __attribute__((deprecated("Use incomingVideoOptions and outgoingVideoOptions instead")));
 		[Export ("videoOptions", ArgumentSemantic.Retain)]
@@ -2036,13 +2036,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSAcceptTeamsCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
-	interface ACSAcceptTeamsCallOptions
+	interface ACSAcceptTeamsCallOptions : ACSCallOptions
 	{
 	}
 
 	// @interface ACSAcceptCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
-	interface ACSAcceptCallOptions
+	interface ACSAcceptCallOptions : ACSCallOptions
 	{
 		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingVideoOptions and outgoingVideoOptions instead") ACSVideoOptions * videoOptions __attribute__((deprecated("Use incomingVideoOptions and outgoingVideoOptions instead")));
 		[Export ("videoOptions", ArgumentSemantic.Retain)]
@@ -2051,7 +2051,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSStartCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
-	interface ACSStartCallOptions
+	interface ACSStartCallOptions : ACSCallOptions
 	{
 		// @property (retain) DEPRECATED_MSG_ATTRIBUTE("Use incomingVideoOptions and outgoingVideoOptions instead") ACSVideoOptions * videoOptions __attribute__((deprecated("Use incomingVideoOptions and outgoingVideoOptions instead")));
 		[Export ("videoOptions", ArgumentSemantic.Retain)]
@@ -2092,14 +2092,14 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSJoinTeamsMeetingLocator : ACSJoinMeetingLocator
 	[BaseType (typeof(ACSJoinMeetingLocator))]
 	[DisableDefaultCtor]
-	interface ACSJoinTeamsMeetingLocator
+	interface ACSJoinTeamsMeetingLocator : ACSJoinMeetingLocator
 	{
 	}
 
 	// @interface ACSGroupCallLocator : ACSJoinMeetingLocator
 	[BaseType (typeof(ACSJoinMeetingLocator))]
 	[DisableDefaultCtor]
-	interface ACSGroupCallLocator
+	interface ACSGroupCallLocator : ACSJoinMeetingLocator
 	{
 		// -(instancetype _Nonnull)init:(NSUUID * _Nonnull)groupId __attribute__((swift_name("init(groupId:)")));
 		[Export ("init:")]
@@ -2245,7 +2245,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSCallAgentOptions : ACSCommonCallAgentOptions
 	[BaseType (typeof(ACSCommonCallAgentOptions))]
-	interface ACSCallAgentOptions
+	interface ACSCallAgentOptions : ACSCommonCallAgentOptions
 	{
 		// @property (retain) NSString * _Nonnull displayName;
 		[Export ("displayName", ArgumentSemantic.Retain)]
@@ -2314,7 +2314,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSCallAgent : ACSCommonCallAgent
 	[BaseType (typeof(ACSCommonCallAgent))]
 	[DisableDefaultCtor]
-	interface ACSCallAgent
+	interface ACSCallAgent : ACSCommonCallAgent
 	{
 		// @property (readonly, copy) NSArray<ACSCall *> * _Nonnull calls;
 		[Export ("calls", ArgumentSemantic.Copy)]
@@ -2486,7 +2486,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSCall : ACSCommonCall
 	[BaseType (typeof(ACSCommonCall))]
 	[DisableDefaultCtor]
-	interface ACSCall
+	interface ACSCall : ACSCommonCall
 	{
 		// @property (readonly) BOOL isMuted __attribute__((deprecated("Use isOutgoingAudioMuted instead.")));
 		[Export ("isMuted")]
@@ -2638,7 +2638,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSRemoteVideoStream : ACSIncomingVideoStream
 	[BaseType (typeof(ACSIncomingVideoStream))]
 	[DisableDefaultCtor]
-	interface ACSRemoteVideoStream
+	interface ACSRemoteVideoStream : ACSIncomingVideoStream
 	{
 		// @property (readonly) BOOL isAvailable __attribute__((deprecated("Use state property instead")));
 		[Export ("isAvailable")]
@@ -2766,7 +2766,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSIncomingCall : ACSCommonIncomingCall
 	[BaseType (typeof(ACSCommonIncomingCall))]
 	[DisableDefaultCtor]
-	interface ACSIncomingCall
+	interface ACSIncomingCall : ACSCommonIncomingCall
 	{
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
@@ -2943,7 +2943,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSTeamsCallAgentOptions : ACSCommonCallAgentOptions
 	[BaseType (typeof(ACSCommonCallAgentOptions))]
-	interface ACSTeamsCallAgentOptions
+	interface ACSTeamsCallAgentOptions : ACSCommonCallAgentOptions
 	{
 		// @property (retain) ACSCallKitOptions * _Nullable callKitOptions;
 		[NullAllowed, Export ("callKitOptions", ArgumentSemantic.Retain)]
@@ -2953,7 +2953,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSTeamsCallAgent : ACSCommonCallAgent
 	[BaseType (typeof(ACSCommonCallAgent))]
 	[DisableDefaultCtor]
-	interface ACSTeamsCallAgent
+	interface ACSTeamsCallAgent : ACSCommonCallAgent
 	{
 		// @property (readonly, copy) NSArray<ACSTeamsCall *> * _Nonnull calls;
 		[Export ("calls", ArgumentSemantic.Copy)]
@@ -2991,7 +2991,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSTeamsCall : ACSCommonCall
 	[BaseType (typeof(ACSCommonCall))]
 	[DisableDefaultCtor]
-	interface ACSTeamsCall
+	interface ACSTeamsCall : ACSCommonCall
 	{
 		// @property (readonly, retain) ACSTeamsCallInfo * _Nonnull callInfo;
 		[Export ("callInfo", ArgumentSemantic.Retain)]
@@ -3013,7 +3013,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSTeamsCallInfo : NSObject
 	[BaseType (typeof(NSObject))]
 	[DisableDefaultCtor]
-	interface ACSTeamsCallInfo
+	interface ACSTeamsCallInfo : ACSCommonCallInfo
 	{
 		// -(void)dealloc;
 		[Export ("dealloc")]
@@ -3026,7 +3026,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSStartTeamsCallOptions : ACSCallOptions
 	[BaseType (typeof(ACSCallOptions))]
-	interface ACSStartTeamsCallOptions
+	interface ACSStartTeamsCallOptions : ACSCallOptions
 	{
 	}
 
@@ -3051,7 +3051,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSTeamsIncomingCall : ACSCommonIncomingCall
 	[BaseType (typeof(ACSCommonIncomingCall))]
 	[DisableDefaultCtor]
-	interface ACSTeamsIncomingCall
+	interface ACSTeamsIncomingCall : ACSCommonIncomingCall
 	{
 		// @property (readonly, retain) ACSTeamsCallInfo * _Nonnull callInfo;
 		[Export ("callInfo", ArgumentSemantic.Retain)]
@@ -3236,7 +3236,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSRecordingCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSRecordingCallFeature
+	interface ACSRecordingCallFeature : ACSCallFeature
 	{
 		// @property (readonly) BOOL isRecordingActive;
 		[Export ("isRecordingActive")]
@@ -3258,7 +3258,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSTranscriptionCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSTranscriptionCallFeature
+	interface ACSTranscriptionCallFeature : ACSCallFeature
 	{
 		// @property (readonly) BOOL isTranscriptionActive;
 		[Export ("isTranscriptionActive")]
@@ -3369,7 +3369,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSTeamsCaptions : ACSCallCaptions
 	[BaseType (typeof(ACSCallCaptions))]
 	[DisableDefaultCtor]
-	interface ACSTeamsCaptions
+	interface ACSTeamsCaptions : ACSCallCaptions
 	{
 		// @property (readonly, retain) NSString * _Nonnull activeCaptionLanguage;
 		[Export ("activeCaptionLanguage", ArgumentSemantic.Retain)]
@@ -3399,7 +3399,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSCaptionsCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSCaptionsCallFeature
+	interface ACSCaptionsCallFeature : ACSCallFeature
 	{
 		// -(void)getCaptionsWithCompletionHandler:(void (^ _Nonnull)(ACSCallCaptions * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("getCaptions(completionHandler:)")));
 		[Export ("getCaptionsWithCompletionHandler:")]
@@ -3409,7 +3409,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSDominantSpeakersCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSDominantSpeakersCallFeature
+	interface ACSDominantSpeakersCallFeature : ACSCallFeature
 	{
 		// @property (readonly, retain) ACSDominantSpeakersInfo * _Nonnull dominantSpeakersInfo;
 		[Export ("dominantSpeakersInfo", ArgumentSemantic.Retain)]
@@ -3449,7 +3449,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSRaiseHandCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSRaiseHandCallFeature
+	interface ACSRaiseHandCallFeature : ACSCallFeature
 	{
 		// @property (readonly, copy) NSArray<ACSRaisedHand *> * _Nonnull raisedHands;
 		[Export ("raisedHands", ArgumentSemantic.Copy)]
@@ -3533,7 +3533,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSSpotlightCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSSpotlightCallFeature
+	interface ACSSpotlightCallFeature : ACSCallFeature
 	{
 		// @property (readonly) int maxSpotlightedParticipants;
 		[Export ("maxSpotlightedParticipants")]
@@ -3701,7 +3701,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSRawVideoFrameBuffer : ACSRawVideoFrame
 	[BaseType (typeof(ACSRawVideoFrame))]
-	interface ACSRawVideoFrameBuffer
+	interface ACSRawVideoFrameBuffer : ACSRawVideoFrame
 	{
 		// @property CVPixelBufferRef _Nonnull buffer;
 		[Export ("buffer", ArgumentSemantic.Assign)]
@@ -3742,7 +3742,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSRawOutgoingVideoStream : ACSOutgoingVideoStream
 	[BaseType (typeof(ACSOutgoingVideoStream))]
 	[DisableDefaultCtor]
-	interface ACSRawOutgoingVideoStream
+	interface ACSRawOutgoingVideoStream : ACSOutgoingVideoStream
 	{
 		// @property (readonly, retain) ACSVideoStreamFormat * _Nonnull format;
 		[Export ("format", ArgumentSemantic.Retain)]
@@ -3760,7 +3760,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSScreenShareOutgoingVideoStream : ACSRawOutgoingVideoStream
 	[BaseType (typeof(ACSRawOutgoingVideoStream))]
 	[DisableDefaultCtor]
-	interface ACSScreenShareOutgoingVideoStream
+	interface ACSScreenShareOutgoingVideoStream : ACSRawOutgoingVideoStream
 	{
 		// -(instancetype _Nonnull)init:(ACSRawOutgoingVideoStreamOptions * _Nonnull)videoStreamOptions __attribute__((swift_name("init(videoStreamOptions:)")));
 		[Export ("init:")]
@@ -3782,7 +3782,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSVirtualOutgoingVideoStream : ACSRawOutgoingVideoStream
 	[BaseType (typeof(ACSRawOutgoingVideoStream))]
 	[DisableDefaultCtor]
-	interface ACSVirtualOutgoingVideoStream
+	interface ACSVirtualOutgoingVideoStream : ACSRawOutgoingVideoStream
 	{
 		// -(instancetype _Nonnull)init:(ACSRawOutgoingVideoStreamOptions * _Nonnull)videoStreamOptions __attribute__((swift_name("init(videoStreamOptions:)")));
 		[Export ("init:")]
@@ -3804,7 +3804,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSRawIncomingVideoStream : ACSIncomingVideoStream
 	[BaseType (typeof(ACSIncomingVideoStream))]
 	[DisableDefaultCtor]
-	interface ACSRawIncomingVideoStream
+	interface ACSRawIncomingVideoStream : ACSIncomingVideoStream
 	{
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
@@ -3869,7 +3869,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSRawIncomingAudioStreamProperties : ACSRawAudioStreamProperties
 	[BaseType (typeof(ACSRawAudioStreamProperties))]
-	interface ACSRawIncomingAudioStreamProperties
+	interface ACSRawIncomingAudioStreamProperties : ACSRawAudioStreamProperties
 	{
 	}
 
@@ -3914,7 +3914,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSRawOutgoingAudioStreamProperties : ACSRawAudioStreamProperties
 	[BaseType (typeof(ACSRawAudioStreamProperties))]
-	interface ACSRawOutgoingAudioStreamProperties
+	interface ACSRawOutgoingAudioStreamProperties : ACSRawAudioStreamProperties
 	{
 		// @property ACSAudioStreamBufferDuration bufferDuration;
 		[Export ("bufferDuration", ArgumentSemantic.Assign)]
@@ -3933,7 +3933,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSRawOutgoingAudioStreamOptions : ACSRawAudioStreamOptions
 	[BaseType (typeof(ACSRawAudioStreamOptions))]
-	interface ACSRawOutgoingAudioStreamOptions
+	interface ACSRawOutgoingAudioStreamOptions : ACSRawAudioStreamOptions
 	{
 		// @property (retain) ACSRawOutgoingAudioStreamProperties * _Nonnull properties;
 		[Export ("properties", ArgumentSemantic.Retain)]
@@ -3942,7 +3942,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSRawIncomingAudioStreamOptions : ACSRawAudioStreamOptions
 	[BaseType (typeof(ACSRawAudioStreamOptions))]
-	interface ACSRawIncomingAudioStreamOptions
+	interface ACSRawIncomingAudioStreamOptions : ACSRawAudioStreamOptions
 	{
 		// @property (retain) ACSRawIncomingAudioStreamProperties * _Nonnull properties;
 		[Export ("properties", ArgumentSemantic.Retain)]
@@ -3951,7 +3951,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSLocalOutgoingAudioStream : ACSOutgoingAudioStream
 	[BaseType (typeof(ACSOutgoingAudioStream))]
-	interface ACSLocalOutgoingAudioStream
+	interface ACSLocalOutgoingAudioStream : ACSOutgoingAudioStream
 	{
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
@@ -3968,7 +3968,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSRemoteIncomingAudioStream : ACSIncomingAudioStream
 	[BaseType (typeof(ACSIncomingAudioStream))]
-	interface ACSRemoteIncomingAudioStream
+	interface ACSRemoteIncomingAudioStream : ACSIncomingAudioStream
 	{
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
@@ -3986,7 +3986,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSRawIncomingAudioStream : ACSIncomingAudioStream
 	[BaseType (typeof(ACSIncomingAudioStream))]
 	[DisableDefaultCtor]
-	interface ACSRawIncomingAudioStream
+	interface ACSRawIncomingAudioStream : ACSIncomingAudioStream
 	{
 		// -(instancetype _Nonnull)init:(ACSRawIncomingAudioStreamOptions * _Nonnull)options __attribute__((swift_name("init(options:)")));
 		[Export ("init:")]
@@ -4008,7 +4008,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSRawOutgoingAudioStream : ACSOutgoingAudioStream
 	[BaseType (typeof(ACSOutgoingAudioStream))]
 	[DisableDefaultCtor]
-	interface ACSRawOutgoingAudioStream
+	interface ACSRawOutgoingAudioStream : ACSOutgoingAudioStream
 	{
 		// -(instancetype _Nonnull)init:(ACSRawOutgoingAudioStreamOptions * _Nonnull)options __attribute__((swift_name("init(options:)")));
 		[Export ("init:")]
@@ -4069,13 +4069,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 
 	// @interface ACSBackgroundBlurEffect : ACSVideoEffect
 	[BaseType (typeof(ACSVideoEffect))]
-	interface ACSBackgroundBlurEffect
+	interface ACSBackgroundBlurEffect : ACSVideoEffect
 	{
 	}
 
 	// @interface ACSBackgroundReplacementEffect : ACSVideoEffect
 	[BaseType (typeof(ACSVideoEffect))]
-	interface ACSBackgroundReplacementEffect
+	interface ACSBackgroundReplacementEffect : ACSVideoEffect
 	{
 		// @property (retain) NSData * _Nonnull buffer;
 		[Export ("buffer", ArgumentSemantic.Retain)]
@@ -4085,7 +4085,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSLocalVideoEffectsFeature : ACSLocalVideoStreamFeature
 	[BaseType (typeof(ACSLocalVideoStreamFeature))]
 	[DisableDefaultCtor]
-	interface ACSLocalVideoEffectsFeature
+	interface ACSLocalVideoEffectsFeature : ACSLocalVideoStreamFeature
 	{
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
@@ -4165,7 +4165,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSLocalUserDiagnosticsCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSLocalUserDiagnosticsCallFeature
+	interface ACSLocalUserDiagnosticsCallFeature : ACSCallFeature
 	{
 		// @property (readonly, retain) ACSNetworkDiagnostics * _Nonnull networkDiagnostics;
 		[Export ("networkDiagnostics", ArgumentSemantic.Retain)]
@@ -4374,7 +4374,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSMediaStatisticsCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSMediaStatisticsCallFeature
+	interface ACSMediaStatisticsCallFeature : ACSCallFeature
 	{
 		// @property (readonly) int reportIntervalInSeconds;
 		[Export ("reportIntervalInSeconds")]
@@ -5002,7 +5002,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSPreCallDiagnosticsCallClientFeature : ACSCallClientFeature
 	[BaseType (typeof(ACSCallClientFeature))]
 	[DisableDefaultCtor]
-	interface ACSPreCallDiagnosticsCallClientFeature
+	interface ACSPreCallDiagnosticsCallClientFeature : ACSCallClientFeature
 	{
 		[Wrap ("WeakDelegate")]
 		[NullAllowed]
@@ -5073,7 +5073,7 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	// @interface ACSCapabilitiesCallFeature : ACSCallFeature
 	[BaseType (typeof(ACSCallFeature))]
 	[DisableDefaultCtor]
-	interface ACSCapabilitiesCallFeature
+	interface ACSCapabilitiesCallFeature : ACSCallFeature
 	{
 		// @property (readonly, copy) NSArray<ACSParticipantCapability *> * _Nonnull capabilities;
 		[Export ("capabilities", ArgumentSemantic.Copy)]
