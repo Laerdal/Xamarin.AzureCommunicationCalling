@@ -84,7 +84,19 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		SurveyDoubleSubmissionNotAllowed = 0x122,
 		LobbyAdmitOperationFailure = 0x123,
 		FailedToSetMediaProxy = 0x124,
-		InvalidTokenProvider = 0x125
+		InvalidTokenProvider = 0x125,
+		MediaStatisticsInvalidReportInterval = 0x126,
+		DataChannelFailedToStart = 0x127,
+		DataChannelSenderClosed = 0x128,
+		DataChannelRandomIdNotAvailable = 0x129,
+		DataChannelMessageSizeOverLimit = 0x12a,
+		DataChannelMessageFailureForBandwidth = 0x12b,
+		DataChannelMessageFailureForTrafficLimit = 0x12c,
+		CaptionsFailedToStop = 0x12d,
+		MuteOthersNotSupported = 0x12e,
+		CallClientFeatureExtensionNotFound = 0x12f,
+		TeamsForLifeMeetingJoinNotSupported = 0x130,
+		SwitchSourceBlocked = 0x131
 	}
 
 	[Native]
@@ -126,6 +138,21 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	{
 		Video = 1,
 		ScreenSharing = 2
+	}
+
+	[Native]
+	public enum ACSCallState : long
+	{
+		None = 0,
+		EarlyMedia = 1,
+		Connecting = 3,
+		Ringing = 4,
+		Connected = 5,
+		LocalHold = 6,
+		Disconnecting = 7,
+		Disconnected = 8,
+		InLobby = 9,
+		RemoteHold = 10
 	}
 
 	[Native]
@@ -192,10 +219,10 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
-	public enum ACSCommunicationType : long
+	public enum ACSCommunicationCallType : long
 	{
-		AzureCommunicationCall = 1,
-		TeamsCall = 2
+		Call = 0,
+		TeamsCall = 1
 	}
 
 	[Native]
@@ -203,21 +230,6 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	{
 		Crop = 1,
 		Fit = 2
-	}
-
-	[Native]
-	public enum ACSCallState : long
-	{
-		None = 0,
-		EarlyMedia = 1,
-		Connecting = 3,
-		Ringing = 4,
-		Connected = 5,
-		LocalHold = 6,
-		Disconnecting = 7,
-		Disconnected = 8,
-		InLobby = 9,
-		RemoteHold = 10
 	}
 
 	[Native]
@@ -389,5 +401,53 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	{
 		None = 0,
 		Powerpoint = 1
+	}
+
+	[Native]
+	public enum ACSDevicePermissionType : long
+	{
+		Camera = 0,
+		Microphone = 1
+	}
+
+	[Native]
+	public enum ACSParticipantCapabilityType : long
+	{
+		TurnVideoOn = 0,
+		UnmuteMicrophone = 1,
+		ShareScreen = 2,
+		RemoveParticipant = 3,
+		HangUpForEveryone = 4,
+		AddTeamsUser = 5,
+		AddCommunicationUser = 6,
+		AddPhoneNumber = 7,
+		ManageLobby = 8,
+		SpotlightParticipant = 9,
+		RemoveParticipantSpotlight = 10,
+		BlurBackground = 11,
+		CustomBackground = 12,
+		StartLiveCaptions = 13,
+		RaiseHand = 14
+	}
+
+	[Native]
+	public enum ACSCapabilitiesChangedReason : long
+	{
+		RoleChanged = 0,
+		UserPolicyChanged = 1,
+		MeetingDetailsChanged = 2
+	}
+
+	[Native]
+	public enum ACSCapabilityResolutionReason : long
+	{
+		Capable = 0,
+		CallTypeRestricted = 1,
+		UserPolicyRestricted = 2,
+		RoleRestricted = 3,
+		MeetingRestricted = 4,
+		FeatureNotSupported = 5,
+		NotInitialized = 6,
+		NotCapable = 7
 	}
 }
