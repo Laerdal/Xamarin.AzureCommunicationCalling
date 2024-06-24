@@ -131,9 +131,9 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	// @interface CommunicationUserIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon27CommunicationUserIdentifier")]
+	[BaseType (typeof(CommunicationIdentifier), Name = "_TtC24AzureCommunicationCommon27CommunicationUserIdentifier")]
 	[DisableDefaultCtor]
-	interface CommunicationUserIdentifier : CommunicationIdentifier
+	interface CommunicationUserIdentifier
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull rawId;
 		[Export ("rawId")]
@@ -190,9 +190,9 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	// @interface MicrosoftTeamsAppIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon27MicrosoftTeamsAppIdentifier")]
+	[BaseType (typeof(CommunicationIdentifier), Name = "_TtC24AzureCommunicationCommon27MicrosoftTeamsAppIdentifier")]
 	[DisableDefaultCtor]
-	interface MicrosoftTeamsAppIdentifier : CommunicationIdentifier
+	interface MicrosoftTeamsAppIdentifier
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull appId;
 		[Export ("appId")]
@@ -221,9 +221,9 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	// @interface MicrosoftTeamsUserIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon28MicrosoftTeamsUserIdentifier")]
+	[BaseType (typeof(CommunicationIdentifier), Name = "_TtC24AzureCommunicationCommon28MicrosoftTeamsUserIdentifier")]
 	[DisableDefaultCtor]
-	interface MicrosoftTeamsUserIdentifier : CommunicationIdentifier
+	interface MicrosoftTeamsUserIdentifier
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull userId;
 		[Export ("userId")]
@@ -260,9 +260,9 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	// @interface PhoneNumberIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon21PhoneNumberIdentifier")]
+	[BaseType (typeof(CommunicationIdentifier), Name = "_TtC24AzureCommunicationCommon21PhoneNumberIdentifier")]
 	[DisableDefaultCtor]
-	interface PhoneNumberIdentifier : CommunicationIdentifier
+	interface PhoneNumberIdentifier
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull phoneNumber;
 		[Export ("phoneNumber")]
@@ -287,9 +287,9 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	// @interface UnknownIdentifier : NSObject <CommunicationIdentifier>
-	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon17UnknownIdentifier")]
+	[BaseType (typeof(CommunicationIdentifier), Name = "_TtC24AzureCommunicationCommon17UnknownIdentifier")]
 	[DisableDefaultCtor]
-	interface UnknownIdentifier : CommunicationIdentifier
+	interface UnknownIdentifier
 	{
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull rawId;
 		[Export ("rawId")]
