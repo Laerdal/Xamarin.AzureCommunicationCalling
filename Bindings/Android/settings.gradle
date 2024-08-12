@@ -6,4 +6,3 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Android"
-include ':AzureCommunicationCallingHelper'
