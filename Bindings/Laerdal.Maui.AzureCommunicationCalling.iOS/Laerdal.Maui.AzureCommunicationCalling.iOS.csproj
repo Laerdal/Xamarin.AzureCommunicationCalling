@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <PackageId>Laerdal.Maui.AzureCommunicationCalling.iOS</PackageId>
-        <version>2.11.0.3</version>
+        <version>2.16.0-beta.1.0</version>
         <TargetFramework>net8.0-ios</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>true</ImplicitUsings>
@@ -15,10 +15,10 @@
             This nuget is just a binding library for this native iOS library : https://github.com/Azure/Communication/releases
         </Description>
         <PackageReleaseNotes>
-            Fix bug with communication identifier.
+            Update to 2.16.0-beta.1
         </PackageReleaseNotes>
-        <Copyright>Copyright Laerdal Medical 2023</Copyright>
-        <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
+        <Copyright>Copyright Laerdal Medical 2025</Copyright>
+        <RepositoryUrl>https://github.com/Laerdal/Xamarin.AzureCommunicationCalling/tree/maui-beta</RepositoryUrl>
         <PackageProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageTags>Maui Azure Communication Services iOS</PackageTags>
@@ -30,11 +30,11 @@
         <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
     </ItemGroup>
     <ItemGroup>
-        <NativeReference Include="nativeLibs/Pods/_Prebuild/GeneratedFrameworks/AzureCommunicationCalling/AzureCommunicationCalling.xcframework">
+        <NativeReference Include="nativeLibs/Pods/ACCalling/framework">
             <Kind>Framework</Kind>
             <SmartLink>False</SmartLink>
         </NativeReference>
-        <NativeReference Include="nativeLibs/Pods/AzureCommunicationCommon/AzureCommunicationCommon.framework">
+        <NativeReference Include="nativeLibs/Pods/ACCommon/framework">
             <Kind>Framework</Kind>
             <SmartLink>False</SmartLink>
         </NativeReference>
