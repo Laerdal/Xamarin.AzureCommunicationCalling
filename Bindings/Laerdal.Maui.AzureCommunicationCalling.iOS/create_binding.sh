@@ -24,6 +24,7 @@ mkdir AzureCommunicationCommon.framework # create .framework subfolder
 cd ..
 cp -R _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework/* \
   AzureCommunicationCommon/AzureCommunicationCommon.framework/.
+
 # since AzureCommunicationCalling uses ios-arm64_x86_64-simulator lipo is potentialy not needed?
 # lipo -create \
 #     AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/AzureCommunicationCalling \
@@ -64,3 +65,6 @@ sharpie bind \
 # comment out body of CommunicationTokenRefreshOptions
 # get rid of all [Verify] tags
 echo "Remember to merge new tmp/*.cs into ./*.cs"
+
+# NB: To get rid of NU5123 warnings, I shortened some of the above paths
+echo "Rename some folders(AzureCommunicationCalling to AZCalling and AzureCommunicationCalling.framework to framework) and refs in .h files."
