@@ -1,55 +1,55 @@
 #!/bin/sh
 
-# First get the latest version of the native pods:
-# (if the version you want is not in cocoapod yet,
-#  skip the below steps and instead unzip file from
-#  github release page in nativeLibs/Pods/AzureCommunicationCalling)
-# Release page: https://github.com/Azure/Communication/releases
+# First get the latest version of the native pods and download from
+# release page: https://github.com/Azure/Communication/releases
 cd nativeLibs
-sh fetchPods.sh
-cd ..
 
-# Now make a fat framework containing both x86 and arm64 binaries
-cd nativeLibs/Pods/AzureCommunicationCalling/
-rm -rf AzureCommunicationCalling.framework
-mkdir AzureCommunicationCalling.framework
-cp -R AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/* \
-  AzureCommunicationCalling.framework/.
+echo "Cleaning up old mess"
+rm -rf Pods/*
 
-cd ..
-rm -rf AzureCommunicationCommon # delete the symlink
-mkdir AzureCommunicationCommon  # create real folder
-cd AzureCommunicationCommon
-mkdir AzureCommunicationCommon.framework # create .framework subfolder
-cd ..
-cp -R _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework/* \
-  AzureCommunicationCommon/AzureCommunicationCommon.framework/.
+echo "Installing pods from cocoapods"
+arch -x86_64 pod install
 
-# since AzureCommunicationCalling uses ios-arm64_x86_64-simulator lipo is potentialy not needed?
-# lipo -create \
-#     AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/AzureCommunicationCalling \
-#     -output AzureCommunicationCalling.framework/AzureCommunicationCalling
-cd ../../ # go back to folder of the
+echo "Downloading zip file from github"
+cd Pods
+wget https://github.com/Azure/Communication/releases/download/v2.16.0-beta.1/AzureCommunicationCalling-2.16.0-beta.1.zip
+unzip AzureCommunicationCalling*.zip
 
-# For this to work, change includes of azure deps(core and communicationCommon) header files
-# in below .h file, to reltive includes.
-# Instead of :
-#
-##import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>
-#
-# Make it look like this:
-#
-#import "../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"#
+echo "Move zip framework into pod-structure"
+rm -rf AzureCommunicationCalling/*
+cp -R AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework \
+  AzureCommunicationCalling/.
 
-sed -i '' 's|import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|import "../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' \
-  nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h
+echo "Move symlink to actual folder(dotnet does not like symlinks...)"
+rm -rf AzureCommunicationCommon
+mkdir AzureCommunicationCommon
+cp -R _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework \
+  AzureCommunicationCommon/.
+
+# NB: NU5123 warnings are abundant...
+# I tried shortening paths(renaming framework etc)
+# but got build time errors: is not a valid framework and one other...
+# Probably framework names are hardcoded somewhere :(
+
+echo "Now make fat frameworks containing just the arm64 binaries"
+lipo -extract arm64 \
+  _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework/AzureCommunicationCommon \
+  -output AzureCommunicationCommon/AzureCommunicationCommon.framework/AzureCommunicationCommon
+lipo -create AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/AzureCommunicationCalling \
+  -output AzureCommunicationCalling/AzureCommunicationCalling.framework/AzureCommunicationCalling
+
+echo "Fix calling header file link to common header"
+cd AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers
+sed -i.bak 's@<AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>@"../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"@' \
+  AzureCommunicationCalling.h
+cd ../../../../../
 
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
 # Make sure you have the latest Sharpie version:
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 sharpie bind \
-  -sdk iphoneos \
+  -sdk iphoneos18.2 \
   -o tmp \
   -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
   -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
@@ -66,5 +66,5 @@ sharpie bind \
 # get rid of all [Verify] tags
 echo "Remember to merge new tmp/*.cs into ./*.cs"
 
-# NB: To get rid of NU5123 warnings, I shortened some of the above paths
-echo "Rename some folders(AzureCommunicationCalling to AZCalling and AzureCommunicationCalling.framework to framework) and refs in .h files."
+echo "Finally, build npm with 'dotnet build -c Release'"
+echo "Built npm package will be in bin/Release"
