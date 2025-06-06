@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.TrouterClient.android</PackageId>
-      <version>0.2.0.0</version>
+      <version>0.2.0.1</version>
       <TargetFrameworks>net8.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
@@ -10,12 +10,7 @@
       <Title>TrouterClient for net</Title>
       <Authors>Laerdal Medical</Authors>
       <Description>
- Binding for Microsoft Trouter Client for Android.
-
- This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-core-logging/ 
-
-      When binding this house of cards, remember that azure-communication-calling
-      depends on this, so bind this first.
+          Binding for Microsoft Trouter Client for Android.
       </Description>
       <PackagesReleaseNotes>
           0.2.0.0
