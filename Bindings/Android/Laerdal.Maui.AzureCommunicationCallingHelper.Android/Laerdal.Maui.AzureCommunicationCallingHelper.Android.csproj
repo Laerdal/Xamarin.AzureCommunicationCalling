@@ -17,7 +17,7 @@
         from ACS as regular methods...
       </Description>
       <PackagesReleaseNotes>
-        2.9.0
+          2.13.0-beta.1
       </PackagesReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2024</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
@@ -26,6 +26,9 @@
       <PackageTags>Maui Azure Android</PackageTags>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
+  <ItemGroup>
+    <AndroidLibrary Include="Jars\AzureCommunicationCallingHelper-release.aar"/>
+  </ItemGroup>
      <ItemGroup>
      <PackageReference Include="Laerdal.Maui.AzureCommunicationCalling.android" Version="2.9.0.1" />
    </ItemGroup>

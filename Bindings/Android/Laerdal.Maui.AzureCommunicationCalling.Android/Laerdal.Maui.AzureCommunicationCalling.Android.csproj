@@ -25,7 +25,8 @@
       <EnableDefaultItems>false</EnableDefaultItems>
     </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Laerdal.Maui.AzureCommunicationCommon.Android" Version="1.1.0.4" />
+    <PackageReference Include="Laerdal.Maui.AzureCommunicationCommon.Android" Version="1.2.1.4" />
+    <PackageReference Include="Laerdal.Maui.TrouterClient.Android" Version="0.2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <AndroidLibrary Include="Jars\azure-communication-calling-2.9.0.aar"/>
