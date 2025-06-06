@@ -7,7 +7,6 @@ import com.azure.android.communication.calling.Call;
 import com.azure.android.communication.calling.CallAgent;
 import com.azure.android.communication.calling.CallAgentOptions;
 import com.azure.android.communication.calling.CallClient;
-import com.azure.android.communication.calling.CallInfo;
 import com.azure.android.communication.calling.DeviceManager;
 import com.azure.android.communication.calling.DtmfTone;
 import com.azure.android.communication.calling.HangUpOptions;
@@ -69,8 +68,8 @@ public class CallClientHelper {
         call.unmute(context).get();
     }
 
-    public static String GetServerCallId(CallInfo callInfo) throws ExecutionException, InterruptedException {
-        return callInfo.getServerCallId().get();
+    public static String GetServerCallId(Call call) throws ExecutionException, InterruptedException {
+        return call.getServerCallId().get();
     }
 
     public static void SwitchCameraSource(LocalVideoStream localVideoStream, VideoDeviceInfo camera) throws ExecutionException, InterruptedException {
