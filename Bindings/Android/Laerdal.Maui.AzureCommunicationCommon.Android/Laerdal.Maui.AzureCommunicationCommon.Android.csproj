@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationCommon.android</PackageId>
-      <version>1.1.0.4</version>
+      <version>1.2.1.4</version>
       <TargetFrameworks>net8.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>
       <AssemblyName>Laerdal.Maui.AzureCore.Android</AssemblyName>
-      <Title>AzureCommunicationCommon for net7.0-android</Title>
+      <Title>AzureCommunicationCommon for net8.0-android</Title>
       <Authors>Laerdal Medical</Authors>
       <Owners>Laerdal Medical</Owners>
       <Description>
@@ -16,7 +16,7 @@
  This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-communication-common
       </Description>
       <PackageReleaseNotes>
-          Version 1.1.0 of the java lib
+          Version 1.2.1 of the java lib
       </PackageReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2023</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
@@ -25,19 +25,25 @@
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Laerdal.Maui.AzureCore.Android" Version="1.0.0-beta.12.5" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Jars\azure-communication-common-1.1.0.aar" />
+    <PackageReference Include="Laerdal.Maui.AzureCore.Android" Version="1.0.0-beta.14.1" />
   </ItemGroup>
   <PropertyGroup>
     <AndroidGenerateResourceDesigner>false</AndroidGenerateResourceDesigner>
-  </PropertyGroup>
+    </PropertyGroup>
+  <ItemGroup>
+      <AndroidLibrary Update="Jars\azure-communication-common-1.2.1.aar">
+      </AndroidLibrary>
+    </ItemGroup>
   <ItemGroup>
     <AndroidLibrary Update="Jars\android-retrofuture-1.7.4.jar" Bind="false"/>
     <AndroidLibrary Update="Jars\android-retrostreams-1.7.4.jar" Bind="false"/>
     <AndroidLibrary Update="Jars\jackson-annotations-2.12.7.jar" Bind="false"/>
     <AndroidLibrary Update="Jars\jackson-core-2.12.7.jar" Bind="false"/>
     <AndroidLibrary Update="Jars\jackson-databind-2.12.7.1.jar" Bind="false"/>
+  </ItemGroup>
+  <ItemGroup>
+    <TransformFile Include="Transforms\Metadata.xml" />
+    <TransformFile Include="Transforms\EnumFields.xml" />
+    <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
 </Project>

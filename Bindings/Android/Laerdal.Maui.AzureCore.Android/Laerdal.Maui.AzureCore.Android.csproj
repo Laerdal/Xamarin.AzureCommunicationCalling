@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCore.android</PackageId>
-      <version>1.0.0-beta.12.5</version>
+      <version>1.0.0-beta.14.1</version>
       <TargetFrameworks>net8.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
@@ -15,7 +15,7 @@
  This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-core/ 
       </Description>
       <PackageReleaseNotes>
-          Version 1.0.0-beta.12
+          Version 1.0.0-beta.14
       </PackageReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2023</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
@@ -24,8 +24,11 @@
       <PackageTags>Maui Azure Android</PackageTags>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
+    <ItemGroup>
+      <AndroidLibrary Update="Jars\azure-core-1.0.0-beta.14.aar"/>
+    </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Laerdal.Maui.AzureCoreLogging.Android" Version="1.0.0-beta.12.4" />
+    <PackageReference Include="Laerdal.Maui.AzureCoreLogging.Android" Version="1.0.0-beta.14.1" />
     <PackageReference Include="xamarin.android.threeten.threetenbp" Version="1.4.3" />
   </ItemGroup>
 </Project>
