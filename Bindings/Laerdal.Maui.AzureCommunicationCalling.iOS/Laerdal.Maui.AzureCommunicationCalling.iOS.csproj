@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <PackageId>Laerdal.Maui.AzureCommunicationCalling.iOS</PackageId>
-        <version>2.16.0-beta.1.31</version>
-        <TargetFramework>net8.0-ios</TargetFramework>
+        <version>2.16.0-beta.1.34</version>
+        <TargetFramework>net9.0-ios</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>true</ImplicitUsings>
         <IsBindingProject>true</IsBindingProject>
@@ -30,15 +30,15 @@
         <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
     </ItemGroup>
     <ItemGroup>
-    <NativeReference Include="nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework">
-            <Kind>Framework</Kind>
-            <SmartLink>False</SmartLink>
-        </NativeReference>
-    <NativeReference Include="nativeLibs/Pods/AzureCommunicationCommon/AzureCommunicationCommon.framework">
-            <Kind>Framework</Kind>
-            <SmartLink>False</SmartLink>
-        </NativeReference>
-    </ItemGroup>
+    <NativeReference Include="nativeLibs/Pods/AzureCommunicationCalling.xcframework">
+      <Kind>Framework</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
+    <NativeReference Include="nativeLibs/Pods/AzureCommunicationCommon.xcframework">
+      <Kind>Framework</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
+  </ItemGroup>
     <ItemGroup>
         <None Include="Readme.md" Pack="true" PackagePath="\" />
     </ItemGroup>

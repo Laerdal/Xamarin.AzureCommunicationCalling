@@ -1,70 +1,96 @@
 #!/bin/sh
 
-# First get the latest version of the native pods and download from
-# release page: https://github.com/Azure/Communication/releases
+set -e
+
+# Change to the script's directory
+cd "$(dirname "$0")"
+
+# Clean up previous builds
+echo "--- Cleaning up old frameworks and archives ---"
+rm -rf nativeLibs
+
+# Create directory for native libraries
+mkdir -p nativeLibs
 cd nativeLibs
 
-echo "Cleaning up old mess"
-rm -rf Pods/*
+# --- AzureCommunicationCalling ---
+CALLING_ZIP="AzureCommunicationCalling-2.16.0.zip"
+CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.16.0/${CALLING_ZIP}"
 
-echo "Installing pods from cocoapods"
-arch -x86_64 pod install
+# Download Calling framework
+if [ ! -f "$CALLING_ZIP" ]; then
+    echo "--- Downloading AzureCommunicationCalling zip file ---"
+    wget -q --show-progress "$CALLING_URL"
+else
+    echo "--- AzureCommunicationCalling zip file already exists. Skipping download. ---"
+fi
 
-echo "Downloading zip file from github"
+# --- AzureCommunicationCommon ---
+COMMON_REPO="https://github.com/Azure/azure-sdk-for-ios.git"
+COMMON_REPO_DIR="azure-sdk-for-ios"
+COMMON_TAG="AzureCommunicationCommon_1.3.0"
+
+# Clone Common framework repo
+if [ ! -d "$COMMON_REPO_DIR" ]; then
+    echo "--- Cloning AzureCommunicationCommon repository ---"
+    git clone --depth 1 --branch "$COMMON_TAG" "$COMMON_REPO"
+else
+    echo "--- AzureCommunicationCommon repository already exists. Skipping clone. ---"
+fi
+
+echo "--- Installing pods for AzureCommunicationCommon ---"
+cd "$COMMON_REPO_DIR"
+pod install
+cd .. # back to nativeLibs
+
+echo "--- Building AzureCommunicationCommon.xcframework ---"
+ARCHIVES_PATH="archives"
+mkdir -p "$ARCHIVES_PATH"
+COMMON_WORKSPACE="$COMMON_REPO_DIR/AzureSDK.xcworkspace"
+COMMON_SCHEME="AzureCommunicationCommon"
+
+# Build for iOS device
+echo "--- Archiving for iphoneos ---"
+xcodebuild archive \
+  -workspace "$COMMON_WORKSPACE" \
+  -scheme "$COMMON_SCHEME" \
+  -sdk iphoneos \
+  -archivePath "$ARCHIVES_PATH/AzureCommunicationCommon-iOS.xcarchive" \
+  SKIP_INSTALL=NO \
+  BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+
+# Build for iOS simulator
+echo "--- Archiving for iphonesimulator ---"
+xcodebuild archive \
+  -workspace "$COMMON_WORKSPACE" \
+  -scheme "$COMMON_SCHEME" \
+  -sdk iphonesimulator \
+  -archivePath "$ARCHIVES_PATH/AzureCommunicationCommon-iOS_Simulator.xcarchive" \
+  SKIP_INSTALL=NO \
+  BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+
+# Create the XCFramework
+echo "--- Creating XCFramework ---"
+mkdir -p Pods
+xcodebuild -create-xcframework \
+  -framework "$ARCHIVES_PATH/AzureCommunicationCommon-iOS.xcarchive/Products/Library/Frameworks/AzureCommunicationCommon.framework" \
+  -framework "$ARCHIVES_PATH/AzureCommunicationCommon-iOS_Simulator.xcarchive/Products/Library/Frameworks/AzureCommunicationCommon.framework" \
+  -output Pods/AzureCommunicationCommon.xcframework
+
 cd Pods
-wget https://github.com/Azure/Communication/releases/download/v2.16.0-beta.1/AzureCommunicationCalling-2.16.0-beta.1.zip
-unzip AzureCommunicationCalling*.zip
 
-echo "Move zip framework into pod-structure"
-rm -rf AzureCommunicationCalling/*
-cp -R AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework \
-  AzureCommunicationCalling/.
+echo "--- Unzipping Calling framework ---"
+unzip -q ../"$CALLING_ZIP"
 
-echo "Move symlink to actual folder(dotnet does not like symlinks...)"
-rm -rf AzureCommunicationCommon
-mkdir AzureCommunicationCommon
-cp -R _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework \
-  AzureCommunicationCommon/.
+cd .. # back to nativeLibs
 
-# NB: NU5123 warnings are abundant...
-# I tried shortening paths(renaming framework etc)
-# but got build time errors: is not a valid framework and one other...
-# Probably framework names are hardcoded somewhere :(
+# --- Cleanup ---
+echo "--- Cleaning up intermediate files ---"
+rm "$CALLING_ZIP"
+rm -rf "$COMMON_REPO_DIR"
+rm -rf "$ARCHIVES_PATH"
 
-echo "Now make fat frameworks containing just the arm64 binaries"
-lipo -extract arm64 \
-  _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework/AzureCommunicationCommon \
-  -output AzureCommunicationCommon/AzureCommunicationCommon.framework/AzureCommunicationCommon
-lipo -create AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/AzureCommunicationCalling \
-  -output AzureCommunicationCalling/AzureCommunicationCalling.framework/AzureCommunicationCalling
-
-echo "Fix calling header file link to common header"
-cd AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers
-sed -i.bak 's@<AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>@"../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"@' \
-  AzureCommunicationCalling.h
-cd ../../../../../
-
-# Output "raw" bindings to tmp folder to keep a clean git history of binding changes
-# Make sure you have the latest Sharpie version:
-# 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
-# If you get "invalid sdk", list yours with "xcodebuild -showsdks"
-sharpie bind \
-  -sdk iphoneos18.2 \
-  -o tmp \
-  -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
-  -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
-  nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
-  -c -fmodules
-
-# Lastly: manually copy tmp bindings into this folder and make it work
-# This is the time consuming work: to through bindings, sometimes sharpie
-# fails to get method name, sometime there is a check annotation etc....
-# WHAT SHOULD BE DONE
-# NativeHandle to IntPtr
-# CXHandle to IntPtr
-# comment out body of CommunicationTokenRefreshOptions
-# get rid of all [Verify] tags
-echo "Remember to merge new tmp/*.cs into ./*.cs"
-
-echo "Finally, build npm with 'dotnet build -c Release'"
-echo "Built npm package will be in bin/Release"
+echo "--- Native libraries are updated. ---"
+echo "You may need to re-run 'sharpie bind' if the native API has changed."
+echo "Finally, build the project with 'dotnet build -c Release'"
+echo "Built nuget package will be in bin/Release"
