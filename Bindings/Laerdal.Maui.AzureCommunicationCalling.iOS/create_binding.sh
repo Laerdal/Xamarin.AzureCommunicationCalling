@@ -107,9 +107,6 @@ rm -rf "$COMMON_REPO_DIR"
 rm -rf "$ARCHIVES_PATH"
 
 # --- Sharpie Bind ---
-echo "--- Verifying file structure before binding ---"
-ls -R Pods
-
 echo "--- Generating bindings with Objective Sharpie ---"
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
 # Make sure you have the latest Sharpie version:
@@ -121,7 +118,7 @@ sharpie bind \
   -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
   -scope Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers \
   Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
-  -c -fmodules -fmodule-feature=found_incompatible_headers__check_search_paths
+  -c -fmodules
 
 # --- Final instructions ---
 echo ""
