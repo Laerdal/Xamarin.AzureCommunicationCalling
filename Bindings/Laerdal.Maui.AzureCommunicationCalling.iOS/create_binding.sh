@@ -20,10 +20,10 @@ CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.16.0/${
 
 # Download Calling framework
 if [ ! -f "$CALLING_ZIP" ]; then
-    echo "--- Downloading AzureCommunicationCalling zip file ---"
-    wget -q --show-progress "$CALLING_URL"
+  echo "--- Downloading AzureCommunicationCalling zip file ---"
+  wget -q --show-progress "$CALLING_URL"
 else
-    echo "--- AzureCommunicationCalling zip file already exists. Skipping download. ---"
+  echo "--- AzureCommunicationCalling zip file already exists. Skipping download. ---"
 fi
 
 # --- AzureCommunicationCommon ---
@@ -33,10 +33,10 @@ COMMON_TAG="AzureCommunicationCommon_1.3.0"
 
 # Clone Common framework repo
 if [ ! -d "$COMMON_REPO_DIR" ]; then
-    echo "--- Cloning AzureCommunicationCommon repository ---"
-    git clone --depth 1 --branch "$COMMON_TAG" "$COMMON_REPO"
+  echo "--- Cloning AzureCommunicationCommon repository ---"
+  git clone --depth 1 --branch "$COMMON_TAG" "$COMMON_REPO"
 else
-    echo "--- AzureCommunicationCommon repository already exists. Skipping clone. ---"
+  echo "--- AzureCommunicationCommon repository already exists. Skipping clone. ---"
 fi
 
 echo "--- Installing pods for AzureCommunicationCommon ---"
@@ -52,7 +52,7 @@ COMMON_SCHEME="AzureCommunicationCommon"
 
 # Build for iOS device
 echo "--- Archiving for iphoneos ---"
-xcodebuild archive \
+xcodebuild clean archive \
   -workspace "$COMMON_WORKSPACE" \
   -scheme "$COMMON_SCHEME" \
   -sdk iphoneos \
@@ -62,13 +62,14 @@ xcodebuild archive \
 
 # Build for iOS simulator
 echo "--- Archiving for iphonesimulator ---"
-xcodebuild archive \
+xcodebuild clean archive \
   -workspace "$COMMON_WORKSPACE" \
   -scheme "$COMMON_SCHEME" \
   -sdk iphonesimulator \
   -archivePath "$ARCHIVES_PATH/AzureCommunicationCommon-iOS_Simulator.xcarchive" \
   SKIP_INSTALL=NO \
   BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+
 
 # Create the XCFramework
 echo "--- Creating AzureCommunicationCommon.xcframework ---"
@@ -92,33 +93,35 @@ CALLING_SIM_HEADER="Pods/AzureCommunicationCalling.xcframework/ios-arm64_x86_64-
 
 # Check if files exist before patching
 if [ -f "$CALLING_ARM64_HEADER" ] && [ -f "$CALLING_SIM_HEADER" ]; then
-    # For arm64
-    sed -i.bak 's|@import AzureCommunicationCommon;|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_ARM64_HEADER"
-    # For simulator
-    sed -i.bak 's|@import AzureCommunicationCommon;|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_SIM_HEADER"
+  # For arm64
+  sed -i.bak 's|@import AzureCommunicationCommon;|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_ARM64_HEADER"
+  # For simulator
+  sed -i.bak 's|@import AzureCommunicationCommon;|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_SIM_HEADER"
 else
-    echo "Header files not found, skipping patch."
+  echo "Header files not found, skipping patch."
 fi
 
 # --- Cleanup ---
 echo "--- Cleaning up intermediate files ---"
-rm "$CALLING_ZIP"
 rm -rf "$COMMON_REPO_DIR"
 rm -rf "$ARCHIVES_PATH"
 
 # --- Sharpie Bind ---
+echo "--- Verifying file structure before binding ---"
+ls -R Pods
+
 echo "--- Generating bindings with Objective Sharpie ---"
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
 # Make sure you have the latest Sharpie version:
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 sharpie bind \
-  -sdk iphonesimulator \
+  -sdk iphoneos \
   -o ../tmp \
   -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
-  -scope Pods/AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/Headers \
-  Pods/AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
-  -c -fmodules
+  -scope Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers \
+  Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
+  -c -fmodules -fmodule-feature=found_incompatible_headers__check_search_paths
 
 # --- Final instructions ---
 echo ""
