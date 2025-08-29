@@ -15,8 +15,8 @@ mkdir -p nativeLibs
 cd nativeLibs
 
 # --- AzureCommunicationCalling ---
-CALLING_ZIP="AzureCommunicationCalling-2.15.0.zip"
-CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.15.0/${CALLING_ZIP}"
+CALLING_ZIP="AzureCommunicationCalling-2.15.1.zip"
+CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.15.1/${CALLING_ZIP}"
 
 # Download Calling framework
 if [ ! -f "$CALLING_ZIP" ]; then
@@ -111,16 +111,16 @@ echo "--- Generating bindings with Objective Sharpie ---"
 # Make sure you have the latest Sharpie version:
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
-## Explicitly point to the correct Xcode Developer directory
-# export XCODE_ROOT="/Applications/Xcode16.2.app/Contents/Developer"
-export DEVELOPER_DIR="/Applications/Xcode16.2.app/Contents/Developer"
+
+# Explicitly point to the correct Xcode Developer directory (sharpie is not compatible with xcode above 16.2)
+# export DEVELOPER_DIR="/Applications/Xcode16.2.app/Contents/Developer"
+
 sharpie bind \
   -sdk iphoneos18.2 \
   -o ../tmp \
   -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
   -scope Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers \
   Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
-  -clang -arch arm64 \
   -c -fmodules
 
 # --- Final instructions ---
