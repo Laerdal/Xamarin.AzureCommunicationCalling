@@ -108,12 +108,19 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		void Cancel ();
 	}
 
+  // 1. Define a delegate for the inner completion handler.
+  // This represents the callback: (NSString * _Nullable, NSError * _Nullable) -> void
+  public delegate void TokenCompletionHandler(NSString token, NSError error);
+
 	// @interface CommunicationTokenRefreshOptions : NSObject
 	[BaseType (typeof(NSObject), Name = "_TtC24AzureCommunicationCommon32CommunicationTokenRefreshOptions")]
 	[DisableDefaultCtor]
 	interface CommunicationTokenRefreshOptions
 	{
 		// -(instancetype _Nonnull)initWithInitialToken:(NSString * _Nullable)initialToken refreshProactively:(BOOL)refreshProactively tokenRefresher:(void (^ _Nonnull)(void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable)))tokenRefresher __attribute__((objc_designated_initializer));
+		[Export ("initWithInitialToken:refreshProactively:tokenRefresher:")]
+		[DesignatedInitializer]
+    IntPtr Constructor([NullAllowed] string initialToken, bool refreshProactively, Action<TokenCompletionHandler> tokenRefresher);
 	}
 
 	// @interface CommunicationUserIdentifier : NSObject <CommunicationIdentifier>
