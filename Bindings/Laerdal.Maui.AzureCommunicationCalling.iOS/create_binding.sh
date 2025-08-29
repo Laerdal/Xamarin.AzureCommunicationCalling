@@ -15,8 +15,8 @@ mkdir -p nativeLibs
 cd nativeLibs
 
 # --- AzureCommunicationCalling ---
-CALLING_ZIP="AzureCommunicationCalling-2.16.0.zip"
-CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.16.0/${CALLING_ZIP}"
+CALLING_ZIP="AzureCommunicationCalling-2.15.0.zip"
+CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.15.0/${CALLING_ZIP}"
 
 # Download Calling framework
 if [ ! -f "$CALLING_ZIP" ]; then
@@ -70,7 +70,6 @@ xcodebuild clean archive \
   SKIP_INSTALL=NO \
   BUILD_LIBRARY_FOR_DISTRIBUTION=YES
 
-
 # Create the XCFramework
 echo "--- Creating AzureCommunicationCommon.xcframework ---"
 mkdir -p Pods
@@ -94,9 +93,9 @@ CALLING_SIM_HEADER="Pods/AzureCommunicationCalling.xcframework/ios-arm64_x86_64-
 # Check if files exist before patching
 if [ -f "$CALLING_ARM64_HEADER" ] && [ -f "$CALLING_SIM_HEADER" ]; then
   # For arm64
-  sed -i.bak 's|@import AzureCommunicationCommon;|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_ARM64_HEADER"
+  sed -i.bak 's|#import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_ARM64_HEADER"
   # For simulator
-  sed -i.bak 's|@import AzureCommunicationCommon;|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_SIM_HEADER"
+  sed -i.bak 's|#import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_SIM_HEADER"
 else
   echo "Header files not found, skipping patch."
 fi
@@ -112,12 +111,16 @@ echo "--- Generating bindings with Objective Sharpie ---"
 # Make sure you have the latest Sharpie version:
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
+## Explicitly point to the correct Xcode Developer directory
+# export XCODE_ROOT="/Applications/Xcode16.2.app/Contents/Developer"
+export DEVELOPER_DIR="/Applications/Xcode16.2.app/Contents/Developer"
 sharpie bind \
-  -sdk iphoneos \
+  -sdk iphoneos18.2 \
   -o ../tmp \
   -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
   -scope Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers \
   Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
+  -clang -arch arm64 \
   -c -fmodules
 
 # --- Final instructions ---

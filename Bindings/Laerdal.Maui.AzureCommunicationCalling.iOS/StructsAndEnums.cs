@@ -84,7 +84,17 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		InvalidParticipantAddedToCall = 0x20000000,
 		InvalidTokenProvider = 0x129,
 		TeamsForLifeMeetingJoinNotSupported = 0x12a,
-		SwitchSourceBlocked = 0x131
+		CaptionsFailedToStop = 0x12d,
+		SwitchSourceBlocked = 0x131,
+		SurveyRatingScaleOutOfBounds = 0x132,
+		SurveyRatingScaleInvalidThreshold = 0x133,
+		SurveyScoreOutOfBounds = 0x134,
+		SurveyDoubleSubmissionNotAllowed = 0x135,
+		MuteOthersForbidden = 0x116,
+		MuteOthersInternalServerError = 0x117,
+		MuteOthersNotFound = 0x118,
+		MuteOthersNotSupported = 0x12e,
+		RealTimeTextContentTooLong = 0x137
 	}
 
 	[Native]
@@ -250,6 +260,13 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	}
 
 	[Native]
+	public enum ACSRealTimeTextResultType : long
+	{
+		Partial = 0,
+		Final = 1
+	}
+
+	[Native]
 	public enum ACSCaptionsResultType : long
 	{
 		Partial = 0,
@@ -354,6 +371,62 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		Bad = 3
 	}
 
+	[Native]
+	public enum ACSDataChannelPriority : long
+	{
+		Normal = 0,
+		High = 1
+	}
+
+	[Native]
+	public enum ACSDataChannelReliability : long
+	{
+		Lossy = 0,
+		Durable = 1
+	}
+
+	[Native]
+	public enum ACSParticipantCapabilityType : long
+	{
+		TurnVideoOn = 0,
+		UnmuteMicrophone = 1,
+		ShareScreen = 2,
+		RemoveParticipant = 3,
+		HangUpForEveryone = 4,
+		AddTeamsUser = 5,
+		AddCommunicationUser = 6,
+		AddPhoneNumber = 7,
+		ManageLobby = 8,
+		SpotlightParticipant = 9,
+		RemoveParticipantSpotlight = 10,
+		BlurBackground = 11,
+		CustomBackground = 12,
+		StartLiveCaptions = 13,
+		RaiseHand = 14,
+		MuteOthers = 15
+	}
+
+	[Native]
+	public enum ACSCapabilitiesChangedReason : long
+	{
+		RoleChanged = 0,
+		UserPolicyChanged = 1,
+		MeetingDetailsChanged = 2
+	}
+
+	[Native]
+	public enum ACSCapabilityResolutionReason : long
+	{
+		Capable = 0,
+		CallTypeRestricted = 1,
+		UserPolicyRestricted = 2,
+		RoleRestricted = 3,
+		MeetingRestricted = 4,
+		FeatureNotSupported = 5,
+		NotInitialized = 6,
+		NotCapable = 7
+	}
+
 	[Flags]
 	[Native]
 	public enum ACSCallIssues : long
@@ -410,109 +483,5 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		StoppedUnexpectedly = 0x20,
 		LargeDelay = 0x40,
 		OtherIssues = 0x80
-	}
-
-	[Native]
-	public enum ACSDataChannelPriority : long
-	{
-		Normal = 0,
-		High = 1
-	}
-
-	[Native]
-	public enum ACSDataChannelReliability : long
-	{
-		ACSDataChannelReliabilityLossy = 0
-	}
-
-	[Native]
-	public enum ACSParticipantCapabilityType : long
-	{
-		TurnVideoOn = 0,
-		UnmuteMicrophone = 1,
-		ShareScreen = 2,
-		RemoveParticipant = 3,
-		HangUpForEveryone = 4,
-		AddTeamsUser = 5,
-		AddCommunicationUser = 6,
-		AddPhoneNumber = 7,
-		ManageLobby = 8,
-		SpotlightParticipant = 9,
-		RemoveParticipantSpotlight = 10,
-		BlurBackground = 11,
-		CustomBackground = 12,
-		StartLiveCaptions = 13,
-		RaiseHand = 14
-	}
-
-	[Native]
-	public enum ACSCapabilitiesChangedReason : long
-	{
-		RoleChanged = 0,
-		UserPolicyChanged = 1,
-		MeetingDetailsChanged = 2
-	}
-
-	[Native]
-	public enum ACSCapabilityResolutionReason : long
-	{
-		Capable = 0,
-		CallTypeRestricted = 1,
-		UserPolicyRestricted = 2,
-		RoleRestricted = 3,
-		MeetingRestricted = 4,
-		FeatureNotSupported = 5,
-		NotInitialized = 6,
-		NotCapable = 7
-	}
-
-	[Native]
-	public enum ACSDevicePermissionType : long
-	{
-		Camera = 0,
-		Microphone = 1
-	}
-
-	[Native]
-	public enum ACSParticipantCapabilityType : long
-	{
-		TurnVideoOn = 0,
-		UnmuteMicrophone = 1,
-		ShareScreen = 2,
-		RemoveParticipant = 3,
-		HangUpForEveryone = 4,
-		AddTeamsUser = 5,
-		AddCommunicationUser = 6,
-		AddPhoneNumber = 7,
-		ManageLobby = 8,
-		SpotlightParticipant = 9,
-		RemoveParticipantSpotlight = 10,
-		BlurBackground = 11,
-		CustomBackground = 12,
-		StartLiveCaptions = 13,
-		RaiseHand = 14,
-		MuteOthers = 15
-	}
-
-	[Native]
-	public enum ACSCapabilitiesChangedReason : long
-	{
-		RoleChanged = 0,
-		UserPolicyChanged = 1,
-		MeetingDetailsChanged = 2
-	}
-
-	[Native]
-	public enum ACSCapabilityResolutionReason : long
-	{
-		Capable = 0,
-		CallTypeRestricted = 1,
-		UserPolicyRestricted = 2,
-		RoleRestricted = 3,
-		MeetingRestricted = 4,
-		FeatureNotSupported = 5,
-		NotInitialized = 6,
-		NotCapable = 7,
-		ExplicitConsentRequired = 8
 	}
 }
