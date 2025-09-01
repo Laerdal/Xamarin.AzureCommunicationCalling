@@ -2,7 +2,7 @@
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCoreLogging.android</PackageId>
       <version>1.0.0-beta.14.1</version>
-      <TargetFrameworks>net8.0-android</TargetFrameworks>
+      <TargetFrameworks>net9.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>

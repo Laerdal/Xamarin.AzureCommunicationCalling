@@ -2,7 +2,7 @@
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationHelper.android</PackageId>
       <version>2.13.1.2</version>
-      <TargetFrameworks>net8.0-android</TargetFrameworks>
+      <TargetFrameworks>net9.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>

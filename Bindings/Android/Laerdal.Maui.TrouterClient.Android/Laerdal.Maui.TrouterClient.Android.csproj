@@ -2,7 +2,7 @@
     <PropertyGroup>
       <PackageId>Laerdal.Maui.TrouterClient.android</PackageId>
       <version>0.2.0.1</version>
-      <TargetFrameworks>net8.0-android</TargetFrameworks>
+      <TargetFrameworks>net9.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>

@@ -2,12 +2,12 @@
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationCommon.android</PackageId>
       <version>1.2.1.4</version>
-      <TargetFrameworks>net8.0-android</TargetFrameworks>
+      <TargetFrameworks>net9.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>
       <AssemblyName>Laerdal.Maui.AzureCore.Android</AssemblyName>
-      <Title>AzureCommunicationCommon for net8.0-android</Title>
+      <Title>AzureCommunicationCommon for net9.0-android</Title>
       <Authors>Laerdal Medical</Authors>
       <Owners>Laerdal Medical</Owners>
       <Description>

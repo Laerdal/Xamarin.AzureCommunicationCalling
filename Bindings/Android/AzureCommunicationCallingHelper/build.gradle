@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace "com.laerdal.azurecommunicationcallinghelper"
     compileSdk 33
 
     defaultConfig {
