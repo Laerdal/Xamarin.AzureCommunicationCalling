@@ -15,8 +15,8 @@ mkdir -p nativeLibs
 cd nativeLibs
 
 # --- AzureCommunicationCalling ---
-CALLING_ZIP="AzureCommunicationCalling-2.15.1.zip"
-CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.15.1/${CALLING_ZIP}"
+CALLING_ZIP="AzureCommunicationCalling-2.16.0.zip"
+CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.16.0/${CALLING_ZIP}"
 
 # Download Calling framework
 if [ ! -f "$CALLING_ZIP" ]; then

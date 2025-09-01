@@ -276,7 +276,8 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 	[Native]
 	public enum ACSCaptionsType : long
 	{
-		ACSCaptionsTypeTeamsCaptions = 0
+		TeamsCaptions = 0,
+		CommunicationCaptions = 1
 	}
 
 	[Native]
@@ -424,7 +425,8 @@ namespace Laerdal.Maui.AzureCommunicationCalling.iOS
 		MeetingRestricted = 4,
 		FeatureNotSupported = 5,
 		NotInitialized = 6,
-		NotCapable = 7
+		NotCapable = 7,
+		ExplicitConsentRequired = 8
 	}
 
 	[Flags]
