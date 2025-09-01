@@ -10,9 +10,9 @@
       <Title>AzureCommunicationCalling for net9.0-android</Title>
       <Authors>Laerdal Medical</Authors>
       <Description>
- Binding for Azure Communication Calling library for Android.
- 
- This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-communication-calling
+          Binding for Azure Communication Calling library for Android.
+          
+          This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-communication-calling
       </Description>
       <PackageReleaseNotes>
           2.13.1
