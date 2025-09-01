@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationCalling.android</PackageId>
-      <version>2.13.1.4</version>
+      <version>2.13.1.6</version>
       <TargetFrameworks>net9.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>

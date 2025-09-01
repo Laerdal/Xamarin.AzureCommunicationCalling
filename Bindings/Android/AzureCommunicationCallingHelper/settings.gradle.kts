@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My Application"
+rootProject.name = "AzureCommunicationHelper"
 // include(":app")
 include(":AzureCommunicationHelper")
