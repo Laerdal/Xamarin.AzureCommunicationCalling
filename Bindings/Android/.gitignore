@@ -5,3 +5,7 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore local properties files
+AzureCommunicationCallingHelper/local.properties
+AzureCommunicationCallingHelper/AzureCommunicationHelper/local.properties

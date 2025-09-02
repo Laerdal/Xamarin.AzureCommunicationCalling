@@ -1,26 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <PackageId>Laerdal.Maui.AzureCoreLogging.android</PackageId>
-      <version>1.0.0-beta.14.1</version>
+      <PackageId>Laerdal.Maui.TrouterClient.android</PackageId>
+      <version>0.2.0.1</version>
       <TargetFrameworks>net9.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>
-      <AssemblyName>Laerdal.Maui.AzureCoreLogging.Android</AssemblyName>
-      <Title>AzureCoreLogging for net</Title>
+      <AssemblyName>Laerdal.Maui.TrouterClient.Android</AssemblyName>
+      <Title>TrouterClient for net</Title>
       <Authors>Laerdal Medical</Authors>
       <Description>
- Binding for Azure Core Logging for Android.
-
- This nuget is just a binding library for this native Android library : https://search.maven.org/artifact/com.azure.android/azure-core-logging/ 
-
-          When binding this house of cards, remember the mind boggling fact
-          that azure-core depends on this, so bind this first, THEN core.
+          Binding for Microsoft Trouter Client for Android.
       </Description>
       <PackagesReleaseNotes>
-          1.0.0-beta.14
+          0.2.0.0
       </PackagesReleaseNotes>
-      <Copyright>Copyright Laerdal Medical 2023</Copyright>
+      <Copyright>Copyright Laerdal Medical 2025</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
       <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -28,10 +23,7 @@
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
     <ItemGroup>
-      <AndroidLibrary Update="Jars\azure-core-logging-1.0.0-beta.14.aar"/>
-    </ItemGroup>
-    <ItemGroup>
-      <AndroidLibrary Update="Jars\slf4j-api-1.7.32.jar">
+      <AndroidLibrary Update="Jars\trouter-client-android-0.2.0.aar">
         <Bind>false</Bind>
       </AndroidLibrary>
     </ItemGroup>

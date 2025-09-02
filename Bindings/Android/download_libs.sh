@@ -2,10 +2,10 @@
 
 rm -rf */Jars/*
 
-gradle downloadCalling
-gradle downloadCommon
-gradle downloadCore
-gradle downloadLogging
+gradle downloadAzureCalling
+gradle downloadAzureCommon
+gradle downloadAzureCore
+gradle downloadAzureCoreLogging
+gradle downloadTrouterClient
 
 echo "Remember to delete Jars that are included in depended upon nugets"
-

@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationHelper.android</PackageId>
-      <version>2.9.0.4</version>
-      <TargetFrameworks>net8.0-android</TargetFrameworks>
+      <version>2.13.1.6</version>
+      <TargetFrameworks>net9.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
       <IsBindingProject>true</IsBindingProject>
       <AssemblyName>Laerdal.Maui.AzureCommunicationCallingHelper.Android</AssemblyName>
-      <Title>AzureCoreLogging for net7.0-android</Title>
+      <Title>AzureCoreLogging for NET</Title>
       <Authors>Laerdal Medical</Authors>
       <Description>
         This  nuget is a horrible hack to solve the problem of ACS using retrofuture in its
@@ -17,16 +17,19 @@
         from ACS as regular methods...
       </Description>
       <PackagesReleaseNotes>
-        2.9.0
+          2.13.1
       </PackagesReleaseNotes>
-      <Copyright>Copyright Laerdal Medical 2023</Copyright>
+      <Copyright>Copyright Laerdal Medical 2024</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
       <ProjectUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</ProjectUrl>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
       <PackageTags>Maui Azure Android</PackageTags>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
+  <ItemGroup>
+    <AndroidLibrary Include="Jars\AzureCommunicationHelper-release.aar"/>
+  </ItemGroup>
      <ItemGroup>
-     <PackageReference Include="Laerdal.Maui.AzureCommunicationCalling.android" Version="2.9.0.1" />
+     <PackageReference Include="Laerdal.Maui.AzureCommunicationCalling.android" Version="2.13.1.6" />
    </ItemGroup>
 </Project>

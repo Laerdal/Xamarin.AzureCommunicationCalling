@@ -1,68 +1,140 @@
 #!/bin/sh
 
-# First get the latest version of the native pods:
-# (if the version you want is not in cocoapod yet,
-#  skip the below steps and instead unzip file from
-#  github release page in nativeLibs/Pods/AzureCommunicationCalling)
-# Release page: https://github.com/Azure/Communication/releases
-#
-# If pod complains, run pod install --repo-update
+set -e
+
+# Change to the script's directory
+cd "$(dirname "$0")"
+
+# Clean up previous builds
+echo "--- Cleaning up old frameworks, archives, and bindings ---"
+rm -rf nativeLibs
+rm -rf tmp
+
+# Create directory for native libraries
+mkdir -p nativeLibs
 cd nativeLibs
-sh fetchPods.sh
-cd ..
 
-# Now make a fat framework containing both x86 and arm64 binaries
-cd nativeLibs/Pods/AzureCommunicationCalling/
-rm -rf AzureCommunicationCalling.framework
-mkdir AzureCommunicationCalling.framework
-cp -R AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/* \
-    AzureCommunicationCalling.framework/.
+# --- AzureCommunicationCalling ---
+CALLING_ZIP="AzureCommunicationCalling-2.16.0.zip"
+CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.16.0/${CALLING_ZIP}"
 
-cd ..
-rm -rf AzureCommunicationCommon # delete the symlink
-mkdir AzureCommunicationCommon  # create real folder
-cd AzureCommunicationCommon
-mkdir AzureCommunicationCommon.framework   # create .framework subfolder
-cd ..
-cp -R _Prebuild/GeneratedFrameworks/AzureCommunicationCommon/AzureCommunicationCommon.framework/* \
-    AzureCommunicationCommon/AzureCommunicationCommon.framework/.
-# since AzureCommunicationCalling uses ios-arm64_x86_64-simulator lipo is potentialy not needed?
-# lipo -create \
-#     AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/AzureCommunicationCalling \
-#     -output AzureCommunicationCalling.framework/AzureCommunicationCalling
-cd ../../    # go back to folder of the
+# Download Calling framework
+if [ ! -f "$CALLING_ZIP" ]; then
+  echo "--- Downloading AzureCommunicationCalling zip file ---"
+  wget -q --show-progress "$CALLING_URL"
+else
+  echo "--- AzureCommunicationCalling zip file already exists. Skipping download. ---"
+fi
 
-# For this to work, change includes of azure deps(core and communicationCommon) header files
-# in below .h file, to reltive includes.
-# Instead of :
-#
-##import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>
-#
-# Make it look like this:
-#
-#import "../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"#
+# --- AzureCommunicationCommon ---
+COMMON_REPO="https://github.com/Azure/azure-sdk-for-ios.git"
+COMMON_REPO_DIR="azure-sdk-for-ios"
+COMMON_TAG="AzureCommunicationCommon_1.3.0"
 
-sed -i '' 's|import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|import "../../../AzureCommunicationCommon/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' \
- nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h
+# Clone Common framework repo
+if [ ! -d "$COMMON_REPO_DIR" ]; then
+  echo "--- Cloning AzureCommunicationCommon repository ---"
+  git clone --depth 1 --branch "$COMMON_TAG" "$COMMON_REPO"
+else
+  echo "--- AzureCommunicationCommon repository already exists. Skipping clone. ---"
+fi
 
+echo "--- Installing pods for AzureCommunicationCommon ---"
+cd "$COMMON_REPO_DIR"
+arch -x86_64 pod install
+cd .. # back to nativeLibs
+
+echo "--- Building AzureCommunicationCommon.xcframework ---"
+ARCHIVES_PATH="archives"
+mkdir -p "$ARCHIVES_PATH"
+COMMON_WORKSPACE="$COMMON_REPO_DIR/AzureSDK.xcworkspace"
+COMMON_SCHEME="AzureCommunicationCommon"
+
+# Build for iOS device
+echo "--- Archiving for iphoneos ---"
+xcodebuild clean archive \
+  -workspace "$COMMON_WORKSPACE" \
+  -scheme "$COMMON_SCHEME" \
+  -sdk iphoneos \
+  -archivePath "$ARCHIVES_PATH/AzureCommunicationCommon-iOS.xcarchive" \
+  SKIP_INSTALL=NO \
+  BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+
+# Build for iOS simulator
+echo "--- Archiving for iphonesimulator ---"
+xcodebuild clean archive \
+  -workspace "$COMMON_WORKSPACE" \
+  -scheme "$COMMON_SCHEME" \
+  -sdk iphonesimulator \
+  -archivePath "$ARCHIVES_PATH/AzureCommunicationCommon-iOS_Simulator.xcarchive" \
+  SKIP_INSTALL=NO \
+  BUILD_LIBRARY_FOR_DISTRIBUTION=YES
+
+# Create the XCFramework
+echo "--- Creating AzureCommunicationCommon.xcframework ---"
+mkdir -p Pods
+xcodebuild -create-xcframework \
+  -framework "$ARCHIVES_PATH/AzureCommunicationCommon-iOS.xcarchive/Products/Library/Frameworks/AzureCommunicationCommon.framework" \
+  -framework "$ARCHIVES_PATH/AzureCommunicationCommon-iOS_Simulator.xcarchive/Products/Library/Frameworks/AzureCommunicationCommon.framework" \
+  -output Pods/AzureCommunicationCommon.xcframework
+
+cd Pods
+
+echo "--- Unzipping AzureCommunicationCalling framework ---"
+unzip -q ../"$CALLING_ZIP"
+
+cd .. # back to nativeLibs
+
+# --- Patching headers ---
+echo "--- Patching header files to use relative paths for xcframeworks ---"
+CALLING_ARM64_HEADER="Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h"
+CALLING_SIM_HEADER="Pods/AzureCommunicationCalling.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h"
+
+# Check if files exist before patching
+if [ -f "$CALLING_ARM64_HEADER" ] && [ -f "$CALLING_SIM_HEADER" ]; then
+  # For arm64
+  sed -i.bak 's|#import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_ARM64_HEADER"
+  # For simulator
+  sed -i.bak 's|#import <AzureCommunicationCommon/AzureCommunicationCommon-Swift.h>|#import "../../../../AzureCommunicationCommon.xcframework/ios-arm64_x86_64-simulator/AzureCommunicationCommon.framework/Headers/AzureCommunicationCommon-Swift.h"|' "$CALLING_SIM_HEADER"
+else
+  echo "Header files not found, skipping patch."
+fi
+
+# --- Cleanup ---
+echo "--- Cleaning up intermediate files ---"
+rm -rf "$COMMON_REPO_DIR"
+rm -rf "$ARCHIVES_PATH"
+
+# --- Sharpie Bind ---
+echo "--- Generating bindings with Objective Sharpie ---"
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
 # Make sure you have the latest Sharpie version:
 # 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
-sharpie bind \
-    -sdk iphoneos \
-    -o tmp \
-    -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
-    -scope nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers \
-    nativeLibs/Pods/AzureCommunicationCalling/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
-    -c -fmodules
 
-# Lastly: manually copy tmp bindings into this folder and make it work
-# This is the time consuming work: to through bindings, sometimes sharpie
-# fails to get method name, sometime there is a check annotation etc....
-# WHAT SHOULD BE DONE
-# NativeHandle to IntPtr
-# CXHandle to IntPtr
-# comment out body of CommunicationTokenRefreshOptions
-# get rid of all [Verify] tags
+# Explicitly point to the correct Xcode Developer directory (sharpie is not compatible with xcode above 16.2)
+# export DEVELOPER_DIR="/Applications/Xcode16.2.app/Contents/Developer"
+
+sharpie bind \
+  -sdk iphoneos18.2 \
+  -o ../tmp \
+  -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
+  -scope Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers \
+  Pods/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h \
+  -c -fmodules
+
+# --- Final instructions ---
+echo ""
+echo "--- Manual steps required ---"
 echo "Remember to merge new tmp/*.cs into ./*.cs"
+echo "This is the time consuming work: go through bindings, sometimes sharpie"
+echo "fails to get method name, sometime there is a check annotation etc...."
+echo "WHAT SHOULD BE DONE:"
+echo "- NativeHandle to IntPtr"
+echo "- CXHandle to IntPtr"
+echo "- comment out body of CommunicationTokenRefreshOptions"
+echo "- get rid of all [Verify] tags"
+echo ""
+echo "--- Build ---"
+echo "Finally, build the project with 'dotnet build -c Release'"
+echo "Built nuget package will be in bin/Release"
