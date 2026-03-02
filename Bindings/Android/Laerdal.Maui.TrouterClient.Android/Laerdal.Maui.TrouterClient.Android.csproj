@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.TrouterClient.android</PackageId>
-      <version>0.2.0.1</version>
+      <version>1.0.0.0</version>
       <TargetFrameworks>net9.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
@@ -13,7 +13,7 @@
           Binding for Microsoft Trouter Client for Android.
       </Description>
       <PackagesReleaseNotes>
-          0.2.0.0
+          1.0.0.0
       </PackagesReleaseNotes>
       <Copyright>Copyright Laerdal Medical 2025</Copyright>
       <RepositoryUrl>https://github.com/laerdal/Xamarin.AzureCommunicationCalling</RepositoryUrl>
@@ -23,7 +23,7 @@
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
     <ItemGroup>
-      <AndroidLibrary Update="Jars\trouter-client-android-0.2.0.aar">
+      <AndroidLibrary Update="Jars\trouter-client-android-1.0.0.aar">
         <Bind>false</Bind>
       </AndroidLibrary>
     </ItemGroup>

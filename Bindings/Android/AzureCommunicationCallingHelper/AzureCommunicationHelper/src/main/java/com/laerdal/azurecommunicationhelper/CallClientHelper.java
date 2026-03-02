@@ -128,5 +128,9 @@ public class CallClientHelper {
     public static void sendDtmf(Call call, DtmfTone dtmfTone) throws ExecutionException, InterruptedException {
         call.sendDtmf(dtmfTone).get();
     }
+
+    public static String GetServerCallId(Call call) throws ExecutionException, InterruptedException {
+        return call.getServerCallId().get();
+    }
 }
 
