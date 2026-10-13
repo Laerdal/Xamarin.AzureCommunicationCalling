@@ -1,0 +1,12 @@
+<Project>
+  <!--
+    The .NET 10 Android SDK generates a merged $(TargetName).aar for binding projects and adds it to the nupkg.
+    It re-bundles native libs from dependency packages (70MB for the helper) while the real aar passed in via
+    @(AndroidLibrary) is already packed, so don't pack the generated one.
+  -->
+  <Target Name="_RemoveGeneratedAarFromPackage" AfterTargets="_IncludeAarInNuGetPackage">
+    <ItemGroup>
+      <TfmSpecificPackageFile Remove="$(_AarOutputPath)" />
+    </ItemGroup>
+  </Target>
+</Project>
