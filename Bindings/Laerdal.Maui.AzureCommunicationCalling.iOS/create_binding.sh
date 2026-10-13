@@ -22,8 +22,8 @@ rm -rf "$TMP_DIR"
 mkdir -p "$NATIVE_LIBS_DIR"
 
 # --- AzureCommunicationCalling ---
-CALLING_ZIP="AzureCommunicationCalling-2.16.0.zip"
-CALLING_URL="https://github.com/Azure/Communication/releases/download/v2.16.0/${CALLING_ZIP}"
+CALLING_ZIP="AzureCommunicationCalling-3.0.0.zip"
+CALLING_URL="https://github.com/Azure/Communication/releases/download/v3.0.0/${CALLING_ZIP}"
 FULL_CALLING_ZIP_PATH="$NATIVE_LIBS_DIR/$CALLING_ZIP"
 
 # Download Calling framework
@@ -36,7 +36,7 @@ fi
 
 # --- AzureCommunicationCommon ---
 COMMON_REPO="https://github.com/Azure/azure-sdk-for-ios.git"
-COMMON_TAG="AzureCommunicationCommon_1.3.0"
+COMMON_TAG="AzureCommunicationCommon_1.3.8"
 
 # Clone Common framework repo
 if [ ! -d "$COMMON_REPO_PATH" ]; then
@@ -48,7 +48,7 @@ fi
 
 echo "--- Installing pods for AzureCommunicationCommon ---"
 # Run pod install from the cloned repo directory
-arch -x86_64 pod install --project-directory="$COMMON_REPO_PATH"
+pod install --project-directory="$COMMON_REPO_PATH"
 
 echo "--- Building AzureCommunicationCommon.xcframework ---"
 mkdir -p "$ARCHIVES_DIR"
@@ -169,20 +169,28 @@ rm -rf "$ARCHIVES_DIR"
 # --- Sharpie Bind ---
 echo "--- Generating bindings with Objective Sharpie ---"
 # Output "raw" bindings to tmp folder to keep a clean git history of binding changes
-# Make sure you have the latest Sharpie version:
-# 3.5 or greater. Download from here: http://aka.ms/objective-sharpie
+# Make sure you have a recent Sharpie: dotnet tool update -g sharpie.bind.tool
 # If you get "invalid sdk", list yours with "xcodebuild -showsdks"
 
-# Explicitly point to the correct Xcode Developer directory (sharpie is not compatible with xcode above 16.2)
-# export DEVELOPER_DIR="/Applications/Xcode16.2.app/Contents/Developer"
+
+# Sharpie 26.x parses a plain .h as C and then fails on the Foundation headers,
+# so feed it a tiny Objective-C wrapper that imports the real header.
+HEADERS_DIR="$PODS_DIR/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers"
+mkdir -p "$TMP_DIR"
+WRAPPER="$TMP_DIR/SharpieWrapper.m"
+echo "#import \"$HEADERS_DIR/AzureCommunicationCalling.h\"" > "$WRAPPER"
 
 sharpie bind \
-  -sdk iphoneos18.2 \
+  -sdk iphoneos26.2 \
   -o "$TMP_DIR" \
   -namespace "Laerdal.Maui.AzureCommunicationCalling.iOS" \
-  -scope "$PODS_DIR/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers" \
-  "$PODS_DIR/AzureCommunicationCalling.xcframework/ios-arm64/AzureCommunicationCalling.framework/Headers/AzureCommunicationCalling.h" \
+  -scope "$HEADERS_DIR" \
+  "$WRAPPER" \
   -c -fmodules
+
+rm -f "$WRAPPER"
+# Newer Sharpie names the file ApiDefinition.cs, the project uses ApiDefinitions.cs
+[ -f "$TMP_DIR/ApiDefinition.cs" ] && mv "$TMP_DIR/ApiDefinition.cs" "$TMP_DIR/ApiDefinitions.cs"
 
 # --- Final instructions ---
 echo ""
