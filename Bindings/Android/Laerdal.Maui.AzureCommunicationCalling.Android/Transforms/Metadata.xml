@@ -31,6 +31,7 @@
     <remove-node path="/api/package[@name='com.microsoft.dl.video.capture.impl.real.impl']/*" />
     <remove-node path="/api/package[@name='com.microsoft.dl.video.capture.impl.real.impl2']/*" />
     <remove-node path="/api/package[@name='com.microsoft.dl.video.capture.impl.mock']/*" />
+    <remove-node path="/api/package[@name='com.microsoft.dl.video.capture.impl.fps']/*" />
     <remove-node path="/api/package[@name='com.microsoft.dl.video.utils']/*" />
     <remove-node path="/api/package[@name='com.skype.android.video.hw.codec.encoder.camera.gl']/class[@name='AbstractRenderingTarget']/field[@name='context']"/>
     <remove-node path="/api/package[@name='com.skype.android.video.hw.format']/interface[@name='SliqOmxMapping']/*"/>

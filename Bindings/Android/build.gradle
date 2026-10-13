@@ -6,7 +6,7 @@ buildscript {
          mavenCentral()
      }
      dependencies {
-         classpath "com.android.tools.build:gradle:7.0.4"
+         classpath "com.android.tools.build:gradle:8.7.3"
 
          // NOTE: Do not place your application dependencies here; they belong
          // in the individual module build.gradle files
@@ -22,11 +22,11 @@ configurations {
 }
 
 dependencies {
-    azureCalling 'com.azure.android:azure-communication-calling:2.13.1'
+    azureCalling 'com.azure.android:azure-communication-calling:3.0.0'
     azureCommon 'com.azure.android:azure-communication-common:1.2.1'
     azureCore 'com.azure.android:azure-core:1.0.0-beta.14'
     azureCoreLogging 'com.azure.android:azure-core-logging:1.0.0-beta.14'
-    trouterClient 'com.microsoft:trouter-client-android:0.2.0'
+    trouterClient 'com.microsoft:trouter-client-android:3.0.0'
 }
 
 task downloadAzureCalling(type: Copy) {

@@ -12,7 +12,7 @@ arch -x86_64 pod install
 
 echo "Downloading zip file from github"
 cd Pods
-wget https://github.com/Azure/Communication/releases/download/v2.16.0-beta.1/AzureCommunicationCalling-2.16.0-beta.1.zip
+wget https://github.com/Azure/Communication/releases/download/v3.0.0/AzureCommunicationCalling-3.0.0.zip
 unzip AzureCommunicationCalling*.zip
 
 echo "Move zip framework into pod-structure"

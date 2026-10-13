@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace "com.laerdal.azurecommunicationhelper"
     compileSdk 33
 
     defaultConfig {
@@ -28,5 +29,5 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.azure.android:azure-communication-calling:2.13.1'
+    implementation 'com.azure.android:azure-communication-calling:3.0.0'
 }

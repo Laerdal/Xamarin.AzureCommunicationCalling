@@ -2,12 +2,12 @@
     <PropertyGroup>
         <PackageId>Laerdal.Maui.AzureCommunicationCalling.iOS</PackageId>
         <version>2.16.0-beta.1.31</version>
-        <TargetFramework>net8.0-ios</TargetFramework>
+        <TargetFramework>net10.0-ios</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>true</ImplicitUsings>
         <IsBindingProject>true</IsBindingProject>
         <AssemblyName>Laerdal.Maui.AzureCommunicationCalling.iOS</AssemblyName>
-        <Title>AzureCommunicationCalling for net8.0-ios</Title>
+        <Title>AzureCommunicationCalling for net10.0-ios</Title>
         <Authors>Laerdal Medical</Authors>
         <Description>
             Binding for Azure Communication Calling SDK for iOS.
