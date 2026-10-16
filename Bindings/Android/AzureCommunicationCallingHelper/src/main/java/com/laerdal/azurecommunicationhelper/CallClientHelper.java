@@ -67,6 +67,12 @@ public class CallClientHelper {
     public static void UnMute(Call call, Context context) throws ExecutionException, InterruptedException {
         call.unmute(context).get();
     }
+    public static void MuteIncomingAudio(Call call, Context context) throws ExecutionException, InterruptedException {
+        call.muteIncomingAudio(context).get();
+    }
+    public static void UnmuteIncomingAudio(Call call, Context context) throws ExecutionException, InterruptedException {
+        call.unmuteIncomingAudio(context).get();
+    }
     public static String GetServerCallId(CallInfo callInfo) throws ExecutionException, InterruptedException {
         return callInfo.getServerCallId().get();
     }

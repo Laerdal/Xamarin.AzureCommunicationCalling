@@ -49,7 +49,7 @@ Windows support is official.
 | View remote screen sharing                     | :construction:            | :construction:                |:construction:                 |
 | Request permission to use audio and/or video   | ✅             | ✅               |✅               |
 | Mute/unmute local microphone audio      | ✅           | ✅               |✅               |
-| Mute/unmute local speaker audio      | :x:           | :x:               |:x:               |
+| Mute/unmute local speaker audio      | :x:           | ✅               |:x:               |
 | Call in Hold      | :x:           | :x:               |:x:               |
 | Show dominant speaker                         | ✅             | ✅                 |✅                 |
 | Turn off screen on calls      | :hourglass:           | :hourglass:                |:x:               |
