@@ -70,7 +70,7 @@ public class CallClientHelper {
     public static void MuteIncomingAudio(Call call, Context context) throws ExecutionException, InterruptedException {
         call.muteIncomingAudio(context).get();
     }
-    public static void UnmuteIncomingAudio(Call call, Context context) throws ExecutionException, InterruptedException {
+    public static void UnMuteIncomingAudio(Call call, Context context) throws ExecutionException, InterruptedException {
         call.unmuteIncomingAudio(context).get();
     }
     public static String GetServerCallId(CallInfo callInfo) throws ExecutionException, InterruptedException {
