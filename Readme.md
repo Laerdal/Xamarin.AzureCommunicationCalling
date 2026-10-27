@@ -5,6 +5,23 @@ These nugets are native to each platform, you need to make a common abstraction 
 
 Additional documentation for this sample can be found on [Microsoft Docs](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/calling-sdk-features).
 
+## .NET MAUI
+
+Development for .NET MAUI is carried out on the following branches:
+
+- [`maui-stable`](https://github.com/Laerdal/Xamarin.AzureCommunicationCalling/tree/maui-stable): bindings for stable releases of the Azure Communication Services SDKs
+- [`maui-beta`](https://github.com/Laerdal/Xamarin.AzureCommunicationCalling/tree/maui-beta): bindings for beta releases of the Azure Communication Services SDKs
+
+This `master` branch contains the Xamarin bindings. For MAUI, use the `Laerdal.Maui.*` nugets:
+
+- [Laerdal.Maui.AzureCommunicationCalling.iOS](https://www.nuget.org/packages/Laerdal.Maui.AzureCommunicationCalling.iOS)
+- [Laerdal.Maui.AzureCommunicationCalling.android](https://www.nuget.org/packages/Laerdal.Maui.AzureCommunicationCalling.android)
+- [Laerdal.Maui.AzureCommunicationHelper.android](https://www.nuget.org/packages/Laerdal.Maui.AzureCommunicationHelper.android)
+- [Laerdal.Maui.AzureCommunicationCommon.android](https://www.nuget.org/packages/Laerdal.Maui.AzureCommunicationCommon.android)
+- [Laerdal.Maui.AzureCore.android](https://www.nuget.org/packages/Laerdal.Maui.AzureCore.android)
+- [Laerdal.Maui.AzureCoreLogging.android](https://www.nuget.org/packages/Laerdal.Maui.AzureCoreLogging.android)
+- [Laerdal.Maui.TrouterClient.android](https://www.nuget.org/packages/Laerdal.Maui.TrouterClient.android)
+
 ## Supported platforms
 
 - [x] Android >= 21
