@@ -73,6 +73,14 @@ public class CallClientHelper {
         call.unmute(context).get();
     }
 
+    public static void MuteIncomingAudio(Call call, Context context) throws ExecutionException, InterruptedException {
+        call.muteIncomingAudio(context).get();
+    }
+
+    public static void UnMuteIncomingAudio(Call call, Context context) throws ExecutionException, InterruptedException {
+        call.unmuteIncomingAudio(context).get();
+    }
+
     public static void SwitchCameraSource(LocalVideoStream localVideoStream, VideoDeviceInfo camera) throws ExecutionException, InterruptedException {
         localVideoStream.switchSource(camera).get();
     }
