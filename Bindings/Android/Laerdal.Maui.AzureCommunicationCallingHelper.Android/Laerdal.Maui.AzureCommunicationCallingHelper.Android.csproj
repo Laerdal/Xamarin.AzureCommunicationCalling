@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <PackageId>Laerdal.Maui.AzureCommunicationHelper.android</PackageId>
-      <version>3.0.0.1</version>
+      <version>3.0.0.2</version>
       <TargetFrameworks>net10.0-android</TargetFrameworks>
       <Nullable>enable</Nullable>
       <ImplicitUsings>true</ImplicitUsings>
